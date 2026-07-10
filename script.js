@@ -122,6 +122,23 @@ document.getElementById('cookieReject').addEventListener('click', () => cookieCo
 document.getElementById('cookieManageLink').addEventListener('click', toggleCookiePrefs);
 document.querySelectorAll('.js-open-cookies').forEach(el => el.addEventListener('click', openCookiePolicy));
 
+const footerCookiePrefs = document.getElementById('footerCookiePrefs');
+if (footerCookiePrefs) {
+  footerCookiePrefs.addEventListener('click', e => {
+    e.preventDefault();
+    const pop = document.getElementById('cookiePop');
+    pop.classList.add('show');
+    const prefs = document.getElementById('cookiePrefs');
+    const existing = cookieGetConsent();
+    if (existing) {
+      document.getElementById('ckAnalytics').checked = !!existing.analytics;
+      document.getElementById('ckMarketing').checked = !!existing.marketing;
+    }
+    if (prefs.hidden) toggleCookiePrefs();
+    pop.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
 setTimeout(() => {
   if (!cookieGetConsent()) document.getElementById('cookiePop').classList.add('show');
 }, 1200);
