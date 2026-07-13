@@ -162,11 +162,11 @@ header nav a:hover{color:var(--accent)}
    hero's total height (it contains the whole promise grid) is much taller
    than the logo/headline area it's meant to sit behind */
 .hero-cube-wrap{position:absolute;top:360px;left:50%;transform:translate(-50%,0);perspective:1000px;
-  opacity:.14;pointer-events:none;z-index:0}
+  opacity:.28;pointer-events:none;z-index:0}
 @media(max-width:780px){.hero-cube-wrap{top:300px}}
 .hero-cube{width:340px;height:340px;position:relative;transform-style:preserve-3d;
   animation:cubeSpin 32s linear infinite, cubeFloat 10s ease-in-out infinite}
-.hero-cube .f{position:absolute;width:340px;height:340px;border:1px solid var(--accent);background:rgba(57,255,106,.03)}
+.hero-cube .f{position:absolute;width:340px;height:340px;border:1.5px solid var(--accent);background:rgba(57,255,106,.05);box-shadow:0 0 30px -6px var(--accent-dim)}
 .hero-cube .f:nth-child(1){transform:translateZ(170px)}
 .hero-cube .f:nth-child(2){transform:rotateY(180deg) translateZ(170px)}
 .hero-cube .f:nth-child(3){transform:rotateY(90deg) translateZ(170px)}
