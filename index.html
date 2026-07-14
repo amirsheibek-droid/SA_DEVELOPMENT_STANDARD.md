@@ -7,7 +7,7 @@
 <meta name="description" content="S·A Intelligent Designs builds intelligent websites with full SEO support and develops mobile applications for specialist niches, serving Milton Keynes, Bedford and London. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="S·A Intelligent Designs — SA Intelligence Marketing">
-<meta name="theme-color" content="#0a0a0d">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://www.samarketingintelligence.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="S·A Intelligent Designs">
@@ -67,19 +67,19 @@
 </script>
 <style>
 :root{
-  --bg:#000000;
-  --bg-alt:#020403;
-  --panel:#000000;
-  --border:rgba(255,255,255,.14);
-  --border-dim:rgba(255,255,255,.08);
-  --ink:#ffffff;
-  --mute:#9a9aa4;
-  --mute2:#6c6c74;
-  --accent:#39ff6a;
-  --accent-dim:rgba(57,255,106,.35);
-  --accent-ink:#00160a;
-  --accent2:#3fa9ff;
-  --accent2-dim:rgba(63,169,255,.35);
+  --bg:#ffffff;
+  --bg-alt:#f8f6fc;
+  --panel:#ffffff;
+  --border:rgba(20,15,30,.14);
+  --border-dim:rgba(20,15,30,.09);
+  --ink:#15121c;
+  --mute:#5c5568;
+  --mute2:#8b8494;
+  --accent:#0ea968;
+  --accent-dim:rgba(14,169,104,.3);
+  --accent-ink:#ffffff;
+  --accent2:#7c3aed;
+  --accent2-dim:rgba(124,58,237,.3);
   --mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
   --gap-gallery:clamp(4rem,10vw,8rem);
 }
@@ -92,7 +92,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 #netbg canvas{position:absolute;inset:0;width:100%;height:100%}
 
 /* ---- dissolve transition overlay (nav "page shift") ---- */
-#dissolve{position:fixed;inset:0;z-index:90;background:#000;opacity:0;pointer-events:none;transition:opacity .38s ease}
+#dissolve{position:fixed;inset:0;z-index:90;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .38s ease}
 #dissolve.show{opacity:1}
 
 /* ---- scroll-reveal dissolve-in for gallery frames ---- */
@@ -125,12 +125,12 @@ p.lede{color:var(--mute);font-size:1.05rem;max-width:640px;margin-top:16px}
 .btn-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
 
 /* ---- header / nav ---- */
-header{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-dim);
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-dim);
   display:flex;align-items:center;justify-content:space-between;padding:18px 28px}
 .logo{display:flex;align-items:center;gap:12px}
 .logo .mark{width:24px;height:24px;position:relative;flex-shrink:0}
 .logo .mark span{position:absolute;inset:0;border:2px solid var(--accent);transform:rotate(45deg);box-shadow:0 0 8px -1px var(--accent)}
-.logo .mark span:nth-child(2){inset:7px;box-shadow:none}
+.logo .mark span:nth-child(2){inset:7px;border-color:var(--accent2);box-shadow:none}
 .word{font-weight:700;font-size:.92rem;letter-spacing:.04em;text-transform:uppercase}
 .logo b,.word b{color:var(--accent)}
 header nav{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
@@ -143,7 +143,7 @@ header nav a:hover{color:var(--accent)}
 .hero-logo{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:clamp(3rem,8vw,5rem)}
 .hero-logo .mark{width:46px;height:46px;position:relative;flex-shrink:0}
 .hero-logo .mark span{position:absolute;inset:0;border:2.5px solid var(--accent);transform:rotate(45deg);box-shadow:0 0 26px -2px var(--accent)}
-.hero-logo .mark span:nth-child(2){inset:11px;box-shadow:0 0 10px -2px var(--accent)}
+.hero-logo .mark span:nth-child(2){inset:11px;border-color:var(--accent2);box-shadow:0 0 10px -2px var(--accent2)}
 .hero-logo-word{font-weight:700;font-size:1.3rem;letter-spacing:.06em;text-transform:uppercase}
 .hero-logo-word b{color:var(--accent)}
 .hero .eyebrow{display:block}
@@ -157,16 +157,20 @@ header nav a:hover{color:var(--accent)}
 .promise b{display:block;font-size:1.1rem;margin-bottom:10px}
 .promise span{color:var(--mute);font-size:.92rem}
 
-/* colourful floating cubes framing the hero in the side margins — sized
-   and positioned to sit clear of the centered ~820px content column
-   rather than behind it, so they never cross the headline/body text.
+/* colourful 3D cubes framing the hero in the side margins — sized and
+   positioned to sit clear of the centered ~820px content column rather
+   than behind it, so they never cross the headline/body text.
+   A constant X-axis tilt on the outer wrapper (rather than animating
+   X too) means the cube always shows depth on 2-3 faces at once —
+   a pure Y-axis spin never passes through a flat, face-on angle.
    Hidden below 1100px, where there's no margin left to put them in. */
 .deco-cubes{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .deco-cube-wrap{position:absolute;perspective:900px}
-.deco-cube{width:var(--size);height:var(--size);position:relative;transform-style:preserve-3d;opacity:var(--op,.4);
-  animation:cubeSpin var(--spin,32s) linear infinite, cubeFloat var(--float,10s) ease-in-out infinite}
+.deco-cube-tilt{transform-style:preserve-3d;transform:rotateX(-24deg);animation:cubeFloat var(--float,10s) ease-in-out infinite}
+.deco-cube{width:var(--size);height:var(--size);position:relative;transform-style:preserve-3d;opacity:var(--op,.5);
+  animation:cubeSpinY var(--spin,32s) linear infinite}
 .deco-cube .f{position:absolute;width:var(--size);height:var(--size);border:1.5px solid var(--cube-color);
-  background:rgba(255,255,255,.02);box-shadow:0 0 26px -6px var(--cube-color)}
+  background:color-mix(in srgb, var(--cube-color) 8%, transparent);box-shadow:0 0 26px -8px var(--cube-color)}
 .deco-cube .f:nth-child(1){transform:translateZ(calc(var(--size) / 2))}
 .deco-cube .f:nth-child(2){transform:rotateY(180deg) translateZ(calc(var(--size) / 2))}
 .deco-cube .f:nth-child(3){transform:rotateY(90deg) translateZ(calc(var(--size) / 2))}
@@ -174,15 +178,15 @@ header nav a:hover{color:var(--accent)}
 .deco-cube .f:nth-child(5){transform:rotateX(90deg) translateZ(calc(var(--size) / 2))}
 .deco-cube .f:nth-child(6){transform:rotateX(-90deg) translateZ(calc(var(--size) / 2))}
 
-.deco-cube-wrap.c1{top:120px;left:3vw;--size:150px;--cube-color:#39ff6a;--spin:34s;--float:10s}
-.deco-cube-wrap.c2{top:210px;right:3vw;--size:170px;--cube-color:#3fa9ff;--spin:40s;--float:11.5s}
-.deco-cube-wrap.c3{top:560px;left:7.5vw;--size:100px;--cube-color:#b388ff;--spin:26s;--float:8.5s}
-.deco-cube-wrap.c4{top:600px;right:8.5vw;--size:110px;--cube-color:#ff5fae;--spin:30s;--float:9s}
+.deco-cube-wrap.c1{top:110px;left:3vw;--size:150px;--cube-color:var(--accent);--spin:30s;--float:10s;--op:.55}
+.deco-cube-wrap.c2{top:200px;right:3vw;--size:170px;--cube-color:var(--accent2);--spin:38s;--float:11.5s;--op:.5}
+.deco-cube-wrap.c3{top:560px;left:7.5vw;--size:100px;--cube-color:#5ee0a0;--spin:24s;--float:8.5s;--op:.55}
+.deco-cube-wrap.c4{top:600px;right:8.5vw;--size:110px;--cube-color:#b18cf5;--spin:27s;--float:9s;--op:.5}
 
-@keyframes cubeSpin{from{transform:rotateX(0) rotateY(0)}to{transform:rotateX(360deg) rotateY(360deg)}}
+@keyframes cubeSpinY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
 @keyframes cubeFloat{0%,100%{margin-top:0}50%{margin-top:-24px}}
 @media(max-width:1100px){.deco-cubes{display:none}}
-@media(prefers-reduced-motion:reduce){.deco-cube{animation:none}}
+@media(prefers-reduced-motion:reduce){.deco-cube,.deco-cube-tilt{animation:none}}
 
 /* ---- gallery frame: shared by every isolated content block ---- */
 .card,.promise,.step{
@@ -225,11 +229,11 @@ section.alt .promise::before{background:var(--bg-alt)}
 /* ---- portfolio ---- */
 .folio-grid{display:flex;flex-direction:column;gap:var(--gap-gallery);margin-top:var(--gap-gallery);counter-reset:frame}
 .folio-card{max-width:560px;margin:0 auto;width:100%}
-.folio-logo-chip{background:#fff;padding:16px;display:flex;align-items:center;justify-content:center;height:140px;margin-bottom:22px;overflow:hidden}
+.folio-logo-chip{background:#fff;border:1px solid var(--border);padding:16px;display:flex;align-items:center;justify-content:center;height:140px;margin-bottom:22px;overflow:hidden}
 .folio-logo-chip img{max-width:100%;max-height:100%;object-fit:contain}
-.folio-logo-chip.folio-logo-text{background:var(--bg);border:1px solid var(--border)}
-.folio-logo-chip.folio-logo-text span{font-weight:800;font-size:1.4rem;letter-spacing:-.02em;color:var(--ink)}
-.folio-logo-chip.folio-logo-text span b{color:var(--accent)}
+.folio-logo-chip.folio-logo-text{background:var(--ink);border-color:var(--ink)}
+.folio-logo-chip.folio-logo-text span{font-weight:800;font-size:1.4rem;letter-spacing:-.02em;color:#fff}
+.folio-logo-chip.folio-logo-text span b{color:var(--accent2)}
 .folio-status{display:inline-block;font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;margin-bottom:12px;border:1px solid currentColor}
 .folio-card h3{font-size:1.05rem;margin-top:6px}
 .folio-card p{color:var(--mute);font-size:.88rem;margin-top:8px}
@@ -301,8 +305,8 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
 
 /* ---- cookie banner ---- */
 #cookiePop{position:fixed;left:20px;bottom:20px;z-index:60;max-width:360px;
-  border:1px solid var(--border);background:#000;
-  padding:22px 22px 20px;box-shadow:0 14px 40px -12px rgba(0,0,0,.9);
+  border:1px solid var(--border);background:var(--bg);
+  padding:22px 22px 20px;box-shadow:0 14px 40px -12px rgba(20,15,30,.22);
   opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}
 #cookiePop.show{opacity:1;transform:none;pointer-events:auto}
 #cookiePop h4{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
@@ -352,22 +356,22 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
 
   <section class="hero" id="home">
     <div class="deco-cubes" aria-hidden="true">
-      <div class="deco-cube-wrap c1"><div class="deco-cube">
+      <div class="deco-cube-wrap c1"><div class="deco-cube-tilt"><div class="deco-cube">
         <div class="f"></div><div class="f"></div><div class="f"></div>
         <div class="f"></div><div class="f"></div><div class="f"></div>
-      </div></div>
-      <div class="deco-cube-wrap c2"><div class="deco-cube">
+      </div></div></div>
+      <div class="deco-cube-wrap c2"><div class="deco-cube-tilt"><div class="deco-cube">
         <div class="f"></div><div class="f"></div><div class="f"></div>
         <div class="f"></div><div class="f"></div><div class="f"></div>
-      </div></div>
-      <div class="deco-cube-wrap c3"><div class="deco-cube">
+      </div></div></div>
+      <div class="deco-cube-wrap c3"><div class="deco-cube-tilt"><div class="deco-cube">
         <div class="f"></div><div class="f"></div><div class="f"></div>
         <div class="f"></div><div class="f"></div><div class="f"></div>
-      </div></div>
-      <div class="deco-cube-wrap c4"><div class="deco-cube">
+      </div></div></div>
+      <div class="deco-cube-wrap c4"><div class="deco-cube-tilt"><div class="deco-cube">
         <div class="f"></div><div class="f"></div><div class="f"></div>
         <div class="f"></div><div class="f"></div><div class="f"></div>
-      </div></div>
+      </div></div></div>
     </div>
     <div class="wrap hero-inner">
       <div class="hero-logo">
@@ -692,7 +696,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
   const ctx = canvas.getContext('2d', { alpha: true });
   const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   let dots = [], w = 0, h = 0;
-  const DOT_COLOR = '63,169,255'; // --accent2 in rgb
+  const DOT_COLOR = '124,58,237'; // --accent2 (ultra violet) in rgb
   const LINK_DIST = 130;
 
   function size(){
@@ -722,7 +726,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
         const dx=dots[i].x-dots[j].x, dy=dots[i].y-dots[j].y;
         const dist=Math.hypot(dx,dy);
         if(dist<LINK_DIST){
-          ctx.strokeStyle = `rgba(${DOT_COLOR},${(1-dist/LINK_DIST)*0.16})`;
+          ctx.strokeStyle = `rgba(${DOT_COLOR},${(1-dist/LINK_DIST)*0.2})`;
           ctx.beginPath();
           ctx.moveTo(dots[i].x,dots[i].y);
           ctx.lineTo(dots[j].x,dots[j].y);
@@ -730,7 +734,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
         }
       }
     }
-    ctx.fillStyle = `rgba(${DOT_COLOR},0.45)`;
+    ctx.fillStyle = `rgba(${DOT_COLOR},0.55)`;
     ctx.beginPath();
     for(let i=0;i<dots.length;i++){
       ctx.moveTo(dots[i].x+1.4, dots[i].y);
