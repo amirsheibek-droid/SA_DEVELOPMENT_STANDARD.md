@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Voltz CRM · Field CRM for trades</title>
+  <meta
+    name="description"
+    content="Voltz CRM — field CRM for trades. Clients, schedule, quotes, invoices, and Operative Dave."
+  />
   <link rel="canonical" href="https://www.samarketingintelligence.com/voltz" />
   <link rel="icon" href="/favicon.png" />
   <style>
@@ -16,6 +20,12 @@
     .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
     .links a{display:inline-block;padding:12px 16px;border:1px solid rgba(0,240,255,.35);border-radius:12px;text-decoration:none}
     .eyebrow{letter-spacing:2px;font-size:12px;color:#5f7684}
+    .video-wrap{margin:22px 0 8px;border-radius:18px;overflow:hidden;border:1px solid rgba(0,240,255,.28);background:#05080c;aspect-ratio:16/9}
+    .hero-video{display:block;width:100%;height:100%;object-fit:cover;background:#05080c}
+    .sound-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 8px}
+    .sound-btn{appearance:none;border:1px solid rgba(0,240,255,.45);background:rgba(0,240,255,.12);color:#e8f4f8;border-radius:10px;padding:10px 14px;font:inherit;font-size:13px;letter-spacing:.04em;cursor:pointer}
+    .sound-btn:hover{background:rgba(0,240,255,.2)}
+    .hint{color:#5f7684;font-size:13px;margin:0}
   </style>
 </head>
 <body>
@@ -23,6 +33,23 @@
   <p class="eyebrow">SAM MARKETING INTELLIGENCE</p>
   <img class="logo" src="/voltz/assets/voltz-logo.png" alt="Voltz CRM logo" width="88" height="88" />
   <h1>Voltz CRM</h1>
+  <div class="video-wrap">
+    <video
+      id="dave-video"
+      class="hero-video"
+      src="/voltz/assets/operative-dave-intro.mp4"
+      playsinline
+      loop
+      muted
+      autoplay
+      preload="metadata"
+      poster="/voltz/assets/voltz-logo.png"
+    ></video>
+  </div>
+  <div class="sound-row">
+    <button type="button" class="sound-btn" id="sound-btn">▶ PLAY WITH SOUND</button>
+    <p class="hint" id="sound-hint">Intro plays muted until you tap.</p>
+  </div>
   <p class="meta">Field CRM for tradespeople — clients, schedule, quotes, invoices, cashbook, receipt filer, trader availability &amp; customer booking links, and optional AI helpers. Desk layouts: Classic, AI Voice Assistant, Command Centre.</p>
   <p class="meta">Support: <a href="mailto:contact@samarketingintelligence.com">contact@samarketingintelligence.com</a></p>
   <div class="links">
@@ -31,5 +58,21 @@
     <a href="/">← Back to studio site</a>
   </div>
 </main>
+<script>
+  (function () {
+    var video = document.getElementById('dave-video');
+    var soundBtn = document.getElementById('sound-btn');
+    var hint = document.getElementById('sound-hint');
+    if (!video || !soundBtn) return;
+    var soundOn = false;
+    soundBtn.addEventListener('click', function () {
+      soundOn = !soundOn;
+      video.muted = !soundOn;
+      soundBtn.textContent = soundOn ? 'MUTE' : '▶ PLAY WITH SOUND';
+      if (hint) hint.textContent = soundOn ? 'Sound on.' : 'Intro plays muted until you tap.';
+      video.play().catch(function () {});
+    });
+  })();
+</script>
 </body>
 </html>
