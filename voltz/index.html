@@ -134,9 +134,8 @@
         src="/voltz/assets/operative-dave-intro.mp4"
         playsinline
         loop
-        muted
         autoplay
-        preload="metadata"
+        preload="auto"
         poster="/voltz/assets/voltz-logo.png"
       ></video>
     </div>
@@ -144,7 +143,7 @@
   <div class="sound-row">
     <button type="button" class="sound-btn" id="sound-btn">▶ PLAY WITH SOUND</button>
   </div>
-  <p class="hint" id="sound-hint">Full portrait intro · plays muted until you tap</p>
+  <p class="hint" id="sound-hint">Full portrait intro</p>
 
   <h2>Inside the app</h2>
   <p class="meta">Classic, AI Voice, and Command Centre — real screens from Voltz.</p>
@@ -244,16 +243,66 @@
     var soundBtn = document.getElementById('sound-btn');
     var hint = document.getElementById('sound-hint');
     if (!video || !soundBtn) return;
+
+    var SEEN_KEY = 'voltz_dave_intro_seen_v1';
+    var firstVisit = !localStorage.getItem(SEEN_KEY);
     var soundOn = false;
+
+    function setUi(on, message) {
+      soundOn = on;
+      video.muted = !on;
+      soundBtn.textContent = on ? 'MUTE' : '▶ PLAY WITH SOUND';
+      if (hint) hint.textContent = message;
+    }
+
+    function markSeen() {
+      try { localStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
+    }
+
+    function playWithSound() {
+      setUi(true, 'Full portrait intro · sound on');
+      return video.play();
+    }
+
+    function playMuted(message) {
+      setUi(false, message);
+      return video.play().catch(function () {});
+    }
+
+    function armFirstGestureUnmute() {
+      var unlock = function () {
+        playWithSound().then(markSeen).catch(function () {});
+        document.removeEventListener('pointerdown', unlock, true);
+        document.removeEventListener('keydown', unlock, true);
+      };
+      document.addEventListener('pointerdown', unlock, true);
+      document.addEventListener('keydown', unlock, true);
+    }
+
     soundBtn.addEventListener('click', function () {
-      soundOn = !soundOn;
-      video.muted = !soundOn;
-      soundBtn.textContent = soundOn ? 'MUTE' : '▶ PLAY WITH SOUND';
-      if (hint) hint.textContent = soundOn
-        ? 'Full portrait intro · sound on'
-        : 'Full portrait intro · plays muted until you tap';
-      video.play().catch(function () {});
+      if (soundOn) {
+        playMuted('Full portrait intro · muted');
+      } else {
+        playWithSound().then(markSeen).catch(function () {
+          playMuted('Full portrait intro · tap again for sound');
+        });
+      }
     });
+
+    // First-time viewers: try autoplay WITH sound. Browsers often block that —
+    // fall back to muted autoplay and unmute on the first tap/key anywhere.
+    if (firstVisit) {
+      video.muted = false;
+      video.play().then(function () {
+        setUi(true, 'Full portrait intro · sound on (first visit)');
+        markSeen();
+      }).catch(function () {
+        playMuted('Browser blocked sound autoplay · tap anywhere for sound');
+        armFirstGestureUnmute();
+      });
+    } else {
+      playMuted('Welcome back · tap for sound');
+    }
   })();
 </script>
 </body>
