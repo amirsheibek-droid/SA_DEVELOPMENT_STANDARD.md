@@ -10,6 +10,7 @@
     main{max-width:720px;margin:0 auto;padding:48px 20px 80px}
     h1{font-size:2rem;margin:0 0 8px}.meta{color:#8fa6b3;font-size:14px;margin-bottom:28px}
     h2{font-size:1.15rem;margin:28px 0 8px;color:#00f0ff}
+    h3{font-size:1rem;margin:20px 0 6px;color:#8fe8ef}
     p,li{line-height:1.55;color:#cfe3ea}.eyebrow{letter-spacing:2px;font-size:12px;color:#5f7684}
     a{color:#00f0ff} ul{padding-left:18px}
   </style>
@@ -20,51 +21,132 @@
   <h1>Privacy Policy</h1>
   <p class="meta">Last updated: 18 September 2026 · Live page: <a href="https://www.samarketingintelligence.com/voltz/privacy">samarketingintelligence.com/voltz/privacy</a></p>
 
-  <h2>Who we are</h2>
+  <h2>1. Who we are</h2>
   <p>Voltz CRM (“Voltz”, “we”) is a field CRM for tradespeople, operated in connection with SAM Marketing Intelligence. This policy explains what we collect when you use the Voltz mobile app (iOS / Android) and related web services, including customer booking pages.</p>
   <p>Contact: <a href="mailto:contact@samarketingintelligence.com">contact@samarketingintelligence.com</a> · <a href="https://www.samarketingintelligence.com/voltz" target="_blank" rel="noreferrer">www.samarketingintelligence.com/voltz</a></p>
 
-  <h2>Consent before an account is created</h2>
+  <h2>2. Consent before an account is created</h2>
   <p>Creating an account requires you to agree to our <a href="https://www.samarketingintelligence.com/voltz/terms">Terms of Use</a> and this Privacy Policy. Until you tick that agreement, we do not create a Voltz account or store your CRM business data. Device settings that stay only on your phone (for example theme preference) may be saved locally and are not linked to an account until you sign up.</p>
 
-  <h2>What we collect</h2>
+  <h2>3. How we collect data</h2>
   <ul>
-    <li><strong>Account:</strong> email, display name, sign-in provider (email, Google, or Apple), and a timestamp that you accepted Terms &amp; Privacy at signup.</li>
-    <li><strong>Workspace / CRM data you enter:</strong> clients, jobs, schedule, quotes, invoices, cashbook (income/expenses), receipts, site photos &amp; attachments, parts/SLA libraries, trader availability / work hours (weekly hours, closed dates, date overrides), booking requests, and related notes.</li>
-    <li><strong>Customer booking pages:</strong> when a customer uses a quote booking link, we process the slot they choose and any optional note they leave, so the trader can accept or decline. That request is stored in the trader’s workspace.</li>
-    <li><strong>AI helpers (optional, metered):</strong> text, images, or voice audio you choose to send for job extract, Smart Chaser, receipt read, or the voice assistant. See “AI features and third‑party data sharing” below for exactly what is sent, to whom, and how you consent.</li>
-    <li><strong>Payments:</strong> App Store / Play billing via RevenueCat for Pro and credit top-ups on iOS; Stripe Checkout on Android/web for those digital goods where used; optional Stripe Connect for customer pay links (money goes to your Stripe account — Voltz does not hold card funds).</li>
-    <li><strong>Biometric unlock (optional):</strong> Face ID / Touch ID / fingerprint stay on your device. We never receive your face or fingerprint images. If you enable unlock, we store session tokens in the device Keychain / Keystore so the OS biometric check can unlock the app — not on our servers as biometric data.</li>
-    <li><strong>Device permissions you grant:</strong> camera, photo library, microphone / on-device speech recognition (for dictate / Speak a Job), and Face ID prompt text as shown by the OS.</li>
-    <li><strong>Diagnostics (optional):</strong> if crash or product analytics are enabled in a future build (e.g. Sentry / PostHog), basic device and usage events may be collected as described in the App Store / Play privacy labels.</li>
+    <li><strong>You type it</strong> — names, emails, phones, addresses, job notes, quote and invoice lines, prices, tax, cashbook amounts, part names, feedback.</li>
+    <li><strong>You speak it</strong> — microphone audio on a Live AI call (after you agree to Google Gemini). Optional on-device speech recognition to dictate a job.</li>
+    <li><strong>You take or pick a photo</strong> — camera or photo library for site photos, receipts, attachments, or to show the assistant a part or fault.</li>
+    <li><strong>You sign in</strong> — email + password / magic link, Sign in with Apple, or Google. We receive the email and display name those providers give us, plus a timestamp that you accepted Terms &amp; Privacy.</li>
+    <li><strong>You buy in the app (iOS)</strong> — Apple In-App Purchase / StoreKit via RevenueCat. We receive purchase status, product ID, and that credits or Pro should be granted. We do not receive your card number.</li>
+    <li><strong>You use GET PAID (optional)</strong> — Stripe Connect pay links for your own customers. Stripe processes their card. Voltz does not hold card funds.</li>
+    <li><strong>We look up an address you typed</strong> — postcode / address sent to postcodes.io, Zippopotam (US ZIP), or OpenStreetMap Nominatim so we can drop a pin on a job map. Map tiles may load from CARTO, Esri or OpenStreetMap.</li>
+    <li><strong>The app on your phone</strong> — theme, desk, mute, sounds, Who talks voice, icons layout, and similar preferences in on-device storage (UserDefaults / AsyncStorage).</li>
+    <li><strong>Crash / analytics (only if enabled in that build)</strong> — Sentry and/or PostHog may receive device type, app version, and a user id. Not Live voice audio.</li>
   </ul>
 
-  <h2>How we use data</h2>
-  <p>To run your CRM, sync across your devices, show customers only booking slots inside the availability you set, process subscriptions and AI credits you buy, deliver optional AI features you turn on, send booking/reminder emails where configured, and keep the service secure. We do not sell your personal data.</p>
+  <h2>4. What we collect and store (CRM)</h2>
+  <p>Stored on our servers (Supabase: authentication, PostgreSQL database, file storage) for your workspace, unless noted as on-device only.</p>
 
-  <h2>Lawful basis (UK GDPR)</h2>
-  <p>Where UK GDPR applies: contract (to provide the service you signed up for), legitimate interests (security, product improvement, support), and consent where we ask for it (for example optional AI features or marketing if offered). You can request access, correction, or deletion via the contact email below or Account → Delete account.</p>
-
-  <h2>AI features and third‑party data sharing</h2>
-  <p>Voltz's voice assistant and smart suggestions (job extract, Smart Chaser, receipt read, Ask AI, and the voice/mic assistant) are built on <strong>Google's Gemini AI</strong>. These features are optional and metered (they use AI credits) — the CRM works fully without them.</p>
-  <p><strong>Before any of these features send anything</strong>, the app shows an in‑app consent screen naming Google Gemini and listing what will be sent, and asks you to agree. If you decline, the AI features stay off and nothing is sent; you can change your choice anytime in Account → Privacy &amp; AI Data.</p>
-  <p>When you turn AI features on and actively use them (tap the mic, start a Live voice call, or use Ask AI / job extract / receipt read / Smart Chaser), we send to Google, via our own backend proxy (never with a Google key embedded in the app):</p>
+  <h3>Account and workspace</h3>
   <ul>
-    <li>Your voice audio and the transcript of what you say, only while a voice/mic session is active;</li>
-    <li>The specific text or image you submit to a helper (e.g. a photo for receipt read, or a job description for job extract);</li>
-    <li>Business context needed to complete the request you asked for — for example the client, job, quote, or invoice you ask the assistant to open, look up, or change.</li>
+    <li>Email, display name, phone (if you add one), avatar URL, sign-in provider (email, Apple, or Google).</li>
+    <li>Timestamp that you accepted Terms &amp; Privacy.</li>
+    <li>Workspace name, trade, plan (free / Pro), currency, VAT or sales-tax label and rate, slogan, logo / branding, call sign / operative name display.</li>
+    <li>Workspace members (user id, role), invites (email, role, token, expiry).</li>
+    <li>AI credit balance and usage log (which AI feature, credits spent, timestamps — not the full voice recording).</li>
+    <li>Stripe customer id if used for non-iOS billing; Stripe Connect account ids if you turn on GET PAID.</li>
   </ul>
-  <p>We do not send your full workspace database to Google — only the data relevant to the specific request in that moment. Data is sent over an encrypted connection and only while a request or call is active; nothing is sent in the background. Google processes this data under its own API terms to generate a response back to the app. We do not use this data to serve you third‑party ads.</p>
-  <p>Other processors we use, depending on features you use: Supabase (auth, database, file storage, edge functions — including relaying AI requests), Apple / Google / RevenueCat (in‑app purchases), and Stripe (Connect pay links and non‑iOS billing where used). Each acts under their own terms and our instructions.</p>
 
-  <h2>Exports &amp; sharing</h2>
-  <p>You can export jobs, invoices, clients, quotes, and cashbook/tax CSVs or PDFs from the app. Those files leave Voltz only when you choose to share or save them (email, Files, Drive, etc.). Quote booking links share limited quote details and available slots with the customer who has the link.</p>
+  <h3>Clients</h3>
+  <ul>
+    <li>Name, email, phone, address line 1, address line 2, city, postcode, country, latitude, longitude, notes, tags, custom fields, owner, created/updated times.</li>
+  </ul>
 
-  <h2>Retention &amp; deletion</h2>
-  <p>You can delete your account in the app under Account → Delete account. That removes your auth user and associated profile. Workspace content shared with other members may remain for those members. Biometric unlock material is wiped from the device on logout / delete.</p>
+  <h3>Jobs and diary</h3>
+  <ul>
+    <li>Title, description, status, scheduled start/end, check-in/out times, duration, address fields and coordinates, price, currency, capture method, materials list, tags, custom fields, to-dos (label, done, who completed), linked client, photos/attachments.</li>
+  </ul>
 
-  <h2>Contact</h2>
-  <p>Questions about Voltz CRM or this policy: email <a href="mailto:contact@samarketingintelligence.com">contact@samarketingintelligence.com</a>, or use in-app feedback (Account → Send feedback). Product overview: <a href="https://www.samarketingintelligence.com/voltz" target="_blank" rel="noreferrer">www.samarketingintelligence.com/voltz</a>. See also our <a href="https://www.samarketingintelligence.com/voltz/terms">Terms of Use</a>.</p>
+  <h3>Quotes and invoices</h3>
+  <ul>
+    <li>Number, status, issue date, valid-until or due date, subtotal, tax rate and amount, total, amount paid, currency, notes, sent/accepted/declined/paid times, linked client and job.</li>
+    <li>Line items: description, quantity, unit price (ex tax), kind (labour, part, SLA, custom), link to a saved part or SLA if used.</li>
+  </ul>
+
+  <h3>Money, receipts, parts, files</h3>
+  <ul>
+    <li>Cashbook: income or expense, category, amount, VAT amount, date, description, links to invoice/job/client.</li>
+    <li>Receipt images and filing status.</li>
+    <li>Parts library: name, SKU, cost, currency, unit, notes, stock/bought, listing URL, image URL.</li>
+    <li>SLA library: name, description, cost, period.</li>
+    <li>Attachments: file name, type, size, storage path, which job/quote/invoice they belong to.</li>
+    <li>Work hours, closed dates, booking requests from a customer who used a quote booking link (slot chosen + optional note).</li>
+    <li>In-app notifications, user feedback you send from Settings.</li>
+    <li>Live voice call memory: a short recap of the last call and open lines/actions, so the next call can continue.</li>
+  </ul>
+
+  <h3>On this device only (unless you also save it to the CRM)</h3>
+  <ul>
+    <li>Theme (dark/light), desk (AI Voice / Bird’s Eye), Icons view, sounds/haptics/mute, Who talks voice, Home icon layout, board Charts toggle, biometric unlock tokens in Keychain/Keystore.</li>
+    <li>Face ID / Touch ID / fingerprint images never leave the phone. We never receive them.</li>
+  </ul>
+
+  <h2>5. How we use that data</h2>
+  <p>To run your CRM, sync across your devices, show booking slots you set, process Pro and AI credits you buy, deliver optional AI features you turn on, send booking or reminder emails where configured, keep the service secure, and improve reliability (crash reports if enabled). We do not sell your personal data. We do not use Gemini data to show you third-party ads.</p>
+
+  <h2>6. Google Gemini AI (third-party) — what is shared, how, and why</h2>
+  <p>Optional AI (Live voice, Ask AI, and helpers such as job extract, receipt read, site-photo describe, quote/invoice line suggestions, Smart Chaser, price suggest, if turned on) is built on <strong>Google’s Gemini AI</strong> (Google LLC / Google Cloud Gemini API and Gemini Live).</p>
+  <p><strong>Permission is asked in the app, not only in this policy.</strong> Before the first send, the app shows a consent screen that names Google Gemini, lists what can be sent, and asks you to Agree or Not now. If you decline, AI stays off and nothing is sent to Google. You can change this in Account → Privacy &amp; AI Data.</p>
+  <p>The app does not embed a Google API key. Your phone talks to our backend (Supabase Edge Functions, including voice-relay). That backend calls Google over an encrypted connection, only while the feature is active.</p>
+  <h3>Data that can be sent to Google Gemini (only the request you are making)</h3>
+  <ul>
+    <li>Microphone audio and a transcript of what you say, only during a Live call.</li>
+    <li>Typed Ask AI text; job notes you submit for extract.</li>
+    <li>A photo you choose: receipt, site photo, or a live camera frame of a part/fault/SKU during a call.</li>
+    <li>The CRM record you named: client name, email, phone, address, coordinates, notes, tags, custom fields; job title, times, status, price, materials, to-dos; quote/invoice number, status, dates, line items, tax, totals, amount paid, notes; cashbook row; part name/SKU/cost/stock; workspace tax/currency/desk/voice settings you ask to read or change; leftover talk-time if you ask.</li>
+    <li>A short previous-call recap from voice call memory, so a new call can continue.</li>
+    <li>A web-search query (product name) if you ask to find a part or price. Google Search may run as part of Gemini for that query.</li>
+  </ul>
+  <p>We do not send your full customer book, passwords, Face ID images, card numbers, or photos you never showed the assistant. Nothing is sent in the background after you hang up.</p>
+  <p>Google uses this to generate a reply and to decide in-app actions (open a screen, create a client, add a line). Google’s API terms apply. We do not use this data for third-party advertising.</p>
+
+  <h2>7. Payments — Apple vs Stripe (not Gemini)</h2>
+  <ul>
+    <li><strong>iPhone Pro and credit top-ups:</strong> Apple In-App Purchase (StoreKit) via RevenueCat. Apple handles the card. We store that you bought Pro or a top-up and grant ⚡ credits. Product IDs: <code>com.voltz.crm.pro.monthly</code>, <code>com.voltz.crm.credits.topup100</code> (shown as 563 AI Credits).</li>
+    <li><strong>Stripe Connect / GET PAID:</strong> optional. You send a pay link to your own customer. Money goes to your Stripe account. Voltz does not hold card funds. This is not how you buy Voltz on iPhone, and it is not part of the Gemini consent screen.</li>
+    <li><strong>Android / web digital goods</strong> (if used): Stripe Checkout where offered.</li>
+  </ul>
+
+  <h2>8. Other processors</h2>
+  <ul>
+    <li><strong>Supabase</strong> — auth, database, file storage, Edge Functions (including relaying AI), realtime.</li>
+    <li><strong>Apple / Google / RevenueCat</strong> — sign-in and in-app purchases.</li>
+    <li><strong>Google Gemini</strong> — optional AI, as section 6.</li>
+    <li><strong>Stripe</strong> — GET PAID and non-iOS billing where used.</li>
+    <li><strong>postcodes.io, Zippopotam, OpenStreetMap Nominatim, CARTO / Esri / OSM tiles</strong> — address you typed, to show a map pin.</li>
+    <li><strong>Expo</strong> — JavaScript updates onto the app you already installed.</li>
+    <li><strong>Sentry / PostHog</strong> — only if keys are present on that build.</li>
+  </ul>
+  <p>Each acts under their own terms and our instructions. Data may be processed outside the UK (for example Google and Apple in the US) with appropriate safeguards those providers publish.</p>
+
+  <h2>9. Device permissions</h2>
+  <ul>
+    <li>Microphone — Live voice, after Gemini consent.</li>
+    <li>Speech recognition — optional on-device dictate.</li>
+    <li>Camera and photo library — site photos, receipts, attachments, showing a part to the assistant.</li>
+    <li>Face ID — optional unlock. Images stay on device.</li>
+    <li>We do not read your iOS Contacts, Calendar, or precise GPS “always” location. Job pins use the address you typed, geocoded as above.</li>
+  </ul>
+
+  <h2>10. Lawful basis (UK GDPR)</h2>
+  <p>Contract (to provide the CRM), legitimate interests (security, support, product reliability), and consent (optional AI / Google Gemini, and marketing if we ever offer it). You can request access, correction, or deletion via the contact email or Account → Delete account.</p>
+
+  <h2>11. Exports, sharing, retention, deletion</h2>
+  <p>You can export jobs, invoices, clients, quotes, and cashbook CSVs or PDFs. Those files leave Voltz only when you share or save them. Quote booking links share limited quote details and available slots with the customer who has the link.</p>
+  <p>We keep workspace data while the account exists. Delete account in the app removes your auth user and associated profile. Workspace content shared with other members may remain for those members. Biometric material is wiped from the device on logout / delete. Voice call memory is stored per workspace until overwritten or the workspace is deleted. Google processes a request only while that call or helper request is active; we do not keep a second copy of the raw Live audio on Voltz servers after the call (credit usage is logged without the recording).</p>
+
+  <h2>12. Children</h2>
+  <p>Voltz is a business CRM. It is not directed at children. We do not knowingly collect data from children.</p>
+
+  <h2>13. Contact</h2>
+  <p>Questions: <a href="mailto:contact@samarketingintelligence.com">contact@samarketingintelligence.com</a>, or Account → Send feedback. Product: <a href="https://www.samarketingintelligence.com/voltz">www.samarketingintelligence.com/voltz</a>. Terms: <a href="https://www.samarketingintelligence.com/voltz/terms">Terms of Use</a>.</p>
 </main>
 </body>
 </html>
