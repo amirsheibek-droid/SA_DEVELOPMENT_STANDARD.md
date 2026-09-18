@@ -18,7 +18,7 @@
 <main>
   <p class="eyebrow">VOLTZ CRM</p>
   <h1>Privacy Policy</h1>
-  <p class="meta">Last updated: 6 August 2026 · Live page: <a href="https://www.samarketingintelligence.com/voltz/privacy">samarketingintelligence.com/voltz/privacy</a></p>
+  <p class="meta">Last updated: 18 September 2026 · Live page: <a href="https://www.samarketingintelligence.com/voltz/privacy">samarketingintelligence.com/voltz/privacy</a></p>
 
   <h2>Who we are</h2>
   <p>Voltz CRM (“Voltz”, “we”) is a field CRM for tradespeople, operated in connection with SAM Marketing Intelligence. This policy explains what we collect when you use the Voltz mobile app (iOS / Android) and related web services, including customer booking pages.</p>
@@ -32,7 +32,7 @@
     <li><strong>Account:</strong> email, display name, sign-in provider (email, Google, or Apple), and a timestamp that you accepted Terms &amp; Privacy at signup.</li>
     <li><strong>Workspace / CRM data you enter:</strong> clients, jobs, schedule, quotes, invoices, cashbook (income/expenses), receipts, site photos &amp; attachments, parts/SLA libraries, trader availability / work hours (weekly hours, closed dates, date overrides), booking requests, and related notes.</li>
     <li><strong>Customer booking pages:</strong> when a customer uses a quote booking link, we process the slot they choose and any optional note they leave, so the trader can accept or decline. That request is stored in the trader’s workspace.</li>
-    <li><strong>AI helpers (optional, metered):</strong> text or images you choose to send for job extract, Smart Chaser, receipt read, or voice assist — processed via our server proxy (not with a provider key embedded in the app).</li>
+    <li><strong>AI helpers (optional, metered):</strong> text, images, or voice audio you choose to send for job extract, Smart Chaser, receipt read, or the voice assistant. See “AI features and third‑party data sharing” below for exactly what is sent, to whom, and how you consent.</li>
     <li><strong>Payments:</strong> App Store / Play billing via RevenueCat for Pro and credit top-ups on iOS; Stripe Checkout on Android/web for those digital goods where used; optional Stripe Connect for customer pay links (money goes to your Stripe account — Voltz does not hold card funds).</li>
     <li><strong>Biometric unlock (optional):</strong> Face ID / Touch ID / fingerprint stay on your device. We never receive your face or fingerprint images. If you enable unlock, we store session tokens in the device Keychain / Keystore so the OS biometric check can unlock the app — not on our servers as biometric data.</li>
     <li><strong>Device permissions you grant:</strong> camera, photo library, microphone / on-device speech recognition (for dictate / Speak a Job), and Face ID prompt text as shown by the OS.</li>
@@ -45,8 +45,17 @@
   <h2>Lawful basis (UK GDPR)</h2>
   <p>Where UK GDPR applies: contract (to provide the service you signed up for), legitimate interests (security, product improvement, support), and consent where we ask for it (for example optional AI features or marketing if offered). You can request access, correction, or deletion via the contact email below or Account → Delete account.</p>
 
-  <h2>Third parties</h2>
-  <p>Depending on features you use, processors may include: Supabase (auth, database, file storage, edge functions), Apple / Google / RevenueCat (in-app purchases), Stripe (Connect pay links and non-iOS billing where used), and AI providers called only through our backend. Each acts under their own terms and our instructions.</p>
+  <h2>AI features and third‑party data sharing</h2>
+  <p>Voltz's voice assistant and smart suggestions (job extract, Smart Chaser, receipt read, Ask AI, and the voice/mic assistant) are built on <strong>Google's Gemini AI</strong>. These features are optional and metered (they use AI credits) — the CRM works fully without them.</p>
+  <p><strong>Before any of these features send anything</strong>, the app shows an in‑app consent screen naming Google Gemini and listing what will be sent, and asks you to agree. If you decline, the AI features stay off and nothing is sent; you can change your choice anytime in Account → Privacy &amp; AI Data.</p>
+  <p>When you turn AI features on and actively use them (tap the mic, start a Live voice call, or use Ask AI / job extract / receipt read / Smart Chaser), we send to Google, via our own backend proxy (never with a Google key embedded in the app):</p>
+  <ul>
+    <li>Your voice audio and the transcript of what you say, only while a voice/mic session is active;</li>
+    <li>The specific text or image you submit to a helper (e.g. a photo for receipt read, or a job description for job extract);</li>
+    <li>Business context needed to complete the request you asked for — for example the client, job, quote, or invoice you ask the assistant to open, look up, or change.</li>
+  </ul>
+  <p>We do not send your full workspace database to Google — only the data relevant to the specific request in that moment. Data is sent over an encrypted connection and only while a request or call is active; nothing is sent in the background. Google processes this data under its own API terms to generate a response back to the app. We do not use this data to serve you third‑party ads.</p>
+  <p>Other processors we use, depending on features you use: Supabase (auth, database, file storage, edge functions — including relaying AI requests), Apple / Google / RevenueCat (in‑app purchases), and Stripe (Connect pay links and non‑iOS billing where used). Each acts under their own terms and our instructions.</p>
 
   <h2>Exports &amp; sharing</h2>
   <p>You can export jobs, invoices, clients, quotes, and cashbook/tax CSVs or PDFs from the app. Those files leave Voltz only when you choose to share or save them (email, Files, Drive, etc.). Quote booking links share limited quote details and available slots with the customer who has the link.</p>
