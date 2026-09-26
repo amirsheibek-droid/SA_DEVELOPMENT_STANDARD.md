@@ -6,47 +6,125 @@
   <title>Voltz CRM · Field CRM for trades</title>
   <meta
     name="description"
-    content="Voltz CRM — field CRM for trades. Clients, schedule, quotes, invoices, and Operative Dave."
+    content="Voltz CRM — field CRM for trades. Clients, schedule, quotes, invoices, and Live voice AI."
   />
   <link rel="canonical" href="https://www.samarketingintelligence.com/voltz" />
-  <link rel="icon" href="/favicon.png" />
+  <link rel="icon" href="/voltz/assets/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/voltz/assets/voltz-logo.png" />
+  <meta name="theme-color" content="#f7fbff" />
+  <meta property="og:title" content="Voltz CRM · Field CRM for trades" />
+  <meta property="og:description" content="Speak a job and watch Voltz book it, quote it and invoice it." />
+  <meta property="og:image" content="https://www.samarketingintelligence.com/voltz/assets/voltz-logo.png" />
+  <meta property="og:url" content="https://www.samarketingintelligence.com/voltz" />
   <style>
     :root {
-      --bg0: #0a0e14;
-      --bg1: #101820;
-      --text: #e8f4f8;
-      --dim: #8fa6b3;
-      --mute: #5f7684;
-      --cyan: #00f0ff;
-      --line: rgba(0, 240, 255, 0.35);
+      --bg0: #f7fbff;
+      --bg1: #eef5fc;
+      --bg2: #e4eef8;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --dim: #475569;
+      --mute: #64748b;
+      --blue: #2563eb;
+      --blue-soft: rgba(37, 99, 235, 0.12);
+      --blue-line: rgba(37, 99, 235, 0.28);
+      --gold: #ca8a04;
+      --gold-soft: rgba(202, 138, 4, 0.14);
+      --shadow: 0 24px 64px rgba(37, 99, 235, 0.12);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
-      background: linear-gradient(180deg, var(--bg0), var(--bg1));
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -10%, rgba(37, 99, 235, 0.14), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 20%, rgba(202, 138, 4, 0.1), transparent 50%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg2));
+      color: var(--text);
+      min-height: 100vh;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 96px;
+      text-align: center;
+    }
+    .eyebrow {
+      letter-spacing: 0.18em;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--mute);
+      margin: 0 0 28px;
+    }
+    .hero-icon {
+      display: block;
+      width: min(78vw, 360px);
+      height: auto;
+      margin: 0 auto 28px;
+      border-radius: 28%;
+      box-shadow:
+        var(--shadow),
+        0 0 0 1px var(--blue-line),
+        0 0 80px rgba(37, 99, 235, 0.18);
+      background: #fff;
+    }
+    @media (min-width: 720px) {
+      .hero-icon {
+        width: min(42vw, 420px);
+        border-radius: 96px;
+      }
+    }
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 3.4rem);
+      margin: 0 0 10px;
+      letter-spacing: -0.03em;
+      font-weight: 800;
       color: var(--text);
     }
-    main { max-width: 960px; margin: 0 auto; padding: 48px 20px 96px; }
-    .logo {
-      width: 88px; height: 88px; border-radius: 20px;
-      border: 1px solid var(--line);
+    h1 span {
+      background: linear-gradient(135deg, var(--blue), #38bdf8 55%, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    h1 { font-size: 2.2rem; margin: 18px 0 8px; }
     h2 {
-      font-size: 1.05rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--cyan); margin: 48px 0 14px;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin: 56px 0 16px;
+      font-weight: 700;
     }
-    .meta { color: var(--dim); font-size: 15px; line-height: 1.55; margin-bottom: 22px; }
-    a { color: var(--cyan); }
-    .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+    .meta {
+      color: var(--dim);
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 0 auto 28px;
+      max-width: 34rem;
+    }
+    a { color: var(--blue); }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 40px;
+      justify-content: center;
+    }
     .links a {
-      display: inline-block; padding: 12px 16px;
-      border: 1px solid var(--line); border-radius: 12px; text-decoration: none;
+      display: inline-block;
+      padding: 12px 18px;
+      border: 1px solid var(--blue-line);
+      border-radius: 14px;
+      text-decoration: none;
+      background: var(--panel);
+      color: var(--blue);
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
     }
-    .eyebrow { letter-spacing: 2px; font-size: 12px; color: var(--mute); }
+    .links a:hover {
+      background: var(--blue-soft);
+    }
 
-    /* Portrait intro — show full frame, no crop */
     .video-stage {
       margin: 24px auto 10px;
       width: min(100%, 360px);
@@ -58,40 +136,46 @@
       aspect-ratio: 9 / 16;
       border-radius: 22px;
       overflow: hidden;
-      border: 1px solid var(--line);
-      background: #05080c;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--blue-line);
+      background: #fff;
+      box-shadow: var(--shadow);
     }
     .hero-video {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: #05080c;
+      background: #f8fafc;
     }
     .sound-row {
-      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-      justify-content: center; margin: 12px 0 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin: 14px 0 8px;
     }
     .sound-btn {
       appearance: none;
-      border: 1px solid rgba(0, 240, 255, 0.45);
-      background: rgba(0, 240, 255, 0.12);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 10px 14px;
+      border: 1px solid var(--blue-line);
+      background: var(--blue-soft);
+      color: var(--blue);
+      border-radius: 12px;
+      padding: 11px 16px;
       font: inherit;
       font-size: 13px;
+      font-weight: 700;
       letter-spacing: 0.04em;
       cursor: pointer;
     }
-    .sound-btn:hover { background: rgba(0, 240, 255, 0.2); }
+    .sound-btn:hover { background: rgba(37, 99, 235, 0.2); }
     .hint { color: var(--mute); font-size: 13px; margin: 0; text-align: center; }
 
     .shots {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 14px;
+      text-align: left;
     }
     @media (min-width: 720px) {
       .shots { grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -100,8 +184,9 @@
       margin: 0;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(0, 240, 255, 0.22);
-      background: #05080c;
+      border: 1px solid rgba(37, 99, 235, 0.16);
+      background: var(--panel);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
     }
     .shot img {
       display: block;
@@ -116,14 +201,25 @@
       color: var(--mute);
       line-height: 1.35;
     }
+    .support {
+      margin-top: 40px;
+      color: var(--dim);
+      font-size: 15px;
+    }
   </style>
 </head>
 <body>
 <main>
   <p class="eyebrow">SAM MARKETING INTELLIGENCE</p>
-  <img class="logo" src="/voltz/assets/voltz-logo.png" alt="Voltz CRM logo" width="88" height="88" />
-  <h1>Voltz CRM</h1>
-  <p class="meta">Field CRM for tradespeople — clients, schedule, quotes, invoices, cashbook, receipt filer, trader availability &amp; customer booking links, and optional AI helpers. Desk layouts: Classic, AI Voice Assistant, Command Centre.</p>
+  <img
+    class="hero-icon"
+    src="/voltz/assets/voltz-logo.png"
+    alt="Voltz CRM app icon — blue microphone with sound waves"
+    width="1024"
+    height="1024"
+  />
+  <h1>Voltz <span>CRM</span></h1>
+  <p class="meta">Field CRM for tradespeople — clients, schedule, quotes, invoices, cashbook, and Live voice AI. Speak a job and watch Voltz book it, quote it and invoice it.</p>
 
   <h2>Meet Operative Dave</h2>
   <div class="video-stage">
@@ -146,7 +242,7 @@
   <p class="hint" id="sound-hint">Full portrait intro</p>
 
   <h2>Inside the app</h2>
-  <p class="meta">Classic, AI Voice, and Command Centre — real screens from Voltz.</p>
+  <p class="meta">AI Voice and Command Centre — real screens from Voltz.</p>
   <div class="shots">
     <figure class="shot">
       <img src="/voltz/assets/screens/01-classic-home.png" alt="Classic home" loading="lazy" width="1179" height="2556" />
@@ -230,7 +326,7 @@
     </figure>
   </div>
 
-  <p class="meta" style="margin-top:36px">Support: <a href="mailto:contact@samarketingintelligence.com">contact@samarketingintelligence.com</a></p>
+  <p class="support">Support: <a href="mailto:contact@samarketingintelligence.com">contact@samarketingintelligence.com</a></p>
   <div class="links">
     <a href="/voltz/privacy">Privacy Policy</a>
     <a href="/voltz/terms">Terms of Use</a>
@@ -289,8 +385,6 @@
       }
     });
 
-    // First-time viewers: try autoplay WITH sound. Browsers often block that —
-    // fall back to muted autoplay and unmute on the first tap/key anywhere.
     if (firstVisit) {
       video.muted = false;
       video.play().then(function () {
