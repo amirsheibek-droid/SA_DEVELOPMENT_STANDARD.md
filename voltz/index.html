@@ -357,37 +357,22 @@
     .feature-phone-wrap {
       flex-shrink: 0;
       position: relative;
-      width: 260px;
+      width: 240px;
     }
-    /* Store screenshots are full App Store promo images — display as portrait cards, no extra frame */
     .feature-phone-wrap .phone-shell {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      border-radius: 0;
-      overflow: visible;
-      aspect-ratio: unset;
+      aspect-ratio: 1179/2556;
     }
-    .feature-phone-wrap .phone-shell img {
-      width: 100%;
-      height: auto;
-      object-fit: unset;
-      display: block;
-      border-radius: 16px;
-      box-shadow: 0 24px 64px rgba(15,23,42,0.14), 0 0 0 1px rgba(37,99,235,0.06);
-      filter: drop-shadow(0 8px 32px rgba(37,99,235,0.08));
-    }
-    /* Glow under screenshot */
+    /* Glow under phone */
     .feature-phone-wrap::after {
       content: '';
       position: absolute;
-      bottom: -20px; left: 50%;
+      bottom: -24px; left: 50%;
       transform: translateX(-50%);
-      width: 70%; height: 40px;
+      width: 70%; height: 50px;
       background: var(--blue-glow);
       border-radius: 50%;
       filter: blur(24px);
-      opacity: 0.5;
+      opacity: 0.7;
     }
 
     .feature-text { flex: 1; min-width: 0; }
@@ -1029,7 +1014,7 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-01-ai-voice-home.png" alt="AI Voice home" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/05-ai-voice-home.png" alt="AI Voice home" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-right">
@@ -1047,7 +1032,7 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-03-birds-eye.png" alt="Bird's Eye dashboard" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/08-command-centre-home.png" alt="Bird's Eye dashboard" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-left">
@@ -1065,7 +1050,7 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-05-schedule-calendar.png" alt="Schedule calendar" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/02-classic-schedule.png" alt="Schedule calendar" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-right">
@@ -1083,7 +1068,7 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-06-schedule-list.png" alt="Schedule list" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/01-classic-home.png" alt="Schedule list" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-left">
@@ -1101,7 +1086,7 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-07-quote-preview.png" alt="Quote preview" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/07-ai-new-quote.png" alt="Quote preview" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-right">
@@ -1119,7 +1104,7 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-09-invoice-preview.png" alt="Invoice preview" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/09-command-new-invoice.png" alt="Invoice preview" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-left">
@@ -1137,7 +1122,7 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-10-take-payment.png" alt="Take payment" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/10-command-clients.png" alt="Take payment" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-right">
@@ -1155,7 +1140,7 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-11-search-products.png" alt="Search products" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/03-classic-quotes.png" alt="Search products" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-left">
@@ -1173,7 +1158,7 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-12-compare-products.png" alt="Compare products" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/06-ai-voice-speak.png" alt="Compare products" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-right">
@@ -1191,7 +1176,7 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/store-13-command-pipeline.png" alt="Command Centre pipeline" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/08-command-centre-home.png" alt="Command Centre pipeline" loading="lazy" width="1179" height="2556">
         </div>
       </div>
       <div class="feature-text reveal from-left">
