@@ -543,6 +543,12 @@
       opacity: 0;
       transition: opacity 0.5s ease;
       font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+    .demo-screen img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+      display: block;
     }
     .demo-screen.active { opacity: 1; }
 
@@ -880,7 +886,6 @@
     <div class="hero-dave">
       <div class="dave-phone reveal from-left">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <video id="dave-video" src="/voltz/assets/operative-dave-intro.mp4"
             playsinline loop autoplay preload="auto"
             poster="/voltz/assets/voltz-logo.png"></video>
@@ -960,167 +965,31 @@
       <!-- Animated phone -->
       <div class="demo-phone-wrap reveal from-right">
         <div class="demo-phone-shell">
-          <div class="demo-phone-notch"></div>
 
-          <!-- Screen 0: Voice command -->
+          <!-- Screen 0: AI Voice Home -->
           <div class="demo-screen active" id="screen-0">
-            <div class="phone-statusbar">
-              <span class="phone-time">9:41</span>
-              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
-            </div>
-            <div class="screen-voice">
-              <div class="voice-logo">
-                <img src="/voltz/assets/voltz-logo.png" alt="Voltz">
-              </div>
-              <div class="voice-label">AI Voice &middot; Listening&hellip;</div>
-              <div class="waveform">
-                <div class="wave-bar"></div><div class="wave-bar"></div>
-                <div class="wave-bar"></div><div class="wave-bar"></div>
-                <div class="wave-bar"></div><div class="wave-bar"></div>
-                <div class="wave-bar"></div><div class="wave-bar"></div>
-                <div class="wave-bar"></div><div class="wave-bar"></div>
-                <div class="wave-bar"></div><div class="wave-bar"></div>
-              </div>
-              <div class="voice-transcript" id="voice-text"><span class="cursor"></span></div>
-              <div class="voice-sub">Tap mic to speak a job</div>
-            </div>
+            <img src="/voltz/assets/screens/store-01-ai-voice-home.png" alt="AI Voice Home" width="1290" height="2796">
           </div>
 
-          <!-- Screen 1: Processing / AI Skeleton -->
+          <!-- Screen 1: Speak New Job -->
           <div class="demo-screen" id="screen-1">
-            <div class="phone-statusbar">
-              <span class="phone-time">9:41</span>
-              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
-            </div>
-            <div class="screen-processing">
-              <!-- Header with icon + spinner -->
-              <div class="proc-header">
-                <div class="proc-icon">
-                  <img src="/voltz/assets/voltz-logo.png" alt="Voltz">
-                </div>
-                <div class="proc-title-row">
-                  <div class="proc-title">Operative Dave</div>
-                  <div class="proc-sub">Building your job&hellip;</div>
-                </div>
-                <div class="proc-spinner"></div>
-              </div>
-              <!-- Skeleton placeholder body -->
-              <div class="proc-body">
-                <!-- Job skeleton card -->
-                <div class="proc-card">
-                  <div class="proc-card-label"><span class="p-dot"></span>Generating job record</div>
-                  <div class="skel-row">
-                    <div class="skel skel-avatar"></div>
-                    <div class="skel-lines">
-                      <div class="skel skel-h"></div>
-                      <div class="skel skel-s"></div>
-                    </div>
-                  </div>
-                  <div class="skel skel-tag" style="margin-bottom:8px;"></div>
-                  <div class="skel skel-full"></div>
-                  <div class="skel skel-full"></div>
-                  <div class="skel skel-half"></div>
-                  <div class="skel-btn-row">
-                    <div class="skel skel-btn"></div>
-                    <div class="skel skel-btn"></div>
-                  </div>
-                </div>
-                <!-- AI steps -->
-                <div class="proc-card" style="padding:8px 12px;">
-                  <div class="p-step active" id="ps-0"><div class="p-dot"></div>Understanding your request</div>
-                  <div class="p-step" id="ps-1"><div class="p-dot"></div>Finding client: John Smith</div>
-                  <div class="p-step" id="ps-2"><div class="p-dot"></div>Checking schedule: Friday 2pm</div>
-                  <div class="p-step" id="ps-3"><div class="p-dot"></div>Creating job record</div>
-                </div>
-                <!-- AI note -->
-                <div class="ai-badge">
-                  <span class="ai-badge-icon">&#9889;</span>
-                  Dave is filling in the details from your voice note
-                </div>
-              </div>
-            </div>
+            <img src="/voltz/assets/screens/store-07-new-job-speak.png" alt="Speaking new job" width="1290" height="2796">
           </div>
 
-          <!-- Screen 2: Job Created -->
+          <!-- Screen 2: Job Created with client -->
           <div class="demo-screen" id="screen-2">
-            <div class="phone-statusbar">
-              <span class="phone-time">9:41</span>
-              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
-            </div>
-            <div class="screen-job">
-              <div class="phone-header">
-                <span class="ph-back">&#8249; Back</span>
-                <span class="phone-header-title">Job Created</span>
-              </div>
-              <div class="job-card">
-                <div class="job-badge"><div class="job-badge-dot"></div>Confirmed</div>
-                <div class="job-title">Boiler Service</div>
-                <div class="job-client">John Smith &middot; 07700 900000</div>
-                <div class="job-row"><span class="job-icon">&#128197;</span> Friday, 2 Oct &middot; 2:00 PM</div>
-                <div class="job-row"><span class="job-icon">&#128205;</span> 14 Baker St, London</div>
-                <div class="job-row"><span class="job-icon">&#9203;</span> Est. 2 hours</div>
-                <div class="job-actions">
-                  <div class="job-btn job-btn-primary">View Job</div>
-                  <div class="job-btn job-btn-ghost">Edit</div>
-                </div>
-              </div>
-              <div class="ai-note">&#9889; Dave created this from your voice note and added it to your schedule.</div>
-            </div>
+            <img src="/voltz/assets/screens/store-06-new-job-client.png" alt="Job created" width="1290" height="2796">
           </div>
 
-          <!-- Screen 3: Quote -->
+          <!-- Screen 3: Quote Preview -->
           <div class="demo-screen" id="screen-3">
-            <div class="phone-statusbar">
-              <span class="phone-time">9:41</span>
-              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
-            </div>
-            <div class="screen-quote">
-              <div class="phone-header">
-                <span class="ph-back">&#8249; Back</span>
-                <span class="phone-header-title">Quote Ready</span>
-              </div>
-              <div class="quote-card">
-                <div class="quote-header">
-                  <div class="quote-number">QUO-2024-0142</div>
-                  <div class="quote-status">&#9203; Draft</div>
-                </div>
-                <div class="quote-title">Boiler Service</div>
-                <div class="quote-client">John Smith</div>
-                <div class="quote-line"><span>Labour (2 hrs)</span><span>&pound;180.00</span></div>
-                <div class="quote-line"><span>Parts allowance</span><span>&pound;40.00</span></div>
-                <div class="quote-line"><span>Call-out fee</span><span>&pound;30.00</span></div>
-                <div class="quote-total"><span>Total inc VAT</span><span>&pound;300.00</span></div>
-              </div>
-              <div class="quote-send">Send Quote to John &#8594;</div>
-            </div>
+            <img src="/voltz/assets/screens/store-07-quote-preview.png" alt="Quote preview" width="1290" height="2796">
           </div>
 
-          <!-- Screen 4: Done -->
+          <!-- Screen 4: Invoice Preview -->
           <div class="demo-screen" id="screen-4">
-            <div class="phone-statusbar">
-              <span class="phone-time">9:41</span>
-              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
-            </div>
-            <div class="screen-invoice">
-              <div class="success-ring">&#10003;</div>
-              <div class="success-title">Job Complete.</div>
-              <div class="success-sub">Invoice sent to John Smith.<br>&pound;300.00 outstanding.</div>
-              <div class="success-stats">
-                <div class="success-stat">
-                  <div class="success-stat-val">42s</div>
-                  <div class="success-stat-lbl">Time saved</div>
-                </div>
-                <div class="success-stat">
-                  <div class="success-stat-val">&pound;300</div>
-                  <div class="success-stat-lbl">Invoiced</div>
-                </div>
-                <div class="success-stat">
-                  <div class="success-stat-val">0</div>
-                  <div class="success-stat-lbl">Forms filled</div>
-                </div>
-              </div>
-              <button class="replay-btn" id="replay-btn">&#8635; Watch again</button>
-            </div>
+            <img src="/voltz/assets/screens/store-09-invoice-preview.png" alt="Invoice preview" width="1290" height="2796">
+            <button class="replay-btn" id="replay-btn" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;">&#8635; Watch again</button>
           </div>
 
         </div><!-- /demo-phone-shell -->
@@ -1145,7 +1014,6 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-01-ai-voice-home.png" alt="AI Voice home" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1164,7 +1032,6 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-03-birds-eye.png" alt="Bird's Eye dashboard" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1183,7 +1050,6 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-05-schedule-calendar.png" alt="Schedule calendar" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1202,7 +1068,6 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-06-schedule-list.png" alt="Schedule list" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1221,7 +1086,6 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-07-quote-preview.png" alt="Quote preview" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1240,7 +1104,6 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-09-invoice-preview.png" alt="Invoice preview" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1259,7 +1122,6 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-10-take-payment.png" alt="Take payment" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1278,7 +1140,6 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-11-search-products.png" alt="Search products" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1297,7 +1158,6 @@
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-12-compare-products.png" alt="Compare products" loading="lazy" width="1290" height="2796">
         </div>
       </div>
@@ -1316,7 +1176,6 @@
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <div class="phone-notch"></div>
           <img src="/voltz/assets/screens/store-13-command-pipeline.png" alt="Command Centre pipeline" loading="lazy" width="1290" height="2796">
         </div>
       </div>
