@@ -357,22 +357,37 @@
     .feature-phone-wrap {
       flex-shrink: 0;
       position: relative;
-      width: 240px;
+      width: 260px;
     }
+    /* Store screenshots are full App Store promo images — display as portrait cards, no extra frame */
     .feature-phone-wrap .phone-shell {
-      aspect-ratio: 1290/2796;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      overflow: visible;
+      aspect-ratio: unset;
     }
-    /* Glow under phone */
+    .feature-phone-wrap .phone-shell img {
+      width: 100%;
+      height: auto;
+      object-fit: unset;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 24px 64px rgba(15,23,42,0.14), 0 0 0 1px rgba(37,99,235,0.06);
+      filter: drop-shadow(0 8px 32px rgba(37,99,235,0.08));
+    }
+    /* Glow under screenshot */
     .feature-phone-wrap::after {
       content: '';
       position: absolute;
-      bottom: -24px; left: 50%;
+      bottom: -20px; left: 50%;
       transform: translateX(-50%);
-      width: 70%; height: 50px;
+      width: 70%; height: 40px;
       background: var(--blue-glow);
       border-radius: 50%;
       filter: blur(24px);
-      opacity: 0.7;
+      opacity: 0.5;
     }
 
     .feature-text { flex: 1; min-width: 0; }
