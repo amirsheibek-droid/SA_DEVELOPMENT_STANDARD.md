@@ -1,364 +1,1486 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Voltz CRM · Field CRM for trades</title>
-  <meta
-    name="description"
-    content="Voltz CRM — field CRM for trades. Clients, schedule, quotes, invoices, and Live voice AI."
-  />
-  <link rel="canonical" href="https://www.samarketingintelligence.com/voltz" />
-  <link rel="icon" href="/voltz/assets/favicon.png" type="image/png" />
-  <link rel="apple-touch-icon" href="/voltz/assets/voltz-logo.png" />
-  <meta name="theme-color" content="#f7fbff" />
-  <meta property="og:title" content="Voltz CRM · Field CRM for trades" />
-  <meta property="og:description" content="Speak a job and watch Voltz book it, quote it and invoice it." />
-  <meta property="og:image" content="https://www.samarketingintelligence.com/voltz/assets/voltz-logo.png" />
-  <meta property="og:url" content="https://www.samarketingintelligence.com/voltz" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voltz CRM · Field CRM for Trades</title>
+  <meta name="description" content="Voltz CRM — field CRM for trades. Clients, schedule, quotes, invoices, and Live voice AI.">
+  <link rel="canonical" href="https://www.samarketingintelligence.com/voltz">
+  <link rel="icon" href="/voltz/assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/voltz/assets/voltz-logo.png">
+  <meta name="theme-color" content="#f0f6ff">
+  <meta property="og:title" content="Voltz CRM · Field CRM for Trades">
+  <meta property="og:description" content="Speak a job and watch Voltz book it, quote it and invoice it.">
+  <meta property="og:image" content="https://www.samarketingintelligence.com/voltz/assets/voltz-logo.png">
+  <meta property="og:url" content="https://www.samarketingintelligence.com/voltz">
+
   <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
     :root {
-      --bg0: #f7fbff;
-      --bg1: #eef5fc;
-      --bg2: #e4eef8;
-      --panel: #ffffff;
-      --text: #0f172a;
-      --dim: #475569;
-      --mute: #64748b;
-      --blue: #2563eb;
-      --blue-soft: rgba(37, 99, 235, 0.12);
-      --blue-line: rgba(37, 99, 235, 0.28);
-      --gold: #ca8a04;
-      --gold-soft: rgba(202, 138, 4, 0.14);
-      --shadow: 0 24px 64px rgba(37, 99, 235, 0.12);
+      --bg:        #f0f6ff;
+      --bg2:       #e8f2ff;
+      --bg3:       #deeeff;
+      --white:     #ffffff;
+      --blue:      #2563eb;
+      --blue-mid:  #3b82f6;
+      --blue-light:#60a5fa;
+      --blue-soft: rgba(37,99,235,0.08);
+      --blue-line: rgba(37,99,235,0.2);
+      --blue-glow: rgba(37,99,235,0.18);
+      --gold:      #ca8a04;
+      --gold-soft: rgba(202,138,4,0.1);
+      --text:      #0f172a;
+      --text2:     #1e3a5f;
+      --muted:     #475569;
+      --grey:      #64748b;
+      --border:    rgba(37,99,235,0.12);
+      --shadow:    0 24px 80px rgba(37,99,235,0.1);
+      --shadow-deep: 0 40px 100px rgba(15,23,42,0.12);
     }
-    * { box-sizing: border-box; }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(ellipse 90% 55% at 50% -10%, rgba(37, 99, 235, 0.14), transparent 55%),
-        radial-gradient(ellipse 60% 40% at 90% 20%, rgba(202, 138, 4, 0.1), transparent 50%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg2));
+      background: var(--bg);
       color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ─── SCROLL REVEAL ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.from-left  { transform: translateX(-60px); }
+    .reveal.from-right { transform: translateX(60px); }
+    .reveal.visible    { opacity: 1; transform: none; }
+
+    /* ─── FLOATING BACKGROUND SHAPES ────────────────────────── */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(100px);
+    }
+    .blob-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
+      top: -200px; left: -200px;
+      animation: blobFloat1 14s ease-in-out infinite alternate;
+    }
+    .blob-2 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(202,138,4,0.08) 0%, transparent 70%);
+      top: 30%; right: -200px;
+      animation: blobFloat2 18s ease-in-out infinite alternate;
+    }
+    .blob-3 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+      bottom: 0; left: 20%;
+      animation: blobFloat3 22s ease-in-out infinite alternate;
+    }
+    @keyframes blobFloat1 { 0%{transform:translate(0,0)} 100%{transform:translate(60px,40px)} }
+    @keyframes blobFloat2 { 0%{transform:translate(0,0)} 100%{transform:translate(-50px,60px)} }
+    @keyframes blobFloat3 { 0%{transform:translate(0,0)} 100%{transform:translate(40px,-50px)} }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
       min-height: 100vh;
-    }
-    main {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 40px 20px 96px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      padding: 100px 24px 60px;
+      background:
+        radial-gradient(ellipse 90% 60% at 50% -10%, rgba(37,99,235,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 20%, rgba(202,138,4,0.1) 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 60%, var(--bg3) 100%);
+      overflow: hidden;
     }
-    .eyebrow {
-      letter-spacing: 0.18em;
+
+    /* Subtle grid overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--blue-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blue-line) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.25;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 75%);
+    }
+
+    .eyebrow-tag {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37,99,235,0.08);
+      border: 1px solid var(--blue-line);
+      border-radius: 100px;
+      padding: 7px 18px;
       font-size: 11px;
-      font-weight: 600;
-      color: var(--mute);
-      margin: 0 0 28px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 28px;
     }
+    .eyebrow-tag .live-dot {
+      width: 7px; height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #22c55e;
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%,100%{opacity:1;transform:scale(1)}
+      50%{opacity:0.5;transform:scale(0.7)}
+    }
+
     .hero-icon {
-      display: block;
-      width: min(78vw, 360px);
-      height: auto;
-      margin: 0 auto 28px;
-      border-radius: 28%;
+      width: 96px; height: 96px;
+      border-radius: 22px;
       box-shadow:
-        var(--shadow),
         0 0 0 1px var(--blue-line),
-        0 0 80px rgba(37, 99, 235, 0.18);
+        0 0 50px var(--blue-glow),
+        0 16px 48px rgba(37,99,235,0.15),
+        0 4px 12px rgba(15,23,42,0.1);
+      margin: 0 auto 24px;
       background: #fff;
     }
-    @media (min-width: 720px) {
-      .hero-icon {
-        width: min(42vw, 420px);
-        border-radius: 96px;
-      }
-    }
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 3.4rem);
-      margin: 0 0 10px;
-      letter-spacing: -0.03em;
-      font-weight: 800;
+
+    .hero-title {
+      font-size: clamp(3.2rem, 9vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      line-height: 0.95;
       color: var(--text);
+      margin-bottom: 8px;
     }
-    h1 span {
-      background: linear-gradient(135deg, var(--blue), #38bdf8 55%, var(--gold));
+    .hero-title .grad {
+      background: linear-gradient(130deg, var(--blue) 0%, #7c3aed 50%, var(--gold) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    h2 {
-      font-size: 0.85rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin: 56px 0 16px;
-      font-weight: 700;
-    }
-    .meta {
-      color: var(--dim);
-      font-size: 17px;
-      line-height: 1.6;
-      margin: 0 auto 28px;
-      max-width: 34rem;
-    }
-    a { color: var(--blue); }
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 40px;
-      justify-content: center;
-    }
-    .links a {
-      display: inline-block;
-      padding: 12px 18px;
-      border: 1px solid var(--blue-line);
-      border-radius: 14px;
-      text-decoration: none;
-      background: var(--panel);
-      color: var(--blue);
-      font-weight: 600;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
-    }
-    .links a:hover {
-      background: var(--blue-soft);
+
+    .hero-sub {
+      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin: 22px auto 44px;
+      line-height: 1.7;
+      font-weight: 400;
     }
 
-    .video-stage {
-      margin: 24px auto 10px;
-      width: min(100%, 360px);
-      max-width: 100%;
+    .hero-cta-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 72px;
     }
-    .video-wrap {
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff;
+      padding: 14px 28px; border-radius: 14px;
+      font-weight: 700; font-size: 15px;
+      border: none; cursor: pointer; text-decoration: none;
+      box-shadow: 0 0 0 1px rgba(37,99,235,0.3), 0 8px 32px rgba(37,99,235,0.25), 0 2px 8px rgba(37,99,235,0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 1px rgba(37,99,235,0.4), 0 16px 48px rgba(37,99,235,0.35), 0 4px 12px rgba(37,99,235,0.25);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); color: var(--blue);
+      padding: 14px 28px; border-radius: 14px;
+      font-weight: 600; font-size: 15px;
+      border: 1px solid var(--blue-line); cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(15,23,42,0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-ghost:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,0.1); }
+
+    /* ─── DAVE SECTION ───────────────────────────────────────── */
+    .hero-dave {
       position: relative;
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid var(--blue-line);
-      background: #fff;
-      box-shadow: var(--shadow);
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .hero-video {
+
+    /* ─── PHONE MOCKUP (light) ───────────────────────────────── */
+    .dave-phone {
+      position: relative;
+      width: 230px;
+      flex-shrink: 0;
+    }
+    .phone-shell {
+      position: relative;
+      background: #e8edf5;
+      border-radius: 46px;
+      border: 6px solid #c8d4e8;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.8) inset,
+        0 0 0 1px rgba(37,99,235,0.12),
+        var(--shadow-deep),
+        0 0 60px rgba(37,99,235,0.12);
+      overflow: hidden;
+      aspect-ratio: 9/19.5;
+    }
+    .phone-shell video,
+    .phone-shell img {
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      background: #f8fafc;
+      object-fit: cover;
+      object-position: top;
     }
-    .sound-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-      margin: 14px 0 8px;
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38%;
+      height: 26px;
+      background: #e8edf5;
+      border-radius: 0 0 16px 16px;
+      z-index: 10;
+    }
+    /* Reflection shimmer on phone */
+    .phone-shell::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .dave-info {
+      text-align: left;
+      max-width: 340px;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 10px;
+    }
+    .dave-info h2 {
+      font-size: 2.2rem; font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.15;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .dave-info p {
+      color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 22px;
     }
     .sound-btn {
       appearance: none;
+      background: rgba(37,99,235,0.08);
       border: 1px solid var(--blue-line);
-      background: var(--blue-soft);
-      color: var(--blue);
-      border-radius: 12px;
-      padding: 11px 16px;
-      font: inherit;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      cursor: pointer;
+      color: var(--blue); border-radius: 12px;
+      padding: 12px 20px; font-family: inherit;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.05em; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
     }
-    .sound-btn:hover { background: rgba(37, 99, 235, 0.2); }
-    .hint { color: var(--mute); font-size: 13px; margin: 0; text-align: center; }
+    .sound-btn:hover { background: rgba(37,99,235,0.15); transform: translateY(-1px); }
 
-    .shots {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 14px;
-      text-align: left;
+    /* ─── DIVIDER ────────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue-line), transparent);
+      position: relative; z-index: 1;
     }
-    @media (min-width: 720px) {
-      .shots { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* ─── FEATURES INTRO ─────────────────────────────────────── */
+    .features-intro {
+      position: relative; z-index: 1;
+      padding: 96px 24px 56px;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
     }
-    .shot {
-      margin: 0;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(37, 99, 235, 0.16);
-      background: var(--panel);
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    .features-intro h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.035em;
+      line-height: 1.1; margin-bottom: 16px; color: var(--text);
     }
-    .shot img {
-      display: block;
-      width: 100%;
-      height: auto;
-      vertical-align: middle;
+    .features-intro h2 em {
+      font-style: normal;
+      background: linear-gradient(130deg, var(--blue) 0%, #7c3aed 60%, var(--gold) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-    .shot figcaption {
-      padding: 8px 10px 10px;
-      font-size: 11px;
+    .features-intro p { color: var(--muted); font-size: 18px; line-height: 1.7; }
+
+    /* ─── FEATURE ROWS ───────────────────────────────────────── */
+    .feature-row {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+    .feature-row.flip { flex-direction: row-reverse; }
+
+    /* Feature section alternating backgrounds */
+    .feature-section {
+      position: relative; z-index: 1;
+    }
+    .feature-section:nth-child(even) {
+      background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(202,138,4,0.03) 100%);
+    }
+
+    .feature-phone-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: 240px;
+    }
+    .feature-phone-wrap .phone-shell {
+      aspect-ratio: 1290/2796;
+    }
+    /* Glow under phone */
+    .feature-phone-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -24px; left: 50%;
+      transform: translateX(-50%);
+      width: 70%; height: 50px;
+      background: var(--blue-glow);
+      border-radius: 50%;
+      filter: blur(24px);
+      opacity: 0.7;
+    }
+
+    .feature-text { flex: 1; min-width: 0; }
+    .feature-number {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--blue); opacity: 0.5; margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .feature-text h3 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.15; margin-bottom: 16px; color: var(--text);
+    }
+    .feature-text p {
+      color: var(--muted); font-size: 17px; line-height: 1.75; margin-bottom: 24px;
+    }
+    .feature-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 100px; padding: 7px 16px;
+      font-size: 12px; font-weight: 600; color: var(--blue);
       letter-spacing: 0.04em;
-      color: var(--mute);
-      line-height: 1.35;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.07);
     }
-    .support {
-      margin-top: 40px;
-      color: var(--dim);
-      font-size: 15px;
+    .feature-chip .cdot {
+      width: 6px; height: 6px;
+      background: #22c55e; border-radius: 50%;
+      box-shadow: 0 0 6px rgba(34,197,94,0.6);
+    }
+
+    /* Row separator */
+    .row-sep {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 5%, var(--border) 25%, var(--border) 75%, transparent 95%);
+      max-width: 1080px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+
+    /* ─── DEMO WIZARD ───────────────────────────────────────── */
+    .demo-section {
+      position: relative; z-index: 1;
+      padding: 100px 24px 100px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(37,99,235,0.08) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg3) 0%, var(--bg2) 50%, var(--bg) 100%);
+      overflow: hidden;
+    }
+    .demo-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+    .demo-steps {
+      flex: 1;
+      min-width: 0;
+    }
+    .demo-steps-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+      display: block;
+    }
+    .demo-steps h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+      color: var(--text); margin-bottom: 40px;
+    }
+    .demo-steps h2 em {
+      font-style: normal;
+      background: linear-gradient(130deg, var(--blue), #7c3aed);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .step-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px 20px; border-radius: 16px;
+      border: 1px solid transparent;
+      transition: all 0.4s ease;
+      cursor: default;
+    }
+    .step-item.active {
+      background: var(--white);
+      border-color: var(--blue-line);
+      box-shadow: 0 4px 24px rgba(37,99,235,0.08), 0 1px 4px rgba(37,99,235,0.06);
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      background: rgba(37,99,235,0.08); color: var(--blue);
+      border: 1.5px solid var(--blue-line);
+      transition: all 0.4s ease;
+    }
+    .step-item.active .step-num {
+      background: var(--blue); color: #fff; border-color: var(--blue);
+      box-shadow: 0 0 16px rgba(37,99,235,0.3);
+    }
+    .step-item.done .step-num {
+      background: #22c55e; color: #fff; border-color: #22c55e;
+    }
+    .step-content { flex: 1; min-width: 0; }
+    .step-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      margin-bottom: 2px;
+      opacity: 0.4; transition: opacity 0.4s;
+    }
+    .step-item.active .step-title,
+    .step-item.done .step-title { opacity: 1; }
+    .step-desc {
+      font-size: 13px; color: var(--muted); line-height: 1.5;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s;
+      opacity: 0;
+    }
+    .step-item.active .step-desc { max-height: 60px; opacity: 1; }
+
+    /* Progress bar inside active step */
+    .step-progress {
+      height: 2px; background: var(--blue-line); border-radius: 2px;
+      margin-top: 10px; overflow: hidden;
+      display: none;
+    }
+    .step-item.active .step-progress { display: block; }
+    .step-progress-fill {
+      height: 100%; background: var(--blue); border-radius: 2px;
+      width: 0%; transition: width linear;
+    }
+
+    /* Demo phone */
+    .demo-phone-wrap {
+      flex-shrink: 0;
+      width: 260px;
+      position: relative;
+    }
+    .demo-phone-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -28px; left: 50%;
+      transform: translateX(-50%);
+      width: 70%; height: 50px;
+      background: var(--blue-glow);
+      border-radius: 50%; filter: blur(24px); opacity: 0.8;
+    }
+    .demo-phone-shell {
+      background: #e8edf5;
+      border-radius: 48px;
+      border: 7px solid #c8d4e8;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.8) inset,
+        0 0 0 1px rgba(37,99,235,0.1),
+        0 40px 100px rgba(15,23,42,0.12),
+        0 0 60px rgba(37,99,235,0.1);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 9/19.5;
+    }
+    .demo-phone-notch {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 38%; height: 26px; background: #e8edf5;
+      border-radius: 0 0 14px 14px; z-index: 20;
+    }
+    /* Phone screen content */
+    .demo-screen {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      background: #f8faff;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .demo-screen.active { opacity: 1; }
+
+    /* Screen: Status bar */
+    .phone-statusbar {
+      height: 44px; background: inherit;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding: 0 20px 6px; flex-shrink: 0;
+    }
+    .phone-time { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .phone-icons { display: flex; gap: 5px; align-items: center; }
+    .phone-icons span { font-size: 11px; color: #0f172a; }
+
+    /* Screen 1: Voice */
+    .screen-voice {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px; background: linear-gradient(180deg, #f0f6ff 0%, #e8f2ff 100%);
+      gap: 16px;
+    }
+    .voice-logo {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: #fff; box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 4px;
+    }
+    .voice-logo img { width: 40px; height: 40px; border-radius: 10px; }
+    .voice-label { font-size: 13px; font-weight: 700; color: #0f172a; text-align: center; }
+    .voice-sub { font-size: 11px; color: #64748b; text-align: center; line-height: 1.4; }
+    .waveform {
+      display: flex; align-items: center; gap: 3px; height: 40px;
+    }
+    .wave-bar {
+      width: 3px; background: var(--blue); border-radius: 2px;
+      animation: waveAnim 1.2s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(1)  { --h: 8px;  animation-delay: 0s; }
+    .wave-bar:nth-child(2)  { --h: 22px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(3)  { --h: 30px; animation-delay: 0.2s; }
+    .wave-bar:nth-child(4)  { --h: 18px; animation-delay: 0.3s; }
+    .wave-bar:nth-child(5)  { --h: 36px; animation-delay: 0.15s; }
+    .wave-bar:nth-child(6)  { --h: 24px; animation-delay: 0.25s; }
+    .wave-bar:nth-child(7)  { --h: 14px; animation-delay: 0.35s; }
+    .wave-bar:nth-child(8)  { --h: 28px; animation-delay: 0.05s; }
+    .wave-bar:nth-child(9)  { --h: 20px; animation-delay: 0.4s; }
+    .wave-bar:nth-child(10) { --h: 10px; animation-delay: 0.2s; }
+    .wave-bar:nth-child(11) { --h: 32px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(12) { --h: 16px; animation-delay: 0.3s; }
+    @keyframes waveAnim {
+      0%,100% { height: 4px; }
+      50% { height: var(--h); }
+    }
+    .voice-transcript {
+      background: #fff; border-radius: 12px; padding: 10px 14px;
+      font-size: 12px; color: #0f172a; line-height: 1.5;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.08); width: 100%;
+      min-height: 42px;
+      border: 1px solid rgba(37,99,235,0.1);
+    }
+    .cursor { display: inline-block; width: 1px; height: 13px; background: var(--blue); vertical-align: middle; animation: blink 0.7s step-end infinite; margin-left: 1px; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* Screen 2: Processing */
+    .screen-processing {
+      flex: 1; display: flex; flex-direction: column;
+      background: #f8faff; padding: 0;
+    }
+    .proc-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 14px 10px; border-bottom: 1px solid #f1f5f9;
+      background: #fff;
+    }
+    .proc-icon {
+      width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.15); background: #fff;
+    }
+    .proc-icon img { width: 100%; height: 100%; border-radius: 7px; display: block; }
+    .proc-title-row { flex: 1; }
+    .proc-title { font-size: 12px; font-weight: 700; color: #0f172a; }
+    .proc-sub { font-size: 10px; color: #64748b; }
+    .proc-spinner {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(37,99,235,0.15); border-top-color: var(--blue);
+      animation: spin 0.8s linear infinite; flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Skeleton shimmer placeholders */
+    @keyframes shimmer {
+      0% { background-position: -300px 0; }
+      100% { background-position: 300px 0; }
+    }
+    .skel {
+      background: linear-gradient(90deg, #e8f0fe 25%, #d4e3ff 50%, #e8f0fe 75%);
+      background-size: 600px 100%;
+      animation: shimmer 1.6s ease-in-out infinite;
+      border-radius: 6px;
+    }
+    .proc-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .proc-card {
+      background: #fff; border-radius: 12px; padding: 12px;
+      border: 1px solid #e8f0fe;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.05);
+    }
+    .proc-card-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .proc-card-label .p-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); animation: dotPulse 0.8s ease-in-out infinite; }
+    .skel-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
+    .skel-avatar { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; }
+    .skel-lines { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .skel-h { height: 10px; }
+    .skel-s { height: 8px; width: 60%; }
+    .skel-tag { height: 16px; width: 60px; border-radius: 20px; }
+    .skel-full { height: 8px; width: 100%; margin-bottom: 4px; }
+    .skel-half { height: 8px; width: 55%; }
+    .skel-btn-row { display: flex; gap: 6px; margin-top: 8px; }
+    .skel-btn { height: 24px; flex: 1; border-radius: 8px; }
+
+    .ai-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.12);
+      border-radius: 8px; padding: 6px 10px;
+      font-size: 10px; color: var(--blue); line-height: 1.4;
+    }
+    .ai-badge-icon { font-size: 12px; flex-shrink: 0; }
+
+    .p-step {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 10px; color: #64748b; padding: 4px 0;
+    }
+    .p-step.done { color: #22c55e; }
+    .p-dot { width: 5px; height: 5px; border-radius: 50%; background: #cbd5e1; flex-shrink: 0; }
+    .p-step.done .p-dot { background: #22c55e; box-shadow: 0 0 5px rgba(34,197,94,0.5); }
+    .p-step.active .p-dot { background: var(--blue); box-shadow: 0 0 5px rgba(37,99,235,0.4); animation: dotPulse 0.8s ease-in-out infinite; }
+    @keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* Screen 3: Job Created */
+    .screen-job {
+      flex: 1; display: flex; flex-direction: column; background: #f8faff;
+    }
+    .phone-header {
+      background: #fff; padding: 12px 16px 10px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .phone-header-title { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .ph-back { font-size: 12px; color: var(--blue); }
+    .job-card {
+      margin: 12px; background: #fff; border-radius: 14px;
+      border: 1px solid #e2e8f0; padding: 14px;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.05);
+    }
+    .job-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #dcfce7; color: #16a34a; border-radius: 20px;
+      padding: 3px 10px; font-size: 10px; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .job-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #22c55e; }
+    .job-title { font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .job-client { font-size: 11px; color: #64748b; margin-bottom: 12px; }
+    .job-row {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11px; color: #475569; margin-bottom: 6px;
+    }
+    .job-icon { font-size: 12px; }
+    .job-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .job-btn {
+      flex: 1; padding: 8px; border-radius: 9px; text-align: center;
+      font-size: 11px; font-weight: 700;
+    }
+    .job-btn-primary { background: var(--blue); color: #fff; }
+    .job-btn-ghost { background: #f1f5f9; color: #475569; }
+    .ai-note {
+      margin: 0 12px 12px; background: rgba(37,99,235,0.06);
+      border: 1px solid rgba(37,99,235,0.12); border-radius: 10px;
+      padding: 9px 12px; font-size: 11px; color: var(--blue); line-height: 1.4;
+    }
+
+    /* Screen 4: Quote */
+    .screen-quote {
+      flex: 1; display: flex; flex-direction: column; background: #f8faff;
+    }
+    .quote-card {
+      margin: 12px; background: #fff; border-radius: 14px;
+      border: 1px solid #e2e8f0; padding: 14px;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.05);
+    }
+    .quote-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .quote-number { font-size: 10px; color: #64748b; }
+    .quote-status {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #fef3c7; color: #d97706; border-radius: 20px;
+      padding: 2px 8px; font-size: 10px; font-weight: 700;
+    }
+    .quote-title { font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .quote-client { font-size: 11px; color: #64748b; margin-bottom: 12px; }
+    .quote-line {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: #475569; padding: 5px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .quote-total {
+      display: flex; justify-content: space-between;
+      font-size: 13px; font-weight: 800; color: #0f172a;
+      padding-top: 10px; margin-top: 4px;
+    }
+    .quote-send {
+      display: block; text-align: center; margin: 0 12px;
+      background: var(--blue); color: #fff; border-radius: 10px;
+      padding: 11px; font-size: 12px; font-weight: 700;
+    }
+
+    /* Screen 5: Invoice / Done */
+    .screen-invoice {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 24px; gap: 16px;
+      background: linear-gradient(180deg, #f0f6ff 0%, #e8f2ff 100%);
+    }
+    .success-ring {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 8px rgba(34,197,94,0.12), 0 8px 24px rgba(34,197,94,0.25);
+      font-size: 32px;
+    }
+    .success-title { font-size: 16px; font-weight: 800; color: #0f172a; text-align: center; }
+    .success-sub { font-size: 12px; color: #64748b; text-align: center; line-height: 1.5; }
+    .success-stats {
+      display: flex; gap: 12px; width: 100%;
+    }
+    .success-stat {
+      flex: 1; background: #fff; border-radius: 12px; padding: 10px;
+      text-align: center; border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.04);
+    }
+    .success-stat-val { font-size: 15px; font-weight: 800; color: #0f172a; }
+    .success-stat-lbl { font-size: 10px; color: #64748b; }
+    .replay-btn {
+      background: rgba(37,99,235,0.08); border: 1px solid var(--blue-line);
+      color: var(--blue); border-radius: 10px; padding: 9px 18px;
+      font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: background 0.2s;
+    }
+    .replay-btn:hover { background: rgba(37,99,235,0.15); }
+
+    @media (max-width: 760px) {
+      .demo-inner { flex-direction: column; gap: 48px; }
+      .demo-phone-wrap { width: 220px; margin: 0 auto; }
+      .demo-steps h2 { text-align: center; }
+      .demo-steps-label { display: block; text-align: center; }
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 64px 24px;
+      text-align: center;
+      margin-top: 80px;
+      background: linear-gradient(180deg, transparent, rgba(37,99,235,0.04));
+    }
+    .footer-logo {
+      width: 56px; height: 56px; border-radius: 14px;
+      margin: 0 auto 16px;
+      box-shadow: 0 0 0 1px var(--blue-line), 0 0 24px var(--blue-glow), var(--shadow);
+      background: #fff;
+    }
+    .footer-name { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; color: var(--text); }
+    .footer-tag { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+    .footer-links {
+      display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;
+    }
+    .footer-links a { color: var(--muted); font-size: 14px; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--blue); }
+    .footer-copy { color: var(--muted); font-size: 13px; opacity: 0.6; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 760px) {
+      .feature-row, .feature-row.flip {
+        flex-direction: column;
+        padding: 56px 24px;
+        gap: 36px;
+        text-align: center;
+      }
+      .feature-phone-wrap { width: 190px; margin: 0 auto; }
+      .dave-info { text-align: center; max-width: 100%; }
+      .hero-dave { flex-direction: column; gap: 32px; }
+      .dave-phone { width: 185px; }
     }
   </style>
 </head>
+
 <body>
-<main>
-  <p class="eyebrow">SAM MARKETING INTELLIGENCE</p>
-  <img
-    class="hero-icon"
-    src="/voltz/assets/voltz-logo.png"
-    alt="Voltz CRM app icon — blue microphone with sound waves"
-    width="1024"
-    height="1024"
-  />
-  <h1>Voltz <span>CRM</span></h1>
-  <p class="meta">Field CRM for tradespeople — clients, schedule, quotes, invoices, cashbook, and Live voice AI. Speak a job and watch Voltz book it, quote it and invoice it.</p>
 
-  <h2>Meet Operative Dave</h2>
-  <div class="video-stage">
-    <div class="video-wrap">
-      <video
-        id="dave-video"
-        class="hero-video"
-        src="/voltz/assets/operative-dave-intro.mp4"
-        playsinline
-        loop
-        autoplay
-        preload="auto"
-        poster="/voltz/assets/voltz-logo.png"
-      ></video>
+  <!-- Ambient blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <header class="hero">
+
+    <div class="eyebrow-tag reveal">
+      <span class="live-dot"></span>
+      SAM Marketing Intelligence
     </div>
+
+    <img class="hero-icon reveal" src="/voltz/assets/voltz-logo.png" alt="Voltz CRM app icon" width="1024" height="1024">
+
+    <h1 class="hero-title reveal">
+      Voltz&nbsp;<span class="grad">CRM</span>
+    </h1>
+
+    <p class="hero-sub reveal">
+      Field CRM for tradespeople — clients, schedule, quotes, invoices, cashbook,
+      and Live voice AI. Speak a job and watch Voltz book it, quote it and invoice it.
+    </p>
+
+    <div class="hero-cta-row reveal">
+      <a class="btn-primary" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download on the App Store
+      </a>
+      <a class="btn-ghost" href="#inside-the-app">
+        See it in action ↓
+      </a>
+    </div>
+
+    <!-- Meet Operative Dave -->
+    <div class="hero-dave">
+      <div class="dave-phone reveal from-left">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <video id="dave-video" src="/voltz/assets/operative-dave-intro.mp4"
+            playsinline loop autoplay preload="auto"
+            poster="/voltz/assets/voltz-logo.png"></video>
+        </div>
+      </div>
+      <div class="dave-info reveal from-right">
+        <span class="section-label">Meet Operative Dave</span>
+        <h2>Your AI<br>Voice Assistant</h2>
+        <p>Dave listens, understands, and gets to work — booking jobs, raising quotes, and sending invoices while you focus on the tools in your hand.</p>
+        <button class="sound-btn" id="sound-btn">▶ Play with Sound</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════ DEMO WIZARD ═══════════════ -->
+  <section class="demo-section">
+    <div class="demo-inner">
+
+      <!-- Steps list -->
+      <div class="demo-steps reveal from-left">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <img src="/voltz/assets/voltz-logo.png" alt="Voltz"
+            style="width:44px;height:44px;border-radius:11px;
+              box-shadow:0 0 0 1px rgba(37,99,235,0.18),0 0 20px rgba(37,99,235,0.15),0 4px 12px rgba(37,99,235,0.12);
+              background:#fff;flex-shrink:0;">
+          <span class="demo-steps-label" style="margin-bottom:0;">Live Demo</span>
+        </div>
+        <h2>Watch Voltz<br><em>do the work</em></h2>
+        <ul class="step-list" id="step-list">
+          <li class="step-item active" data-step="0">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Speak the job</div>
+              <div class="step-desc">You say it out loud — Voltz listens and understands every detail.</div>
+              <div class="step-progress"><div class="step-progress-fill" id="prog-0"></div></div>
+            </div>
+          </li>
+          <li class="step-item" data-step="1">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">AI processes instantly</div>
+              <div class="step-desc">Extracts the client, date, job type, and notes in under a second.</div>
+              <div class="step-progress"><div class="step-progress-fill" id="prog-1"></div></div>
+            </div>
+          </li>
+          <li class="step-item" data-step="2">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Job booked automatically</div>
+              <div class="step-desc">Client record created, job scheduled, team notified.</div>
+              <div class="step-progress"><div class="step-progress-fill" id="prog-2"></div></div>
+            </div>
+          </li>
+          <li class="step-item" data-step="3">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Quote drafted &amp; ready</div>
+              <div class="step-desc">Professional quote built from the job details — review and send.</div>
+              <div class="step-progress"><div class="step-progress-fill" id="prog-3"></div></div>
+            </div>
+          </li>
+          <li class="step-item" data-step="4">
+            <div class="step-num">&#10003;</div>
+            <div class="step-content">
+              <div class="step-title">Invoice out, job done</div>
+              <div class="step-desc">Complete the job, Voltz raises the invoice. You get paid.</div>
+              <div class="step-progress"><div class="step-progress-fill" id="prog-4"></div></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Animated phone -->
+      <div class="demo-phone-wrap reveal from-right">
+        <div class="demo-phone-shell">
+          <div class="demo-phone-notch"></div>
+
+          <!-- Screen 0: Voice command -->
+          <div class="demo-screen active" id="screen-0">
+            <div class="phone-statusbar">
+              <span class="phone-time">9:41</span>
+              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
+            </div>
+            <div class="screen-voice">
+              <div class="voice-logo">
+                <img src="/voltz/assets/voltz-logo.png" alt="Voltz">
+              </div>
+              <div class="voice-label">AI Voice &middot; Listening&hellip;</div>
+              <div class="waveform">
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+              </div>
+              <div class="voice-transcript" id="voice-text"><span class="cursor"></span></div>
+              <div class="voice-sub">Tap mic to speak a job</div>
+            </div>
+          </div>
+
+          <!-- Screen 1: Processing / AI Skeleton -->
+          <div class="demo-screen" id="screen-1">
+            <div class="phone-statusbar">
+              <span class="phone-time">9:41</span>
+              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
+            </div>
+            <div class="screen-processing">
+              <!-- Header with icon + spinner -->
+              <div class="proc-header">
+                <div class="proc-icon">
+                  <img src="/voltz/assets/voltz-logo.png" alt="Voltz">
+                </div>
+                <div class="proc-title-row">
+                  <div class="proc-title">Operative Dave</div>
+                  <div class="proc-sub">Building your job&hellip;</div>
+                </div>
+                <div class="proc-spinner"></div>
+              </div>
+              <!-- Skeleton placeholder body -->
+              <div class="proc-body">
+                <!-- Job skeleton card -->
+                <div class="proc-card">
+                  <div class="proc-card-label"><span class="p-dot"></span>Generating job record</div>
+                  <div class="skel-row">
+                    <div class="skel skel-avatar"></div>
+                    <div class="skel-lines">
+                      <div class="skel skel-h"></div>
+                      <div class="skel skel-s"></div>
+                    </div>
+                  </div>
+                  <div class="skel skel-tag" style="margin-bottom:8px;"></div>
+                  <div class="skel skel-full"></div>
+                  <div class="skel skel-full"></div>
+                  <div class="skel skel-half"></div>
+                  <div class="skel-btn-row">
+                    <div class="skel skel-btn"></div>
+                    <div class="skel skel-btn"></div>
+                  </div>
+                </div>
+                <!-- AI steps -->
+                <div class="proc-card" style="padding:8px 12px;">
+                  <div class="p-step active" id="ps-0"><div class="p-dot"></div>Understanding your request</div>
+                  <div class="p-step" id="ps-1"><div class="p-dot"></div>Finding client: John Smith</div>
+                  <div class="p-step" id="ps-2"><div class="p-dot"></div>Checking schedule: Friday 2pm</div>
+                  <div class="p-step" id="ps-3"><div class="p-dot"></div>Creating job record</div>
+                </div>
+                <!-- AI note -->
+                <div class="ai-badge">
+                  <span class="ai-badge-icon">&#9889;</span>
+                  Dave is filling in the details from your voice note
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 2: Job Created -->
+          <div class="demo-screen" id="screen-2">
+            <div class="phone-statusbar">
+              <span class="phone-time">9:41</span>
+              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
+            </div>
+            <div class="screen-job">
+              <div class="phone-header">
+                <span class="ph-back">&#8249; Back</span>
+                <span class="phone-header-title">Job Created</span>
+              </div>
+              <div class="job-card">
+                <div class="job-badge"><div class="job-badge-dot"></div>Confirmed</div>
+                <div class="job-title">Boiler Service</div>
+                <div class="job-client">John Smith &middot; 07700 900000</div>
+                <div class="job-row"><span class="job-icon">&#128197;</span> Friday, 2 Oct &middot; 2:00 PM</div>
+                <div class="job-row"><span class="job-icon">&#128205;</span> 14 Baker St, London</div>
+                <div class="job-row"><span class="job-icon">&#9203;</span> Est. 2 hours</div>
+                <div class="job-actions">
+                  <div class="job-btn job-btn-primary">View Job</div>
+                  <div class="job-btn job-btn-ghost">Edit</div>
+                </div>
+              </div>
+              <div class="ai-note">&#9889; Dave created this from your voice note and added it to your schedule.</div>
+            </div>
+          </div>
+
+          <!-- Screen 3: Quote -->
+          <div class="demo-screen" id="screen-3">
+            <div class="phone-statusbar">
+              <span class="phone-time">9:41</span>
+              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
+            </div>
+            <div class="screen-quote">
+              <div class="phone-header">
+                <span class="ph-back">&#8249; Back</span>
+                <span class="phone-header-title">Quote Ready</span>
+              </div>
+              <div class="quote-card">
+                <div class="quote-header">
+                  <div class="quote-number">QUO-2024-0142</div>
+                  <div class="quote-status">&#9203; Draft</div>
+                </div>
+                <div class="quote-title">Boiler Service</div>
+                <div class="quote-client">John Smith</div>
+                <div class="quote-line"><span>Labour (2 hrs)</span><span>&pound;180.00</span></div>
+                <div class="quote-line"><span>Parts allowance</span><span>&pound;40.00</span></div>
+                <div class="quote-line"><span>Call-out fee</span><span>&pound;30.00</span></div>
+                <div class="quote-total"><span>Total inc VAT</span><span>&pound;300.00</span></div>
+              </div>
+              <div class="quote-send">Send Quote to John &#8594;</div>
+            </div>
+          </div>
+
+          <!-- Screen 4: Done -->
+          <div class="demo-screen" id="screen-4">
+            <div class="phone-statusbar">
+              <span class="phone-time">9:41</span>
+              <div class="phone-icons"><span>&#11044;&#11044;&#11044;</span><span>&#128267;</span></div>
+            </div>
+            <div class="screen-invoice">
+              <div class="success-ring">&#10003;</div>
+              <div class="success-title">Job Complete.</div>
+              <div class="success-sub">Invoice sent to John Smith.<br>&pound;300.00 outstanding.</div>
+              <div class="success-stats">
+                <div class="success-stat">
+                  <div class="success-stat-val">42s</div>
+                  <div class="success-stat-lbl">Time saved</div>
+                </div>
+                <div class="success-stat">
+                  <div class="success-stat-val">&pound;300</div>
+                  <div class="success-stat-lbl">Invoiced</div>
+                </div>
+                <div class="success-stat">
+                  <div class="success-stat-val">0</div>
+                  <div class="success-stat-lbl">Forms filled</div>
+                </div>
+              </div>
+              <button class="replay-btn" id="replay-btn">&#8635; Watch again</button>
+            </div>
+          </div>
+
+        </div><!-- /demo-phone-shell -->
+      </div><!-- /demo-phone-wrap -->
+
+    </div><!-- /demo-inner -->
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════ FEATURES INTRO ═══════════════ -->
+  <div class="features-intro" id="inside-the-app">
+    <span class="section-label reveal">Inside the App</span>
+    <h2 class="reveal">Built for the <em>real world</em></h2>
+    <p class="reveal">AI Voice and Command Centre — real screens from Voltz, purpose-built for tradespeople who don't have time to mess about.</p>
   </div>
-  <div class="sound-row">
-    <button type="button" class="sound-btn" id="sound-btn">▶ PLAY WITH SOUND</button>
-  </div>
-  <p class="hint" id="sound-hint">Full portrait intro</p>
 
-  <h2>Inside the app</h2>
-  <p class="meta">AI Voice and Command Centre — real screens from Voltz.</p>
-  
-  <div class="shots">
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-01-ai-voice-home.png" alt="AI Voice home" loading="lazy" width="1290" height="2796" />
-      <figcaption>AI Voice · Home</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-03-birds-eye.png" alt="Bird's Eye desk" loading="lazy" width="1290" height="2796" />
-      <figcaption>Bird’s Eye · Dashboard</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-05-schedule-calendar.png" alt="Schedule calendar" loading="lazy" width="1290" height="2796" />
-      <figcaption>Schedule · Calendar</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-06-schedule-list.png" alt="Schedule list" loading="lazy" width="1290" height="2796" />
-      <figcaption>Schedule · List</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-07-quote-preview.png" alt="Quote preview" loading="lazy" width="1290" height="2796" />
-      <figcaption>Quote preview</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-09-invoice-preview.png" alt="Invoice preview" loading="lazy" width="1290" height="2796" />
-      <figcaption>Invoice preview</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-10-take-payment.png" alt="Take payment" loading="lazy" width="1290" height="2796" />
-      <figcaption>Take payment</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-11-search-products.png" alt="Search products" loading="lazy" width="1290" height="2796" />
-      <figcaption>Shop · Search</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-12-compare-products.png" alt="Compare products" loading="lazy" width="1290" height="2796" />
-      <figcaption>Shop · Compare</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="/voltz/assets/screens/store-13-command-pipeline.png" alt="Command Centre pipeline" loading="lazy" width="1290" height="2796" />
-      <figcaption>Command Centre · Pipeline</figcaption>
-    </figure>
-  </div>
+  <!-- ═══════════════ FEATURE ROWS ═══════════════ -->
 
-<p class="support">Support: <a href="mailto:contact@samarketingintelligence.com">contact@samarketingintelligence.com</a></p>
-  <div class="links">
-    <a href="/voltz/privacy">Privacy Policy</a>
-    <a href="/voltz/terms">Terms of Use</a>
-    <a href="/">← Back to studio site</a>
-  </div>
-</main>
-<script>
-  (function () {
-    var video = document.getElementById('dave-video');
-    var soundBtn = document.getElementById('sound-btn');
-    var hint = document.getElementById('sound-hint');
-    if (!video || !soundBtn) return;
+  <!-- 01 · AI Voice -->
+  <section class="feature-section">
+    <div class="feature-row">
+      <div class="feature-phone-wrap reveal from-left">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-01-ai-voice-home.png" alt="AI Voice home" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-right">
+        <div class="feature-number">01 / 10</div>
+        <h3>Speak a Job.<br>Watch It Happen.</h3>
+        <p>Tell Voltz about a job in plain English — the AI books it, creates the client record, and queues up a quote. No typing. No forms. Just talk.</p>
+        <span class="feature-chip"><span class="cdot"></span>AI Voice · Home</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
 
-    var SEEN_KEY = 'voltz_dave_intro_seen_v1';
-    var firstVisit = !localStorage.getItem(SEEN_KEY);
-    var soundOn = false;
+  <!-- 02 · Bird's Eye -->
+  <section class="feature-section">
+    <div class="feature-row flip">
+      <div class="feature-phone-wrap reveal from-right">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-03-birds-eye.png" alt="Bird's Eye dashboard" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-left">
+        <div class="feature-number">02 / 10</div>
+        <h3>Your Business,<br>Bird's Eye View.</h3>
+        <p>Revenue, pipeline, outstanding invoices — your whole operation on one screen, at a glance. Know exactly where you stand before you've even had your first coffee.</p>
+        <span class="feature-chip"><span class="cdot"></span>Bird's Eye · Dashboard</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
 
-    function setUi(on, message) {
-      soundOn = on;
-      video.muted = !on;
-      soundBtn.textContent = on ? 'MUTE' : '▶ PLAY WITH SOUND';
-      if (hint) hint.textContent = message;
-    }
+  <!-- 03 · Schedule Calendar -->
+  <section class="feature-section">
+    <div class="feature-row">
+      <div class="feature-phone-wrap reveal from-left">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-05-schedule-calendar.png" alt="Schedule calendar" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-right">
+        <div class="feature-number">03 / 10</div>
+        <h3>Schedule.<br>Track. Deliver.</h3>
+        <p>Every job, every client, mapped across your calendar. Drag, reschedule, and reassign without breaking a sweat. Your diary, finally under control.</p>
+        <span class="feature-chip"><span class="cdot"></span>Schedule · Calendar</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
 
-    function markSeen() {
-      try { localStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
-    }
+  <!-- 04 · Schedule List -->
+  <section class="feature-section">
+    <div class="feature-row flip">
+      <div class="feature-phone-wrap reveal from-right">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-06-schedule-list.png" alt="Schedule list" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-left">
+        <div class="feature-number">04 / 10</div>
+        <h3>Every Job,<br>Right When You Need It.</h3>
+        <p>List view keeps your day tight, ordered, and actionable. Tap in, see all the details, head out the door. That's it.</p>
+        <span class="feature-chip"><span class="cdot"></span>Schedule · List</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
 
-    function playWithSound() {
-      setUi(true, 'Full portrait intro · sound on');
-      return video.play();
-    }
+  <!-- 05 · Quote Preview -->
+  <section class="feature-section">
+    <div class="feature-row">
+      <div class="feature-phone-wrap reveal from-left">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-07-quote-preview.png" alt="Quote preview" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-right">
+        <div class="feature-number">05 / 10</div>
+        <h3>Quote in Seconds.<br>Win the Job.</h3>
+        <p>Voltz drafts a professional quote from your voice note. Review it, tweak the numbers, send it — before you've even left the site. First impressions win contracts.</p>
+        <span class="feature-chip"><span class="cdot"></span>Quote Preview</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
 
-    function playMuted(message) {
-      setUi(false, message);
-      return video.play().catch(function () {});
-    }
+  <!-- 06 · Invoice Preview -->
+  <section class="feature-section">
+    <div class="feature-row flip">
+      <div class="feature-phone-wrap reveal from-right">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-09-invoice-preview.png" alt="Invoice preview" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-left">
+        <div class="feature-number">06 / 10</div>
+        <h3>Invoice the Moment<br>It's Done.</h3>
+        <p>Job complete? Invoice sent. Voltz auto-builds a clean, branded invoice the second you mark a job finished. No chasing paperwork. No forgotten invoices.</p>
+        <span class="feature-chip"><span class="cdot"></span>Invoice Preview</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
 
-    function armFirstGestureUnmute() {
-      var unlock = function () {
-        playWithSound().then(markSeen).catch(function () {});
-        document.removeEventListener('pointerdown', unlock, true);
-        document.removeEventListener('keydown', unlock, true);
-      };
-      document.addEventListener('pointerdown', unlock, true);
-      document.addEventListener('keydown', unlock, true);
-    }
+  <!-- 07 · Take Payment -->
+  <section class="feature-section">
+    <div class="feature-row">
+      <div class="feature-phone-wrap reveal from-left">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-10-take-payment.png" alt="Take payment" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-right">
+        <div class="feature-number">07 / 10</div>
+        <h3>Get Paid.<br>On the Spot.</h3>
+        <p>Take card payments right there on site. Cash, card, bank transfer — Voltz logs it instantly, marks the invoice paid, and keeps your cashbook bang up to date.</p>
+        <span class="feature-chip"><span class="cdot"></span>Take Payment</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
 
-    soundBtn.addEventListener('click', function () {
-      if (soundOn) {
-        playMuted('Full portrait intro · muted');
-      } else {
-        playWithSound().then(markSeen).catch(function () {
-          playMuted('Full portrait intro · tap again for sound');
-        });
-      }
+  <!-- 08 · Shop Search -->
+  <section class="feature-section">
+    <div class="feature-row flip">
+      <div class="feature-phone-wrap reveal from-right">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-11-search-products.png" alt="Search products" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-left">
+        <div class="feature-number">08 / 10</div>
+        <h3>Source Parts Without<br>the Phone Tag.</h3>
+        <p>Search trade suppliers instantly from within Voltz. Find the part, check availability, add it to your quote — all without leaving the app or dialling anyone.</p>
+        <span class="feature-chip"><span class="cdot"></span>Shop · Search</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
+
+  <!-- 09 · Shop Compare -->
+  <section class="feature-section">
+    <div class="feature-row">
+      <div class="feature-phone-wrap reveal from-left">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-12-compare-products.png" alt="Compare products" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-right">
+        <div class="feature-number">09 / 10</div>
+        <h3>Compare.<br>Choose. Order.</h3>
+        <p>Side-by-side product comparison across suppliers. Best price, best availability, best fit — clear as day. Make the call and move on.</p>
+        <span class="feature-chip"><span class="cdot"></span>Shop · Compare</span>
+      </div>
+    </div>
+  </section>
+  <div class="row-sep"></div>
+
+  <!-- 10 · Command Pipeline -->
+  <section class="feature-section">
+    <div class="feature-row flip">
+      <div class="feature-phone-wrap reveal from-right">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img src="/voltz/assets/screens/store-13-command-pipeline.png" alt="Command Centre pipeline" loading="lazy" width="1290" height="2796">
+        </div>
+      </div>
+      <div class="feature-text reveal from-left">
+        <div class="feature-number">10 / 10</div>
+        <h3>Your Pipeline.<br>Commanded.</h3>
+        <p>See every lead, job, quote, and invoice in a single kanban pipeline. Drag cards through stages. Know exactly what needs doing next. Never drop a ball again.</p>
+        <span class="feature-chip"><span class="cdot"></span>Command Centre · Pipeline</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer>
+    <img class="footer-logo" src="/voltz/assets/voltz-logo.png" alt="Voltz CRM" width="56" height="56">
+    <div class="footer-name">Voltz CRM</div>
+    <div class="footer-tag">Field CRM for tradespeople</div>
+    <div class="footer-links">
+      <a href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">App Store</a>
+      <a href="mailto:contact@samarketingintelligence.com">Support</a>
+      <a href="/voltz/privacy">Privacy Policy</a>
+      <a href="/voltz/terms">Terms of Use</a>
+      <a href="https://www.samarketingintelligence.com/">← Back to studio</a>
+    </div>
+    <div class="footer-copy">© 2026 SAM Marketing Intelligence. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // ── Scroll reveal ──────────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => io.observe(el));
+
+    // Trigger visible ones on load
+    setTimeout(() => {
+      revealEls.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.95) el.classList.add('visible');
+      });
+    }, 80);
+
+    // ── Sound toggle ───────────────────────────────────────
+    const video = document.getElementById('dave-video');
+    const btn   = document.getElementById('sound-btn');
+    video.muted = true;
+    btn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      btn.textContent = video.muted ? '▶ Play with Sound' : '🔊 Sound On';
+      if (!video.muted) video.play().catch(() => {});
     });
 
-    if (firstVisit) {
-      video.muted = false;
-      video.play().then(function () {
-        setUi(true, 'Full portrait intro · sound on (first visit)');
-        markSeen();
-      }).catch(function () {
-        playMuted('Browser blocked sound autoplay · tap anywhere for sound');
-        armFirstGestureUnmute();
+    // ── Subtle parallax blobs ──────────────────────────────
+    const b1 = document.querySelector('.blob-1');
+    const b2 = document.querySelector('.blob-2');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.12;
+      if (b1) b1.style.transform = `translateY(${y}px)`;
+      if (b2) b2.style.transform = `translateY(${-y * 0.7}px)`;
+    }, { passive: true });
+
+    // ── Demo Wizard ────────────────────────────────────────
+    const STEPS = [
+      { duration: 4200 },  // voice typing
+      { duration: 3200 },  // processing
+      { duration: 3000 },  // job created
+      { duration: 3000 },  // quote
+      { duration: 4000 },  // done
+    ];
+    const VOICE_TEXT = "Book a boiler service for John Smith on Friday at 2pm, 14 Baker Street. Estimate 2 hours.";
+
+    let currentStep = 0;
+    let demoTimer = null;
+    let typeTimer = null;
+
+    function setStep(n) {
+      // Update step list
+      document.querySelectorAll('.step-item').forEach((el, i) => {
+        el.classList.remove('active', 'done');
+        if (i < n) el.classList.add('done');
+        if (i === n) el.classList.add('active');
       });
-    } else {
-      playMuted('Welcome back · tap for sound');
+      // Update screens
+      document.querySelectorAll('.demo-screen').forEach((el, i) => {
+        el.classList.toggle('active', i === n);
+      });
+      // Animate progress bar
+      const prog = document.getElementById(`prog-${n}`);
+      if (prog) {
+        prog.style.transition = 'none';
+        prog.style.width = '0%';
+        setTimeout(() => {
+          prog.style.transition = `width ${STEPS[n].duration}ms linear`;
+          prog.style.width = '100%';
+        }, 30);
+      }
+      // Step-specific animations
+      if (n === 0) startTypewriter();
+      if (n === 1) animateProcessing();
     }
-  })();
-</script>
+
+    function startTypewriter() {
+      const el = document.getElementById('voice-text');
+      if (!el) return;
+      el.innerHTML = '<span class="cursor"></span>';
+      let i = 0;
+      clearInterval(typeTimer);
+      typeTimer = setInterval(() => {
+        if (i >= VOICE_TEXT.length) { clearInterval(typeTimer); return; }
+        el.innerHTML = VOICE_TEXT.slice(0, ++i) + '<span class="cursor"></span>';
+      }, 48);
+    }
+
+    function animateProcessing() {
+      const steps = ['ps-0','ps-1','ps-2','ps-3'];
+      steps.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.classList.remove('done','active'); el.querySelector('.p-dot').style.cssText = ''; }
+      });
+      document.getElementById('ps-0').classList.add('active');
+      let pi = 0;
+      const pTimer = setInterval(() => {
+        const cur = document.getElementById(steps[pi]);
+        if (cur) { cur.classList.remove('active'); cur.classList.add('done'); cur.querySelector('.p-dot').style.background = '#22c55e'; }
+        pi++;
+        if (pi >= steps.length) { clearInterval(pTimer); return; }
+        const nxt = document.getElementById(steps[pi]);
+        if (nxt) nxt.classList.add('active');
+      }, 700);
+    }
+
+    function runDemo() {
+      setStep(currentStep);
+      clearTimeout(demoTimer);
+      demoTimer = setTimeout(() => {
+        currentStep++;
+        if (currentStep >= STEPS.length) return; // wait for replay
+        runDemo();
+      }, STEPS[currentStep].duration);
+    }
+
+    // Start demo when wizard section is visible
+    const demoEl = document.querySelector('.demo-section');
+    const demoIO = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        demoIO.disconnect();
+        setTimeout(runDemo, 600);
+      }
+    }, { threshold: 0.3 });
+    if (demoEl) demoIO.observe(demoEl);
+
+    // Replay button
+    const replayBtn = document.getElementById('replay-btn');
+    if (replayBtn) {
+      replayBtn.addEventListener('click', () => {
+        currentStep = 0;
+        clearTimeout(demoTimer);
+        clearInterval(typeTimer);
+        runDemo();
+      });
+    }
+  </script>
 </body>
 </html>
