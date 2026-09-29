@@ -467,10 +467,14 @@
     .stoptour { bottom: 150px; }
     /* ── Tagline beside the brand ── */
     .brand-tag { font-style: normal; display: flex; flex-direction: column; justify-content: center; line-height: 1.15;
-      margin-left: 6px; padding-left: 18px; border-left: 2px solid rgba(124,58,237,.25);
-      font-size: 17px; font-weight: 700; letter-spacing: -.01em; color: #64748b; }
-    .brand-tag b { font-size: 22px; font-weight: 900; letter-spacing: -.02em;
-      background: linear-gradient(110deg, var(--blue), var(--violet) 55%, var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      margin-left: 6px; padding-left: 18px; border-left: 2px solid rgba(217,160,40,.45); min-width: 11.5em;
+      font-size: 17px; font-weight: 800; letter-spacing: -.01em; }
+    .brand-tag .bt1, .brand-tag b { background: linear-gradient(100deg, #a16207, #d99a0b 35%, #f5c451 50%, #d99a0b 65%, #a16207);
+      background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: goldShine 4s linear infinite; }
+    .brand-tag b { font-size: 22px; font-weight: 900; letter-spacing: -.02em; min-height: 1.15em; }
+    .brand-tag .bt1 { min-height: 1.15em; }
+    .brand-tag .tcaret { display: inline-block; width: 2px; height: .95em; margin-left: 2px; vertical-align: -2px; background: #e0a82e; animation: blink .8s steps(1) infinite; }
+    @keyframes goldShine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
     @media (max-width: 1280px) { .brand-tag { font-size: 14px; padding-left: 14px; } .brand-tag b { font-size: 18px; } }
     @media (max-width: 700px) { .brand-tag { display: none; } }
     /* ── Why Voltz intro ── */
@@ -486,7 +490,7 @@
   <!-- Top bar -->
   <div class="topbar">
     <button class="pill menu-btn" id="menu-btn" aria-label="Open menu"><i></i></button>
-    <a class="brand" href="#why" data-go="why" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span><i class="brand-tag">Tired of typing?<b>Just talk.</b></i></a>
+    <a class="brand" href="#why" data-go="why" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span><i class="brand-tag" aria-label="Tired of typing? Just talk."><span class="bt1">Tired of typing?</span><b>Just talk.</b></i></a>
     <button class="pill" id="sound-btn" aria-pressed="false">&#9654; Sound on</button>
     <a class="pill primary appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">App Store</a>
   </div>
@@ -895,6 +899,22 @@
       s.connect(f); f.connect(g); g.connect(c.destination); o.connect(og); og.connect(c.destination); s.start(n); s.stop(n+d); o.start(n); o.stop(n+d);
     }catch(e){} }
 
+    /* ── Gold tagline writes itself: "Tired of typing? Just talk." ── */
+    var TagType=(function(){
+      var tag=document.querySelector('.brand-tag'); if(!tag) return {play:function(){}};
+      var l1=tag.querySelector('.bt1'), l2=tag.querySelector('b'), T1='Tired of typing?', T2='Just talk.', timer=null;
+      function tick(){ if(!soundOn) return; try{ var c=vctx(), n=c.currentTime, o=c.createOscillator(), g=c.createGain();
+        o.type='square'; o.frequency.value=1800+Math.random()*600; g.gain.setValueAtTime(0.012,n); g.gain.exponentialRampToValueAtTime(0.0001,n+0.03);
+        o.connect(g); g.connect(c.destination); o.start(n); o.stop(n+0.04); }catch(e){} }
+      function type(el, text, speed, done){ var i=0; el.innerHTML='<span class="tcaret"></span>';
+        timer=setInterval(function(){ i++; el.innerHTML=text.slice(0,i).replace(/&/g,'&amp;')+'<span class="tcaret"></span>'; if(text[i-1]!==' ') tick();
+          if(i>=text.length){ clearInterval(timer); done&&done(); } }, speed); }
+      function play(){ clearInterval(timer); l1.textContent=''; l2.textContent='';
+        type(l1, T1, 55, function(){ l1.textContent=T1; setTimeout(function(){ type(l2, T2, 75, function(){ setTimeout(function(){ l2.textContent=T2; }, 1600); }); }, 250); }); }
+      return {play:play};
+    })();
+    setInterval(function(){ if(!document.hidden) TagType.play(); }, 20000);
+
     /* ── Sound effects (generated live, quiet, only when sound is on) ── */
     var Sfx=(function(){
       function tone(freq, t0, len, vol, type, slideTo){
@@ -1206,7 +1226,7 @@
       // this tap unlocks sound in every browser: wake the single audio engine
       try{ var c0=vctx(); if(c0.resume) c0.resume(); }catch(e){}
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
-      Music.start(); Sfx.boom();
+      Music.start(); Sfx.boom(); setTimeout(TagType.play, 700);
       slides.forEach(function(sl){ if(sl.dataset.audio) loadVoice(sl.dataset.audio); });
       gate.classList.add('out');
       setTimeout(function(){ gate.classList.add('gone'); },800);
