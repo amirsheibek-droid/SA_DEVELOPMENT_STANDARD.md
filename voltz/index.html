@@ -1203,7 +1203,8 @@
     }
     function go(i){
       if(document.body.classList.contains('locked')) return;
-      if(auto && !autoNav) stopAuto(); autoNav=false;
+      // moving around by hand keeps the tour going (only "Stop tour" ends it)
+      if(!autoNav) clearTimeout(autoT); autoNav=false;
       if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
       busy=true; side.classList.remove('open'); audio.pause(); clearInterval(typer);
       zoop();
@@ -1216,24 +1217,31 @@
     document.addEventListener('keydown',function(e){
       if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
       if(document.getElementById('intro').classList.contains('show')) return;
-      if(['ArrowRight','ArrowDown','PageDown',' '].indexOf(e.key)>-1){ e.preventDefault(); go(cur+1); }
-      if(['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key)>-1){ e.preventDefault(); go(cur-1); }
+      if(['ArrowRight','PageDown'].indexOf(e.key)>-1){ e.preventDefault(); go(cur+1); }
+      if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){ e.preventDefault(); go(cur-1); }
     });
-    // wheel: only change page when the page itself isn't scrolling
-    var wheelLock=0;
+    // wheel / trackpad: only change page after a deliberate push past the top or bottom edge
+    var wheelLock=0, wAcc=0, wLast=0, edgeAt=0, edgeDir=0;
     window.addEventListener('wheel',function(e){
-      var s=slides[cur]; if(!s) return; var now=Date.now(); if(now<wheelLock||Math.abs(e.deltaY)<25) return;
-      var atTop=s.scrollTop<=0, atBot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
-      if(e.deltaY>0&&atBot){ wheelLock=now+1100; go(cur+1); } else if(e.deltaY<0&&atTop){ wheelLock=now+1100; go(cur-1); }
+      var s=slides[cur]; if(!s) return; var now=Date.now();
+      if(e.target.closest && e.target.closest('.chat, .side')) return;
+      if(now<wheelLock){ wLast=now; return; }                      // swallow trackpad momentum after a page change
+      var dir=e.deltaY>0?1:-1, atTop=s.scrollTop<=0, atBot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
+      var atEdge=(dir>0&&atBot)||(dir<0&&atTop);
+      if(!atEdge){ wAcc=0; edgeAt=0; wLast=now; return; }
+      if(edgeDir!==dir||!edgeAt||now-wLast>350){ edgeAt=now; edgeDir=dir; wAcc=0; }
+      wLast=now; wAcc+=Math.abs(e.deltaY);
+      if(now-edgeAt>450 && wAcc>260){ wheelLock=now+1600; wAcc=0; edgeAt=0; go(cur+dir); }
     },{passive:true});
-    // swipe
-    var tx=0,ty=0;
-    window.addEventListener('touchstart',function(e){ tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
+    // swipe: sideways only, and it has to be a clear, quick swipe (scrolling up/down never changes page)
+    var tx=0,ty=0,tt=0,tOk=false;
+    window.addEventListener('touchstart',function(e){
+      tOk=e.touches.length===1 && !(e.target.closest && e.target.closest('.chat, .side, input, textarea, button, a, .chip'));
+      tx=e.touches[0].clientX; ty=e.touches[0].clientY; tt=Date.now(); },{passive:true});
     window.addEventListener('touchend',function(e){
-      var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty, s=slides[cur];
-      if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)){ go(dx<0?cur+1:cur-1); return; }
-      if(Math.abs(dy)>70&&s){ var atTop=s.scrollTop<=0, atBot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
-        if(dy<0&&atBot) go(cur+1); else if(dy>0&&atTop) go(cur-1); }
+      if(!tOk) return; tOk=false;
+      var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+      if(Math.abs(dx)>90 && Math.abs(dx)>Math.abs(dy)*2 && Date.now()-tt<700) go(dx<0?cur+1:cur-1);
     },{passive:true});
 
     soundBtn.onclick=function(){
