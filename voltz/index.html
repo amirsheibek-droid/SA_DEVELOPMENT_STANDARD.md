@@ -473,6 +473,10 @@
       background: linear-gradient(110deg, var(--blue), var(--violet) 55%, var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     @media (max-width: 1280px) { .brand-tag { font-size: 14px; padding-left: 14px; } .brand-tag b { font-size: 18px; } }
     @media (max-width: 700px) { .brand-tag { display: none; } }
+    /* ── Why Voltz intro ── */
+    .why-lead { margin: -4px 0 18px; font-size: clamp(15px, 1.3vw, 17px); }
+    .card.mission { background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(124,58,237,.10)); border-color: rgba(124,58,237,.25); }
+    @media (max-width: 900px) { .why-grid .cards { order: 2; } }
   </style>
 </head>
 <body>
@@ -482,14 +486,15 @@
   <!-- Top bar -->
   <div class="topbar">
     <button class="pill menu-btn" id="menu-btn" aria-label="Open menu"><i></i></button>
-    <a class="brand" href="#speak" data-go="speak" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span><i class="brand-tag">Tired of typing?<b>Just talk.</b></i></a>
+    <a class="brand" href="#why" data-go="why" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span><i class="brand-tag">Tired of typing?<b>Just talk.</b></i></a>
     <button class="pill" id="sound-btn" aria-pressed="false">&#9654; Sound on</button>
     <a class="pill primary appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">App Store</a>
   </div>
 
   <!-- Glass side menu -->
   <nav class="side" id="side" aria-label="Pages">
-    <a class="side-brand" href="#speak" data-go="speak"><img src="/voltz/assets/voltz-icon.png" alt=""> Voltz CRM</a>
+    <a class="side-brand" href="#why" data-go="why"><img src="/voltz/assets/voltz-icon.png" alt=""> Voltz CRM</a>
+    <a class="sl" href="#why" data-go="why"><span class="d"></span>Why Voltz</a>
     <div class="grp">Guided tour</div>
     <a class="sl" href="#speak" data-go="speak"><span class="d"></span>Speak a job</a>
     <a class="sl" href="#client" data-go="client"><span class="d"></span>Create a client</a>
@@ -509,10 +514,31 @@
 
   <main class="deck" id="deck">
 
+    <!-- 0 · Why Voltz -->
+    <section class="slide" id="why" data-title="Why Voltz"
+      data-jess="Hey there, I'm Jess. Voltz is made for sole traders: plumbers, electricians, builders and every one-person trade business. You're the boss, the worker and the office all at once, so we built an app that does the paperwork while you talk. Shall I show you how?"
+      data-chips='[["Yes, show me","next"],["Just get the app","get"]]'>
+      <div class="slide-inner cards-grid why-grid">
+        <div class="cards-copy">
+          <span class="label">Built for sole traders</span>
+          <h2>You do the work.<br><em>Voltz does the admin.</em></h2>
+          <p class="lead why-lead">When you work for yourself, you're the boss, the tradesperson and the office. Evenings go on quotes, invoices and chasing money. Voltz gives you that time back. Just talk, and it gets done.</p>
+          <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
+        </div>
+        <div class="cards">
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Made for one-person businesses</h4><p>No teams, no dispatch, no bloat. Just you, your customers and your jobs.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>Talk instead of type</h4><p>Say the job out loud. Voltz books it, adds the client and starts the quote.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>Everything in one app</h4><p>Clients, diary, quotes, invoices, payments and receipts, right on your phone.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Your evenings back</h4><p>Less paperwork, faster quotes, quicker payments. More time for work and home.</p></div>
+          <div class="card wide mission"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>Why we built it</h4><p>We're SA Intelligent Designs. We build tools that help sole traders win more work with less paperwork, so running your own business feels a little lighter.</p></div>
+        </div>
+      </div>
+    </section>
+
     <!-- 2 · Speak a job -->
     <section class="slide" id="speak" data-audio="/voltz/assets/jess/speak.m4a" data-title="Speak a job"
       data-jess="Hey there, I'm Jess, your Voltz assistant. This is your home screen. Tap the mic and tell me about a job, like: boiler service for John on Friday at two. I'll book it in, create the client and start the quote. Shall I show you around?"
-      data-chips='[["Yes, show me","next"],["Just get the app","get"]]'>
+      data-chips='[["Show me how I add a client","next"]]'>
       <div class="slide-inner screen-grid">
         <div class="screen-copy">
           <div class="brandline"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM" width="56" height="56"><div><strong>Voltz CRM</strong><span>The field CRM for sole traders</span></div></div>
@@ -710,7 +736,7 @@
     <!-- 12 · Get Voltz -->
     <section class="slide" id="get" data-audio="/voltz/assets/jess/get.m4a" data-title="Get Voltz"
       data-jess="That's the tour. Download Voltz from the App Store and I'll be ready when you are. Speak soon!"
-      data-chips='[["Start the tour again","speak"]]'>
+      data-chips='[["Start the tour again","why"]]'>
       <div class="slide-inner final">
         <img class="hero-icon" src="/voltz/assets/voltz-icon.png" alt="" width="168" height="168" loading="lazy">
         <h2>Less admin.<br><em>More work done.</em></h2>
@@ -1110,6 +1136,8 @@
       // this tap unlocks sound in every browser: prime Jess's audio + the zoop
       try{ audio.muted=true; audio.src=slides[0].dataset.audio; var pp=audio.play(); if(pp&&pp.then) pp.then(function(){ audio.pause(); audio.muted=false; }).catch(function(){ audio.muted=false; }); }catch(e){}
       try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); if(actx.resume) actx.resume(); }catch(e){}
+      soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
+      Music.start();
       gate.classList.add('out');
       setTimeout(function(){ gate.classList.add('gone'); },800);
       setTimeout(function(){
