@@ -879,6 +879,14 @@
     }
     .feature-text { max-width: 440px; }
 
+    /* Demo + Dave sections use the exact same layout as the feature rows */
+    .demo-inner { max-width: 1000px; gap: 80px; justify-content: center; }
+    .demo-steps { flex: 0 1 440px; }
+    .demo-phone-wrap { width: 300px; }
+    .hero-dave { gap: 80px; }
+    .dave-phone { width: 300px; }
+    .dave-info { max-width: 440px; }
+
     /* ─── ALSO IN VOLTZ GRID ─────────────────────────────────── */
     .more-section { position: relative; z-index: 1; padding: 96px 24px 40px; }
     .more-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
@@ -908,6 +916,10 @@
       }
       .feature-phone-wrap { width: 260px; margin: 0 auto; }
       .feature-text { margin: 0 auto; }
+      .demo-inner { gap: 48px; }
+      .demo-steps { flex: none; width: 100%; max-width: 440px; }
+      .demo-phone-wrap { width: 260px; margin: 0 auto; }
+      .dave-phone { width: 260px !important; }
       .dave-info { text-align: center; max-width: 100%; }
       .hero-dave { flex-direction: column; gap: 32px; }
       .dave-phone { width: 185px; }
