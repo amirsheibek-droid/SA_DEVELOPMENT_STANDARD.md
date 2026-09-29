@@ -906,8 +906,8 @@
             chipT=setTimeout(function(){ chips.classList.add('show'); },120);
             autoAfter(line);
           }
-        }, 20);
-      }, 650);
+        }, 13);
+      }, 180);
     }
 
     /* ── Company details: fill in and they show on the site ── */
@@ -964,7 +964,7 @@
     /* ── Background music: generated live (no files, no licences), builds as the tour goes on ── */
     var Music=window.VzMusic=(function(){
       var ctx=null, master=null, duck=null, timer=null, playing=false, step=0, nextT=0, intensity=0, duckLevel=1;
-      var BPM=108, SIXTEENTH=60/BPM/4;
+      var BPM=124, SIXTEENTH=60/BPM/4;
       // I – V – vi – IV in C major (uplifting), 2 bars each
       var CHORDS=[[48,52,55,60],[43,50,55,59],[45,52,57,60],[41,48,53,57]];
       var ARP=[0,1,2,3,2,1,3,2];
@@ -982,7 +982,7 @@
         notes.forEach(function(n){
           var o=ctx.createOscillator(), o2=ctx.createOscillator(), f=ctx.createBiquadFilter(), g=ctx.createGain();
           o.type='sawtooth'; o2.type='triangle'; o.frequency.value=hz(n); o2.frequency.value=hz(n)*1.003;
-          f.type='lowpass'; f.frequency.value=700+intensity*1400; f.Q.value=0.6;
+          f.type='lowpass'; f.frequency.value=1100+intensity*1900; f.Q.value=0.6;
           g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.028,t+0.9); g.gain.setValueAtTime(0.028,t+len-0.6); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
           o.connect(f); o2.connect(f); f.connect(g); g.connect(master);
           o.start(t); o2.start(t); o.stop(t+len+0.05); o2.stop(t+len+0.05);
@@ -1011,26 +1011,48 @@
         s.buffer=noiseBuf; f.type='highpass'; f.frequency.value=8000; env(g,t,0.002,vol,0.04);
         s.connect(f); f.connect(g); g.connect(master); s.start(t);
       }
+      function clap(t,vol){
+        if(!noiseBuf){ noiseBuf=ctx.createBuffer(1,ctx.sampleRate*0.05,ctx.sampleRate); var d=noiseBuf.getChannelData(0); for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; }
+        var s=ctx.createBufferSource(), f=ctx.createBiquadFilter(), g=ctx.createGain();
+        s.buffer=noiseBuf; f.type='bandpass'; f.frequency.value=1800; f.Q.value=0.8; env(g,t,0.003,vol,0.12);
+        s.connect(f); f.connect(g); g.connect(master); s.start(t);
+      }
+      function riser(t,len,vol){
+        var n=ctx.createBuffer(1,ctx.sampleRate*len,ctx.sampleRate), d=n.getChannelData(0);
+        for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+        var s=ctx.createBufferSource(), f=ctx.createBiquadFilter(), g=ctx.createGain();
+        s.buffer=n; f.type='bandpass'; f.Q.value=2;
+        f.frequency.setValueAtTime(400,t); f.frequency.exponentialRampToValueAtTime(7000,t+len);
+        g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol,t+len*0.95); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
+        s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t+len);
+      }
       function schedule(){
         while(nextT < ctx.currentTime + 0.15){
-          var bar=Math.floor(step/16), chord=CHORDS[Math.floor(bar/2)%4], s16=step%16;
+          var bar=Math.floor(step/16), chord=CHORDS[Math.floor(bar/2)%4], s16=step%16, e=0.35+intensity*0.65;
           if(step%32===0) pad(chord,nextT,SIXTEENTH*32);
-          if(intensity>0.15 && s16%8===0) bass(chord[0],nextT,SIXTEENTH*7);
-          var arpOn = intensity<0.35 ? (s16%4===0) : (intensity<0.7 ? (s16%2===0) : true);
-          if(arpOn) pluck(chord[ARP[s16%8]]+12+(intensity>0.8 && s16%4===3?12:0), nextT, 0.03+intensity*0.02);
-          if(intensity>0.45 && s16%4===0) kick(nextT);
-          if(intensity>0.6 && s16%4===2) hat(nextT,0.02+intensity*0.02);
+          // four-on-the-floor kick from the start
+          if(s16%4===0) kick(nextT);
+          // pumping off-beat bass
+          if(s16%4===2) bass(chord[0],nextT,SIXTEENTH*1.8);
+          // bright 16th sparkle arpeggio, octave jumps as it builds
+          pluck(chord[ARP[s16%8]]+12+((e>0.7 && s16%8===7)?12:0), nextT, 0.028+e*0.022);
+          // off-beat hats, 16ths when it's peaking
+          if(s16%4===2 || (e>0.75 && s16%2===1)) hat(nextT,0.018+e*0.025);
+          // claps on 2 and 4 once it's warmed up
+          if(e>0.5 && (s16===4 || s16===12)) clap(nextT,0.05+e*0.04);
+          // rising whoosh into every 8th bar
+          if(step%128===96) riser(nextT, SIXTEENTH*32, 0.04+e*0.05);
           nextT+=SIXTEENTH; step++;
         }
       }
       return {
         start:function(){ try{ init(); if(ctx.resume) ctx.resume(); if(playing) return; playing=true; step=0; nextT=ctx.currentTime+0.1;
-          master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.0001,ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.55,ctx.currentTime+2.5);
+          master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.0001,ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.7,ctx.currentTime+1.5);
           timer=setInterval(schedule,50); }catch(e){} },
         stop:function(){ if(!playing||!ctx) return; playing=false; clearInterval(timer);
           master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value||0.3,ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+1.2); },
         setIntensity:function(x){ intensity=Math.max(0,Math.min(1,x)); },
-        duck:function(on){ if(!ctx) return; var v=on?0.35:1; duck.gain.cancelScheduledValues(ctx.currentTime); duck.gain.setTargetAtTime(v,ctx.currentTime,on?0.08:0.6); }
+        duck:function(on){ if(!ctx) return; var v=on?0.4:1; duck.gain.cancelScheduledValues(ctx.currentTime); duck.gain.setTargetAtTime(v,ctx.currentTime,on?0.08:0.6); }
       };
     })();
 
@@ -1051,7 +1073,7 @@
       if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
       busy=true; side.classList.remove('open'); audio.pause(); clearInterval(typer);
       zoop();
-      transition(slides[cur], slides[i], i>cur?1:-1, function(){ show(i); }, function(){ busy=false; runJess(slides[i]); });
+      transition(slides[cur], slides[i], i>cur?1:-1, function(){ show(i); runJess(slides[i]); }, function(){ busy=false; });
     }
     prevB.onclick=function(){ go(cur-1); };
     nextB.onclick=function(){ go(cur===slides.length-1?0:cur+1); };
@@ -1138,6 +1160,7 @@
       try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); if(actx.resume) actx.resume(); }catch(e){}
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
       Music.start();
+      slides.forEach(function(sl){ if(sl.dataset.audio){ var a=new Audio(); a.preload='auto'; a.src=sl.dataset.audio; } });
       gate.classList.add('out');
       setTimeout(function(){ gate.classList.add('gone'); },800);
       setTimeout(function(){
