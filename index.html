@@ -379,6 +379,7 @@ header nav a.on{color:var(--accent)}
 .wz-dots button{width:8px;height:8px;border-radius:8px;border:none;padding:0;background:rgba(255,255,255,.22);cursor:pointer;transition:all .3s}
 .wz-dots button.on{width:24px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
 .wz-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);min-width:118px;text-align:center}
+@media(max-width:1000px){.wz-label{display:none}}
 @media(max-width:700px){
   .wz-ctrl{bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));justify-content:space-between;background:rgba(12,11,16,.92);border-top:1px solid var(--border-dim);backdrop-filter:blur(12px)}
   .wz-dots{display:none}
