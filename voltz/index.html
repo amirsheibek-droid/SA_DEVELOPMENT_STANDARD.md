@@ -925,8 +925,6 @@
       setTimeout(function(){ runJess(slides[cur]); },250);
     }
     function askTour(){
-      var tourSeen=recall('voltzTourSeen')==='1';
-      if(tourSeen || startAt()!==0){ begin(false); return; }
       ask.classList.add('show'); ask.setAttribute('aria-hidden','false');
     }
     document.getElementById('ask-yes').onclick=function(){ ask.classList.remove('show'); ask.setAttribute('aria-hidden','true'); begin(true); };
