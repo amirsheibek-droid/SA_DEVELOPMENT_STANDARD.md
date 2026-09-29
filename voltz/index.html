@@ -874,8 +874,8 @@
       audio.paused=false; audio.ended=false;          // busy while the clip loads, so the tour waits
       loadVoice(url).then(function(buf){
         if(cur!==mine || !soundOn){ audio.paused=true; audio.ended=true; return; }
-        if(!voiceGain){ voiceGain=c.createGain(); voiceGain.gain.value=1; voiceGain.connect(c.destination); }
-        var src=c.createBufferSource(); src.buffer=buf; src.connect(voiceGain);
+        if(!voiceGain){ voiceGain=c.createGain(); voiceGain.gain.value=1.25; voiceGain.connect(c.destination); }
+        var src=c.createBufferSource(); src.buffer=buf; src.playbackRate.value=1.06; src.connect(voiceGain);  // a touch quicker and brighter = more upbeat
         src.onended=function(){ if(voiceSrc!==src) return; voiceSrc=null; audio.paused=true; audio.ended=true;
           el&&el.classList.remove('talking'); if(window.VzMusic) VzMusic.duck(false); };
         voiceSrc=src; el&&el.classList.add('talking'); if(window.VzMusic) VzMusic.duck(true);
@@ -1070,12 +1070,12 @@
       }
       return {
         start:function(){ try{ init(); if(ctx.resume) ctx.resume(); if(playing) return; playing=true; step=0; nextT=ctx.currentTime+0.1;
-          master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.0001,ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.7,ctx.currentTime+1.5);
+          master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.0001,ctx.currentTime); master.gain.exponentialRampToValueAtTime(1.0,ctx.currentTime+1.5);
           timer=setInterval(schedule,50); }catch(e){} },
         stop:function(){ if(!playing||!ctx) return; playing=false; clearInterval(timer);
           master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value||0.3,ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+1.2); },
         setIntensity:function(x){ intensity=Math.max(0,Math.min(1,x)); },
-        duck:function(on){ if(!ctx) return; var v=on?0.4:1; duck.gain.cancelScheduledValues(ctx.currentTime); duck.gain.setTargetAtTime(v,ctx.currentTime,on?0.08:0.6); }
+        duck:function(on){ if(!ctx) return; var v=on?0.5:1; duck.gain.cancelScheduledValues(ctx.currentTime); duck.gain.setTargetAtTime(v,ctx.currentTime,on?0.08:0.6); }
       };
     })();
 
