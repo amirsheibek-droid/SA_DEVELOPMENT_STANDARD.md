@@ -454,11 +454,89 @@ body.wiz main > section{perspective:1600px}
 .asm-piece{will-change:transform,opacity}
 .asm-lock{box-shadow:0 0 0 1px rgba(31,107,255,.55),0 0 26px rgba(31,107,255,.35)!important;transition:box-shadow .5s}
 
+/* =================== BRAINTRIX: enter the mind, pages live in nodes, AI guide =================== */
+body.pre-entry header, body.pre-entry main, body.pre-entry .wz-ctrl, body.pre-entry #cookiePop, body.pre-entry .guide{opacity:0!important;pointer-events:none!important}
+header, main, .wz-ctrl{transition:opacity .9s ease}
+.btx{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.15) 0%,rgba(243,246,251,.55) 60%,rgba(220,228,240,.85) 100%);transition:opacity 1.1s ease,transform 1.4s cubic-bezier(.5,0,.2,1),filter 1.1s}
+.btx.go{opacity:0;transform:scale(1.8);filter:blur(10px);pointer-events:none}
+.btx.gone{display:none}
+.btx-in{max-width:760px}
+.btx-eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);opacity:0;animation:btxUp 1s .2s forwards}
+.btx h1{margin-top:18px;font-size:clamp(3rem,9vw,6.4rem);font-weight:900;letter-spacing:-.04em;line-height:.95;
+  background:linear-gradient(180deg,#0a1530 0%,#34466e 55%,#8c9ab3 100%);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;animation:btxUp 1.1s .4s forwards}
+.btx h1 b{background:linear-gradient(90deg,#1f6bff,#12a8ff 45%,#12d98a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btx p{margin:20px auto 0;max-width:520px;color:var(--mute);font-size:1.08rem;opacity:0;animation:btxUp 1.1s .65s forwards}
+.btx-btn{position:relative;margin-top:44px;width:150px;height:150px;border-radius:50%;border:0;cursor:pointer;color:#fff;font-weight:800;font-size:1.02rem;letter-spacing:.06em;text-transform:uppercase;
+  background:radial-gradient(circle at 35% 30%,#6aa8ff,#1f6bff 45%,#0b3fb8 100%);box-shadow:0 0 0 10px rgba(31,107,255,.12),0 24px 60px rgba(31,107,255,.45),0 0 60px rgba(18,217,138,.35);
+  opacity:0;animation:btxUp 1.1s .9s forwards;transition:transform .25s}
+.btx-btn:hover{transform:scale(1.06)}
+.btx-btn::before,.btx-btn::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:2px solid rgba(31,107,255,.45);animation:btxRing 2.4s ease-out infinite}
+.btx-btn::after{border-color:rgba(18,217,138,.45);animation-delay:1.2s}
+.btx-btn span{display:block;font-size:.66rem;letter-spacing:.2em;opacity:.8;margin-top:4px}
+.btx.go .btx-btn{transform:scale(.2)}
+.btx-foot{position:absolute;bottom:22px;left:0;right:0;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute2)}
+@keyframes btxUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes btxRing{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+#warpFlash.big{background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(255,255,255,.95) 40%,rgba(200,225,255,.6) 70%,transparent 100%);transition:opacity .9s}
+/* page names floating beside their nodes */
+#nodeLabels{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.node-label{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:#1f6bff;padding:5px 11px;border-radius:100px;background:rgba(255,255,255,.72);border:1px solid rgba(31,107,255,.28);box-shadow:0 6px 18px rgba(31,107,255,.15);transition:opacity .35s}
+/* the AI guide */
+.guide{position:fixed;z-index:65;left:20px;bottom:86px;width:min(440px,calc(100vw - 28px));transition:transform .5s cubic-bezier(.2,.9,.25,1.1),opacity .4s}
+.guide.hide{transform:translateY(30px);opacity:0;pointer-events:none}
+.guide-card{border-radius:22px;padding:16px 16px 14px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid rgba(255,255,255,.95);box-shadow:0 24px 60px -18px rgba(20,50,120,.35)}
+.guide-top{display:flex;align-items:center;gap:12px}
+.orb{position:relative;width:46px;height:46px;border-radius:50%;flex:0 0 auto;background:radial-gradient(circle at 35% 30%,#bfe0ff,#1f6bff 55%,#0a3cb0);box-shadow:0 0 20px rgba(31,107,255,.5)}
+.orb::before,.orb::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid rgba(18,217,138,.6);opacity:0}
+.guide.talking .orb::before{animation:btxRing 1.4s ease-out infinite}.guide.talking .orb::after{animation:btxRing 1.4s .7s ease-out infinite}
+.guide.talking .orb{animation:orbPulse .6s ease-in-out infinite alternate}
+@keyframes orbPulse{to{box-shadow:0 0 34px rgba(18,217,138,.75)}}
+.guide-name b{display:block;font-size:.95rem;color:var(--ink)}.guide-name span{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.guide-tools{margin-left:auto;display:flex;gap:6px}
+.guide-tools button{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.8);color:var(--ink);font-size:.9rem;line-height:1;cursor:pointer}
+.guide-text{margin-top:12px;color:var(--ink);font-size:.95rem;line-height:1.55;min-height:3em}
+.guide-text .caret{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:gBlink .8s steps(1) infinite}
+@keyframes gBlink{50%{opacity:0}}
+.guide-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.guide-chips button{padding:10px 15px;border-radius:100px;font-weight:700;font-size:.85rem;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--ink)}
+.guide-chips button.go{background:linear-gradient(135deg,#1f6bff,#0fbf78);color:#fff;border-color:transparent;box-shadow:0 10px 24px -8px rgba(31,107,255,.6)}
+.guide-mini{position:fixed;z-index:65;left:20px;bottom:86px;display:none;align-items:center;gap:10px;padding:8px 16px 8px 8px;border-radius:100px;border:1px solid rgba(255,255,255,.95);
+  background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 14px 34px -12px rgba(20,50,120,.35);cursor:pointer;font-weight:700;color:var(--ink)}
+.guide-mini .orb{width:36px;height:36px}
+.guide-mini.show{display:inline-flex}
+@media(max-width:700px){.guide,.guide-mini{left:12px;bottom:calc(74px + env(safe-area-inset-bottom))}.guide-text{font-size:.9rem}}
+
 </style>
 </head>
-<body>
+<body class="pre-entry">
 
 <div id="neural" aria-hidden="true"></div>
+<div class="btx" id="btx" role="dialog" aria-label="Enter S·A Intelligent Designs">
+  <div class="btx-in">
+    <div class="btx-eyebrow">S·A Intelligent Designs &middot; SA Marketing Intelligence</div>
+    <h1>Enter the <b>Braintrix</b></h1>
+    <p>We build AI apps and intelligent websites. Step inside the mind that builds them.</p>
+    <button class="btx-btn" id="btxEnter">Enter<span>the mind</span></button>
+  </div>
+  <div class="btx-foot">Sound on for the full experience</div>
+</div>
+<div id="nodeLabels" aria-hidden="true"></div>
+<div class="guide hide" id="guide" role="region" aria-label="S·A AI guide" aria-live="polite">
+  <div class="guide-card">
+    <div class="guide-top">
+      <div class="orb" aria-hidden="true"></div>
+      <div class="guide-name"><b>Sia</b><span>S·A AI guide</span></div>
+      <div class="guide-tools"><button id="gVoice" aria-label="Voice on or off" title="Voice on / off">&#128266;</button><button id="gMin" aria-label="Minimise guide" title="Minimise">&minus;</button></div>
+    </div>
+    <div class="guide-text" id="gText"></div>
+    <div class="guide-chips" id="gChips"></div>
+  </div>
+</div>
+<button class="guide-mini" id="gMini" aria-label="Open the AI guide"><span class="orb" aria-hidden="true"></span><span id="gMiniTxt">Show me around</span></button>
+
 <div id="warpFlash" aria-hidden="true"></div>
 <div id="dissolve" aria-hidden="true"></div>
 
@@ -984,6 +1062,7 @@ setTimeout(()=>{
     slides[i].querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
     if(history.replaceState) history.replaceState(null,'','#'+ids[i]);
     if(window.SANeural) SANeural.page(ids[i]);
+    if(window.SAGuide) SAGuide.onPage(ids[i]);
   }
   function go(i){
     if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
@@ -1025,11 +1104,116 @@ setTimeout(()=>{
     var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
     if(Math.abs(dx)>90&&Math.abs(dx)>Math.abs(dy)*2) go(dx<0?cur+1:cur-1);
   },{passive:true});
-  var start=ids.indexOf(location.hash.slice(1)); show(start<0?0:start);
+  show(0);   // everyone starts at Home, inside the brain
+  window.SAWizard={go:go,show:show,index:function(){ return cur; },ids:ids,count:slides.length};
+})();
+</script>
+<script>
+/* ── Braintrix entry + Sia, the AI voice guide ── */
+(function(){
+  var btx=document.getElementById('btx'), btn=document.getElementById('btxEnter'), flash=document.getElementById('warpFlash');
+  var guide=document.getElementById('guide'), gText=document.getElementById('gText'), gChips=document.getElementById('gChips'),
+      gMini=document.getElementById('gMini'), gMiniTxt=document.getElementById('gMiniTxt'), gVoice=document.getElementById('gVoice');
+  var LINES={
+    home:"Welcome inside the S·A mind. I'm Sia, the AI guide for S·A Intelligent Designs, the studio behind SA Marketing Intelligence. We build AI-powered apps and intelligent websites that help businesses work smarter and win more customers. Would you like me to show you around?",
+    packages:"These are our services. Launch is a sharp, single-page website that gets you online and bringing in enquiries fast. Signature is a fully bespoke, multi-page site with its own creative direction. Every package starts with a free mock-up, and hosting is free.",
+    referral:"Our referral programme. Refer a client who takes our care plan, and you keep one hundred percent of their first month's fee. It costs you, and them, nothing extra.",
+    portfolio:"Here's what we've built. Voltz CRM, our voice-first app for sole traders, and NEX License are live. Qlarvia, Contract Analyser and more are being built by our engineering team right now.",
+    process:"Five simple steps. A free consultation, a free mock-up, a fixed written quote, the build, then launch. The common questions below cover costs and what you own.",
+    book:"Ready to build something intelligent? Tell us about your project here, or message us directly. We reply within one working day.",
+    about:"And that's the S·A mind: intelligent websites and mobile apps for specialist niches, across Milton Keynes, Bedford and London. Book your free consultation whenever you're ready."
+  };
+  var synth=window.speechSynthesis||null, voice=null, voiceOn=true, tour=false, tourNav=false, typer=null, nextT=null, speakId=0, entered=false;
+  try{ voiceOn=sessionStorage.getItem('saVoice')!=='off'; }catch(e){}
+  function pickVoice(){ if(!synth) return; var vs=synth.getVoices(); if(!vs.length) return;
+    var pref=['Google UK English Female','Serena','Kate','Stephanie','Martha','Microsoft Libby','Microsoft Sonia','Samantha','Karen','Moira','Google US English'];
+    for(var i=0;i<pref.length;i++){ for(var j=0;j<vs.length;j++){ if(vs[j].name.indexOf(pref[i])>-1){ voice=vs[j]; return; } } }
+    for(var k=0;k<vs.length;k++){ if(/^en[-_]GB/i.test(vs[k].lang)){ voice=vs[k]; return; } }
+    for(var m=0;m<vs.length;m++){ if(/^en/i.test(vs[m].lang)){ voice=vs[m]; return; } } }
+  if(synth){ pickVoice(); if(synth.addEventListener) synth.addEventListener('voiceschanged',pickVoice); else synth.onvoiceschanged=pickVoice; }
+  function setVoiceBtn(){ gVoice.innerHTML=voiceOn?'&#128266;':'&#128263;'; gVoice.setAttribute('aria-pressed',voiceOn?'true':'false'); }
+  setVoiceBtn();
+  function stopSpeech(){ speakId++; if(synth) try{ synth.cancel(); }catch(e){} guide.classList.remove('talking'); }
+  function speak(text, done){
+    stopSpeech(); var id=speakId;
+    var finish=function(){ if(id!==speakId) return; guide.classList.remove('talking'); done&&done(); };
+    if(!synth||!voiceOn){ setTimeout(finish, Math.max(3800, text.length*52)); return; }
+    var parts=text.match(/[^.!?]+[.!?]*/g)||[text], i=0; guide.classList.add('talking');
+    (function next(){ if(id!==speakId) return; if(i>=parts.length){ finish(); return; }
+      var u=new SpeechSynthesisUtterance(parts[i++].trim()); if(voice) u.voice=voice; u.lang=voice?voice.lang:'en-GB'; u.rate=1.04; u.pitch=1.06;
+      var guard=setTimeout(next, 9000+u.text.length*90);            // some browsers never fire onend
+      u.onend=u.onerror=function(){ clearTimeout(guard); next(); };
+      try{ synth.speak(u); }catch(e){ clearTimeout(guard); finish(); } })();
+  }
+  function type(text){ clearInterval(typer); var i=0; gText.innerHTML='<span class="caret"></span>';
+    typer=setInterval(function(){ i+=2; gText.innerHTML=text.slice(0,i).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="caret"></span>';
+      if(i>=text.length){ clearInterval(typer); gText.textContent=text; } },18); }
+  function chips(list){ gChips.innerHTML=''; list.forEach(function(c,k){ var b=document.createElement('button'); b.textContent=c[0]; if(k===0) b.className='go'; b.onclick=c[1]; gChips.appendChild(b); }); }
+  function openGuide(){ guide.classList.remove('hide'); gMini.classList.remove('show'); }
+  function minimise(label){ guide.classList.add('hide'); gMiniTxt.textContent=label||(tour?'Tour running':'Show me around'); gMini.classList.add('show'); }
+  function ids(){ return window.SAWizard?SAWizard.ids:[]; }
+  function goNext(){ var W=window.SAWizard; if(!W) return; var i=W.index();
+    if(i>=W.count-1){ endTour(true); return; } tourNav=true; W.go(i+1); }
+  function startTour(fromHere){
+    tour=true; openGuide(); clearTimeout(nextT);
+    var W=window.SAWizard; if(!fromHere && W && W.index()!==0){ tourNav=true; W.go(0); return; }
+    if(W && W.index()===0 && !fromHere){ tourNav=true; W.go(1); return; }
+    onPage(ids()[W?W.index():0]);
+  }
+  function stopTour(){ tour=false; clearTimeout(nextT); stopSpeech(); chips([['Continue the tour',function(){ startTour(true); }],['Hide',function(){ minimise(); }]]); }
+  function endTour(){ tour=false; clearTimeout(nextT);
+    chips([['Book a free consultation',function(){ var W=window.SAWizard; if(W) W.go(W.ids.indexOf('book')); minimise('Ask Sia'); }],['Start the tour again',function(){ startTour(false); }]]); }
+  function onPage(id){
+    if(!entered) return;
+    var text=LINES[id]||''; clearTimeout(nextT);
+    if(tour){
+      openGuide(); type(text);
+      chips([['Stop tour',stopTour],['Skip',function(){ clearTimeout(nextT); stopSpeech(); goNext(); }]]);
+      speak(text,function(){ if(!tour) return; nextT=setTimeout(goNext, 1400); });
+    } else {
+      stopSpeech();
+      if(!guide.classList.contains('hide')){ type(text); chips([['Show me around from here',function(){ startTour(true); }],['Hide',function(){ minimise(); }]]); }
+    }
+    tourNav=false;
+  }
+  window.SAGuide={onPage:onPage};
+  gVoice.onclick=function(){ voiceOn=!voiceOn; setVoiceBtn(); try{ sessionStorage.setItem('saVoice',voiceOn?'on':'off'); }catch(e){} if(!voiceOn) stopSpeech(); };
+  document.getElementById('gMin').onclick=function(){ minimise(); };
+  gMini.onclick=function(){ openGuide(); if(!tour){ var W=window.SAWizard; startTour(!!(W && W.index()>0)); } };
+  // manual navigation during a tour keeps it going from the new page (handled by onPage)
+
+  // a soft whoosh when the brain pulls you in
+  function whoosh(){ try{ var C=window.AudioContext||window.webkitAudioContext; if(!C) return; var c=new C(), n=c.currentTime, d=2.4;
+    var b=c.createBuffer(1,c.sampleRate*d,c.sampleRate), x=b.getChannelData(0); for(var i=0;i<x.length;i++) x[i]=Math.random()*2-1;
+    var s=c.createBufferSource(); s.buffer=b; var f=c.createBiquadFilter(); f.type='bandpass'; f.Q.value=.9;
+    f.frequency.setValueAtTime(180,n); f.frequency.exponentialRampToValueAtTime(2600,n+d*.8);
+    var g=c.createGain(); g.gain.setValueAtTime(.0001,n); g.gain.exponentialRampToValueAtTime(.22,n+d*.7); g.gain.exponentialRampToValueAtTime(.0001,n+d);
+    var o=c.createOscillator(); o.frequency.setValueAtTime(55,n); o.frequency.exponentialRampToValueAtTime(140,n+d); var og=c.createGain();
+    og.gain.setValueAtTime(.0001,n); og.gain.exponentialRampToValueAtTime(.18,n+d*.75); og.gain.exponentialRampToValueAtTime(.0001,n+d);
+    s.connect(f); f.connect(g); g.connect(c.destination); o.connect(og); og.connect(c.destination); s.start(n); o.start(n); s.stop(n+d); o.stop(n+d); }catch(e){} }
+
+  btn.onclick=function(){
+    if(entered) return;
+    // unlock speech on iPhone/iPad: it has to start inside the tap
+    if(synth){ try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; synth.speak(u); }catch(e){} }
+    whoosh(); btx.classList.add('go');
+    var W=window.SAWizard; if(W) W.show(0);
+    var arrive=function(){
+      entered=true;
+      if(flash){ flash.classList.add('big','on'); setTimeout(function(){ flash.classList.remove('on'); setTimeout(function(){ flash.classList.remove('big'); },900); },180); }
+      document.body.classList.remove('pre-entry'); setTimeout(function(){ btx.classList.add('gone'); },1200);
+      var home=document.getElementById('home'); if(window.SAAssemble) setTimeout(function(){ SAAssemble(home); },120);
+      setTimeout(function(){ openGuide(); type(LINES.home);
+        chips([['Yes, show me around',function(){ startTour(false); }],["I'll explore myself",function(){ stopSpeech(); minimise(); }]]);
+        speak(LINES.home,function(){}); }, 1500);
+    };
+    if(window.SANeural && SANeural.enter) SANeural.enter(arrive); else setTimeout(arrive,600);
+  };
+  document.addEventListener('keydown',function(e){ if(!entered && (e.key==='Enter'||e.key===' ') && document.activeElement!==btn){ e.preventDefault(); btn.click(); } });
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/neural-bg.js?v=3"></script>
+<script src="/assets/neural-bg2.js?v=1"></script>
 
 <script>
 /* ── Site assembly: on every page, the blocks spin in from deep space and clamp together ── */
@@ -1061,7 +1245,6 @@ setTimeout(()=>{
   }
   // run on the first page, then every time the wizard changes page
   window.SAAssemble=assemble;
-  var act=document.querySelector('main > section.active'); if(act) setTimeout(function(){ assemble(act); },60);
   new MutationObserver(function(ms){ ms.forEach(function(m){ var el=m.target;
     if(el.classList && el.classList.contains('active') && el.classList.contains('entering')) assemble(el); }); })
     .observe(document.querySelector('main'),{subtree:true,attributes:true,attributeFilter:['class']});
