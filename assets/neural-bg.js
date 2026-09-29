@@ -11,8 +11,8 @@
   renderer.setClearColor(0x000000,0);
   host.appendChild(renderer.domElement);
   var scene=new T.Scene();
-  scene.fog=new T.Fog(0xeef2f8, 70, 230);
-  var cam=new T.PerspectiveCamera(60,1,0.1,400);
+  scene.fog=new T.Fog(0xeef2f8, 80, 280);
+  var cam=new T.PerspectiveCamera(60,1,0.1,500);
   function size(){ var w=innerWidth,h=innerHeight; renderer.setSize(w,h); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   size(); addEventListener('resize',size);
 
@@ -140,6 +140,7 @@
   }
   function warp(dir){ speed=220; rotTarget+=(dir||1)*1.1; shake=1; burst(40); if(Math.random()<.9) setTimeout(spawnPair,350); }
 
+  var fly={mode:'return',t:0,next:16,v:0}, tmpV=new T.Vector3();
   var clock=new T.Clock(), pairT=0.4, soloT=1.2, running=true;
   document.addEventListener('visibilitychange',function(){ running=!document.hidden; if(running){ clock.getDelta(); loop(); } });
   function frame(dt){
@@ -154,7 +155,21 @@
     rotY+=dt*0.08; rotTarget+=dt*0.08;
     brain.rotation.y+=(rotTarget-brain.rotation.y)*Math.min(1,dt*1.8);
     brain.rotation.x=Math.sin(t*.2)*.08-0.12;
-    brain.position.lerp(brainTo,Math.min(1,dt*1.5));
+    // flight path: drift away and back, then every so often fly straight through us and return from deep space
+    fly.t+=dt;
+    if(fly.mode==='rest'){
+      var bob=Math.sin(fly.t*.45)*14;                               // breathe away and closer
+      tmpV.copy(brainTo); tmpV.z+=bob-6;
+      brain.position.lerp(tmpV,Math.min(1,dt*1.2));
+      if(fly.t>fly.next){ fly.mode='pass'; fly.t=0; fly.v=6; }
+    } else if(fly.mode==='pass'){
+      fly.v=Math.min(fly.v+dt*55,95);
+      brain.position.z+=fly.v*dt; brain.position.x+=(0-brain.position.x)*Math.min(1,dt*1.2); brain.position.y+=(-1-brain.position.y)*Math.min(1,dt*1.2);
+      if(brain.position.z>28){ brain.position.set(brainTo.x*.4, brainTo.y+rnd(-6,6), -270); fly.mode='return'; fly.t=0; burst(30); }
+    } else {
+      brain.position.lerp(brainTo,Math.min(1,dt*.55));
+      if(Math.abs(brain.position.z-brainTo.z)<3){ fly.mode='rest'; fly.t=0; fly.next=rnd(14,22); }
+    }
     var sc=brain.scale.x+(scaleTo-brain.scale.x)*Math.min(1,dt*1.5); brain.scale.setScalar(sc*(1+Math.sin(t*1.3)*.012));
     core.material.opacity=(brain.scale.x>1.3?.12:.26)+Math.sin(t*1.7)*.06;
     for(var k=0;k<NP;k++){ var p=pulses[k], E=edges[p.e]; p.t+=dt*p.v;
@@ -191,7 +206,7 @@
   }
   function loop(){ if(!running) return; var dt=Math.min(clock.getDelta(),.05); frame(dt); renderer.render(scene,cam); requestAnimationFrame(loop); }
   window.SANeural={warp:warp,page:page};
-  page((location.hash||'#home').slice(1)||'home'); brain.position.copy(brainTo);
+  page((location.hash||'#home').slice(1)||'home'); brain.position.set(brainTo.x*.4, brainTo.y, -270);   // first arrives from deep space
   if(reduce){ frame(0.016); renderer.render(scene,cam); window.SANeural.warp=function(){}; return; }
   loop();
 })();

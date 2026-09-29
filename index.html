@@ -7,7 +7,7 @@
 <meta name="description" content="S·A Intelligent Designs builds intelligent websites with full SEO support and develops mobile applications for specialist niches, serving Milton Keynes, Bedford and London. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="S·A Intelligent Designs — SA Marketing Intelligence">
-<meta name="theme-color" content="#0c0b10">
+<meta name="theme-color" content="#f3f6fb">
 <link rel="canonical" href="https://www.samarketingintelligence.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="S·A Intelligent Designs">
@@ -366,7 +366,7 @@ body.wiz .about-slide footer{border-top:none;padding:0}
 body.wiz main > section.leaving{animation:wzOut .38s cubic-bezier(.4,0,.2,1) forwards;pointer-events:none}
 body.wiz main > section.entering{animation:wzIn .7s cubic-bezier(.16,1,.3,1) both}
 @keyframes wzOut{to{opacity:0;transform:translateX(calc(var(--dir,1) * -48px)) scale(.97);filter:blur(8px)}}
-@keyframes wzIn{from{opacity:0;transform:translateX(calc(var(--dir,1) * 64px)) scale(.985);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes wzIn{from{opacity:0}to{opacity:1}}
 header nav a.on{color:var(--accent)}
 .wz-ctrl{position:fixed;z-index:60;left:0;right:0;bottom:18px;display:flex;justify-content:center;align-items:center;gap:12px;pointer-events:none}
 .wz-ctrl > *{pointer-events:auto}
@@ -387,10 +387,78 @@ header nav a.on{color:var(--accent)}
 }
 @media(prefers-reduced-motion:reduce){body.wiz main > section.leaving,body.wiz main > section.entering{animation:none}}
 
+/* =================== NEURAL MIND THEME (white · silver · electric blue · green) =================== */
+:root{
+  --bg:#f3f6fb;--bg-alt:transparent;--panel:rgba(255,255,255,.66);
+  --border:rgba(110,130,165,.28);--border-dim:rgba(110,130,165,.18);
+  --ink:#0a1530;--mute:#4a5874;--mute2:#7a869c;
+  --accent:#1f6bff;--accent-dim:rgba(31,107,255,.32);--accent-ink:#ffffff;
+  --accent2:#0fbf78;--accent2-dim:rgba(15,191,120,.3);--accent2-ink:#ffffff;
+  --chrome:linear-gradient(180deg,#ffffff 0%,#e3e9f2 45%,#c9d2df 55%,#f4f7fb 100%);
+}
+body{background:radial-gradient(1200px 800px at 70% 35%,#ffffff 0%,#eef3fa 45%,#dde4ee 100%) fixed;color:var(--ink)}
+#neural{position:fixed;inset:0;z-index:0;pointer-events:none}
+#neural canvas{display:block;width:100%;height:100%}
+#neural::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(200,210,225,.55) 100%)}
+body.wiz main{z-index:2}
+header{z-index:50;background:rgba(255,255,255,.55)!important;border-bottom:1px solid rgba(255,255,255,.9)!important;
+  box-shadow:0 8px 30px rgba(20,40,90,.08);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%)}
+.word b,.logo b{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+section.alt,.hero{background:transparent!important}
+.hero::before,.hero::after{display:none}
+.cube-scene{visibility:hidden}
+@media(max-width:960px){.cube-scene{display:none}}
+.hero h1{background:linear-gradient(180deg,#0a1530 0%,#23345c 60%,#4b5f86 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .hl{background:linear-gradient(90deg,#1f6bff,#12a8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .hl2{background:linear-gradient(90deg,#0fbf78,#12d98a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-logo-word i{color:var(--ink)}
+.eyebrow{color:var(--accent);text-shadow:0 0 18px rgba(31,107,255,.25)}
+p.lede{color:var(--mute)}
+/* glass + chrome panels */
+.card,.step,.promise,.scope-note,#cookiePop,.faq-item{ -webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%)}
+.card,.step{background:var(--panel);border:1px solid rgba(255,255,255,.95);border-radius:18px;
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 18px 50px -18px rgba(20,50,120,.28);border-top:1px solid rgba(255,255,255,.95);overflow:hidden}
+.card::before,.step::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--accent),#12a8ff 50%,var(--accent2))}
+.card:hover,.step:hover{transform:translateY(-3px);box-shadow:0 1px 0 #fff inset,0 26px 60px -18px rgba(31,107,255,.35)}
+.promise{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.95);border-radius:16px;padding:18px 18px 16px;box-shadow:0 12px 34px -16px rgba(20,50,120,.25)}
+.scope-note{background:rgba(255,255,255,.5);border-radius:14px}
+.folio-logo-chip{border-radius:12px}
+.folio-logo-chip.folio-logo-text{background:var(--chrome)}
+.btn{border-radius:12px}
+.btn.solid{background:linear-gradient(135deg,#1f6bff,#12a8ff);border-color:transparent;color:#fff;box-shadow:0 10px 30px -8px rgba(31,107,255,.6)}
+.btn.solid:hover{filter:brightness(1.08);box-shadow:0 14px 36px -8px rgba(31,107,255,.75)}
+.btn.outline2{border-color:var(--accent2);color:#0a8f5a;background:rgba(255,255,255,.6)}
+.btn.outline2:hover{background:var(--accent2);color:#fff}
+.btn:not(.solid):not(.outline2):not(.solid2){background:rgba(255,255,255,.6)}
+.btn:hover{box-shadow:0 0 26px -4px var(--accent)}
+.field input,.field select,.field textarea{background:rgba(255,255,255,.85);border-radius:10px}
+.contact-line{background:rgba(255,255,255,.55);border-radius:12px}
+#dissolve{background:#f3f6fb}
+#cookiePop{background:rgba(255,255,255,.85);border-radius:16px}
+/* wizard controls */
+.wz-btn{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);color:var(--ink);box-shadow:0 10px 26px -12px rgba(20,50,120,.3)}
+.wz-btn.next{background:linear-gradient(135deg,#1f6bff,#0fbf78);color:#fff;border-color:transparent;box-shadow:0 12px 32px -10px rgba(31,107,255,.6)}
+.wz-dots{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95)}
+.wz-dots button{background:rgba(10,21,48,.18)}
+.wz-dots button.on{background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 12px rgba(31,107,255,.6)}
+.wz-label{color:var(--mute)}
+@media(max-width:700px){.wz-ctrl{background:rgba(255,255,255,.82);border-top:1px solid rgba(255,255,255,.95)}}
+/* warp flash on page change */
+#warpFlash{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 50% 50%,rgba(31,107,255,.18),rgba(15,191,120,.08) 35%,transparent 65%);transition:opacity .5s}
+#warpFlash.on{opacity:1;transition:opacity .08s}
+/* pages assemble themselves: every block flies in from space and locks into place */
+body.wiz main > section{perspective:1600px}
+.asm-piece{will-change:transform,opacity}
+.asm-lock{box-shadow:0 0 0 1px rgba(31,107,255,.55),0 0 26px rgba(31,107,255,.35)!important;transition:box-shadow .5s}
+
 </style>
 </head>
 <body>
 
+<div id="neural" aria-hidden="true"></div>
+<div id="warpFlash" aria-hidden="true"></div>
 <div id="dissolve" aria-hidden="true"></div>
 
 <header>
@@ -914,12 +982,14 @@ setTimeout(()=>{
     document.querySelectorAll('header nav a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')==='#'+ids[i]); });
     slides[i].querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
     if(history.replaceState) history.replaceState(null,'','#'+ids[i]);
+    if(window.SANeural) SANeural.page(ids[i]);
   }
   function go(i){
     if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
     var from=slides[cur], to=slides[i], dir=i>cur?1:-1;
     if(reduce||!from){ show(i); return; }
     busy=true; from.style.setProperty('--dir',dir); from.classList.add('leaving');
+    if(window.SANeural) SANeural.warp(dir); var wf=document.getElementById('warpFlash'); if(wf){ wf.classList.add('on'); setTimeout(function(){ wf.classList.remove('on'); },260); }
     setTimeout(function(){ from.classList.remove('leaving'); show(i); to.style.setProperty('--dir',dir); to.classList.add('entering');
       setTimeout(function(){ to.classList.remove('entering'); busy=false; },700); },380);
   }
@@ -937,19 +1007,63 @@ setTimeout(()=>{
     if(e.key==='ArrowRight'||e.key==='PageDown'){ e.preventDefault(); go(cur+1); }
     if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); go(cur-1); }
   });
-  var lock=0;
+  // wheel / trackpad: only change page after a deliberate push past the top or bottom edge
+  var lock=0, wAcc=0, wLast=0, edgeAt=0, edgeDir=0;
   window.addEventListener('wheel',function(e){
-    var s=slides[cur]; if(!s) return; var now=Date.now(); if(now<lock||Math.abs(e.deltaY)<25) return;
-    var top=s.scrollTop<=0, bot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
-    if(e.deltaY>0&&bot){ lock=now+1100; go(cur+1); } else if(e.deltaY<0&&top){ lock=now+1100; go(cur-1); }
+    var s=slides[cur]; if(!s) return; var now=Date.now();
+    if(now<lock){ wLast=now; return; }
+    var dir=e.deltaY>0?1:-1, top=s.scrollTop<=0, bot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
+    if(!((dir>0&&bot)||(dir<0&&top))){ wAcc=0; edgeAt=0; wLast=now; return; }
+    if(edgeDir!==dir||!edgeAt||now-wLast>350){ edgeAt=now; edgeDir=dir; wAcc=0; }
+    wLast=now; wAcc+=Math.abs(e.deltaY);
+    if(now-edgeAt>450 && wAcc>260){ lock=now+1600; wAcc=0; edgeAt=0; go(cur+dir); }
   },{passive:true});
   var tx=0,ty=0;
   window.addEventListener('touchstart',function(e){ tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
   window.addEventListener('touchend',function(e){
     var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
-    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.5) go(dx<0?cur+1:cur-1);
+    if(Math.abs(dx)>90&&Math.abs(dx)>Math.abs(dy)*2) go(dx<0?cur+1:cur-1);
   },{passive:true});
   var start=ids.indexOf(location.hash.slice(1)); show(start<0?0:start);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="/assets/neural-bg.js?v=3"></script>
+
+<script>
+/* ── Site assembly: on every page, the blocks spin in from deep space and clamp together ── */
+(function(){
+  if(!document.body.animate || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  var SEL='.hero-logo, .eyebrow, h1, h2.h, p.lede, .btn-row, .promise, .card, .step, .scope-note, .faq, footer .logo, .foot-links, footer .desc, .legal';
+  var small=innerWidth<700, seen={};
+  function rnd(a,b){ return a+Math.random()*(b-a); }
+  function assemble(sec){
+    if(!sec) return;
+    var parts=[].slice.call(sec.querySelectorAll(SEL)).filter(function(el){ return !el.closest('.cube-scene') && el.offsetParent!==null; });
+    // top-to-bottom, left-to-right like a robot building it
+    parts.sort(function(a,b){ var ra=a.getBoundingClientRect(), rb=b.getBoundingClientRect(); return (ra.top-rb.top)*1.2+(ra.left-rb.left)*.4; });
+    var first=!seen[sec.id]; seen[sec.id]=1;
+    parts.forEach(function(el,k){
+      var big=el.matches('.card, .step, .promise');
+      var sx=rnd(-1,1)*(small?260:620), sy=rnd(-1,1)*(small?300:420), sz=rnd(-1400,-500);
+      var spin=first?1:.45;
+      var a=el.animate([
+        {opacity:0, transform:'perspective(1400px) translate3d('+sx+'px,'+sy+'px,'+sz+'px) rotateX('+rnd(-220,220)*spin+'deg) rotateY('+rnd(-260,260)*spin+'deg) rotateZ('+rnd(-60,60)*spin+'deg) scale(.55)'},
+        {opacity:1, offset:.62, transform:'perspective(1400px) translate3d(0,0,90px) rotateX(0) rotateY(0) scale(1.03)'},
+        {opacity:1, offset:.8, transform:'perspective(1400px) translate3d(0,0,90px)'},
+        {opacity:1, offset:.9, transform:'perspective(1400px) translate3d(0,0,-6px)'},
+        {opacity:1, transform:'perspective(1400px) translate3d(0,0,0)'}
+      ],{duration:big?(small?900:1100):(small?750:900), delay:120+k*(small?45:60), easing:'cubic-bezier(.25,.8,.3,1)', fill:'backwards'});
+      el.classList.add('asm-piece');
+      if(big) a.onfinish=function(){ el.classList.add('asm-lock'); setTimeout(function(){ el.classList.remove('asm-lock'); },450); };
+    });
+  }
+  // run on the first page, then every time the wizard changes page
+  window.SAAssemble=assemble;
+  var act=document.querySelector('main > section.active'); if(act) setTimeout(function(){ assemble(act); },60);
+  new MutationObserver(function(ms){ ms.forEach(function(m){ var el=m.target;
+    if(el.classList && el.classList.contains('active') && el.classList.contains('entering')) assemble(el); }); })
+    .observe(document.querySelector('main'),{subtree:true,attributes:true,attributeFilter:['class']});
 })();
 </script>
 </body>
