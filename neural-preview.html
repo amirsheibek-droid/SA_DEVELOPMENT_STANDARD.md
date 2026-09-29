@@ -1207,13 +1207,15 @@ setTimeout(()=>{
         chips([['Yes, show me around',function(){ startTour(false); }],["I'll explore myself",function(){ stopSpeech(); minimise(); }]]);
         speak(LINES.home,function(){}); }, 1500);
     };
-    if(window.SANeural && SANeural.enter) SANeural.enter(arrive); else setTimeout(arrive,600);
+    var arrived=false, once=function(){ if(arrived) return; arrived=true; arrive(); };
+    if(window.SANeural && SANeural.enter) SANeural.enter(once); else setTimeout(once,600);
+    setTimeout(once, 3400);   // never leave anyone stuck at the door
   };
   document.addEventListener('keydown',function(e){ if(!entered && (e.key==='Enter'||e.key===' ') && document.activeElement!==btn){ e.preventDefault(); btn.click(); } });
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/neural-bg2.js?v=1"></script>
+<script src="/assets/neural-bg2.js?v=2"></script>
 
 <script>
 /* ── Site assembly: on every page, the blocks spin in from deep space and clamp together ── */

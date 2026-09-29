@@ -163,7 +163,7 @@
   /* ── Modes: outside (the gate), entering (pulled in), inside (flying node to node) ── */
   var mode='outside', speed=16, baseSpeed=16, rotTarget=0, mx=0, my=0, shake=0;
   var OUT_POS=new T.Vector3(0,0,-62), IN_SCALE=3.2, IN_ROT=new T.Euler(-.08,.35,0);
-  brain.position.set(0,0,-270);
+  brain.position.set(0,0,-150);
   addEventListener('pointermove',function(e){ mx=(e.clientX/innerWidth-.5); my=(e.clientY/innerHeight-.5); },{passive:true});
   var fly={mode:'return',t:0,next:16,v:0}, tmpV=new T.Vector3();
   var curNode='home', travel=null, camPos=new T.Vector3(0,0,0), camLook=new T.Vector3(0,0,-60), tmpA=new T.Vector3(), tmpB=new T.Vector3();
@@ -180,13 +180,14 @@
     if(id===curNode && !travel) return;
     var from=curNode; curNode=id;
     var L=linkBetween(from,id); if(L) L.boost=2.2;
-    travel={t:0,dur:reduce?0.01:1.9,fromPos:camPos.clone(),fromLook:camLook.clone()};
+    travel={t0:performance.now(),dur:reduce?10:1900,fromPos:camPos.clone(),fromLook:camLook.clone()};
   }
   function warp(dir){ speed=mode==='inside'?120:220; rotTarget+=(dir||1)*1.1; shake=mode==='inside'?.4:1; burst(40); if(mode!=='inside' && Math.random()<.9) setTimeout(spawnPair,350); }
-  var enterCb=null, enterT=0;
+  var enterCb=null, enterT=0, enterFrom=null;
   function enter(cb){
     if(mode!=='outside'){ cb&&cb(); return; }
-    mode='entering'; enterT=0; enterCb=cb; speed=260; shake=1.2; burst(80); nodeGroup.visible=true;
+    mode='entering'; enterT=performance.now(); enterCb=cb; speed=260; shake=1.2; burst(80); nodeGroup.visible=true;
+    enterFrom={p:brain.position.clone(),s:brain.scale.x,rx:brain.rotation.x,ry:brain.rotation.y%(Math.PI*2)};
   }
 
   var clock=new T.Clock(), pairT=0.4, soloT=1.2, running=true;
@@ -213,10 +214,10 @@
       brain.scale.setScalar(1+Math.sin(t*1.3)*.012);
       camPos.set(mx*6,-my*4,0); camLook.set(mx*2,-my*1.5,-60);
     } else if(mode==='entering'){
-      enterT+=dt; var k=Math.min(1,enterT/2.6), e=ease(k);
-      brain.position.lerp(tmpV.set(0,0,0),Math.min(1,dt*2.2));
-      var sc=brain.scale.x+(IN_SCALE-brain.scale.x)*Math.min(1,dt*2.2); brain.scale.setScalar(sc);
-      brain.rotation.x+=(IN_ROT.x-brain.rotation.x)*Math.min(1,dt*2.5); brain.rotation.y+=(IN_ROT.y-brain.rotation.y)*Math.min(1,dt*2.5);
+      var k=Math.min(1,(performance.now()-enterT)/2600), e=ease(k);          // wall-clock, so slow devices still arrive on time
+      brain.position.lerpVectors(enterFrom.p,tmpV.set(0,0,0),e);
+      brain.scale.setScalar(enterFrom.s+(IN_SCALE-enterFrom.s)*e);
+      brain.rotation.x=enterFrom.rx+(IN_ROT.x-enterFrom.rx)*e; brain.rotation.y=enterFrom.ry+(IN_ROT.y-enterFrom.ry)*e;
       brain.updateMatrixWorld();
       var P0=new T.Vector3(), L0=new T.Vector3(); poseFor('home',P0,L0);
       camPos.lerpVectors(new T.Vector3(0,0,0),P0,e); camLook.lerpVectors(new T.Vector3(0,0,-60),L0,e);
@@ -226,7 +227,7 @@
       brain.rotation.y=IN_ROT.y+Math.sin(t*.12)*.05; brain.rotation.x=IN_ROT.x+Math.sin(t*.17)*.03;
       brain.scale.setScalar(IN_SCALE*(1+Math.sin(t*1.1)*.006)); brain.updateMatrixWorld();
       var P1=new T.Vector3(), L1=new T.Vector3(); poseFor(curNode,P1,L1);
-      if(travel){ travel.t+=dt/travel.dur; var k2=Math.min(1,travel.t), e2=ease(k2);
+      if(travel){ var k2=Math.min(1,(performance.now()-travel.t0)/travel.dur), e2=ease(k2);
         camPos.lerpVectors(travel.fromPos,P1,e2); camPos.y+=Math.sin(Math.PI*k2)*5;          // arc along the connector
         camLook.lerpVectors(travel.fromLook,L1,e2);
         if(k2>=1) travel=null;
