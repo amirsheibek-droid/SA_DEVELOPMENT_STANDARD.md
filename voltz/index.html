@@ -501,6 +501,25 @@
     .music-btn { margin-right: 8px; }
     .music-btn:not(.on) { opacity: .75; text-decoration: line-through; }
     @media (max-width: 560px) { .music-btn span { display: none; } .music-btn { padding: 10px 12px; margin-right: 6px; } }
+    /* ── Tap a screen to zoom in ── */
+    .phone { cursor: zoom-in; position: relative; }
+    .phone::after { content: "\2922  Tap to zoom"; position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); white-space: nowrap;
+      padding: 7px 13px; border-radius: 100px; background: rgba(15,23,42,.72); color: #fff; font: 700 12px/1 system-ui, sans-serif; letter-spacing: .02em;
+      opacity: 0; transition: opacity .25s; pointer-events: none; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .phone:hover::after, .slide.active .phone.hint::after { opacity: 1; }
+    .zoom { position: fixed; inset: 0; z-index: 110; display: flex; align-items: center; justify-content: center; padding: 18px;
+      background: rgba(8,14,30,.72); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .zoom.open { opacity: 1; pointer-events: auto; }
+    .zoom-frame { height: min(92dvh, 1100px); aspect-ratio: .4775; max-width: 94vw; padding: 12px; background: #0f172a; border-radius: 54px; overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08) inset; transform: scale(.6) translateY(30px); transition: transform .45s cubic-bezier(.2,.9,.25,1.15); }
+    .zoom.open .zoom-frame { transform: none; }
+    .zoom-frame img { width: 100%; height: 100%; object-fit: contain; border-radius: 42px; background: #fff; cursor: zoom-in;
+      transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+    .zoom-frame.close-up img { transform: scale(2.1); cursor: zoom-out; }
+    .zoom-x { position: absolute; top: 18px; right: 18px; width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+      background: rgba(255,255,255,.92); color: #0f172a; font-size: 26px; line-height: 48px; box-shadow: 0 10px 30px rgba(0,0,0,.3); }
+    .zoom-tip { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.85); font: 600 13px/1.3 system-ui, sans-serif; white-space: nowrap; }
+    @media (max-width: 560px) { .zoom-frame { border-radius: 40px; padding: 8px; } .zoom-frame img { border-radius: 32px; } }
     /* ── Why Voltz intro ── */
     .why-lead { margin: -4px 0 18px; font-size: clamp(15px, 1.3vw, 17px); }
     .card.mission { background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(124,58,237,.10)); border-color: rgba(124,58,237,.25); }
@@ -518,6 +537,12 @@
     <button class="pill music-btn on" id="music-btn" aria-pressed="true" title="Background music on or off">&#9835; <span>Music on</span></button>
     <button class="pill" id="sound-btn" aria-pressed="false">&#9654; Sound on</button>
     <a class="pill primary appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">App Store</a>
+  </div>
+
+  <div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="App screen, zoomed in" aria-hidden="true">
+    <button class="zoom-x" id="zoom-x" aria-label="Close">&times;</button>
+    <div class="zoom-frame" id="zoom-frame"><img id="zoom-img" alt=""></div>
+    <div class="zoom-tip">Tap the screen to look closer &middot; tap outside to close</div>
   </div>
 
   <!-- Promo message under the brand -->
@@ -971,6 +996,36 @@
       return { run:function(){ if(ran) return; ran=true; box.classList.add('open'); if(window.VzSfx) VzSfx.pop(); setTimeout(function(){ typeLine(0); }, 450); } };
     })();
 
+    /* ── Tap an app screen: it pops up big, tap again to look closer ── */
+    var Zoom=(function(){
+      var box=document.getElementById('zoom'), frame=document.getElementById('zoom-frame'), img=document.getElementById('zoom-img');
+      function open(src, alt){
+        img.src=src; img.alt=alt||''; frame.classList.remove('close-up'); box.classList.add('open'); box.setAttribute('aria-hidden','false');
+        clearTimeout(autoT); if(window.VzSfx) VzSfx.pop();
+      }
+      function close(){
+        if(!box.classList.contains('open')) return;
+        box.classList.remove('open'); box.setAttribute('aria-hidden','true'); frame.classList.remove('close-up');
+        if(auto){ var s=slides[cur]; if(s) autoAfter(s.dataset.jess||''); }
+      }
+      document.querySelectorAll('.phone').forEach(function(ph){
+        ph.setAttribute('role','button'); ph.setAttribute('tabindex','0'); ph.setAttribute('aria-label','Zoom in on this screen');
+        function go(e){ var im=ph.querySelector('img'); if(!im) return; e.preventDefault(); e.stopPropagation(); open(im.currentSrc||im.src, im.alt); }
+        ph.addEventListener('click',go);
+        ph.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' ') go(e); });
+      });
+      img.addEventListener('click',function(e){
+        e.stopPropagation(); var r=img.getBoundingClientRect();
+        img.style.transformOrigin=((e.clientX-r.left)/r.width*100)+'% '+((e.clientY-r.top)/r.height*100)+'%';
+        frame.classList.toggle('close-up'); if(window.VzSfx) VzSfx.tap();
+      });
+      box.addEventListener('click',function(e){ if(e.target===box) close(); });
+      document.getElementById('zoom-x').addEventListener('click',function(e){ e.stopPropagation(); close(); });
+      return { open:open, close:close, isOpen:function(){ return box.classList.contains('open'); } };
+    })();
+    // show the "Tap to zoom" hint briefly each time a screen appears (phones have no hover)
+    function zoomHint(slide){ var ph=slide&&slide.querySelector('.phone'); if(!ph) return; ph.classList.add('hint'); setTimeout(function(){ ph.classList.remove('hint'); },2600); }
+
     /* ── Sound effects (generated live, quiet, only when sound is on) ── */
     var Sfx=(function(){
       function tone(freq, t0, len, vol, type, slideTo){
@@ -1206,9 +1261,9 @@
       // moving around by hand keeps the tour going (only "Stop tour" ends it)
       if(!autoNav) clearTimeout(autoT); autoNav=false;
       if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
-      busy=true; side.classList.remove('open'); audio.pause(); clearInterval(typer);
+      busy=true; side.classList.remove('open'); audio.pause(); clearInterval(typer); Zoom.close();
       zoop();
-      transition(slides[cur], slides[i], i>cur?1:-1, function(){ show(i); runJess(slides[i]); }, function(){ busy=false; });
+      transition(slides[cur], slides[i], i>cur?1:-1, function(){ show(i); runJess(slides[i]); zoomHint(slides[i]); }, function(){ busy=false; });
     }
     prevB.onclick=function(){ go(cur-1); };
     nextB.onclick=function(){ go(cur===slides.length-1?0:cur+1); };
@@ -1216,6 +1271,7 @@
     menuBtn.onclick=function(){ side.classList.toggle('open'); };
     document.addEventListener('keydown',function(e){
       if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+      if(Zoom.isOpen()){ if(e.key==='Escape') Zoom.close(); return; }
       if(document.getElementById('intro').classList.contains('show')) return;
       if(['ArrowRight','PageDown'].indexOf(e.key)>-1){ e.preventDefault(); go(cur+1); }
       if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){ e.preventDefault(); go(cur-1); }
@@ -1224,7 +1280,7 @@
     var wheelLock=0, wAcc=0, wLast=0, edgeAt=0, edgeDir=0;
     window.addEventListener('wheel',function(e){
       var s=slides[cur]; if(!s) return; var now=Date.now();
-      if(e.target.closest && e.target.closest('.chat, .side')) return;
+      if(Zoom.isOpen() || (e.target.closest && e.target.closest('.chat, .side'))) return;
       if(now<wheelLock){ wLast=now; return; }                      // swallow trackpad momentum after a page change
       var dir=e.deltaY>0?1:-1, atTop=s.scrollTop<=0, atBot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
       var atEdge=(dir>0&&atBot)||(dir<0&&atTop);
@@ -1236,7 +1292,7 @@
     // swipe: sideways only, and it has to be a clear, quick swipe (scrolling up/down never changes page)
     var tx=0,ty=0,tt=0,tOk=false;
     window.addEventListener('touchstart',function(e){
-      tOk=e.touches.length===1 && !(e.target.closest && e.target.closest('.chat, .side, input, textarea, button, a, .chip'));
+      tOk=e.touches.length===1 && !(e.target.closest && e.target.closest('.chat, .side, .zoom, .phone, input, textarea, button, a, .chip'));
       tx=e.touches[0].clientX; ty=e.touches[0].clientY; tt=Date.now(); },{passive:true});
     window.addEventListener('touchend',function(e){
       if(!tOk) return; tOk=false;
