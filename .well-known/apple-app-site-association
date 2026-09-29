@@ -4,7 +4,11 @@
     "details": [
       {
         "appID": "H77JZ768DX.com.voltz.crm",
-        "paths": [ "/voltz/*", "/voltz" ]
+        "appIDs": [ "H77JZ768DX.com.voltz.crm" ],
+        "paths": [ "/voltz/auth/*" ],
+        "components": [
+          { "/": "/voltz/auth/*", "comment": "Only sign-in and password-reset email links open the app; the website stays in the browser" }
+        ]
       }
     ]
   }
