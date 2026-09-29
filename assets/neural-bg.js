@@ -88,15 +88,15 @@
   /* ── Space dust: streaks rushing past (the flight) ── */
   var ND=small?420:900, dust=[], dp=new Float32Array(ND*6), dc=new Float32Array(ND*6);
   for(var q=0;q<ND;q++){ dust.push({x:rnd(-90,90),y:rnd(-55,55),z:rnd(-230,5)});
-    var c4=Math.random()<.7?SILVER:(Math.random()<.6?CYAN:GREEN); dc.set([c4.r,c4.g,c4.b,1,1,1],q*6); }
+    var c4=Math.random()<.7?STEEL:(Math.random()<.6?BLUE:GREEN); dc.set([c4.r,c4.g,c4.b,1,1,1],q*6); }
   var dg=new T.BufferGeometry(); dg.setAttribute('position',new T.BufferAttribute(dp,3)); dg.setAttribute('color',new T.BufferAttribute(dc,3));
-  scene.add(new T.LineSegments(dg,new T.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.55,depthWrite:false})));
+  scene.add(new T.LineSegments(dg,new T.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.7,depthWrite:false})));
 
   /* ── Glass cubes that crash into each other and shatter ── */
   var boxG=new T.BoxGeometry(1,1,1), edgeG=new T.EdgesGeometry(boxG);
   function makeCube(tint){
     var g=new T.Group();
-    var m=new T.Mesh(boxG,new T.MeshPhongMaterial({color:0xe9eef6,specular:0xffffff,shininess:90,transparent:true,opacity:.55,depthWrite:false}));
+    var m=new T.Mesh(boxG,new T.MeshPhongMaterial({color:0xb9c4d4,specular:0xffffff,shininess:110,transparent:true,opacity:.6,depthWrite:false}));
     var l=new T.LineSegments(edgeG,new T.LineBasicMaterial({color:tint,transparent:true,opacity:.95}));
     g.add(m); g.add(l); g.userData={mesh:m,line:l}; g.visible=false; scene.add(g); return g;
   }
@@ -107,9 +107,9 @@
   function free(list){ for(var i=0;i<list.length;i++) if(!list[i].on) return list[i]; return null; }
   function spawnPair(){
     var A=free(cubes); if(!A) return; A.on=true; var B=free(cubes); if(!B){ A.on=false; return; } B.on=true;
-    var M=new T.Vector3(rnd(-45,45),rnd(-24,24),rnd(-130,-60)), sz=rnd(3,6.5), T0=rnd(1.8,3);
+    var M=new T.Vector3(rnd(-38,38),rnd(-20,20),rnd(-95,-45)), sz=rnd(3.5,7), T0=rnd(1.8,3);
     [[A,-1],[B,1]].forEach(function(o){ var c=o[0], s=o[1];
-      c.size=sz*rnd(.8,1.15); c.g.scale.setScalar(c.size); c.g.visible=true; c.g.userData.mesh.material.opacity=.55;
+      c.size=sz*rnd(.8,1.15); c.g.scale.setScalar(c.size); c.g.visible=true; c.g.userData.mesh.material.opacity=.6;
       c.p=new T.Vector3(M.x+s*rnd(40,70), M.y+rnd(-18,18), M.z-rnd(10,40));
       c.v=M.clone().sub(c.p).divideScalar(T0); c.rv=new T.Vector3(rnd(-1.5,1.5),rnd(-1.5,1.5),rnd(-1.5,1.5)); c.mate=(c===A?B:A); c.solo=false; });
   }
@@ -130,13 +130,13 @@
 
   /* ── Camera, pages, warp ── */
   var speed=16, baseSpeed=16, rotY=0, rotTarget=0, mx=0, my=0, shake=0;
-  var brainHome=new T.Vector3(15,1,-46), brainPage=new T.Vector3(0,0,-58), brainTo=brainHome.clone(), brainScale=1, scaleTo=1;
+  var brainHome=new T.Vector3(15,1,-46), brainPage=new T.Vector3(0,-2,-34), brainTo=brainHome.clone(), brainScale=1, scaleTo=1;
   brain.position.copy(brainHome);
   addEventListener('pointermove',function(e){ mx=(e.clientX/innerWidth-.5); my=(e.clientY/innerHeight-.5); },{passive:true});
   function page(id){
     var home=id==='home';
     brainTo.copy(home?(innerWidth<960?new T.Vector3(0,-2,-60):brainHome):brainPage);
-    scaleTo= home?1:1.18;
+    scaleTo= home?1:1.9;
   }
   function warp(dir){ speed=220; rotTarget+=(dir||1)*1.1; shake=1; burst(40); if(Math.random()<.9) setTimeout(spawnPair,350); }
 
@@ -156,7 +156,7 @@
     brain.rotation.x=Math.sin(t*.2)*.08-0.12;
     brain.position.lerp(brainTo,Math.min(1,dt*1.5));
     var sc=brain.scale.x+(scaleTo-brain.scale.x)*Math.min(1,dt*1.5); brain.scale.setScalar(sc*(1+Math.sin(t*1.3)*.012));
-    core.material.opacity=.28+Math.sin(t*1.7)*.08;
+    core.material.opacity=(brain.scale.x>1.3?.12:.26)+Math.sin(t*1.7)*.06;
     for(var k=0;k<NP;k++){ var p=pulses[k], E=edges[p.e]; p.t+=dt*p.v;
       if(p.t>=1){ var end=p.fw?E[1]:E[0], nx=adj[end]; p.e=nx.length?nx[(Math.random()*nx.length)|0]:(Math.random()*edges.length)|0;
         E=edges[p.e]; p.fw=E[0]===end; p.t=0; p.v+= (1.4-p.v)*.3; }
@@ -180,7 +180,7 @@
       if(k2<=0){ f.on=false; f.g.visible=false; return; }
       f.v.multiplyScalar(1-dt*.9); f.p.addScaledVector(f.v,dt); f.p.z+=worldDz; f.g.position.copy(f.p);
       f.g.rotation.x+=f.rv.x*dt; f.g.rotation.y+=f.rv.y*dt; f.g.scale.setScalar(f.size*Math.max(.05,k2));
-      f.g.userData.mesh.material.opacity=.55*k2; f.g.userData.line.material.opacity=k2; });
+      f.g.userData.mesh.material.opacity=.6*k2; f.g.userData.line.material.opacity=k2; });
     flashes.forEach(function(fl){ if(fl.t>=1){ fl.s.material.opacity=0; return; } fl.t+=dt*1.8;
       var s=4+fl.t*26; fl.s.scale.set(s,s,1); fl.s.material.opacity=Math.max(0,.9*(1-fl.t)); });
     // camera drift + shake
