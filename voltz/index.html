@@ -388,6 +388,46 @@
     .gate-foot { position: absolute; bottom: 22px; left: 0; right: 0; text-align: center; color: #94a3b8; font-size: 12.5px; }
     @media (max-width: 560px) { .gate-icon { width: 160px; height: 160px; } .gate-btn { padding: 17px 30px; font-size: 17px; } }
 
+    /* ── Intro: the app assembles itself, robot-style ── */
+    .gate-stage { position: relative; display: flex; align-items: center; justify-content: center; gap: clamp(20px, 5vw, 90px); width: 100%; max-width: 1280px; padding: 0 24px; }
+    .gate-stage .gate-inner { flex: 0 1 auto; }
+    .gate-stage .gate-title { font-size: clamp(56px, 7.6vw, 116px); }
+    .gate-stage .gate-icon { width: 150px; height: 150px; }
+    .asm { position: relative; flex: 0 0 auto; height: min(74vh, 640px); aspect-ratio: .4775; perspective: 1500px; }
+    .asm-rig { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .asm-back { position: absolute; inset: -12px; border-radius: 52px; background: linear-gradient(160deg, #1e293b, #0b1220 60%, #1e293b);
+      box-shadow: 0 50px 90px -30px rgba(15,23,42,.55), 0 0 0 1px rgba(255,255,255,.06) inset; opacity: 0; }
+    .asm-back::before { content: ""; position: absolute; top: 14px; left: 50%; width: 30%; height: 22px; transform: translateX(-50%); border-radius: 20px; background: #05080f; }
+    .asm-tiles { position: absolute; inset: 0; display: grid; transform-style: preserve-3d; }
+    .asm-tile { background-repeat: no-repeat; backface-visibility: hidden; opacity: 0; will-change: transform, opacity;
+      box-shadow: 0 0 0 .5px rgba(37,99,235,.0); }
+    .asm-tile.glow { box-shadow: 0 0 0 1px rgba(37,99,235,.55), 0 0 16px rgba(37,99,235,.45); }
+    .asm-scan { position: absolute; left: -8px; right: -8px; height: 3px; top: 0; border-radius: 3px; opacity: 0; pointer-events: none;
+      background: linear-gradient(90deg, transparent, #22d3ee, #2563eb, #22d3ee, transparent); box-shadow: 0 0 22px 4px rgba(34,211,238,.55); }
+    .asm-hud { position: absolute; left: 50%; bottom: -44px; transform: translateX(-50%); white-space: nowrap; font: 700 12px/1 ui-monospace, 'SF Mono', Menlo, monospace;
+      letter-spacing: .14em; text-transform: uppercase; color: #2563eb; opacity: .9; }
+    .asm-hud b { color: #0f172a; }
+    .asm-br { position: absolute; width: 26px; height: 26px; border: 2.5px solid #2563eb; opacity: 0; transition: opacity .4s, transform .6s cubic-bezier(.2,.9,.25,1.2); }
+    .asm-br.tl { left: -30px; top: -30px; border-right: 0; border-bottom: 0; transform: translate(-30px,-30px); }
+    .asm-br.tr { right: -30px; top: -30px; border-left: 0; border-bottom: 0; transform: translate(30px,-30px); }
+    .asm-br.bl { left: -30px; bottom: -30px; border-right: 0; border-top: 0; transform: translate(-30px,30px); }
+    .asm-br.br { right: -30px; bottom: -30px; border-left: 0; border-top: 0; transform: translate(30px,30px); }
+    .asm.locked .asm-br { opacity: 1; transform: none; }
+    .asm-glare { position: absolute; inset: 0; border-radius: 40px; pointer-events: none; opacity: 0;
+      background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.55) 45%, transparent 60%); background-size: 250% 100%; }
+    .asm.shine .asm-glare { animation: glare 1.2s ease-out; }
+    @keyframes glare { 0% { opacity: 1; background-position: 130% 0; } 100% { opacity: 1; background-position: -60% 0; } }
+    @media (max-width: 900px) {
+      .gate-stage { flex-direction: column; gap: 14px; }
+      .gate-stage .gate-icon { display: none; }
+      .asm { height: min(44vh, 420px); order: -1; margin-bottom: 40px; }
+      .asm-back { inset: -8px; border-radius: 36px; }
+      .asm-back::before { height: 14px; top: 9px; }
+      .gate-stage .gate-title { font-size: clamp(46px, 13vw, 80px); margin-top: 0; }
+      .gate-stage .gate-btn { margin-top: 22px; }
+      .asm-hud { bottom: -30px; font-size: 10.5px; }
+      .asm-br { width: 18px; height: 18px; }
+    }
     /* ── Cookie consent ── */
     .consent { position: fixed; z-index: 130; left: 50%; bottom: 24px; width: min(620px, calc(100vw - 28px)); transform: translate(-50%, 30px);
       opacity: 0; pointer-events: none; transition: opacity .4s, transform .4s cubic-bezier(.16,1,.3,1);
@@ -833,11 +873,23 @@
   <!-- Entrance -->
   <div class="gate" id="gate" role="dialog" aria-label="Welcome to Voltz CRM">
     <div class="gate-glow"></div>
-    <div class="gate-inner">
-      <img class="gate-icon" src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="240" height="240">
-      <h1 class="gate-title">Voltz <em>CRM</em></h1>
-      <p class="gate-sub">The field CRM for sole traders</p>
-      <button class="gate-btn" id="enter">Enter Voltz CRM <span>&rarr;</span></button>
+    <div class="gate-stage">
+      <div class="gate-inner">
+        <img class="gate-icon" src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="240" height="240">
+        <h1 class="gate-title">Voltz <em>CRM</em></h1>
+        <p class="gate-sub">The field CRM for sole traders</p>
+        <button class="gate-btn" id="enter">Enter Voltz CRM <span>&rarr;</span></button>
+      </div>
+      <div class="asm" id="asm" aria-hidden="true">
+        <div class="asm-rig" id="asm-rig">
+          <div class="asm-back"></div>
+          <div class="asm-tiles" id="asm-tiles"></div>
+          <div class="asm-glare"></div>
+          <div class="asm-scan" id="asm-scan"></div>
+        </div>
+        <i class="asm-br tl"></i><i class="asm-br tr"></i><i class="asm-br bl"></i><i class="asm-br br"></i>
+        <div class="asm-hud" id="asm-hud">Assembling <b>Voltz CRM</b> &middot; 0%</div>
+      </div>
     </div>
     <small class="gate-foot">Voltz CRM by SA Intelligent Designs</small>
   </div>
@@ -1389,6 +1441,82 @@
       // keep typing in the chat from moving the tour
       input.addEventListener('keydown',function(e){ e.stopPropagation(); });
     })();
+  })();
+  </script>
+
+  <script>
+  /* ── Intro: the app flies in piece by piece, spins, and locks together; then the panels flip to show more screens ── */
+  (function(){
+    var asm=document.getElementById('asm'); if(!asm || !asm.animate) return;
+    var rig=document.getElementById('asm-rig'), grid=document.getElementById('asm-tiles'), scan=document.getElementById('asm-scan'),
+        hud=document.getElementById('asm-hud'), back=asm.querySelector('.asm-back'), gate=document.getElementById('gate');
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, small=innerWidth<700;
+    var SCREENS=[['/voltz/assets/screens/clean-01-home.jpg','AI Voice home'],['/voltz/assets/screens/clean-02-birds-eye.jpg',"Bird's-eye view"],
+                 ['/voltz/assets/screens/clean-03-schedule.jpg','Your diary'],['/voltz/assets/screens/clean-05-new-client.jpg','New client']];
+    SCREENS.forEach(function(x){ var im=new Image(); im.src=x[0]; });
+    var C=small?4:5, R=small?8:10, tiles=[], rad=small?'28px':'40px';
+    grid.style.gridTemplateColumns='repeat('+C+',1fr)'; grid.style.gridTemplateRows='repeat('+R+',1fr)';
+    for(var r=0;r<R;r++) for(var c=0;c<C;c++){
+      var t=document.createElement('div'); t.className='asm-tile';
+      t.style.backgroundSize=(C*100)+'% '+(R*100)+'%'; t.style.backgroundPosition=(c/(C-1)*100)+'% '+(r/(R-1)*100)+'%';
+      if(r===0&&c===0) t.style.borderTopLeftRadius=rad; if(r===0&&c===C-1) t.style.borderTopRightRadius=rad;
+      if(r===R-1&&c===0) t.style.borderBottomLeftRadius=rad; if(r===R-1&&c===C-1) t.style.borderBottomRightRadius=rad;
+      t.dataset.r=r; t.dataset.c=c; grid.appendChild(t); tiles.push(t);
+    }
+    function setScreen(i){ tiles.forEach(function(t){ t.style.backgroundImage='url("'+SCREENS[i][0]+'")'; }); }
+    function R_(a,b){ return a+Math.random()*(b-a); }
+    function sfxClick(){ try{ if(window.vzCtx && vzCtx.state==='running' && window.VzSfx) VzSfx.tap(); }catch(e){} }
+    setScreen(0);
+    if(reduce){ back.style.opacity=1; tiles.forEach(function(t){ t.style.opacity=1; }); hud.innerHTML='<b>Voltz CRM</b> &middot; ready'; asm.classList.add('locked'); return; }
+
+    // 1. the chassis spins in from deep space
+    back.animate([{opacity:0,transform:'translateZ(-900px) rotateY(540deg) rotateX(25deg) scale(.6)'},
+                  {opacity:1,offset:.75,transform:'translateZ(40px) rotateY(-8deg) rotateX(0) scale(1.02)'},
+                  {opacity:1,transform:'none'}],{duration:1400,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
+    // the whole rig turns while it builds
+    var rigAnim=rig.animate([{transform:'rotateY(-38deg) rotateX(10deg)'},{transform:'rotateY(12deg) rotateX(-4deg)',offset:.8},{transform:'none'}],
+                {duration:3600,easing:'cubic-bezier(.3,.7,.2,1)',fill:'forwards'});
+    // 2. every panel flies in spinning, hovers, then clamps into place (robotic two-step)
+    var order=tiles.slice().sort(function(a,b){ return (+a.dataset.r + +a.dataset.c*.6 + Math.random()*1.4)-(+b.dataset.r + +b.dataset.c*.6 + Math.random()*1.4); });
+    var done=0, total=order.length, start=700, step=small?55:42;
+    order.forEach(function(t,k){
+      var sx=R_(-1,1)*(small?420:760), sy=R_(-1,1)*(small?520:560), sz=R_(-900,400);
+      var a=t.animate([
+        {opacity:0,transform:'translate3d('+sx+'px,'+sy+'px,'+sz+'px) rotateX('+R_(-540,540)+'deg) rotateY('+R_(-540,540)+'deg) rotateZ('+R_(-180,180)+'deg) scale(.5)'},
+        {opacity:1,offset:.62,transform:'translate3d(0,0,70px) rotateX(0) rotateY(0) rotateZ(0) scale(1.04)'},
+        {opacity:1,offset:.8,transform:'translate3d(0,0,70px)'},
+        {opacity:1,offset:.9,transform:'translate3d(0,0,-4px)'},
+        {opacity:1,transform:'none'}],{duration:small?1000:1150,delay:start+k*step,easing:'cubic-bezier(.25,.8,.3,1)',fill:'forwards'});
+      a.onfinish=function(){ t.classList.add('glow'); setTimeout(function(){ t.classList.remove('glow'); },260);
+        done++; if(done%4===0) sfxClick();
+        hud.innerHTML='Assembling <b>Voltz CRM</b> &middot; '+Math.round(done/total*100)+'%';
+        if(done===total) locked(); };
+    });
+    // 3. locked: brackets clamp, scan beam checks it, glare sweeps
+    function locked(){
+      asm.classList.add('locked'); hud.innerHTML='<b>Voltz CRM</b> &middot; online';
+      scan.animate([{opacity:0,top:'0%'},{opacity:1,offset:.1},{opacity:1,offset:.9},{opacity:0,top:'100%'}],{duration:1100,easing:'ease-in-out'});
+      setTimeout(function(){ asm.classList.add('shine'); setTimeout(function(){ asm.classList.remove('shine'); },1300); },700);
+      idle(); setTimeout(cycle, 3600);
+    }
+    // gentle hover tilt that follows the pointer
+    var tiltOn=false;
+    function idle(){ setTimeout(function(){ try{ rigAnim.cancel(); }catch(e){} tiltOn=true; }, 900); }
+    gate.addEventListener('pointermove',function(e){ if(!tiltOn) return; var x=e.clientX/innerWidth-.5, y=e.clientY/innerHeight-.5;
+      rig.style.transform='rotateY('+(x*14)+'deg) rotateX('+(-y*10)+'deg)'; rig.style.transition='transform .4s ease-out'; });
+    // 4. show more of the app: panels flip over in a wave to reveal the next screen
+    var cur=0, cycT=null;
+    function cycle(){
+      if(gate.classList.contains('gone')) return;
+      var nxt=(cur+1)%SCREENS.length; hud.innerHTML='Loading <b>'+SCREENS[nxt][1]+'</b>';
+      tiles.forEach(function(t){
+        var d=(+t.dataset.r*70)+(+t.dataset.c*90);
+        t.animate([{transform:'none'},{transform:'rotateY(90deg) translateZ(20px)',offset:.5},{transform:'none'}],{duration:620,delay:d,easing:'ease-in-out'});
+        setTimeout(function(){ t.style.backgroundImage='url("'+SCREENS[nxt][0]+'")'; }, d+310);
+      });
+      setTimeout(function(){ hud.innerHTML='<b>'+SCREENS[nxt][1]+'</b> &middot; online'; sfxClick(); }, (R*70)+(C*90)+400);
+      cur=nxt; cycT=setTimeout(cycle, 4200);
+    }
   })();
   </script>
 </body>
