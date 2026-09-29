@@ -341,6 +341,24 @@
       .slide { padding-top: 112px; }
       .side { top: 108px; }
     }
+    /* ── Auto tour prompts ── */
+    .tapsound { position: fixed; z-index: 70; left: 50%; bottom: 96px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+      padding: 16px 26px; border-radius: 100px; border: none; cursor: pointer; font-weight: 800; font-size: 17px; color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--violet)); box-shadow: 0 16px 40px rgba(37,99,235,.45);
+      transition: opacity .35s, transform .35s; animation: tapPulse 1.8s ease-in-out infinite; }
+    .tapsound.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+    @keyframes tapPulse { 50% { box-shadow: 0 16px 40px rgba(37,99,235,.45), 0 0 0 12px rgba(37,99,235,.12); } }
+    .stoptour { position: fixed; z-index: 60; right: 24px; bottom: 84px; display: none; padding: 10px 16px; border-radius: 100px;
+      border: 1px solid rgba(15,23,42,.12); background: rgba(255,255,255,.7); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      font-weight: 700; font-size: 13px; color: var(--text); cursor: pointer; box-shadow: 0 8px 22px rgba(15,23,42,.1); }
+    .stoptour.show { display: inline-flex; }
+    @media (max-width: 900px) { .tapsound { bottom: 100px; font-size: 15px; padding: 14px 20px; white-space: nowrap; } .stoptour { bottom: 84px; right: 14px; } }
+
+    /* ── Bigger Dave ── */
+    .dave { width: 300px; right: -210px; bottom: -14px; }
+    #speak .slide-inner { padding-right: 210px; }
+    @media (max-width: 900px) { .dave { width: 190px; right: -118px; } #speak .slide-inner { padding-right: 0; } }
+    @media (max-width: 560px) { .dave { width: 150px; right: -84px; } }
   </style>
 </head>
 <body>
@@ -577,6 +595,9 @@
     </section>
   </main>
 
+  <button class="tapsound" id="tap-sound">&#128266; Tap anywhere to hear Jess</button>
+  <button class="stoptour" id="stop-tour">&#9632; Stop tour</button>
+
   <!-- Bottom controls -->
   <div class="controls">
     <button class="ctrl" id="prev" aria-label="Previous page">&larr; Back</button>
@@ -607,7 +628,7 @@
       audio.src=s.dataset.audio; audio.currentTime=0;
       audio.onplay=function(){ el&&el.classList.add('talking'); };
       audio.onended=audio.onerror=function(){ el&&el.classList.remove('talking'); };
-      var p=audio.play(); if(p&&p.catch) p.catch(function(){ el&&el.classList.remove('talking'); });
+      var p=audio.play(); if(p&&p.catch) p.catch(function(){ el&&el.classList.remove('talking'); needTap=true; tapEl.classList.add('show'); });
     }
     /* ── "Zoop" sound ── */
     var actx=null;
@@ -654,10 +675,45 @@
             list.forEach(function(c,ix){ var b=document.createElement('button'); b.className='chip'+(ix===0?' go':''); b.textContent=c[0]+(c[1]==='next'?' →':'');
               b.onclick=function(){ c[1]==='next'?go(cur+1):go(ids.indexOf(c[1])); }; chips.appendChild(b); });
             chipT=setTimeout(function(){ chips.classList.add('show'); },120);
+            autoAfter(line);
           }
         }, 20);
       }, 650);
     }
+
+    /* ── First-visit auto tour ── */
+    var auto=false, autoNav=false, autoT=null, needTap=false;
+    var tapEl=document.getElementById('tap-sound'), stopEl=document.getElementById('stop-tour');
+    function autoAfter(line){
+      clearTimeout(autoT); if(!auto) return;
+      var started=Date.now(), minRead=Math.max(3000, line.length*48);
+      (function wait(){
+        if(!auto) return;
+        var playing = soundOn && !needTap && !audio.paused && !audio.ended;
+        if(playing || Date.now()-started < (soundOn && !needTap ? 900 : minRead)){ autoT=setTimeout(wait,250); return; }
+        autoT=setTimeout(function(){
+          if(!auto) return;
+          if(cur>=slides.length-1){ stopAuto(); return; }
+          autoNav=true; go(cur+1);
+        }, 1300);
+      })();
+    }
+    function startAuto(){
+      auto=true; stopEl.classList.add('show');
+      soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
+    }
+    function stopAuto(){
+      auto=false; clearTimeout(autoT); stopEl.classList.remove('show'); tapEl.classList.remove('show');
+      try{ localStorage.setItem('voltzTourSeen','1'); }catch(e){}
+    }
+    stopEl.onclick=function(e){ e.stopPropagation(); stopAuto(); };
+    // browsers block sound until the visitor taps once: first tap anywhere unlocks Jess
+    function unlock(){
+      if(!needTap) return; needTap=false; tapEl.classList.remove('show');
+      var s=slides[cur]; if(s&&soundOn) speak(s.dataset.jess, s.querySelector('.jess'));
+    }
+    ['pointerdown','keydown','touchstart'].forEach(function(ev){ window.addEventListener(ev,unlock,{passive:true}); });
+    tapEl.onclick=function(e){ e.stopPropagation(); unlock(); };
 
     /* ── Navigation ── */
     function show(i){
@@ -670,6 +726,7 @@
       if(history.replaceState) history.replaceState(null,'','#'+ids[i]);
     }
     function go(i){
+      if(auto && !autoNav) stopAuto(); autoNav=false;
       if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
       busy=true; side.classList.remove('open'); audio.pause(); clearInterval(typer);
       zoop();
@@ -720,7 +777,9 @@
         setTimeout(function(){ dave.src='/voltz/assets/dave-still.webp'; },2700);
       };
     }
+    var tourSeen=false; try{ tourSeen=localStorage.getItem('voltzTourSeen')==='1'; }catch(e){}
     show(startAt()); daveOnce();
+    if(!tourSeen && startAt()===0) startAuto();
     setTimeout(function(){ runJess(slides[cur]); },300);
   })();
   </script>
