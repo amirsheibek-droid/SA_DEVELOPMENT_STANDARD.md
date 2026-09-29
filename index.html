@@ -6,7 +6,7 @@
 <title>Intelligent Website Design &amp; Niche Mobile App Development | S·A Intelligent Designs</title>
 <meta name="description" content="S·A Intelligent Designs builds intelligent websites with full SEO support and develops mobile applications for specialist niches, serving Milton Keynes, Bedford and London. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="author" content="S·A Intelligent Designs — SA Intelligence Marketing">
+<meta name="author" content="S·A Intelligent Designs — SA Marketing Intelligence">
 <meta name="theme-color" content="#0c0b10">
 <link rel="canonical" href="https://www.samarketingintelligence.com/">
 <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
       "@type": "ProfessionalService",
       "@id": "https://www.samarketingintelligence.com/#business",
       "name": "S·A Intelligent Designs",
-      "alternateName": "SA Intelligence Marketing",
+      "alternateName": "SA Marketing Intelligence",
       "url": "https://www.samarketingintelligence.com/",
       "description": "Intelligent website design with full SEO support, and mobile application development for specialist niches. Free mock-up before commitment, fixed written quotes and free hosting.",
       "areaServed": [{"@type":"City","name":"Milton Keynes"},{"@type":"City","name":"London"},{"@type":"City","name":"Bedford"},"GB"],
@@ -57,7 +57,7 @@
       "mainEntity": [
         {"@type":"Question","name":"How much does a website cost?","acceptedAnswer":{"@type":"Answer","text":"Every build is quoted individually at your free consultation, and the cost is fixed in writing before any work begins. Your only ongoing costs are your domain and business email, passed on at cost — hosting is provided free."}},
         {"@type":"Question","name":"Do I see anything before I pay?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every package begins with a complimentary working mock-up of your site, so you can review the direction before committing to anything."}},
-        {"@type":"Question","name":"Do you build mobile applications?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside website design, we develop mobile applications for specialist niches — current products in development include Voltz CRM, a field CRM for tradespeople, and Contract Analyser, an intelligent contract review application."}},
+        {"@type":"Question","name":"Do you build mobile applications?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside website design, we develop mobile applications for specialist niches — products include Voltz CRM, a field CRM for tradespeople now live on the App Store, and Contract Analyser (in development), an intelligent contract review application."}},
         {"@type":"Question","name":"Is SEO included?","acceptedAnswer":{"@type":"Answer","text":"Every website is built with SEO support. The Launch package includes foundational SEO setup, and the Signature package adds full on-page SEO with analytics."}},
         {"@type":"Question","name":"Am I tied into a contract?","acceptedAnswer":{"@type":"Answer","text":"No. The care plan is optional, billed in advance and can be cancelled at any time without penalty. You buy and own your domain in your own name."}}
       ]
@@ -352,6 +352,40 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
   header nav{gap:12px 18px}
   .hero-logo{margin-bottom:44px}
 }
+/* =================== WIZARD MODE (full-page steps) =================== */
+html,body{height:100%}
+body.wiz{overflow:hidden}
+body.wiz header{position:fixed;top:0;left:0;right:0}
+body.wiz main{position:fixed;left:0;right:0;top:var(--hdr,66px);bottom:0}
+body.wiz main > section{position:absolute;inset:0;display:none;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(1.5rem,4vw,3rem) 0 120px;-webkit-overflow-scrolling:touch}
+body.wiz main > section.active{display:flex}
+body.wiz main > section > .wrap, body.wiz main > section > footer{margin:auto;width:100%}
+body.wiz main > section.hero{padding-top:clamp(1.5rem,4vw,3rem)}
+body.wiz .about-slide footer{border-top:none;padding:0}
+body.wiz main > section.leaving{animation:wzOut .38s cubic-bezier(.4,0,.2,1) forwards;pointer-events:none}
+body.wiz main > section.entering{animation:wzIn .7s cubic-bezier(.16,1,.3,1) both}
+@keyframes wzOut{to{opacity:0;transform:translateX(calc(var(--dir,1) * -48px)) scale(.97);filter:blur(8px)}}
+@keyframes wzIn{from{opacity:0;transform:translateX(calc(var(--dir,1) * 64px)) scale(.985);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+header nav a.on{color:var(--accent)}
+.wz-ctrl{position:fixed;z-index:60;left:0;right:0;bottom:18px;display:flex;justify-content:center;align-items:center;gap:12px;pointer-events:none}
+.wz-ctrl > *{pointer-events:auto}
+.wz-btn{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:13px 20px;border-radius:12px;cursor:pointer;
+  border:1px solid var(--border);background:rgba(24,20,31,.85);color:var(--ink);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .15s,border-color .15s}
+.wz-btn:hover{transform:translateY(-1px);border-color:var(--accent)}
+.wz-btn.next{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700;box-shadow:0 10px 30px rgba(47,229,131,.25)}
+.wz-btn:disabled{opacity:.35;cursor:default;transform:none}
+.wz-dots{display:flex;gap:7px;align-items:center;padding:12px 16px;border-radius:100px;background:rgba(24,20,31,.85);border:1px solid var(--border-dim);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.wz-dots button{width:8px;height:8px;border-radius:8px;border:none;padding:0;background:rgba(255,255,255,.22);cursor:pointer;transition:all .3s}
+.wz-dots button.on{width:24px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.wz-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);min-width:118px;text-align:center}
+@media(max-width:700px){
+  .wz-ctrl{bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));justify-content:space-between;background:rgba(12,11,16,.92);border-top:1px solid var(--border-dim);backdrop-filter:blur(12px)}
+  .wz-dots{display:none}
+  body.wiz main > section{padding-bottom:96px}
+}
+@media(prefers-reduced-motion:reduce){body.wiz main > section.leaving,body.wiz main > section.entering{animation:none}}
+
 </style>
 </head>
 <body>
@@ -370,6 +404,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
     <a href="#portfolio">Portfolio</a>
     <a href="#process">Process</a>
     <a href="#book">Contact</a>
+    <a href="#about">About</a>
   </nav>
 </header>
 
@@ -522,7 +557,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">◆ Portfolio</span>
-        <h2 class="h">Brands and products built under SA Intelligence Marketing</h2>
+        <h2 class="h">Brands and products built under SA Marketing Intelligence</h2>
         <p class="lede">A selection of the brands we've designed and launched, together with the applications currently in development with our engineering team.</p>
       </div>
       <div class="folio-grid">
@@ -540,7 +575,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
         </div>
         <div class="card folio-card">
           <div class="folio-logo-chip"><img src="data:image/webp;base64,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" alt="The Talking Therapist therapy and wellbeing brand logo" loading="lazy" decoding="async" width="254" height="280"></div>
-          <span class="folio-status" style="color:var(--accent)">Live</span>
+          <span class="folio-status" style="color:var(--accent2)">Ongoing</span>
           <h3>The Talking Therapist</h3>
           <p>Therapy and wellbeing brand — designed, built and launched by our studio.</p>
         </div>
@@ -554,13 +589,13 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
           <div class="folio-logo-chip" style="padding:0;overflow:hidden;background:#0a0e14;display:flex;align-items:center;justify-content:center">
             <img src="/voltz/assets/voltz-logo.png" alt="Voltz CRM" width="72" height="72" style="width:72px;height:72px;object-fit:contain;border-radius:16px" />
           </div>
-          <span class="folio-status" style="color:var(--accent2)">In development</span>
+          <span class="folio-status" style="color:var(--accent)">Live</span>
           <h3>Voltz CRM</h3>
           <p>Field CRM for trades — jobs, quotes, invoices, bookings and AI helpers. <a href="/voltz" style="color:var(--accent)">Product page →</a></p>
         </div>
         <div class="card folio-card">
           <div class="folio-logo-chip folio-logo-text"><span>Contract<b>Analyser</b></span></div>
-          <span class="folio-status" style="color:var(--accent2)">In development</span>
+          <span class="folio-status" style="color:var(--accent2)">Ongoing</span>
           <h3>Contract Analyser</h3>
           <p>Intelligent document analysis application for reviewing contracts — currently in development with our engineering team.</p>
         </div>
@@ -594,7 +629,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
         </details>
         <details class="faq-item">
           <summary>Do you build mobile applications?</summary>
-          <div class="body"><p>Yes. Alongside website design, we develop mobile applications for specialist niches — current products in development include Voltz CRM, a field CRM for tradespeople, and Contract Analyser, an intelligent contract review application.</p></div>
+          <div class="body"><p>Yes. Alongside website design, we develop mobile applications for specialist niches — products include Voltz CRM, a field CRM for tradespeople now live on the App Store, and Contract Analyser (in development), an intelligent contract review application.</p></div>
         </details>
         <details class="faq-item">
           <summary>Is SEO included?</summary>
@@ -672,7 +707,6 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
     </div>
   </section>
 
-</main>
 
 <div id="cookiePop" role="dialog" aria-live="polite" aria-label="Cookie notice">
   <h4>◆ Cookie Notice</h4>
@@ -690,6 +724,7 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
   <a class="cookie-manage" id="cookieManageLink" onclick="toggleCookiePrefs()">Manage preferences</a>
 </div>
 
+<section id="about" class="alt about-slide">
 <footer>
   <div class="wrap">
     <a class="logo" href="#home">
@@ -733,32 +768,14 @@ footer .copy{color:var(--mute2);font-size:.76rem;font-family:var(--mono)}
       </details>
     </div>
 
-    <p class="copy" style="margin-top:24px">© 2026 S·A Intelligent Designs · Part of SA Intelligence Marketing</p>
+    <p class="copy" style="margin-top:24px">© 2026 S·A Intelligent Designs · Part of SA Marketing Intelligence</p>
   </div>
 </footer>
+</section>
+</main>
+
 
 <script>
-// ===== Dissolve transition between sections on nav click =====
-(function(){
-  const overlay = document.getElementById('dissolve');
-  const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      const id = link.getAttribute('href').slice(1);
-      const target = document.getElementById(id);
-      if(!target) return;
-      e.preventDefault();
-      if(reduceMotion){ target.scrollIntoView(); history.replaceState(null,'','#'+id); return; }
-      overlay.classList.add('show');
-      setTimeout(() => {
-        target.scrollIntoView({ behavior:'instant', block:'start' });
-        history.replaceState(null,'','#'+id);
-        requestAnimationFrame(() => overlay.classList.remove('show'));
-      }, 380);
-    });
-  });
-})();
-
 // ===== Scroll-reveal dissolve-in for gallery frames =====
 (function(){
   const targets = document.querySelectorAll('.card, .promise, .step, .section-head');
@@ -865,6 +882,73 @@ setTimeout(()=>{
     document.getElementById('cookiePop').classList.add('show');
   }
 },1400);
+</script>
+
+<nav class="wz-ctrl" aria-label="Page steps">
+  <button class="wz-btn" id="wzPrev" aria-label="Previous page">&larr; Back</button>
+  <div class="wz-dots" id="wzDots"></div>
+  <span class="wz-label" id="wzLabel"></span>
+  <button class="wz-btn next" id="wzNext" aria-label="Next page">Next &rarr;</button>
+</nav>
+<script>
+// ===== Wizard: one full page per section =====
+(function(){
+  var main=document.querySelector('main'); if(!main) return;
+  var slides=[].slice.call(main.children).filter(function(el){ return el.tagName==='SECTION' && el.id; });
+  var ids=slides.map(function(s){return s.id;});
+  var names={home:'Welcome',packages:'Services',referral:'Referral',portfolio:'Portfolio',process:'Process',book:'Contact',about:'About'};
+  var cur=-1, busy=false, reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var prev=document.getElementById('wzPrev'), next=document.getElementById('wzNext'), dots=document.getElementById('wzDots'), label=document.getElementById('wzLabel');
+  document.body.classList.add('wiz');
+  function hdr(){ var h=document.querySelector('header'); if(h) document.documentElement.style.setProperty('--hdr',h.offsetHeight+'px'); }
+  hdr(); window.addEventListener('resize',hdr);
+  slides.forEach(function(s,i){ var b=document.createElement('button'); b.setAttribute('aria-label',names[s.id]||s.id); b.onclick=function(){go(i);}; dots.appendChild(b); });
+  function show(i){
+    slides.forEach(function(s,k){ s.classList.toggle('active',k===i); });
+    cur=i; slides[i].scrollTop=0;
+    [].forEach.call(dots.children,function(d,k){ d.classList.toggle('on',k===i); });
+    label.textContent=(i+1)+' / '+slides.length+' · '+(names[ids[i]]||ids[i]);
+    prev.disabled=i===0; next.innerHTML= i===slides.length-1 ? 'Start again &#8635;' : 'Next &rarr;';
+    document.querySelectorAll('header nav a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')==='#'+ids[i]); });
+    slides[i].querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    if(history.replaceState) history.replaceState(null,'','#'+ids[i]);
+  }
+  function go(i){
+    if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
+    var from=slides[cur], to=slides[i], dir=i>cur?1:-1;
+    if(reduce||!from){ show(i); return; }
+    busy=true; from.style.setProperty('--dir',dir); from.classList.add('leaving');
+    setTimeout(function(){ from.classList.remove('leaving'); show(i); to.style.setProperty('--dir',dir); to.classList.add('entering');
+      setTimeout(function(){ to.classList.remove('entering'); busy=false; },700); },380);
+  }
+  prev.onclick=function(){ go(cur-1); };
+  next.onclick=function(){ go(cur===slides.length-1?0:cur+1); };
+  // every in-page link (#home, #book, "Book a consultation"...) moves the wizard
+  document.addEventListener('click',function(e){
+    var a=e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+    var id=a.getAttribute('href').slice(1), k=ids.indexOf(id);
+    if(k<0){ var t=document.getElementById(id); if(t){ var sec=t.closest('main > section'); if(sec) k=ids.indexOf(sec.id); } }
+    if(k>=0){ e.preventDefault(); go(k); }
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){ e.preventDefault(); go(cur+1); }
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); go(cur-1); }
+  });
+  var lock=0;
+  window.addEventListener('wheel',function(e){
+    var s=slides[cur]; if(!s) return; var now=Date.now(); if(now<lock||Math.abs(e.deltaY)<25) return;
+    var top=s.scrollTop<=0, bot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
+    if(e.deltaY>0&&bot){ lock=now+1100; go(cur+1); } else if(e.deltaY<0&&top){ lock=now+1100; go(cur-1); }
+  },{passive:true});
+  var tx=0,ty=0;
+  window.addEventListener('touchstart',function(e){ tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
+  window.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.5) go(dx<0?cur+1:cur-1);
+  },{passive:true});
+  var start=ids.indexOf(location.hash.slice(1)); show(start<0?0:start);
+})();
 </script>
 </body>
 </html>

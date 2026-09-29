@@ -465,6 +465,14 @@
     .chat-note { padding: 0 14px 10px; font-size: 11px; color: #94a3b8; }
     @media (max-width: 900px) { .chat-fab { bottom: 88px; right: 14px; } .chat-fab .cf-txt { display: none; } .chat-fab { padding: 8px; } .chat { right: 12px; bottom: 84px; } }
     .stoptour { bottom: 150px; }
+    /* ── Tagline beside the brand ── */
+    .brand-tag { font-style: normal; display: flex; flex-direction: column; justify-content: center; line-height: 1.15;
+      margin-left: 6px; padding-left: 18px; border-left: 2px solid rgba(124,58,237,.25);
+      font-size: 17px; font-weight: 700; letter-spacing: -.01em; color: #64748b; }
+    .brand-tag b { font-size: 22px; font-weight: 900; letter-spacing: -.02em;
+      background: linear-gradient(110deg, var(--blue), var(--violet) 55%, var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    @media (max-width: 1280px) { .brand-tag { font-size: 14px; padding-left: 14px; } .brand-tag b { font-size: 18px; } }
+    @media (max-width: 700px) { .brand-tag { display: none; } }
   </style>
 </head>
 <body>
@@ -474,7 +482,7 @@
   <!-- Top bar -->
   <div class="topbar">
     <button class="pill menu-btn" id="menu-btn" aria-label="Open menu"><i></i></button>
-    <a class="brand" href="#speak" data-go="speak" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span></a>
+    <a class="brand" href="#speak" data-go="speak" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span><i class="brand-tag">Tired of typing?<b>Just talk.</b></i></a>
     <button class="pill" id="sound-btn" aria-pressed="false">&#9654; Sound on</button>
     <a class="pill primary appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">App Store</a>
   </div>
@@ -715,7 +723,7 @@
           <a href="mailto:contact@samarketingintelligence.com">Support</a>
           <a href="/voltz/privacy">Privacy Policy</a>
           <a href="/voltz/terms">Terms of Use</a>
-          <a href="https://www.samarketingintelligence.com/">SAM Marketing Intelligence</a>
+          <a href="https://www.samarketingintelligence.com/">SA Marketing Intelligence</a>
         </div>
 
         <div class="company">
@@ -821,8 +829,8 @@
       audio.pause(); if(!soundOn) return;
       var s=slides[cur]; if(!s||!s.dataset.audio) return;
       audio.src=s.dataset.audio; audio.currentTime=0;
-      audio.onplay=function(){ el&&el.classList.add('talking'); };
-      audio.onended=audio.onerror=function(){ el&&el.classList.remove('talking'); };
+      audio.onplay=function(){ el&&el.classList.add('talking'); if(window.VzMusic) VzMusic.duck(true); };
+      audio.onended=audio.onerror=function(){ el&&el.classList.remove('talking'); if(window.VzMusic) VzMusic.duck(false); };
       var p=audio.play(); if(p&&p.catch) p.catch(function(){ el&&el.classList.remove('talking'); needTap=true; tapEl.classList.add('show'); });
     }
     /* ── "Zoop" sound ── */
@@ -911,6 +919,7 @@
     function startAuto(){
       auto=true; stopEl.classList.add('show');
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
+      Music.start();
     }
     function stopAuto(){
       auto=false; clearTimeout(autoT); stopEl.classList.remove('show'); tapEl.classList.remove('show');
@@ -920,10 +929,84 @@
     // browsers block sound until the visitor taps once: first tap anywhere unlocks Jess
     function unlock(){
       if(!needTap) return; needTap=false; tapEl.classList.remove('show');
-      var s=slides[cur]; if(s&&soundOn) speak(s.dataset.jess, s.querySelector('.jess'));
+      var s=slides[cur]; if(s&&soundOn){ Music.start(); speak(s.dataset.jess, s.querySelector('.jess')); }
     }
     ['pointerdown','keydown','touchstart'].forEach(function(ev){ window.addEventListener(ev,unlock,{passive:true}); });
     tapEl.onclick=function(e){ e.stopPropagation(); unlock(); };
+
+
+    /* ── Background music: generated live (no files, no licences), builds as the tour goes on ── */
+    var Music=window.VzMusic=(function(){
+      var ctx=null, master=null, duck=null, timer=null, playing=false, step=0, nextT=0, intensity=0, duckLevel=1;
+      var BPM=108, SIXTEENTH=60/BPM/4;
+      // I – V – vi – IV in C major (uplifting), 2 bars each
+      var CHORDS=[[48,52,55,60],[43,50,55,59],[45,52,57,60],[41,48,53,57]];
+      var ARP=[0,1,2,3,2,1,3,2];
+      function hz(n){ return 440*Math.pow(2,(n-69)/12); }
+      function init(){
+        if(ctx) return;
+        ctx=(window.actx)||new (window.AudioContext||window.webkitAudioContext)();
+        master=ctx.createGain(); master.gain.value=0;
+        duck=ctx.createGain(); duck.gain.value=1;
+        var comp=ctx.createDynamicsCompressor(); comp.threshold.value=-20; comp.ratio.value=3;
+        master.connect(duck); duck.connect(comp); comp.connect(ctx.destination);
+      }
+      function env(g,t,a,peak,d){ g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(peak,t+a); g.gain.exponentialRampToValueAtTime(0.0001,t+a+d); }
+      function pad(notes,t,len){
+        notes.forEach(function(n){
+          var o=ctx.createOscillator(), o2=ctx.createOscillator(), f=ctx.createBiquadFilter(), g=ctx.createGain();
+          o.type='sawtooth'; o2.type='triangle'; o.frequency.value=hz(n); o2.frequency.value=hz(n)*1.003;
+          f.type='lowpass'; f.frequency.value=700+intensity*1400; f.Q.value=0.6;
+          g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.028,t+0.9); g.gain.setValueAtTime(0.028,t+len-0.6); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
+          o.connect(f); o2.connect(f); f.connect(g); g.connect(master);
+          o.start(t); o2.start(t); o.stop(t+len+0.05); o2.stop(t+len+0.05);
+        });
+      }
+      function pluck(n,t,vol){
+        var o=ctx.createOscillator(), g=ctx.createGain(), f=ctx.createBiquadFilter();
+        o.type='triangle'; o.frequency.value=hz(n); f.type='lowpass'; f.frequency.value=3200;
+        env(g,t,0.005,vol,0.28); o.connect(f); f.connect(g); g.connect(master); o.start(t); o.stop(t+0.35);
+      }
+      function bass(n,t,len){
+        var o=ctx.createOscillator(), g=ctx.createGain();
+        o.type='sine'; o.frequency.value=hz(n-12);
+        g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.09,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
+        o.connect(g); g.connect(master); o.start(t); o.stop(t+len+0.05);
+      }
+      function kick(t){
+        var o=ctx.createOscillator(), g=ctx.createGain();
+        o.frequency.setValueAtTime(120,t); o.frequency.exponentialRampToValueAtTime(45,t+0.12);
+        env(g,t,0.003,0.16,0.18); o.connect(g); g.connect(master); o.start(t); o.stop(t+0.25);
+      }
+      var noiseBuf=null;
+      function hat(t,vol){
+        if(!noiseBuf){ noiseBuf=ctx.createBuffer(1,ctx.sampleRate*0.05,ctx.sampleRate); var d=noiseBuf.getChannelData(0); for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; }
+        var s=ctx.createBufferSource(), f=ctx.createBiquadFilter(), g=ctx.createGain();
+        s.buffer=noiseBuf; f.type='highpass'; f.frequency.value=8000; env(g,t,0.002,vol,0.04);
+        s.connect(f); f.connect(g); g.connect(master); s.start(t);
+      }
+      function schedule(){
+        while(nextT < ctx.currentTime + 0.15){
+          var bar=Math.floor(step/16), chord=CHORDS[Math.floor(bar/2)%4], s16=step%16;
+          if(step%32===0) pad(chord,nextT,SIXTEENTH*32);
+          if(intensity>0.15 && s16%8===0) bass(chord[0],nextT,SIXTEENTH*7);
+          var arpOn = intensity<0.35 ? (s16%4===0) : (intensity<0.7 ? (s16%2===0) : true);
+          if(arpOn) pluck(chord[ARP[s16%8]]+12+(intensity>0.8 && s16%4===3?12:0), nextT, 0.03+intensity*0.02);
+          if(intensity>0.45 && s16%4===0) kick(nextT);
+          if(intensity>0.6 && s16%4===2) hat(nextT,0.02+intensity*0.02);
+          nextT+=SIXTEENTH; step++;
+        }
+      }
+      return {
+        start:function(){ try{ init(); if(ctx.resume) ctx.resume(); if(playing) return; playing=true; step=0; nextT=ctx.currentTime+0.1;
+          master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.0001,ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.55,ctx.currentTime+2.5);
+          timer=setInterval(schedule,50); }catch(e){} },
+        stop:function(){ if(!playing||!ctx) return; playing=false; clearInterval(timer);
+          master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value||0.3,ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+1.2); },
+        setIntensity:function(x){ intensity=Math.max(0,Math.min(1,x)); },
+        duck:function(on){ if(!ctx) return; var v=on?0.35:1; duck.gain.cancelScheduledValues(ctx.currentTime); duck.gain.setTargetAtTime(v,ctx.currentTime,on?0.08:0.6); }
+      };
+    })();
 
     /* ── Navigation ── */
     function show(i){
@@ -931,6 +1014,7 @@
       cur=i; slides[i].scrollTop=0;
       [].forEach.call(prog.children,function(d,k){ d.classList.toggle('on',k===i); });
       count.textContent=(i+1)+' / '+slides.length;
+      Music.setIntensity(slides.length>1 ? i/(slides.length-1) : 0);
       prevB.disabled=i===0; nextB.innerHTML = i===slides.length-1 ? 'Start again &#8635;' : 'Next &rarr;';
       document.querySelectorAll('.side [data-go]').forEach(function(a){ a.classList.toggle('active', a.dataset.go===ids[i]); });
       if(history.replaceState) history.replaceState(null,'','#'+ids[i]);
@@ -973,7 +1057,7 @@
     soundBtn.onclick=function(){
       soundOn=!soundOn; soundBtn.classList.toggle('on',soundOn); soundBtn.setAttribute('aria-pressed',soundOn);
       soundBtn.innerHTML = soundOn ? '&#10074;&#10074; Sound off' : '&#9654; Sound on';
-      if(soundOn){ var s=slides[cur]; if(s) speak(s.dataset.jess, s.querySelector('.jess')); } else audio.pause();
+      if(soundOn){ Music.start(); var s=slides[cur]; if(s) speak(s.dataset.jess, s.querySelector('.jess')); } else { audio.pause(); Music.stop(); }
     };
 
     /* ── Dave mascot: does his move once per visitor ── */
