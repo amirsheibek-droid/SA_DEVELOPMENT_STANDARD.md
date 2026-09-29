@@ -850,19 +850,42 @@
     slides.forEach(function(s,i){ var d=document.createElement('span'); d.title=s.dataset.title; d.onclick=function(){go(i);}; prog.appendChild(d); });
 
     /* ── Jess voice: pre-recorded Gemini "Aoede" clips ── */
-    var synth=null, audio=new Audio(); audio.preload='auto';
+    var synth=null;
+    // One shared audio engine for voice, music and the zoop (two engines = late voice on iPhone/Mac).
+    function vctx(){ if(!window.vzCtx) window.vzCtx=new (window.AudioContext||window.webkitAudioContext)(); return window.vzCtx; }
+    var voiceBuf={}, voiceSrc=null, voiceGain=null;
+    // small shim so the rest of the page can still ask "is Jess talking?"
+    var audio={ paused:true, ended:true, pause:function(){ stopVoice(); } };
+    function loadVoice(url){
+      if(!voiceBuf[url]) voiceBuf[url]=fetch(url).then(function(r){ return r.arrayBuffer(); })
+        .then(function(buf){ return new Promise(function(res,rej){ vctx().decodeAudioData(buf,res,rej); }); });
+      return voiceBuf[url];
+    }
+    function stopVoice(){
+      if(voiceSrc){ try{ voiceSrc.onended=null; voiceSrc.stop(); }catch(e){} voiceSrc=null; }
+      audio.paused=true; audio.ended=true;
+      if(window.VzMusic) VzMusic.duck(false);
+    }
     function speak(t, el){
-      audio.pause(); if(!soundOn) return;
+      stopVoice(); if(!soundOn) return;
       var s=slides[cur]; if(!s||!s.dataset.audio) return;
-      audio.src=s.dataset.audio; audio.currentTime=0;
-      audio.onplay=function(){ el&&el.classList.add('talking'); if(window.VzMusic) VzMusic.duck(true); };
-      audio.onended=audio.onerror=function(){ el&&el.classList.remove('talking'); if(window.VzMusic) VzMusic.duck(false); };
-      var p=audio.play(); if(p&&p.catch) p.catch(function(){ el&&el.classList.remove('talking'); needTap=true; tapEl.classList.add('show'); });
+      var url=s.dataset.audio, mine=cur, c=vctx();
+      if(c.state==='suspended' && c.resume) c.resume();
+      audio.paused=false; audio.ended=false;          // busy while the clip loads, so the tour waits
+      loadVoice(url).then(function(buf){
+        if(cur!==mine || !soundOn){ audio.paused=true; audio.ended=true; return; }
+        if(!voiceGain){ voiceGain=c.createGain(); voiceGain.gain.value=1; voiceGain.connect(c.destination); }
+        var src=c.createBufferSource(); src.buffer=buf; src.connect(voiceGain);
+        src.onended=function(){ if(voiceSrc!==src) return; voiceSrc=null; audio.paused=true; audio.ended=true;
+          el&&el.classList.remove('talking'); if(window.VzMusic) VzMusic.duck(false); };
+        voiceSrc=src; el&&el.classList.add('talking'); if(window.VzMusic) VzMusic.duck(true);
+        src.start(0);
+      }).catch(function(){ audio.paused=true; audio.ended=true; el&&el.classList.remove('talking'); });
     }
     /* ── "Zoop" sound ── */
     var actx=null;
     function zoop(){ if(!soundOn) return; try{
-      actx=actx||new (window.AudioContext||window.webkitAudioContext)(); var c=actx,n=c.currentTime,d=.45;
+      actx=vctx(); var c=actx,n=c.currentTime,d=.45;
       var b=c.createBuffer(1,c.sampleRate*d,c.sampleRate),x=b.getChannelData(0); for(var i=0;i<x.length;i++) x[i]=Math.random()*2-1;
       var s=c.createBufferSource(); s.buffer=b; var f=c.createBiquadFilter(); f.type='bandpass'; f.Q.value=1.2;
       f.frequency.setValueAtTime(300,n); f.frequency.exponentialRampToValueAtTime(3200,n+d*.8);
@@ -971,7 +994,7 @@
       function hz(n){ return 440*Math.pow(2,(n-69)/12); }
       function init(){
         if(ctx) return;
-        ctx=(window.actx)||new (window.AudioContext||window.webkitAudioContext)();
+        ctx=vctx();
         master=ctx.createGain(); master.gain.value=0;
         duck=ctx.createGain(); duck.gain.value=1;
         var comp=ctx.createDynamicsCompressor(); comp.threshold.value=-20; comp.ratio.value=3;
@@ -1155,12 +1178,11 @@
     };
 
     document.getElementById('enter').onclick=function(){
-      // this tap unlocks sound in every browser: prime Jess's audio + the zoop
-      try{ audio.muted=true; audio.src=slides[0].dataset.audio; var pp=audio.play(); if(pp&&pp.then) pp.then(function(){ audio.pause(); audio.muted=false; }).catch(function(){ audio.muted=false; }); }catch(e){}
-      try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); if(actx.resume) actx.resume(); }catch(e){}
+      // this tap unlocks sound in every browser: wake the single audio engine
+      try{ var c0=vctx(); if(c0.resume) c0.resume(); }catch(e){}
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
       Music.start();
-      slides.forEach(function(sl){ if(sl.dataset.audio){ var a=new Audio(); a.preload='auto'; a.src=sl.dataset.audio; } });
+      slides.forEach(function(sl){ if(sl.dataset.audio) loadVoice(sl.dataset.audio); });
       gate.classList.add('out');
       setTimeout(function(){ gate.classList.add('gone'); },800);
       setTimeout(function(){
