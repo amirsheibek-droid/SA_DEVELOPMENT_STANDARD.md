@@ -515,8 +515,8 @@
   <main class="deck" id="deck">
 
     <!-- 0 · Why Voltz -->
-    <section class="slide" id="why" data-title="Why Voltz"
-      data-jess="Hey there, I'm Jess. Voltz is made for sole traders: plumbers, electricians, builders and every one-person trade business. You're the boss, the worker and the office all at once, so we built an app that does the paperwork while you talk. Shall I show you how?"
+    <section class="slide" id="why" data-audio="/voltz/assets/jess/why.m4a?v=1" data-title="Why Voltz"
+      data-jess="Hey there, I'm Jess, your Voltz assistant. Voltz is built for one-person trade businesses, on purpose. Most field CRMs are made for companies with an office and a dispatcher. I'm made for the person doing the work, running the business from the van. Shall I show you around?"
       data-chips='[["Yes, show me","next"],["Just get the app","get"]]'>
       <div class="slide-inner cards-grid why-grid">
         <div class="cards-copy">
@@ -1152,7 +1152,7 @@
       document.body.classList.remove('locked');
       if(withTour){ if(cur!==0) show(0); startAuto(); }
       daveOnce();
-      setTimeout(function(){ runJess(slides[cur]); },250);
+      setTimeout(function(){ runJess(slides[cur]); },60);
     }
     function askTour(){
       ask.classList.add('show'); ask.setAttribute('aria-hidden','false');
