@@ -536,8 +536,8 @@
     </section>
 
     <!-- 2 · Speak a job -->
-    <section class="slide" id="speak" data-audio="/voltz/assets/jess/speak.m4a" data-title="Speak a job"
-      data-jess="Hey there, I'm Jess, your Voltz assistant. This is your home screen. Tap the mic and tell me about a job, like: boiler service for John on Friday at two. I'll book it in, create the client and start the quote. Shall I show you around?"
+    <section class="slide" id="speak" data-audio="/voltz/assets/jess/speak-v2.m4a" data-title="Speak a job"
+      data-jess="This is your home screen. Tap the mic and tell me about a job, like: boiler service for John on Friday at two. I'll book it in, create the client and start the quote."
       data-chips='[["Show me how I add a client","next"]]'>
       <div class="slide-inner screen-grid">
         <div class="screen-copy">
@@ -895,6 +895,31 @@
       s.connect(f); f.connect(g); g.connect(c.destination); o.connect(og); og.connect(c.destination); s.start(n); s.stop(n+d); o.start(n); o.stop(n+d);
     }catch(e){} }
 
+    /* ── Sound effects (generated live, quiet, only when sound is on) ── */
+    var Sfx=(function(){
+      function tone(freq, t0, len, vol, type, slideTo){
+        var c=vctx(), n=c.currentTime+(t0||0), o=c.createOscillator(), g=c.createGain();
+        o.type=type||'sine'; o.frequency.setValueAtTime(freq,n); if(slideTo) o.frequency.exponentialRampToValueAtTime(slideTo,n+len);
+        g.gain.setValueAtTime(0.0001,n); g.gain.exponentialRampToValueAtTime(vol,n+0.008); g.gain.exponentialRampToValueAtTime(0.0001,n+len);
+        o.connect(g); g.connect(c.destination); o.start(n); o.stop(n+len+0.02);
+      }
+      function ok(){ return soundOn; }
+      return {
+        tap:function(){ if(!ok()) return; try{ tone(1400,0,0.05,0.06,'triangle',900); }catch(e){} },
+        pop:function(){ if(!ok()) return; try{ tone(520,0,0.12,0.09,'sine',1100); }catch(e){} },
+        sparkle:function(){ if(!ok()) return; try{ [1047,1319,1568,2093].forEach(function(f,i){ tone(f,i*0.06,0.35,0.05,'sine'); }); }catch(e){} },
+        boom:function(){ try{ var c=vctx(), n=c.currentTime; tone(110,0,0.9,0.35,'sine',38); tone(880,0,0.6,0.04,'triangle',220);
+          var b=c.createBuffer(1,c.sampleRate*0.8,c.sampleRate), x=b.getChannelData(0); for(var i=0;i<x.length;i++) x[i]=(Math.random()*2-1)*Math.pow(1-i/x.length,3);
+          var s=c.createBufferSource(); s.buffer=b; var f=c.createBiquadFilter(); f.type='lowpass'; f.frequency.value=1800; var g=c.createGain(); g.gain.value=0.12;
+          s.connect(f); f.connect(g); g.connect(c.destination); s.start(n); }catch(e){} }
+      };
+    })();
+    window.VzSfx=Sfx;
+    document.addEventListener('click',function(e){
+      var el=e.target.closest && e.target.closest('button, a, .chip, #progress span');
+      if(el && el.id!=='enter') Sfx.tap();
+    },true);
+
     /* ── Smooth page transition ── */
     function transition(from, to, dir, mid, done){
       if(reduce || !from){ mid(); done&&done(); return; }
@@ -915,7 +940,7 @@
       clearInterval(typer); clearTimeout(chipT);
       chips.classList.remove('show'); chips.innerHTML='';
       bub.classList.remove('pop'); void bub.offsetWidth; bub.classList.add('pop');
-      bub.innerHTML='<span class="dots3"><i></i><i></i><i></i></span>';
+      bub.innerHTML='<span class="dots3"><i></i><i></i><i></i></span>'; Sfx.pop();
       jess.classList.add('talking');
       setTimeout(function(){
         speak(line, jess);
@@ -926,7 +951,7 @@
             var list=[]; try{ list=JSON.parse(s.dataset.chips||'[]'); }catch(e){}
             list.forEach(function(c,ix){ var b=document.createElement('button'); b.className='chip'+(ix===0?' go':''); b.textContent=c[0]+(c[1]==='next'?' →':'');
               b.onclick=function(){ c[1]==='next'?go(cur+1):go(ids.indexOf(c[1])); }; chips.appendChild(b); });
-            chipT=setTimeout(function(){ chips.classList.add('show'); },120);
+            chipT=setTimeout(function(){ chips.classList.add('show'); if(list.length) Sfx.sparkle(); },120);
             autoAfter(line);
           }
         }, 13);
@@ -1181,7 +1206,7 @@
       // this tap unlocks sound in every browser: wake the single audio engine
       try{ var c0=vctx(); if(c0.resume) c0.resume(); }catch(e){}
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
-      Music.start();
+      Music.start(); Sfx.boom();
       slides.forEach(function(sl){ if(sl.dataset.audio) loadVoice(sl.dataset.audio); });
       gate.classList.add('out');
       setTimeout(function(){ gate.classList.add('gone'); },800);
