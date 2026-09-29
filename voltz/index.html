@@ -314,6 +314,33 @@
       .side { top: 92px; }
       .slide { padding-top: 96px; }
     }
+    /* ── Big, crisp app icon ── */
+    .brand { gap: 22px; }
+    .brand img { width: 132px; height: 132px; border-radius: 0; box-shadow: none; background: none;
+      filter: drop-shadow(0 14px 28px rgba(37,99,235,.28)); image-rendering: auto; }
+    .brand span { font-size: 52px; }
+    .topbar { height: 168px; }
+    .slide { padding-top: 176px; }
+    .phone { height: min(calc(100vh - 300px), 680px); }
+    .side { top: 196px; max-height: calc(100vh - 300px); }
+    .side-brand img, .hero-icon { border-radius: 0 !important; box-shadow: none !important; background: none !important;
+      filter: drop-shadow(0 10px 22px rgba(37,99,235,.25)); }
+    @media (max-width: 1280px) {
+      .brand img { width: 104px; height: 104px; }
+      .brand span { font-size: 42px; }
+      .topbar { height: 140px; }
+      .slide { padding-top: 150px; }
+      .side { top: 150px; }
+    }
+    @media (max-width: 900px) { .phone { height: min(42vh, 460px); } }
+    @media (max-width: 560px) {
+      .brand { gap: 12px; }
+      .brand img { width: 76px; height: 76px; }
+      .brand span { font-size: 30px; }
+      .topbar { height: 104px; }
+      .slide { padding-top: 112px; }
+      .side { top: 108px; }
+    }
   </style>
 </head>
 <body>
@@ -323,14 +350,14 @@
   <!-- Top bar -->
   <div class="topbar">
     <button class="pill menu-btn" id="menu-btn" aria-label="Open menu"><i></i></button>
-    <a class="brand" href="#speak" data-go="speak" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-logo.png" alt="Voltz CRM app icon" width="48" height="48"><span>Voltz <em>CRM</em></span></a>
+    <a class="brand" href="#speak" data-go="speak" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span></a>
     <button class="pill" id="sound-btn" aria-pressed="false">&#9654; Sound on</button>
     <a class="pill primary appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">App Store</a>
   </div>
 
   <!-- Glass side menu -->
   <nav class="side" id="side" aria-label="Pages">
-    <a class="side-brand" href="#speak" data-go="speak"><img src="/voltz/assets/voltz-logo.png" alt=""> Voltz CRM</a>
+    <a class="side-brand" href="#speak" data-go="speak"><img src="/voltz/assets/voltz-icon.png" alt=""> Voltz CRM</a>
     <div class="grp">Guided tour</div>
     <a class="sl" href="#speak" data-go="speak"><span class="d"></span>Speak a job</a>
     <a class="sl" href="#client" data-go="client"><span class="d"></span>Create a client</a>
@@ -355,7 +382,7 @@
       data-chips='[["Yes, show me","next"],["Just get the app","get"]]'>
       <div class="slide-inner screen-grid">
         <div class="screen-copy">
-          <div class="brandline"><img src="/voltz/assets/voltz-logo.png" alt="Voltz CRM" width="56" height="56"><div><strong>Voltz CRM</strong><span>The field CRM for sole traders</span></div></div>
+          <div class="brandline"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM" width="56" height="56"><div><strong>Voltz CRM</strong><span>The field CRM for sole traders</span></div></div>
           <div class="step-tag"><b>1 / 5</b> Guided tour</div>
           <h2>Speak a job.<br><em>Watch it happen.</em></h2>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
@@ -532,7 +559,7 @@
       data-jess="That's the tour. Download Voltz from the App Store and I'll be ready when you are. Speak soon!"
       data-chips='[["Start the tour again","speak"]]'>
       <div class="slide-inner final">
-        <img class="hero-icon" src="/voltz/assets/voltz-logo.png" alt="" width="168" height="168" loading="lazy">
+        <img class="hero-icon" src="/voltz/assets/voltz-icon.png" alt="" width="168" height="168" loading="lazy">
         <h2>Less admin.<br><em>More work done.</em></h2>
         <p class="lead" style="text-align:center">Voltz CRM for iPhone. Clients, diary, quotes, invoices, payments and a live AI voice assistant, built for sole traders.</p>
         <div class="cta-row">
