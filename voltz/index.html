@@ -151,8 +151,8 @@
     }
 
     .hero-icon {
-      width: 96px; height: 96px;
-      border-radius: 22px;
+      width: 140px; height: 140px;
+      border-radius: 32px;
       box-shadow:
         0 0 0 1px var(--blue-line),
         0 0 50px var(--blue-glow),
@@ -906,6 +906,255 @@
     @media (max-width: 860px) { .more-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 560px) { .more-grid { grid-template-columns: 1fr; } }
 
+    /* ─── JESS VOICE GUIDE ───────────────────────────────────── */
+    .jess {
+      position: fixed; right: 24px; bottom: 24px; z-index: 50;
+      display: flex; align-items: flex-end; gap: 12px;
+      max-width: 380px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease;
+      pointer-events: none;
+    }
+    .jess.show { opacity: 1; transform: none; pointer-events: auto; }
+    .jess-bubble {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 20px 20px 6px 20px;
+      padding: 14px 16px 12px;
+      box-shadow: 0 16px 40px rgba(15,23,42,0.14);
+      font-size: 14.5px; line-height: 1.55; color: var(--text);
+    }
+    .jess-name { font-size: 11px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; display:flex; align-items:center; gap:8px; }
+    .jess-text { min-height: 22px; }
+    .jess-text .caret { display:inline-block; width:2px; height:1em; background: var(--blue); vertical-align:-2px; margin-left:2px; animation: jblink 1s steps(1) infinite; }
+    @keyframes jblink { 50% { opacity: 0; } }
+    .jess-sound {
+      margin-top: 10px; appearance: none; border: 1px solid var(--blue-line);
+      background: rgba(37,99,235,0.08); color: var(--blue);
+      border-radius: 100px; padding: 6px 14px; font: 700 12px/1 inherit; font-family: inherit; cursor: pointer;
+    }
+    .jess-sound.on { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .jess-avatar {
+      flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #fff; font-weight: 800; font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.35);
+      position: relative;
+    }
+    .jess-avatar::after {
+      content: ''; position: absolute; inset: -6px; border-radius: 50%;
+      border: 2px solid rgba(37,99,235,0.35); opacity: 0;
+    }
+    .jess.talking .jess-avatar::after { animation: jpulse 1.2s ease-out infinite; }
+    @keyframes jpulse { 0% { transform: scale(.9); opacity: .9; } 100% { transform: scale(1.35); opacity: 0; } }
+    .jess-close { margin-left:auto; background:none; border:none; color: var(--muted); cursor:pointer; font-size:16px; line-height:1; padding:0 2px; }
+    @media (max-width: 560px) {
+      .jess { right: 12px; left: 12px; bottom: 12px; max-width: none; }
+      .jess-bubble { font-size: 13.5px; }
+      .jess-avatar { width: 44px; height: 44px; font-size: 17px; }
+    }
+
+    /* ─── GLASS SIDE MENU ────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 24px; }
+    .side-nav {
+      position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
+      z-index: 60; width: 220px;
+      display: flex; flex-direction: column; gap: 2px;
+      padding: 16px 12px;
+      background: rgba(255,255,255,0.45);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 22px;
+      box-shadow: 0 20px 50px rgba(15,23,42,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .side-brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:14px; color: var(--text); padding: 4px 10px 12px; border-bottom: 1px solid rgba(15,23,42,0.08); margin-bottom: 6px; }
+    .side-brand img { border-radius: 8px; box-shadow: 0 2px 8px rgba(37,99,235,.2); }
+    .side-link {
+      display:flex; align-items:center; gap:10px;
+      padding: 8px 10px; border-radius: 12px;
+      font-size: 13.5px; font-weight: 600; color: var(--muted);
+      transition: background .2s, color .2s;
+    }
+    .side-link:hover { background: rgba(37,99,235,0.08); color: var(--text); }
+    .side-link.active { background: rgba(37,99,235,0.12); color: var(--blue); }
+    .side-dot { width:6px; height:6px; border-radius:50%; background: currentColor; opacity:.35; flex-shrink:0; }
+    .side-link.active .side-dot { opacity:1; box-shadow: 0 0 8px var(--blue); }
+    .side-legal { display:flex; gap:10px; flex-wrap:wrap; padding: 10px 10px 4px; margin-top: 6px; border-top: 1px solid rgba(15,23,42,0.08); }
+    .side-legal a { font-size: 11.5px; color: var(--muted); }
+    .side-legal a:hover { color: var(--blue); }
+    .side-cta { margin: 8px 4px 2px; text-align:center; background: var(--blue); color:#fff; font-size:12.5px; font-weight:700; padding: 10px; border-radius: 12px; box-shadow: 0 8px 20px rgba(37,99,235,.3); }
+    .side-toggle {
+      display: none; position: fixed; left: 14px; top: 14px; z-index: 61;
+      align-items:center; gap:8px; padding: 10px 14px;
+      background: rgba(255,255,255,0.55);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.8); border-radius: 100px;
+      font: 700 13px/1 inherit; font-family: inherit; color: var(--text);
+      box-shadow: 0 8px 24px rgba(15,23,42,0.12); cursor: pointer;
+    }
+    .side-toggle span { display:block; width:14px; height:2px; background: var(--text); border-radius:2px; }
+    .side-toggle span + span { margin-left:-22px; }
+    .side-toggle { position: fixed; }
+    .side-toggle span:nth-child(1){ transform: translateY(-4px); }
+    .side-toggle span:nth-child(3){ transform: translateY(4px); }
+    @media (min-width: 1240px) {
+      body { padding-left: 250px; }
+      .bg-blob { margin-left: 125px; }
+    }
+    @media (max-width: 1239px) {
+      .side-toggle { display: inline-flex; }
+      .side-nav {
+        left: 12px; top: 64px; transform: translateX(-120%);
+        transition: transform .35s cubic-bezier(.16,1,.3,1);
+        max-height: calc(100vh - 80px); overflow-y: auto;
+      }
+      .side-nav.open { transform: none; }
+    }
+
+    /* ─── FLOATING GLASS CHIPS ───────────────────────────────── */
+    .float-chip {
+      position: absolute; z-index: 3;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 14px; border-radius: 14px;
+      background: rgba(255,255,255,0.75);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 12px 30px rgba(15,23,42,0.12);
+      font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap;
+      animation: chipFloat 6s ease-in-out infinite;
+    }
+    .fc-a { top: 16%; left: -88px; }
+    .fc-b { bottom: 20%; right: -96px; animation-delay: -3s; }
+    .feature-row.flip .fc-a { left: auto; right: -88px; }
+    .feature-row.flip .fc-b { right: auto; left: -96px; }
+    .fdot { width:8px; height:8px; border-radius:50%; background: var(--blue); box-shadow: 0 0 8px rgba(37,99,235,.6); }
+    .fdot.g { background:#22c55e; box-shadow: 0 0 8px rgba(34,197,94,.6); }
+    .float-chip .pulse { display:none; }
+    @keyframes chipFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @media (max-width: 760px) {
+      .fc-a { left: -24px !important; right: auto !important; top: 10%; }
+      .fc-b { right: -24px !important; left: auto !important; bottom: 14%; }
+      .float-chip { font-size: 12px; padding: 8px 11px; }
+    }
+
+    /* ─── DEEP DIVE SECTIONS ─────────────────────────────────── */
+    .deep { position: relative; z-index: 1; padding: 110px 24px; overflow: hidden; }
+    .deep.alt { background: linear-gradient(135deg, rgba(37,99,235,0.04), rgba(124,58,237,0.04) 60%, rgba(202,138,4,0.04)); }
+    .deep::before {
+      content:''; position:absolute; width: 520px; height: 520px; border-radius: 50%;
+      right: -160px; top: -120px;
+      background: radial-gradient(circle, rgba(37,99,235,0.10), transparent 65%);
+      pointer-events:none;
+    }
+    .deep.alt::before { left: -160px; right: auto; background: radial-gradient(circle, rgba(124,58,237,0.10), transparent 65%); }
+    .deep-inner { max-width: 1000px; margin: 0 auto; position: relative; }
+    .deep h2 {
+      font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800;
+      letter-spacing: -0.035em; line-height: 1.1; color: var(--text); margin-bottom: 18px;
+    }
+    .deep h2 em {
+      font-style: normal;
+      background: linear-gradient(130deg, var(--blue) 0%, #7c3aed 60%, var(--gold) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .deep-lead { font-size: 18px; line-height: 1.7; color: var(--muted); max-width: 620px; margin-bottom: 40px; }
+    .dd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .dd-card {
+      background: rgba(255,255,255,0.7);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 20px; padding: 24px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .dd-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(37,99,235,0.14); }
+    .dd-card h4 { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .dd-card p { font-size: 14.5px; line-height: 1.6; color: var(--muted); }
+    .swatches { display:flex; gap:10px; margin: -16px 0 32px; }
+    .swatches span { width: 34px; height: 34px; border-radius: 50%; box-shadow: 0 4px 12px rgba(15,23,42,.15); }
+    @media (max-width: 860px) { .dd-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .dd-grid { grid-template-columns: 1fr; } .deep { padding: 80px 20px; } }
+
+    /* ─── GUIDED TOUR ────────────────────────────────────────── */
+    .tour { position: relative; z-index: 1; padding: 110px 24px 120px;
+      background: radial-gradient(ellipse 70% 60% at 50% 55%, rgba(37,99,235,0.08), transparent 70%); }
+    .tour-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+    .tour-head h2 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.1; color: var(--text); margin-bottom: 12px; }
+    .tour-head h2 em { font-style: normal; background: linear-gradient(130deg, var(--blue) 0%, #7c3aed 60%, var(--gold) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .tour-head p { color: var(--muted); font-size: 17px; }
+    .tour-body { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 210px 300px 1fr; gap: 48px; align-items: center; }
+    .tour-steps { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .tour-step { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left;
+      padding: 12px 14px; border-radius: 14px; border: 1px solid transparent; background: transparent;
+      font-weight: 600; font-size: 14.5px; line-height: 1.3; font-family: inherit; color: var(--muted); cursor: pointer; transition: all .2s; }
+    .tour-step:hover { background: rgba(255,255,255,0.6); color: var(--text); }
+    .tour-step.active { background: #fff; border-color: var(--border); color: var(--text); box-shadow: 0 8px 22px rgba(15,23,42,0.08); }
+    .ts-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+      font-size: 12px; font-weight: 800; background: rgba(37,99,235,0.1); color: var(--blue); }
+    .tour-step.active .ts-num { background: var(--blue); color: #fff; box-shadow: 0 0 0 4px rgba(37,99,235,0.15); }
+    .tour-step.done .ts-num { background: #22c55e; color: #fff; }
+    .tour-stage { perspective: 1400px; }
+    .tour-phone { position: relative; transform-style: preserve-3d; }
+    .tour-phone::after { content:''; position:absolute; bottom:-26px; left:50%; transform:translateX(-50%); width:70%; height:50px; background: var(--blue-glow); border-radius:50%; filter: blur(24px); opacity:.8; z-index:-1; }
+    .tour-phone.swing { animation: ipadForward .8s cubic-bezier(.2,.9,.25,1); }
+    @keyframes ipadForward {
+      0%   { transform: translateZ(0) rotateY(0) scale(1); }
+      30%  { transform: translateZ(-260px) rotateY(-22deg) scale(.82); filter: blur(1px); }
+      62%  { transform: translateZ(60px) rotateY(4deg) scale(1.05); filter: none; }
+      100% { transform: translateZ(0) rotateY(0) scale(1); }
+    }
+    .tour-shell { position: relative; padding: 10px; background: #0f172a; border-radius: 48px;
+      box-shadow: 0 0 0 2px #c8d4e8, 0 30px 70px rgba(15,23,42,0.22); aspect-ratio: 0.4775; }
+    .tour-screen { position: absolute; inset: 10px; width: calc(100% - 20px); height: calc(100% - 20px);
+      object-fit: contain; border-radius: 38px; background: #fff; opacity: 0; transition: opacity .25s ease; }
+    .tour-screen.active { opacity: 1; }
+    .tour-side { display: flex; flex-direction: column; gap: 18px; max-width: 420px; }
+    .tour-chat { background: rgba(255,255,255,0.82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.95); border-radius: 24px; padding: 20px 22px 24px;
+      box-shadow: 0 18px 44px rgba(15,23,42,0.12); position: relative; transform-origin: 0% 30%; }
+    .tour-chat.hide { opacity: 0; transform: scale(.85) translateX(-10px); transition: opacity .2s, transform .2s; }
+    .tour-chat.pop { animation: bubblePop .5s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes bubblePop { 0% { opacity:0; transform: scale(.6) translateX(-20px); } 100% { opacity:1; transform: none; } }
+    .tour-chat::before { content:''; position:absolute; left:-9px; top:44px; width:18px; height:18px; background: rgba(255,255,255,0.9);
+      transform: rotate(45deg); border-left: 1px solid rgba(255,255,255,0.95); border-bottom: 1px solid rgba(255,255,255,0.95); }
+    .tc-head { display:flex; align-items:center; gap:14px; margin-bottom: 14px; }
+    .tc-head strong { display:block; font-size: 17px; color: var(--text); }
+    .tc-head small { font-size: 13px; color: var(--muted); }
+    .tc-av { width: 60px; height: 60px; flex-shrink:0; border-radius: 50%; display:grid; place-items:center; color:#fff; font-weight:800; font-size: 24px;
+      background: linear-gradient(135deg,#2563eb,#7c3aed); box-shadow: 0 8px 22px rgba(37,99,235,.4); position: relative; }
+    .tc-av::after { content:''; position:absolute; inset:-5px; border-radius:50%; border:2px solid rgba(37,99,235,.35); animation: jpulse 1.6s ease-out infinite; }
+    .tc-msg { background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; border-radius: 18px 18px 18px 6px;
+      padding: 16px 18px; font-size: 16.5px; line-height: 1.55; min-height: 96px; }
+    .tc-typing { display:inline-flex; gap:5px; padding: 6px 0; }
+    .tc-typing i { width:7px; height:7px; border-radius:50%; background:#fff; opacity:.5; animation: tdot 1s infinite; }
+    .tc-typing i:nth-child(2){ animation-delay:.15s } .tc-typing i:nth-child(3){ animation-delay:.3s }
+    @keyframes tdot { 0%,100%{ transform: translateY(0); opacity:.4 } 50%{ transform: translateY(-4px); opacity:1 } }
+    .tour-ctrl { display:flex; align-items:center; gap: 14px; }
+    .tour-btn { appearance:none; border:none; cursor:pointer; font-weight:700; font-size:14px; line-height:1; font-family: inherit;
+      padding: 13px 20px; border-radius: 12px; background: var(--blue); color:#fff; box-shadow: 0 8px 20px rgba(37,99,235,.3); transition: transform .15s; }
+    .tour-btn:hover { transform: translateY(-1px); }
+    .tour-btn.ghost { background:#fff; color: var(--text); border:1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,.06); }
+    .tour-btn:disabled { opacity:.4; cursor: default; transform:none; }
+    .tour-dots { display:flex; gap:6px; flex:1; justify-content:center; }
+    .tour-dots span { width:8px; height:8px; border-radius:8px; background: rgba(37,99,235,.2); transition: all .25s; }
+    .tour-dots span.on { width: 22px; background: var(--blue); }
+    .tour-voice { align-self: flex-start; appearance:none; border:1px solid var(--blue-line); background: rgba(37,99,235,.08); color: var(--blue);
+      border-radius: 100px; padding: 10px 18px; font-weight:700; font-size:13px; line-height:1; font-family: inherit; cursor:pointer; }
+    .tour-voice.on { background: var(--blue); color:#fff; border-color: var(--blue); }
+    body.in-tour .jess { opacity: 0 !important; pointer-events: none !important; }
+    @media (max-width: 980px) {
+      .tour-body { grid-template-columns: 1fr; gap: 28px; justify-items: center; }
+      .tour-steps { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .tour-step { width: auto; padding: 8px 12px; font-size: 13px; }
+      .tour-stage { width: 270px; }
+      .tour-side { max-width: 460px; width: 100%; }
+      .tour-chat { transform-origin: 50% 0%; }
+      .tour-chat::before { left: 50%; top: -9px; margin-left: -9px; border-left: 1px solid rgba(255,255,255,.95); border-top: 1px solid rgba(255,255,255,.95); border-bottom: none; }
+    }
+    @media (max-width: 560px) { .tour-steps { display: none; } .tour-stage { width: 250px; } .hero-icon { width: 112px; height: 112px; border-radius: 26px; } }
+
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 760px) {
       .feature-row, .feature-row.flip {
@@ -928,6 +1177,23 @@
 </head>
 
 <body>
+  <!-- Glass side menu -->
+  <button class="side-toggle" id="side-toggle" aria-label="Open menu"><span></span><span></span><span></span> Menu</button>
+  <nav class="side-nav" id="side-nav" aria-label="Sections">
+    <a class="side-brand" href="#top"><img src="/voltz/assets/voltz-logo.png" alt="" width="28" height="28"> Voltz CRM</a>
+    <a class="side-link" href="#top" data-target="top"><span class="side-dot"></span>Overview</a>
+    <a class="side-link" href="#meet-dave" data-target="meet-dave"><span class="side-dot"></span>Meet Dave</a>
+    <a class="side-link" href="#tour" data-target="tour"><span class="side-dot"></span>Guided tour</a>
+    <a class="side-link" href="#ai-voice" data-target="ai-voice"><span class="side-dot"></span>AI Voice Assist</a>
+    <a class="side-link" href="#desks" data-target="desks"><span class="side-dot"></span>Desk views</a>
+    <a class="side-link" href="#colours" data-target="colours"><span class="side-dot"></span>Colours &amp; branding</a>
+    <a class="side-link" href="#sole-traders" data-target="sole-traders"><span class="side-dot"></span>Why sole traders</a>
+    <a class="side-link" href="#money" data-target="money"><span class="side-dot"></span>Quotes, invoices &amp; more</a>
+    <a class="side-link" href="#legal" data-target="legal"><span class="side-dot"></span>Terms &amp; privacy</a>
+    <div class="side-legal"><a href="/voltz/terms">Terms of Use</a><a href="/voltz/privacy">Privacy Policy</a></div>
+    <a class="side-cta" href="https://apps.apple.com/app/id6797125146">Get it on the App Store</a>
+  </nav>
+
 
   <!-- Ambient blobs -->
   <div class="bg-blob blob-1"></div>
@@ -935,7 +1201,7 @@
   <div class="bg-blob blob-3"></div>
 
   <!-- ═══════════════ HERO ═══════════════ -->
-  <header class="hero">
+  <header class="hero" id="top">
 
     <div class="eyebrow-tag reveal">
       <span class="live-dot"></span>
@@ -958,13 +1224,13 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         Download on the App Store
       </a>
-      <a class="btn-ghost" href="#inside-the-app">
+      <a class="btn-ghost" href="#tour">
         See it in action ↓
       </a>
     </div>
 
     <!-- Meet Operative Dave -->
-    <div class="hero-dave">
+    <div class="hero-dave" id="meet-dave">
       <div class="dave-phone reveal from-left">
         <div class="phone-shell">
           <video id="dave-video" src="/voltz/assets/operative-dave-intro.mp4"
@@ -985,192 +1251,111 @@
 
   <div class="divider"></div>
 
-  <!-- ═══════════════ DEMO WIZARD ═══════════════ -->
-  <section class="demo-section">
-    <div class="demo-inner">
-
-      <!-- Steps list -->
-      <div class="demo-steps reveal from-left">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-          <img src="/voltz/assets/voltz-logo.png" alt="Voltz"
-            style="width:44px;height:44px;border-radius:11px;
-              box-shadow:0 0 0 1px rgba(37,99,235,0.18),0 0 20px rgba(37,99,235,0.15),0 4px 12px rgba(37,99,235,0.12);
-              background:#fff;flex-shrink:0;">
-          <span class="demo-steps-label" style="margin-bottom:0;">Live Demo</span>
-        </div>
-        <h2>Watch Voltz<br><em>do the work</em></h2>
-        <ul class="step-list" id="step-list">
-          <li class="step-item active" data-step="0">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <div class="step-title">Speak the job</div>
-              <div class="step-desc">You say it out loud — Voltz listens and understands every detail.</div>
-              <div class="step-progress"><div class="step-progress-fill" id="prog-0"></div></div>
-            </div>
-          </li>
-          <li class="step-item" data-step="1">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <div class="step-title">AI processes instantly</div>
-              <div class="step-desc">Extracts the client, date, job type, and notes in under a second.</div>
-              <div class="step-progress"><div class="step-progress-fill" id="prog-1"></div></div>
-            </div>
-          </li>
-          <li class="step-item" data-step="2">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <div class="step-title">Job booked automatically</div>
-              <div class="step-desc">Client record created, job scheduled, team notified.</div>
-              <div class="step-progress"><div class="step-progress-fill" id="prog-2"></div></div>
-            </div>
-          </li>
-          <li class="step-item" data-step="3">
-            <div class="step-num">4</div>
-            <div class="step-content">
-              <div class="step-title">Quote drafted &amp; ready</div>
-              <div class="step-desc">Professional quote built from the job details — review and send.</div>
-              <div class="step-progress"><div class="step-progress-fill" id="prog-3"></div></div>
-            </div>
-          </li>
-          <li class="step-item" data-step="4">
-            <div class="step-num">&#10003;</div>
-            <div class="step-content">
-              <div class="step-title">Invoice out, job done</div>
-              <div class="step-desc">Complete the job, Voltz raises the invoice. You get paid.</div>
-              <div class="step-progress"><div class="step-progress-fill" id="prog-4"></div></div>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Animated phone -->
-      <div class="demo-phone-wrap reveal from-right">
-        <div class="demo-phone-shell">
-
-          <!-- Screen 0: Mic Orb Home -->
-          <div class="demo-screen active" id="screen-0">
-            <img src="/voltz/assets/screens/clean-01-home.jpg" alt="AI Voice Home" width="660" height="1434">
+  <!-- ═══════════════ GUIDED TOUR ═══════════════ -->
+  <section class="tour" id="tour">
+    <div class="tour-head">
+      <span class="section-label reveal">Guided tour</span>
+      <h2 class="reveal">Let Jess <em>show you around</em></h2>
+      <p class="reveal">Real screens from Voltz. Tap Next and Jess explains each one.</p>
+    </div>
+    <div class="tour-body">
+      <ol class="tour-steps">
+        <li><button class="tour-step active" data-i="0"><span class="ts-num">1</span>Speak a job</button></li>
+        <li><button class="tour-step" data-i="1"><span class="ts-num">2</span>Create a client</button></li>
+        <li><button class="tour-step" data-i="2"><span class="ts-num">3</span>Check your diary</button></li>
+        <li><button class="tour-step" data-i="3"><span class="ts-num">4</span>Your day at a glance</button></li>
+        <li><button class="tour-step" data-i="4"><span class="ts-num">5</span>Everything one tap away</button></li>
+      </ol>
+      <div class="tour-stage">
+        <div class="tour-phone" id="tour-phone">
+          <div class="tour-shell">
+          <img class="tour-screen active" src="/voltz/assets/screens/clean-01-home.jpg" alt="AI Voice home" width="660" height="1434">
+          <img class="tour-screen" src="/voltz/assets/screens/clean-05-new-client.jpg" alt="New client" width="660" height="1434" loading="lazy">
+          <img class="tour-screen" src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Schedule" width="660" height="1434" loading="lazy">
+          <img class="tour-screen" src="/voltz/assets/screens/clean-02-birds-eye.jpg" alt="Bird's-eye view" width="660" height="1434" loading="lazy">
+          <img class="tour-screen" src="/voltz/assets/screens/clean-04-command-icons.jpg" alt="Command icons" width="660" height="1434" loading="lazy">
           </div>
-
-          <!-- Screen 1: Bird's Eye -->
-          <div class="demo-screen" id="screen-1">
-            <img src="/voltz/assets/screens/clean-05-new-client.jpg" alt="Bird's Eye dashboard" width="660" height="1434">
-          </div>
-
-          <!-- Screen 2: Schedule Calendar -->
-          <div class="demo-screen" id="screen-2">
-            <img src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Schedule calendar" width="660" height="1434">
-          </div>
-
-          <!-- Screen 3: Invoice Preview -->
-          <div class="demo-screen" id="screen-3">
-            <img src="/voltz/assets/screens/clean-02-birds-eye.jpg" alt="Invoice preview" width="660" height="1434">
-          </div>
-
-          <!-- Screen 4: Take Payment -->
-          <div class="demo-screen" id="screen-4">
-            <img src="/voltz/assets/screens/clean-04-command-icons.jpg" alt="Take payment" width="660" height="1434">
-            <button class="replay-btn" id="replay-btn" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;">&#8635; Watch again</button>
-          </div>
-
-        </div><!-- /demo-phone-shell -->
-      </div><!-- /demo-phone-wrap -->
-
-    </div><!-- /demo-inner -->
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ═══════════════ FEATURES INTRO ═══════════════ -->
-  <div class="features-intro" id="inside-the-app">
-    <span class="section-label reveal">Inside the App</span>
-    <h2 class="reveal">Built for the <em>real world</em></h2>
-    <p class="reveal">AI Voice and Command Centre — real screens from Voltz, purpose-built for tradespeople who don't have time to mess about.</p>
-  </div>
-
-  <!-- ═══════════════ FEATURE ROWS ═══════════════ -->
-
-  <section class="feature-section">
-    <div class="feature-row">
-      <div class="feature-phone-wrap reveal from-left">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/clean-01-home.jpg" alt="AI Voice home" loading="lazy" width="660" height="1434">
         </div>
       </div>
-      <div class="feature-text reveal from-right">
-        <div class="feature-number">01 / 05</div>
-        <h3>Speak a Job.<br>Watch It Happen.</h3>
-        <p>Tell Voltz about a job in plain English. The AI books it, creates the client record and queues up a quote. No typing, no forms. Just talk.</p>
-        <span class="feature-chip"><span class="cdot"></span>AI Voice · Home</span>
+      <div class="tour-side">
+        <div class="tour-chat" id="tour-chat">
+          <div class="tc-head"><span class="tc-av">J</span><div><strong>Jess</strong><small>Voltz AI assistant</small></div></div>
+          <div class="tc-msg" id="tour-msg"></div>
+        </div>
+        <div class="tour-ctrl">
+          <button class="tour-btn ghost" id="tour-prev" aria-label="Previous">&larr; Back</button>
+          <div class="tour-dots" id="tour-dots"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+          <button class="tour-btn" id="tour-next">Next &rarr;</button>
+        </div>
+        <button class="tour-voice" id="tour-voice">&#9654; Sound on</button>
       </div>
     </div>
   </section>
-  <div class="row-sep"></div>
-  <section class="feature-section">
-    <div class="feature-row flip">
-      <div class="feature-phone-wrap reveal from-right">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/clean-02-birds-eye.jpg" alt="Bird's Eye dashboard" loading="lazy" width="660" height="1434">
-        </div>
-      </div>
-      <div class="feature-text reveal from-left">
-        <div class="feature-number">02 / 05</div>
-        <h3>Your Business,<br>at a Glance.</h3>
-        <p>Jobs today, open quotes, unpaid invoices and cash, all on one screen. Know exactly where you stand before your first coffee.</p>
-        <span class="feature-chip"><span class="cdot"></span>Bird's Eye · Dashboard</span>
-      </div>
-    </div>
-  </section>
-  <div class="row-sep"></div>
-  <section class="feature-section">
-    <div class="feature-row">
-      <div class="feature-phone-wrap reveal from-left">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Schedule calendar" loading="lazy" width="660" height="1434">
-        </div>
-      </div>
-      <div class="feature-text reveal from-right">
-        <div class="feature-number">03 / 05</div>
-        <h3>Schedule.<br>Track. Deliver.</h3>
-        <p>Every job mapped across your calendar. Switch between calendar and list, see what's booked and move things around in seconds.</p>
-        <span class="feature-chip"><span class="cdot"></span>Schedule · Calendar</span>
+
+  <!-- ═══════════════ DEEP DIVES ═══════════════ -->
+  <section class="deep" id="ai-voice" data-jess="Talk to me like you'd talk to a mate. I'll find the job, draft the quote, or open the right screen for you.">
+    <div class="deep-inner">
+      <span class="section-label reveal">AI Voice Assist</span>
+      <h2 class="reveal">Your hands are busy.<br><em>Your voice isn't.</em></h2>
+      <p class="deep-lead reveal">Tap the mic and talk. Jess understands trade talk, fills in the details and does the admin while you get on with the job.</p>
+      <div class="dd-grid">
+        <div class="dd-card reveal"><h4>Book jobs by voice</h4><p>Say who, where and when. The job lands in your diary and the client record is created for you.</p></div>
+        <div class="dd-card reveal"><h4>Quotes and invoices</h4><p>Describe the work and Voltz drafts the quote. When the job's done, the invoice is ready to send.</p></div>
+        <div class="dd-card reveal"><h4>Find anything</h4><p>Ask for a client, a past job or an unpaid invoice and it opens straight away.</p></div>
+        <div class="dd-card reveal"><h4>Hands-free navigation</h4><p>Ask to open the schedule, cashbook or receipts and Voltz takes you there.</p></div>
+        <div class="dd-card reveal"><h4>Tap to talk</h4><p>The mic button sits on every screen. Grey means off, so it only listens when you want it to.</p></div>
+        <div class="dd-card reveal"><h4>Fills forms for you</h4><p>Paste or speak a client's details and the name, phone, email and address fields fill themselves.</p></div>
       </div>
     </div>
   </section>
-  <div class="row-sep"></div>
-  <section class="feature-section">
-    <div class="feature-row flip">
-      <div class="feature-phone-wrap reveal from-right">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/clean-05-new-client.jpg" alt="New client form" loading="lazy" width="660" height="1434">
-        </div>
-      </div>
-      <div class="feature-text reveal from-left">
-        <div class="feature-number">04 / 05</div>
-        <h3>New Client<br>in Seconds.</h3>
-        <p>Paste or say the client's details and Voltz fills the fields for you. Postcode lookup finds the address. Tap save and you're done.</p>
-        <span class="feature-chip"><span class="cdot"></span>Clients · Quick Add</span>
-      </div>
-    </div>
-  </section>
-  <div class="row-sep"></div>
-  <section class="feature-section">
-    <div class="feature-row">
-      <div class="feature-phone-wrap reveal from-left">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/clean-04-command-icons.jpg" alt="Command icons" loading="lazy" width="660" height="1434">
-        </div>
-      </div>
-      <div class="feature-text reveal from-right">
-        <div class="feature-number">05 / 05</div>
-        <h3>Everything<br>One Tap Away.</h3>
-        <p>Parts, quotes, invoices, cashbook, receipts, bookings. Every tool in the business sits on one clean screen of big, easy buttons.</p>
-        <span class="feature-chip"><span class="cdot"></span>Command Centre · Icons</span>
+
+  <section class="deep alt" id="desks" data-jess="Pick the desk that suits you: Classic, AI Voice or Command Centre. Same jobs and clients in every one.">
+    <div class="deep-inner">
+      <span class="section-label reveal">Desk views</span>
+      <h2 class="reveal">Three desks.<br><em>One set of data.</em></h2>
+      <p class="deep-lead reveal">Work the way you like. Switch desks any time and all your jobs, clients, quotes and invoices come with you.</p>
+      <div class="dd-grid">
+        <div class="dd-card reveal"><h4>Classic desk</h4><p>The familiar layout. Clear lists, big buttons, everything where you expect it.</p></div>
+        <div class="dd-card reveal"><h4>AI Voice desk</h4><p>A voice-first home with the mic front and centre. Talk to run your day.</p></div>
+        <div class="dd-card reveal"><h4>Command Centre</h4><p>A live operations board that shows what needs doing next and who needs chasing.</p></div>
+        <div class="dd-card reveal"><h4>Icons view</h4><p>Turn Home into a grid of big buttons and open any tool in one tap.</p></div>
+        <div class="dd-card reveal"><h4>Bird's-eye view</h4><p>Jobs today, open quotes, unpaid invoices and cash, all on one screen.</p></div>
+        <div class="dd-card reveal"><h4>Same data everywhere</h4><p>Nothing to sync or export. Every desk reads the same CRM.</p></div>
       </div>
     </div>
   </section>
-  <div class="row-sep"></div>
-  <section class="more-section">
+
+  <section class="deep" id="colours" data-jess="Make it yours. Light or dark, your own colours, and your logo on every quote and invoice.">
+    <div class="deep-inner">
+      <span class="section-label reveal">Colours &amp; branding</span>
+      <h2 class="reveal">Make Voltz<br><em>look like your business.</em></h2>
+      <p class="deep-lead reveal">Head to <strong>Settings → Look &amp; brand</strong> to change how the app looks and what your customers see.</p>
+      <div class="swatches reveal">
+        <span style="background:#2563eb"></span><span style="background:#0f172a"></span><span style="background:#ca8a04"></span><span style="background:#16a34a"></span><span style="background:#7c3aed"></span><span style="background:#e11d48"></span><span style="background:#f1f5f9;border:1px solid #cbd5e1"></span>
+      </div>
+      <div class="dd-grid">
+        <div class="dd-card reveal"><h4>Light or dark</h4><p>Switch between a bright daytime look and a dark mode that's easy on the eyes.</p></div>
+        <div class="dd-card reveal"><h4>Colour skins</h4><p>Choose the colour scheme you like for the Classic and AI Voice desks.</p></div>
+        <div class="dd-card reveal"><h4>Your logo, name and slogan</h4><p>Your branding goes on every quote and invoice, so customers see your business.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="deep alt" id="sole-traders" data-jess="I'm built for one-person businesses. No teams, no dispatch, no bloat. Just you and your jobs.">
+    <div class="deep-inner">
+      <span class="section-label reveal">Why sole traders</span>
+      <h2 class="reveal">Built for the one-person<br><em>trade business.</em> On purpose.</h2>
+      <p class="deep-lead reveal">Most field CRMs are built for companies with an office, a dispatcher and a team. Voltz is built for the person doing the work, running the business from the van.</p>
+      <div class="dd-grid">
+        <div class="dd-card reveal"><h4>No teams, no dispatch</h4><p>No features you'll never use and no screens to wade through. Just your jobs, your clients and your money.</p></div>
+        <div class="dd-card reveal"><h4>Priced for one</h4><p>You don't pay for seats, departments or enterprise extras.</p></div>
+        <div class="dd-card reveal"><h4>Runs from your phone</h4><p>Quote on site, book the next job, invoice when you're done and take payment on the spot.</p></div>
+        <div class="dd-card reveal"><h4>Less admin, more work</h4><p>Voice does the typing, so evenings aren't spent catching up on paperwork.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="money" class="more-section" data-jess="Need an invoice sent or a payment taken? Just say the word and I'll prepare it for you.">
     <div class="more-inner">
       <span class="section-label reveal">Also in Voltz</span>
       <h2 class="reveal">Everything else a trade business needs</h2>
@@ -1186,7 +1371,7 @@
   </section>
 
   <!-- ═══════════════ FOOTER ═══════════════ -->
-  <footer>
+  <footer id="legal">
     <img class="footer-logo" src="/voltz/assets/voltz-logo.png" alt="Voltz CRM" width="56" height="56">
     <div class="footer-name">Voltz CRM</div>
     <div class="footer-tag">Field CRM for tradespeople</div>
@@ -1237,106 +1422,176 @@
       if (b2) b2.style.transform = `translateY(${-y * 0.7}px)`;
     }, { passive: true });
 
-    // ── Demo Wizard ────────────────────────────────────────
-    const STEPS = [
-      { duration: 4200 },  // voice typing
-      { duration: 3200 },  // processing
-      { duration: 3000 },  // job created
-      { duration: 3000 },  // quote
-      { duration: 4000 },  // done
-    ];
-    const VOICE_TEXT = "Book a boiler service for John Smith on Friday at 2pm, 14 Baker Street. Estimate 2 hours.";
+    // ── Guided tour ─────────────────────────────────────────
+    (function(){
+      var LINES = ["Hey there, I'm Jess. Tap the mic and tell me about a job. I'll book it in and start the quote for you.", "Would you like me to create a client? Give me a name, number and postcode, and I'll fill in the rest and find the address.", "Here's your diary for the month. Tap any day and I'll show you what's booked.", "This is your business at a glance: jobs today, open quotes, and who still owes you money.", "Quotes, invoices, payments, parts and receipts, all one tap away. What shall we do next?"];
+      var screens=[].slice.call(document.querySelectorAll('.tour-screen')),
+          stepBtns=[].slice.call(document.querySelectorAll('.tour-step')),
+          dots=[].slice.call(document.querySelectorAll('#tour-dots span')),
+          phone=document.getElementById('tour-phone'), chat=document.getElementById('tour-chat'),
+          msg=document.getElementById('tour-msg'),
+          prev=document.getElementById('tour-prev'), next=document.getElementById('tour-next'),
+          voiceBtn=document.getElementById('tour-voice'), tourEl=document.getElementById('tour');
+      var cur=0, typer=null, t1=null, t2=null, started=false, soundOn=false, actx=null;
 
-    let currentStep = 0;
-    let demoTimer = null;
-    let typeTimer = null;
-
-    function setStep(n) {
-      // Update step list
-      document.querySelectorAll('.step-item').forEach((el, i) => {
-        el.classList.remove('active', 'done');
-        if (i < n) el.classList.add('done');
-        if (i === n) el.classList.add('active');
-      });
-      // Update screens
-      document.querySelectorAll('.demo-screen').forEach((el, i) => {
-        el.classList.toggle('active', i === n);
-      });
-      // Animate progress bar
-      const prog = document.getElementById(`prog-${n}`);
-      if (prog) {
-        prog.style.transition = 'none';
-        prog.style.width = '0%';
-        setTimeout(() => {
-          prog.style.transition = `width ${STEPS[n].duration}ms linear`;
-          prog.style.width = '100%';
-        }, 30);
+      // "zoop" whoosh made with WebAudio (no file needed)
+      function zoop(){
+        if(!soundOn) return;
+        try{
+          actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+          var ctx=actx, now=ctx.currentTime, dur=0.45;
+          var buf=ctx.createBuffer(1, ctx.sampleRate*dur, ctx.sampleRate), d=buf.getChannelData(0);
+          for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+          var src=ctx.createBufferSource(); src.buffer=buf;
+          var bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=1.2;
+          bp.frequency.setValueAtTime(300,now); bp.frequency.exponentialRampToValueAtTime(3200,now+dur*0.8);
+          var g=ctx.createGain(); g.gain.setValueAtTime(0.0001,now);
+          g.gain.exponentialRampToValueAtTime(0.35,now+0.12); g.gain.exponentialRampToValueAtTime(0.0001,now+dur);
+          var o=ctx.createOscillator(); o.type='sine';
+          o.frequency.setValueAtTime(220,now); o.frequency.exponentialRampToValueAtTime(880,now+dur*0.7);
+          var og=ctx.createGain(); og.gain.setValueAtTime(0.0001,now);
+          og.gain.exponentialRampToValueAtTime(0.08,now+0.1); og.gain.exponentialRampToValueAtTime(0.0001,now+dur);
+          src.connect(bp); bp.connect(g); g.connect(ctx.destination);
+          o.connect(og); og.connect(ctx.destination);
+          src.start(now); src.stop(now+dur); o.start(now); o.stop(now+dur);
+        }catch(e){}
       }
-      // Step-specific animations
-      if (n === 0) startTypewriter();
-      if (n === 1) animateProcessing();
-    }
-
-    function startTypewriter() {
-      const el = document.getElementById('voice-text');
-      if (!el) return;
-      el.innerHTML = '<span class="cursor"></span>';
-      let i = 0;
-      clearInterval(typeTimer);
-      typeTimer = setInterval(() => {
-        if (i >= VOICE_TEXT.length) { clearInterval(typeTimer); return; }
-        el.innerHTML = VOICE_TEXT.slice(0, ++i) + '<span class="cursor"></span>';
-      }, 48);
-    }
-
-    function animateProcessing() {
-      const steps = ['ps-0','ps-1','ps-2','ps-3'];
-      steps.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) { el.classList.remove('done','active'); el.querySelector('.p-dot').style.cssText = ''; }
-      });
-      document.getElementById('ps-0').classList.add('active');
-      let pi = 0;
-      const pTimer = setInterval(() => {
-        const cur = document.getElementById(steps[pi]);
-        if (cur) { cur.classList.remove('active'); cur.classList.add('done'); cur.querySelector('.p-dot').style.background = '#22c55e'; }
-        pi++;
-        if (pi >= steps.length) { clearInterval(pTimer); return; }
-        const nxt = document.getElementById(steps[pi]);
-        if (nxt) nxt.classList.add('active');
-      }, 700);
-    }
-
-    function runDemo() {
-      setStep(currentStep);
-      clearTimeout(demoTimer);
-      demoTimer = setTimeout(() => {
-        currentStep++;
-        if (currentStep >= STEPS.length) return; // wait for replay
-        runDemo();
-      }, STEPS[currentStep].duration);
-    }
-
-    // Start demo when wizard section is visible
-    const demoEl = document.querySelector('.demo-section');
-    const demoIO = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        demoIO.disconnect();
-        setTimeout(runDemo, 600);
+      function type(line){
+        clearInterval(typer);
+        msg.innerHTML='<span class="tc-typing"><i></i><i></i><i></i></span>';
+        t2=setTimeout(function(){
+          var i=0; typer=setInterval(function(){
+            i++; msg.textContent=line.slice(0,i);
+            if(i>=line.length) clearInterval(typer);
+          },18);
+          if(soundOn && window.Jess) window.Jess.speak(line);
+        },500);
       }
-    }, { threshold: 0.3 });
-    if (demoEl) demoIO.observe(demoEl);
-
-    // Replay button
-    const replayBtn = document.getElementById('replay-btn');
-    if (replayBtn) {
-      replayBtn.addEventListener('click', () => {
-        currentStep = 0;
-        clearTimeout(demoTimer);
-        clearInterval(typeTimer);
-        runDemo();
+      function go(n){
+        cur=(n+screens.length)%screens.length;
+        clearTimeout(t1); clearTimeout(t2); clearInterval(typer);
+        if(window.speechSynthesis) speechSynthesis.cancel();
+        // 1. chat bubble hides, iPad swings back then forward
+        chat.classList.remove('pop'); chat.classList.add('hide');
+        phone.classList.remove('swing'); void phone.offsetWidth; phone.classList.add('swing');
+        zoop();
+        setTimeout(function(){
+          screens.forEach(function(s,i){ s.classList.toggle('active',i===cur); });
+        },260);
+        stepBtns.forEach(function(b,i){ b.classList.toggle('active',i===cur); b.classList.toggle('done',i<cur); });
+        dots.forEach(function(d,i){ d.classList.toggle('on',i===cur); });
+        prev.disabled = cur===0;
+        next.innerHTML = cur===screens.length-1 ? 'Start again &#8635;' : 'Next &rarr;';
+        // 2. after the phone lands, the chat bubble pops up and Jess talks
+        t1=setTimeout(function(){
+          chat.classList.remove('hide'); void chat.offsetWidth; chat.classList.add('pop');
+          type(LINES[cur]);
+        },700);
+      }
+      next.addEventListener('click',function(){ go(cur===screens.length-1?0:cur+1); });
+      prev.addEventListener('click',function(){ if(cur>0) go(cur-1); });
+      stepBtns.forEach(function(b){ b.addEventListener('click',function(){ go(+b.dataset.i); }); });
+      document.addEventListener('keydown',function(e){
+        var r=tourEl.getBoundingClientRect(); if(r.top>innerHeight*0.5||r.bottom<innerHeight*0.5) return;
+        if(e.key==='ArrowRight') next.click(); if(e.key==='ArrowLeft') prev.click();
       });
+      voiceBtn.addEventListener('click',function(){
+        soundOn=!soundOn;
+        voiceBtn.classList.toggle('on',soundOn);
+        voiceBtn.innerHTML = soundOn ? '&#10074;&#10074; Sound off' : '&#9654; Sound on';
+        if(window.Jess && window.Jess.on()!==soundOn) window.Jess.toggle();
+        if(soundOn) go(cur); else if(window.speechSynthesis) speechSynthesis.cancel();
+      });
+      new IntersectionObserver(function(en){
+        var vis=en[0].isIntersecting;
+        document.body.classList.toggle('in-tour',vis);
+        if(vis && !started){ started=true; go(0); }
+      },{threshold:0.35}).observe(tourEl);
+    })();
+  </script>
+
+  <!-- Jess voice guide -->
+  <div class="jess" id="jess" aria-live="polite">
+    <div class="jess-bubble">
+      <div class="jess-name">Jess · Voltz AI <button class="jess-close" id="jess-close" aria-label="Hide Jess">&times;</button></div>
+      <div class="jess-text" id="jess-text"></div>
+      <button class="jess-sound" id="jess-sound">&#9654; Hear Jess</button>
+    </div>
+    <div class="jess-avatar">J</div>
+  </div>
+  <script>
+  (function(){
+    var box=document.getElementById('jess'), txt=document.getElementById('jess-text'),
+        btn=document.getElementById('jess-sound'), closeBtn=document.getElementById('jess-close');
+    var soundOn=false, closed=false, current=null, typer=null, voice=null;
+    var synth=window.speechSynthesis;
+    function pickVoice(){
+      if(!synth) return;
+      var v=synth.getVoices();
+      var pref=['Serena','Kate','Martha','Stephanie','Google UK English Female','Samantha','Karen','Moira'];
+      for(var i=0;i<pref.length;i++){ for(var j=0;j<v.length;j++){ if(v[j].name.indexOf(pref[i])>-1){voice=v[j];return;} } }
+      for(var k=0;k<v.length;k++){ if(v[k].lang==='en-GB'){voice=v[k];return;} }
+      for(var m=0;m<v.length;m++){ if(v[m].lang.indexOf('en')===0){voice=v[m];return;} }
     }
+    if(synth){ pickVoice(); synth.onvoiceschanged=pickVoice; }
+    function speak(line){
+      if(!soundOn||!synth) return;
+      synth.cancel();
+      var u=new SpeechSynthesisUtterance(line);
+      if(voice) u.voice=voice;
+      u.lang=(voice&&voice.lang)||'en-GB'; u.rate=1.02; u.pitch=1.1;
+      u.onstart=function(){box.classList.add('talking');};
+      u.onend=function(){box.classList.remove('talking');};
+      synth.speak(u);
+    }
+    function say(line){
+      if(closed||line===current||document.body.classList.contains('in-tour')) return;
+      current=line;
+      box.classList.add('show');
+      clearInterval(typer); txt.innerHTML='';
+      var i=0; box.classList.add('talking');
+      typer=setInterval(function(){
+        i++; txt.innerHTML=line.slice(0,i).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="caret"></span>';
+        if(i>=line.length){ clearInterval(typer); if(!soundOn) box.classList.remove('talking'); }
+      },22);
+      speak(line);
+    }
+    btn.addEventListener('click',function(){
+      soundOn=!soundOn;
+      btn.classList.toggle('on',soundOn);
+      btn.innerHTML=soundOn?'&#10074;&#10074; Mute Jess':'&#9654; Hear Jess';
+      if(soundOn){ if(!document.body.classList.contains('in-tour')) speak(current||''); } else if(synth){ synth.cancel(); box.classList.remove('talking'); }
+    });
+    window.Jess={
+      speak:function(line){ var was=soundOn; soundOn=true; speak(line); soundOn=was; },
+      toggle:function(){ btn.click(); return soundOn; },
+      on:function(){ return soundOn; }
+    };
+    closeBtn.addEventListener('click',function(){ closed=true; box.classList.remove('show'); if(synth) synth.cancel(); });
+    var els=document.querySelectorAll('[data-jess]');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting) say(e.target.getAttribute('data-jess')); });
+      },{rootMargin:'-40% 0px -40% 0px'});
+      els.forEach(function(el){ io.observe(el); });
+    }
+  })();
+  </script>
+
+  <script>
+  (function(){
+    var nav=document.getElementById('side-nav'), tog=document.getElementById('side-toggle');
+    tog.addEventListener('click',function(){ nav.classList.toggle('open'); });
+    nav.addEventListener('click',function(e){ if(e.target.closest('a')) nav.classList.remove('open'); });
+    var links=[].slice.call(document.querySelectorAll('.side-link'));
+    var targets=links.map(function(l){ return document.getElementById(l.dataset.target); }).filter(Boolean);
+    function onScroll(){
+      var y=window.innerHeight*0.35, cur=targets[0];
+      targets.forEach(function(t){ if(t.getBoundingClientRect().top<=y) cur=t; });
+      links.forEach(function(l){ l.classList.toggle('active', cur && l.dataset.target===cur.id); });
+    }
+    window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  })();
   </script>
 </body>
 </html>
