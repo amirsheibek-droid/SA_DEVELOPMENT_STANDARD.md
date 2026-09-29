@@ -37,7 +37,6 @@
       background:
         radial-gradient(ellipse 55% 55% at 8% 8%, rgba(124,58,237,0.12), transparent 60%),
         radial-gradient(ellipse 55% 65% at 12% 92%, rgba(37,99,235,0.14), transparent 60%),
-        radial-gradient(ellipse 45% 70% at 80% 60%, #ffffff 0%, rgba(255,255,255,0.85) 45%, transparent 75%),
         linear-gradient(180deg, #f5f9ff, #eaf2ff); }
     .bg::after { content: ''; position: absolute; inset: 0;
       background-image: linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px);
@@ -194,11 +193,12 @@
     .brandline img { width: 56px; height: 56px; border-radius: 14px; box-shadow: 0 0 0 1px rgba(37,99,235,.15), 0 10px 26px rgba(37,99,235,.25); }
     .brandline strong { display: block; font-size: 20px; font-weight: 850; letter-spacing: -.02em; }
     .brandline span { font-size: 13.5px; color: var(--muted); }
-    .dave { position: absolute; z-index: 3; width: 210px; left: -150px; bottom: -10px;
-      mix-blend-mode: multiply; filter: brightness(1.1) contrast(1.05); pointer-events: none;
-      -webkit-mask-image: radial-gradient(ellipse 70% 62% at 50% 52%, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 70% 62% at 50% 52%, #000 70%, transparent 100%); }
-    @media (max-width: 900px) { .dave { width: 150px; left: -90px; bottom: -6px; } }
-    @media (max-width: 560px) { .dave { width: 120px; left: -64px; } }
+    .dave { position: absolute; z-index: 3; width: 200px; height: auto; right: -140px; bottom: -8px; pointer-events: none;
+      filter: drop-shadow(0 18px 18px rgba(15,23,42,.18)); }
+    #speak .slide-inner { padding-right: 140px; }
+    #speak .tag.b { right: auto; left: -110px; bottom: 12%; }
+    @media (max-width: 900px) { .dave { width: 140px; right: -86px; bottom: -6px; } #speak .slide-inner { padding-right: 0; } }
+    @media (max-width: 560px) { .dave { width: 112px; right: -62px; } }
 
     /* ── Bottom controls ────────────────────────── */
     .controls { position: fixed; z-index: 40; left: calc(var(--menu-w) + 40px); right: 22px; bottom: 20px;
@@ -318,7 +318,7 @@
           <h2>Speak a job.<br><em>Watch it happen.</em></h2>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
-        <div class="phone-wrap"><video class="dave" id="dave" src="/voltz/assets/dave-mascot.mp4" poster="/voltz/assets/dave-first.jpg" muted playsinline preload="auto" aria-label="Operative Dave, the Voltz mascot"></video><div class="phone"><img src="/voltz/assets/screens/clean-01-home.jpg" alt="Voltz AI Voice home screen" width="660" height="1434"></div>
+        <div class="phone-wrap"><img class="dave" id="dave" src="/voltz/assets/dave-still.webp" alt="Operative Dave, the Voltz mascot" width="360" height="640"><div class="phone"><img src="/voltz/assets/screens/clean-01-home.jpg" alt="Voltz AI Voice home screen" width="660" height="1434"></div>
           <div class="tag a"><i></i>Listening…</div><div class="tag b"><i class="g"></i>Job booked · Fri 2pm</div></div>
       </div>
     </section>
@@ -643,10 +643,13 @@
     try{ seen=localStorage.getItem('voltzDaveSeen')==='1'; }catch(e){}
     function startAt(){ var i=ids.indexOf(location.hash.replace('#','')); return i<0?0:i; }
     function daveOnce(){
-      if(!dave) return;
-      if(seen){ dave.addEventListener('loadedmetadata',function(){ dave.currentTime=Math.max(0,dave.duration-0.05); },{once:true}); dave.load(); return; }
-      setTimeout(function(){ var p=dave.play(); if(p&&p.catch) p.catch(function(){}); },900);
-      dave.addEventListener('ended',function(){ try{ localStorage.setItem('voltzDaveSeen','1'); }catch(e){} },{once:true});
+      if(!dave || seen) return;
+      var anim=new Image(); anim.src='/voltz/assets/dave-cutout.webp';
+      anim.onload=function(){
+        dave.src=anim.src;
+        try{ localStorage.setItem('voltzDaveSeen','1'); }catch(e){}
+        setTimeout(function(){ dave.src='/voltz/assets/dave-still.webp'; },2700);
+      };
     }
     show(startAt()); daveOnce();
     setTimeout(function(){ runJess(slides[cur]); },300);
