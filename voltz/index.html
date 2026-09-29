@@ -427,6 +427,44 @@
     .soc { width: 42px; height: 42px; display: block; border-radius: 12px; transition: transform .2s, box-shadow .2s; box-shadow: 0 6px 16px rgba(15,23,42,.15); }
     .soc svg { width: 100%; height: 100%; display: block; border-radius: 12px; }
     .soc:hover { transform: translateY(-3px) scale(1.06); box-shadow: 0 12px 24px rgba(15,23,42,.22); }
+    .badge { display: inline-block; margin-left: 6px; padding: 3px 8px; border-radius: 100px; font-size: 10.5px; font-weight: 800; letter-spacing: .04em;
+      background: rgba(34,197,94,.14); color: #15803d; vertical-align: middle; }
+    .badge.soon { background: rgba(124,58,237,.12); color: #6d28d9; }
+    .card.soon { border-style: dashed; border-color: rgba(124,58,237,.35); background: rgba(255,255,255,.5); }
+    .skins { display: flex; gap: 10px; flex-wrap: wrap; margin: 4px 0 6px; }
+    .skin { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px 8px 8px; border-radius: 100px; background: rgba(255,255,255,.75);
+      border: 1px solid rgba(15,23,42,.08); font-size: 13px; font-weight: 700; box-shadow: 0 4px 12px rgba(15,23,42,.06); }
+    .skin span { display: inline-flex; } .skin i { width: 16px; height: 16px; border-radius: 50%; margin-right: -4px; border: 2px solid #fff; background: #ccc; }
+    .skin span i:last-child { margin-right: 0; }
+    .card.wide { grid-column: 1 / -1; }
+    /* ── Ask Jess chat ── */
+    .chat-fab { position: fixed; z-index: 65; right: 22px; bottom: 90px; display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 18px 8px 8px; border-radius: 100px; border: none; cursor: pointer; color: #fff; font-weight: 800; font-size: 15px;
+      background: linear-gradient(135deg, var(--blue), var(--violet)); box-shadow: 0 14px 34px rgba(37,99,235,.4); transition: transform .2s; }
+    .chat-fab:hover { transform: translateY(-2px); }
+    .cf-av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.22); color: #fff; font-weight: 900; }
+    body.locked .chat-fab { display: none; }
+    .chat { position: fixed; z-index: 66; right: 22px; bottom: 90px; width: min(390px, calc(100vw - 24px)); height: min(560px, calc(100dvh - 130px));
+      display: flex; flex-direction: column; background: #fff; border-radius: 24px; box-shadow: 0 30px 80px rgba(15,23,42,.28);
+      opacity: 0; transform: translateY(16px) scale(.97); pointer-events: none; transition: opacity .25s, transform .3s cubic-bezier(.16,1,.3,1); overflow: hidden; }
+    .chat.open { opacity: 1; transform: none; pointer-events: auto; }
+    .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; color: #fff; background: linear-gradient(135deg, var(--blue), var(--violet)); }
+    .chat-head strong { display: block; font-size: 16px; } .chat-head small { font-size: 12px; opacity: .85; }
+    .chat-x { margin-left: auto; background: rgba(255,255,255,.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; cursor: pointer; }
+    .chat-log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #f7f9fe; }
+    .msg { max-width: 86%; padding: 11px 14px; border-radius: 16px; font-size: 14.5px; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; }
+    .msg.bot { align-self: flex-start; background: #fff; border: 1px solid rgba(15,23,42,.07); border-bottom-left-radius: 5px; color: var(--text); }
+    .msg.me { align-self: flex-end; background: var(--blue); color: #fff; border-bottom-right-radius: 5px; }
+    .msg.typing { color: var(--muted); font-style: italic; }
+    .chat-suggest { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chat-suggest button { border: 1px solid rgba(37,99,235,.25); background: #fff; color: var(--blue); border-radius: 100px; padding: 7px 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid rgba(15,23,42,.07); }
+    .chat-form input { flex: 1; border: 1px solid rgba(15,23,42,.15); border-radius: 12px; padding: 12px 14px; font-size: 15px; font-family: inherit; outline: none; }
+    .chat-form input:focus { border-color: var(--blue); }
+    .chat-form button { width: 46px; border: none; border-radius: 12px; background: var(--blue); color: #fff; font-size: 16px; cursor: pointer; }
+    .chat-note { padding: 0 14px 10px; font-size: 11px; color: #94a3b8; }
+    @media (max-width: 900px) { .chat-fab { bottom: 88px; right: 14px; } .chat-fab .cf-txt { display: none; } .chat-fab { padding: 8px; } .chat { right: 12px; bottom: 84px; } }
+    .stoptour { bottom: 150px; }
   </style>
 </head>
 <body>
@@ -456,6 +494,7 @@
     <a class="sl" href="#colours" data-go="colours"><span class="d"></span>Colours &amp; branding</a>
     <a class="sl" href="#sole-traders" data-go="sole-traders"><span class="d"></span>Why sole traders</a>
     <a class="sl" href="#money" data-go="money"><span class="d"></span>Quotes, invoices &amp; more</a>
+    <a class="sl" href="#soon" data-go="soon"><span class="d"></span>Coming soon</a>
     <a class="sl" href="#get" data-go="get"><span class="d"></span>Get Voltz</a>
     <div class="side-legal"><a href="/voltz/terms">Terms of Use</a><a href="/voltz/privacy">Privacy Policy</a></div>
   </nav>
@@ -560,42 +599,44 @@
     </section>
 
     <!-- 8 · Desks -->
-    <section class="slide" id="desks" data-audio="/voltz/assets/jess/desks.m4a" data-title="Desk views"
-      data-jess="Pick the desk that suits you: Classic, AI Voice or Command Centre. Switch any time. Your jobs and clients come with you."
+    <section class="slide" id="desks" data-audio="/voltz/assets/jess/desks.m4a?v=2" data-title="Desk views"
+      data-jess="Voltz has two desks right now. AI Voice puts the mic front and centre, and Bird's Eye shows your whole day on one board. Switch any time in Account, and your jobs and clients come with you. Command Centre is coming soon."
       data-chips='[["Can I change the colours?","next"]]'>
       <div class="slide-inner cards-grid">
         <div class="cards-copy">
           <span class="label">Desk views</span>
-          <h2>Three desks.<br><em>One set of data.</em></h2>
+          <h2>Two desks.<br><em>One set of data.</em></h2>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
         <div class="cards">
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></span>Classic desk</h4><p>The familiar layout. Clear lists, big buttons, everything where you expect it.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/></svg></span>AI Voice desk</h4><p>A voice-first home with the mic front and centre. Talk to run your day.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>Command Centre</h4><p>A live operations board showing what needs doing next and who needs chasing.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Icons view</h4><p>Turn Home into a grid of big buttons and open any tool in one tap.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>Bird's-eye view</h4><p>Jobs today, open quotes, unpaid invoices and cash on one screen.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg></span>Same data everywhere</h4><p>Nothing to sync or export. Every desk reads the same CRM.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>AI Voice desk <span class="badge">Recommended</span></h4><p>A voice-first home with the mic orb. Create jobs, quotes and reminders by speaking.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>Bird's Eye desk</h4><p>Today's jobs, quotes, invoices and money on one board.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg></span>Same data on both</h4><p>Switch desks any time in Account. Your jobs and clients come with you.</p></div>
+          <div class="card soon"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>Command Centre <span class="badge soon">Coming soon</span></h4><p>A live operations board is on the way in a future update. Watch this space.</p></div>
         </div>
       </div>
     </section>
 
     <!-- 9 · Colours -->
-    <section class="slide" id="colours" data-audio="/voltz/assets/jess/colours.m4a" data-title="Colours & branding"
-      data-jess="Of course you can. Go to Settings, then Look and brand. Choose light or dark, pick your colours, and add your logo, name and slogan to every quote and invoice."
+    <section class="slide" id="colours" data-audio="/voltz/assets/jess/colours.m4a?v=2" data-title="Colours & branding"
+      data-jess="Go to Account, then Look and brand. Choose Dark, Light or Auto, which switches for daylight and night. Pick a colour skin: Classic cyan, Black and Gold, or Blue and Yellow. Then add your company name, slogan and logo to your quotes and invoices. More colours are on the way."
       data-chips='[["Who is Voltz for?","next"]]'>
       <div class="slide-inner cards-grid">
         <div class="cards-copy">
           <span class="label">Colours &amp; branding</span>
           <h2>Make it look like<br><em>your business.</em></h2>
-          <div class="swatches"><span style="background:#2563eb"></span><span style="background:#0f172a"></span><span style="background:#ca8a04"></span><span style="background:#16a34a"></span><span style="background:#7c3aed"></span><span style="background:#e11d48"></span><span style="background:#f8fafc;border:1px solid #cbd5e1"></span></div>
+          <div class="skins">
+            <div class="skin"><span><i style="background:#00E6FF"></i><i style="background:#FFC107"></i><i style="background:#00FF85"></i></span>Classic cyan</div>
+            <div class="skin"><span><i style="background:#D4AF37"></i><i style="background:#E8D5A3"></i><i style="background:#39FF14"></i></span>Black &amp; Gold</div>
+            <div class="skin"><span><i style="background:#00B4FF"></i><i style="background:#F5E000"></i><i style="background:#FFE566"></i></span>Blue &amp; Yellow</div>
+          </div>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
         <div class="cards">
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2"/></svg></span>Light or dark</h4><p>A bright daytime look, or a dark mode that's easy on the eyes.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><path d="M12 2a10 10 0 1 0 0 20c1 0 1.5-.8 1.5-1.5 0-1.2-1-1.5-1-2.5s.7-1.5 1.5-1.5H16a6 6 0 0 0 6-6c0-4.4-4.5-8.5-10-8.5z"/></svg></span>Colour skins</h4><p>Choose the colour scheme you like for the Classic and AI Voice desks.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg></span>Your logo and name</h4><p>Your logo, business name and slogan go on every quote and invoice.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Looks professional</h4><p>Customers get clean, branded paperwork that wins the next job.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2"/></svg></span>Dark, Light or Auto</h4><p>Auto goes dark in daylight for less glare on site, and light at night.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><path d="M12 2a10 10 0 1 0 0 20c1 0 1.5-.8 1.5-1.5 0-1.2-1-1.5-1-2.5s.7-1.5 1.5-1.5H16a6 6 0 0 0 6-6c0-4.4-4.5-8.5-10-8.5z"/></svg></span>3 colour skins</h4><p>Classic cyan, Black &amp; Gold, or Blue &amp; Yellow for the AI Voice desk.</p></div>
+          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg></span>Name, slogan &amp; logo</h4><p>Your branding goes on the quotes and invoices your customers see.</p></div>
+          <div class="card soon"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>More colours <span class="badge soon">Coming soon</span></h4><p>More skins and your own custom colours are coming in future updates.</p></div>
         </div>
       </div>
     </section>
@@ -622,7 +663,7 @@
     <!-- 11 · Money -->
     <section class="slide" id="money" data-audio="/voltz/assets/jess/money.m4a" data-title="Quotes, invoices & more"
       data-jess="Need a quote sent, an invoice raised or a payment logged? Just say the word and I'll prepare it for you."
-      data-chips='[["How do I get Voltz?","next"]]'>
+      data-chips='[["What\'s coming next?","next"]]'>
       <div class="slide-inner cards-grid">
         <div class="cards-copy">
           <span class="label">Also in Voltz</span>
@@ -636,6 +677,24 @@
           <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L3 18l3 3 6.1-6.1a4 4 0 0 0 5.6-5.6l-2.5 2.5-2.1-.6-.6-2.1z"/></svg></span>Find parts</h4><p>Search trade suppliers and compare prices side by side in the app.</p></div>
           <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="10" rx="1"/><rect x="17" y="4" width="4" height="6" rx="1"/></svg></span>Pipeline</h4><p>Every lead, quote, job and invoice in one place. Always know what's next.</p></div>
           <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14l-4-2-4 2-4-2z"/></svg></span>Cashbook &amp; receipts</h4><p>Snap receipts and track money in and out, ready for your accountant.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coming soon -->
+    <section class="slide" id="soon" data-audio="/voltz/assets/jess/soon.m4a?v=2" data-title="Coming soon"
+      data-jess="Here's what's coming next. Voltz for Mac, a full desktop version where you just talk and Voltz does the work. Plus the Command Centre desk, and more colours for your app. Watch this space!"
+      data-chips='[["How do I get Voltz?","next"]]'>
+      <div class="slide-inner cards-grid">
+        <div class="cards-copy">
+          <span class="label">Coming soon</span>
+          <h2>What's next<br><em>for Voltz.</em></h2>
+          <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
+        </div>
+        <div class="cards">
+          <div class="card soon wide"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M1 19h22"/></svg></span>Voltz for Mac <span class="badge soon">Coming soon</span></h4><p>A full desktop version for your Mac, where you just talk and Voltz does the work. Built for the big screen, not just the phone app stretched out.</p></div>
+          <div class="card soon"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>Command Centre <span class="badge soon">Coming soon</span></h4><p>A live operations board desk, showing what needs doing next.</p></div>
+          <div class="card soon"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><path d="M12 2a10 10 0 1 0 0 20c1 0 1.5-.8 1.5-1.5 0-1.2-1-1.5-1-2.5s.7-1.5 1.5-1.5H16a6 6 0 0 0 6-6c0-4.4-4.5-8.5-10-8.5z"/></svg></span>More colours <span class="badge soon">Coming soon</span></h4><p>More colour skins and your own custom colours.</p></div>
         </div>
       </div>
     </section>
@@ -718,6 +777,20 @@
         <button class="cbtn ghost" id="ask-no">No thanks, I'll explore</button>
       </div>
     </div>
+  </div>
+
+  <!-- Ask Jess chat -->
+  <button class="chat-fab" id="chat-fab" aria-label="Chat with Jess"><span class="cf-av">J</span><span class="cf-txt">Ask Jess</span></button>
+  <div class="chat" id="chat" role="dialog" aria-label="Chat with Jess" aria-hidden="true">
+    <div class="chat-head"><span class="cf-av">J</span><div><strong>Ask Jess</strong><small>Voltz AI assistant</small></div><button class="chat-x" id="chat-x" aria-label="Close chat">&times;</button></div>
+    <div class="chat-log" id="chat-log">
+      <div class="msg bot">Hi, I'm Jess. Ask me anything about Voltz CRM, or anything else you're wondering about.</div>
+      <div class="chat-suggest" id="chat-suggest">
+        <button>What can the AI voice do?</button><button>Which desks are there?</button><button>Can I change the colours?</button><button>Is there a Mac version?</button>
+      </div>
+    </div>
+    <form class="chat-form" id="chat-form"><input id="chat-in" maxlength="500" placeholder="Type your question…" autocomplete="off"><button aria-label="Send">&#10148;</button></form>
+    <small class="chat-note">AI answers can make mistakes. Don't share personal or payment details.</small>
   </div>
 
   <!-- Bottom controls -->
@@ -875,6 +948,7 @@
     document.querySelectorAll('[data-go]').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); go(ids.indexOf(a.dataset.go)); }); });
     menuBtn.onclick=function(){ side.classList.toggle('open'); };
     document.addEventListener('keydown',function(e){
+      if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
       if(document.getElementById('intro').classList.contains('show')) return;
       if(['ArrowRight','ArrowDown','PageDown',' '].indexOf(e.key)>-1){ e.preventDefault(); go(cur+1); }
       if(['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key)>-1){ e.preventDefault(); go(cur-1); }
@@ -958,6 +1032,31 @@
         if(consent){ askTour(); } else { consentEl.classList.add('show'); consentEl.setAttribute('aria-hidden','false'); }
       },500);
     };
+
+    /* ── Ask Jess chat (Gemini via Supabase edge function) ── */
+    (function(){
+      var fab=document.getElementById('chat-fab'), box=document.getElementById('chat'), log=document.getElementById('chat-log'),
+          form=document.getElementById('chat-form'), input=document.getElementById('chat-in'), sug=document.getElementById('chat-suggest');
+      var history=[], busyChat=false;
+      function open(v){ box.classList.toggle('open',v); box.setAttribute('aria-hidden',v?'false':'true'); fab.style.display=v?'none':''; if(v) setTimeout(function(){ input.focus(); },250); }
+      fab.onclick=function(){ open(true); };
+      document.getElementById('chat-x').onclick=function(){ open(false); };
+      function add(text, who){ var d=document.createElement('div'); d.className='msg '+who; d.textContent=text; log.appendChild(d); log.scrollTop=log.scrollHeight; return d; }
+      function ask(q){
+        q=(q||'').trim(); if(!q||busyChat) return; busyChat=true; if(sug) { sug.remove(); sug=null; }
+        add(q,'me'); history.push({role:'user',text:q}); input.value='';
+        var t=add('Jess is typing…','bot typing');
+        fetch('https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/site-chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history.slice(-10)})})
+          .then(function(r){ return r.json(); })
+          .then(function(d){ var a=(d&&d.reply)||"Sorry, I couldn't answer that just now."; t.className='msg bot'; t.textContent=a; history.push({role:'assistant',text:a}); })
+          .catch(function(){ t.className='msg bot'; t.textContent="Sorry, I'm having trouble connecting. Please try again, or email contact@samarketingintelligence.com."; })
+          .then(function(){ busyChat=false; log.scrollTop=log.scrollHeight; });
+      }
+      form.onsubmit=function(e){ e.preventDefault(); ask(input.value); };
+      if(sug) [].forEach.call(sug.querySelectorAll('button'),function(b){ b.onclick=function(){ ask(b.textContent); }; });
+      // keep typing in the chat from moving the tour
+      input.addEventListener('keydown',function(e){ e.stopPropagation(); });
+    })();
   })();
   </script>
 </body>
