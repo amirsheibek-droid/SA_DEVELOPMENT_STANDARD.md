@@ -195,12 +195,9 @@
     .brandline strong { display: block; font-size: 20px; font-weight: 850; letter-spacing: -.02em; }
     .brandline span { font-size: 13.5px; color: var(--muted); }
     .dave { position: absolute; z-index: 3; width: 210px; left: -150px; bottom: -10px;
-      mix-blend-mode: multiply; filter: brightness(1.07) contrast(1.04); pointer-events: none;
+      mix-blend-mode: multiply; filter: brightness(1.1) contrast(1.05); pointer-events: none;
       -webkit-mask-image: radial-gradient(ellipse 70% 62% at 50% 52%, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 70% 62% at 50% 52%, #000 70%, transparent 100%); }
-    #speak .phone-wrap::before { content: ''; position: absolute; z-index: -1; pointer-events: none;
-      width: 620px; height: 760px; left: -330px; bottom: -190px;
-      background: radial-gradient(ellipse at 45% 60%, #ffffff 0%, #ffffff 38%, rgba(255,255,255,0.85) 55%, rgba(255,255,255,0) 72%); }
-    @media (max-width: 900px) { .dave { width: 150px; left: -90px; bottom: -6px; } #speak .phone-wrap::before { width: 420px; height: 520px; left: -220px; bottom: -130px; } }
+    @media (max-width: 900px) { .dave { width: 150px; left: -90px; bottom: -6px; } }
     @media (max-width: 560px) { .dave { width: 120px; left: -64px; } }
 
     /* ── Bottom controls ────────────────────────── */
