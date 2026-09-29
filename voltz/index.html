@@ -498,6 +498,9 @@
     @media (max-width: 1280px) { .promo { top: 124px; left: 22px; } .promo-rib { font-size: 13px; } }
     @media (max-width: 560px) { .promo { top: 92px; left: 14px; } .promo-rib { font-size: 11px; }
       .promo-card p { font-size: 14px; } .promo-card .p1 { font-size: 19px; } .promo-card .p3 { font-size: 15px; } }
+    .music-btn { margin-right: 8px; }
+    .music-btn:not(.on) { opacity: .75; text-decoration: line-through; }
+    @media (max-width: 560px) { .music-btn span { display: none; } .music-btn { padding: 10px 12px; margin-right: 6px; } }
     /* ── Why Voltz intro ── */
     .why-lead { margin: -4px 0 18px; font-size: clamp(15px, 1.3vw, 17px); }
     .card.mission { background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(124,58,237,.10)); border-color: rgba(124,58,237,.25); }
@@ -512,6 +515,7 @@
   <div class="topbar">
     <button class="pill menu-btn" id="menu-btn" aria-label="Open menu"><i></i></button>
     <a class="brand" href="#why" data-go="why" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span><i class="brand-tag" aria-label="Tired of typing? Just talk."><span class="bt1">Tired of typing?</span><b>Just talk.</b></i></a>
+    <button class="pill music-btn on" id="music-btn" aria-pressed="true" title="Background music on or off">&#9835; <span>Music on</span></button>
     <button class="pill" id="sound-btn" aria-pressed="false">&#9654; Sound on</button>
     <a class="pill primary appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener">App Store</a>
   </div>
@@ -876,6 +880,7 @@
     var prog=document.getElementById('progress'), count=document.getElementById('count');
     var side=document.getElementById('side'), menuBtn=document.getElementById('menu-btn');
     var soundBtn=document.getElementById('sound-btn');
+    var voiceOn=true, musicOn=true, musicBtn=document.getElementById('music-btn');  // voice off when the visitor skips the tour
     var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     slides.forEach(function(s,i){ var d=document.createElement('span'); d.title=s.dataset.title; d.onclick=function(){go(i);}; prog.appendChild(d); });
@@ -898,7 +903,7 @@
       if(window.VzMusic) VzMusic.duck(false);
     }
     function speak(t, el){
-      stopVoice(); if(!soundOn) return;
+      stopVoice(); if(!soundOn || !voiceOn) return;
       var s=slides[cur]; if(!s||!s.dataset.audio) return;
       var url=s.dataset.audio, mine=cur, c=vctx();
       if(c.state==='suspended' && c.resume) c.resume();
@@ -1018,7 +1023,7 @@
         var i=0, esc=function(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;');};
         typer=setInterval(function(){
           i+=1; bub.innerHTML=esc(line.slice(0,i))+'<span class="caret"></span>';
-          if(i>=line.length){ clearInterval(typer); bub.textContent=line; if(!soundOn) jess.classList.remove('talking');
+          if(i>=line.length){ clearInterval(typer); bub.textContent=line; if(!soundOn||!voiceOn) jess.classList.remove('talking');
             var list=[]; try{ list=JSON.parse(s.dataset.chips||'[]'); }catch(e){}
             list.forEach(function(c,ix){ var b=document.createElement('button'); b.className='chip'+(ix===0?' go':''); b.textContent=c[0]+(c[1]==='next'?' →':'');
               b.onclick=function(){ c[1]==='next'?go(cur+1):go(ids.indexOf(c[1])); }; chips.appendChild(b); });
@@ -1062,9 +1067,9 @@
       })();
     }
     function startAuto(){
-      auto=true; stopEl.classList.add('show');
+      auto=true; voiceOn=true; stopEl.classList.add('show');
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
-      Music.start();
+      startMusic();
     }
     function stopAuto(){
       auto=false; clearTimeout(autoT); stopEl.classList.remove('show'); tapEl.classList.remove('show');
@@ -1074,7 +1079,7 @@
     // browsers block sound until the visitor taps once: first tap anywhere unlocks Jess
     function unlock(){
       if(!needTap) return; needTap=false; tapEl.classList.remove('show');
-      var s=slides[cur]; if(s&&soundOn){ Music.start(); speak(s.dataset.jess, s.querySelector('.jess')); }
+      var s=slides[cur]; if(s&&soundOn){ startMusic(); speak(s.dataset.jess, s.querySelector('.jess')); }
     }
     ['pointerdown','keydown','touchstart'].forEach(function(ev){ window.addEventListener(ev,unlock,{passive:true}); });
     tapEl.onclick=function(e){ e.stopPropagation(); unlock(); };
@@ -1175,6 +1180,16 @@
       };
     })();
 
+    function startMusic(){ if(musicOn) Music.start(); }
+    function setMusic(on){
+      musicOn=on; musicBtn.classList.toggle('on',on); musicBtn.setAttribute('aria-pressed',on?'true':'false');
+      musicBtn.querySelector('span').textContent= on ? 'Music on' : 'Music off';
+      if(on){ if(soundOn) Music.start(); } else { Music.stop(); }
+      store('voltzMusic', on?'on':'off');
+    }
+    musicBtn.onclick=function(e){ e.stopPropagation(); setMusic(!musicOn); };
+    if(recall('voltzMusic')==='off'){ musicOn=false; musicBtn.classList.remove('on'); musicBtn.setAttribute('aria-pressed','false'); musicBtn.querySelector('span').textContent='Music off'; }
+
     /* ── Navigation ── */
     function show(i){
       slides.forEach(function(s,k){ s.classList.toggle('active',k===i); });
@@ -1222,9 +1237,9 @@
     },{passive:true});
 
     soundBtn.onclick=function(){
-      soundOn=!soundOn; soundBtn.classList.toggle('on',soundOn); soundBtn.setAttribute('aria-pressed',soundOn);
+      soundOn=!soundOn; if(soundOn) voiceOn=true; soundBtn.classList.toggle('on',soundOn); soundBtn.setAttribute('aria-pressed',soundOn);
       soundBtn.innerHTML = soundOn ? '&#10074;&#10074; Sound off' : '&#9654; Sound on';
-      if(soundOn){ Music.start(); var s=slides[cur]; if(s) speak(s.dataset.jess, s.querySelector('.jess')); } else { audio.pause(); Music.stop(); }
+      if(soundOn){ startMusic(); var s=slides[cur]; if(s) speak(s.dataset.jess, s.querySelector('.jess')); } else { audio.pause(); Music.stop(); }
     };
 
     /* ── Dave mascot: does his move once per visitor ── */
@@ -1254,7 +1269,7 @@
       ask.classList.add('show'); ask.setAttribute('aria-hidden','false');
     }
     document.getElementById('ask-yes').onclick=function(){ ask.classList.remove('show'); ask.setAttribute('aria-hidden','true'); begin(true); };
-    document.getElementById('ask-no').onclick=function(){ ask.classList.remove('show'); ask.setAttribute('aria-hidden','true'); store('voltzTourSeen','1'); begin(false); };
+    document.getElementById('ask-no').onclick=function(){ voiceOn=false; stopVoice(); ask.classList.remove('show'); ask.setAttribute('aria-hidden','true'); store('voltzTourSeen','1'); begin(false); };
 
     function saveConsent(pref, analytics, marketing){
       consent={essential:true, preferences:!!pref, analytics:!!analytics, marketing:!!marketing, date:new Date().toISOString()};
@@ -1277,7 +1292,7 @@
       // this tap unlocks sound in every browser: wake the single audio engine
       try{ var c0=vctx(); if(c0.resume) c0.resume(); }catch(e){}
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
-      Music.start(); Sfx.boom(); setTimeout(TagType.play, 700);
+      startMusic(); Sfx.boom(); setTimeout(TagType.play, 700);
       slides.forEach(function(sl){ if(sl.dataset.audio) loadVoice(sl.dataset.audio); });
       gate.classList.add('out');
       setTimeout(function(){ gate.classList.add('gone'); },800);
