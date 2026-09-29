@@ -355,11 +355,11 @@
     @media (max-width: 900px) { .tapsound { bottom: 100px; font-size: 15px; padding: 14px 20px; white-space: nowrap; } .stoptour { bottom: 84px; right: 14px; } }
 
     /* ── Bigger Dave ── */
-    .dave { width: 300px; right: -250px; bottom: -14px; z-index: 20; }
+    .dave { width: 300px; right: -200px; bottom: -14px; z-index: 20; }
     #speak .phone { position: relative; z-index: 1; }
-    #speak .slide-inner { padding-right: 250px; }
-    @media (max-width: 900px) { .dave { width: 190px; right: -140px; } #speak .slide-inner { padding-right: 0; } }
-    @media (max-width: 560px) { .dave { width: 150px; right: -100px; } }
+    #speak .slide-inner { padding-right: 200px; }
+    @media (max-width: 900px) { .dave { width: 190px; right: -112px; } #speak .slide-inner { padding-right: 0; } }
+    @media (max-width: 560px) { .dave { width: 150px; right: -80px; } }
     /* ── Entrance page ── */
     body.locked .deck, body.locked .controls, body.locked .side, body.locked .topbar { visibility: hidden; }
     .gate { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center;
@@ -473,7 +473,7 @@
           <h2>Speak a job.<br><em>Watch it happen.</em></h2>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
-        <div class="phone-wrap"><img class="dave" id="dave" src="/voltz/assets/dave-still.webp" alt="Operative Dave, the Voltz mascot" width="360" height="640"><div class="phone"><img src="/voltz/assets/screens/clean-01-home.jpg" alt="Voltz AI Voice home screen" width="660" height="1434"></div>
+        <div class="phone-wrap"><img class="dave" id="dave" src="/voltz/assets/dave-still.webp?v=3" alt="Operative Dave, the Voltz mascot" width="360" height="640"><div class="phone"><img src="/voltz/assets/screens/clean-01-home.jpg" alt="Voltz AI Voice home screen" width="660" height="1434"></div>
           <div class="tag a"><i></i>Listening…</div><div class="tag b"><i class="g"></i>Job booked · Fri 2pm</div></div>
       </div>
     </section>
@@ -908,11 +908,11 @@
     function startAt(){ var i=ids.indexOf(location.hash.replace('#','')); return i<0?0:i; }
     function daveOnce(){
       if(!dave || seen) return;
-      var anim=new Image(); anim.src='/voltz/assets/dave-cutout.webp';
+      var anim=new Image(); anim.src='/voltz/assets/dave-cutout.webp?v=3';
       anim.onload=function(){
         dave.src=anim.src;
         store('voltzDaveSeen','1');
-        setTimeout(function(){ dave.src='/voltz/assets/dave-still.webp'; },2300);
+        setTimeout(function(){ dave.src='/voltz/assets/dave-still.webp?v=3'; },2300);
       };
     }
     /* ── Entrance → cookies → tour question → site ── */
