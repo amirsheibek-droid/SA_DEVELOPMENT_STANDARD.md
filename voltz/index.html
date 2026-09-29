@@ -205,7 +205,10 @@
     .count { font-size: 12.5px; font-weight: 700; color: var(--muted); min-width: 44px; text-align: center; }
 
     /* ── Pixel transition canvas ────────────────── */
-    #pix { position: fixed; inset: 0; z-index: 90; pointer-events: none; width: 100%; height: 100%; }
+    .slide.leaving { animation: pageOut .38s cubic-bezier(.4,0,.2,1) forwards; pointer-events: none; }
+    .slide.entering { animation: pageIn .7s cubic-bezier(.16,1,.3,1) both; }
+    @keyframes pageOut { to { opacity: 0; transform: translateX(calc(var(--dir,1) * -48px)) scale(.97); filter: blur(8px); } }
+    @keyframes pageIn { from { opacity: 0; transform: translateX(calc(var(--dir,1) * 64px)) scale(.985); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
 
     /* ── Dave intro (plays once) ────────────────── */
     .intro { position: fixed; inset: 0; z-index: 80; background: #05070d; display: none; align-items: center; justify-content: center; }
@@ -502,7 +505,6 @@
     <button class="ctrl next" id="next" aria-label="Next page">Next &rarr;</button>
   </div>
 
-  <canvas id="pix"></canvas>
 
   <script>
   (function(){
@@ -540,33 +542,19 @@
       s.connect(f); f.connect(g); g.connect(c.destination); o.connect(og); og.connect(c.destination); s.start(n); s.stop(n+d); o.start(n); o.stop(n+d);
     }catch(e){} }
 
-    /* ── Pixel phase transition ── */
-    var cv=document.getElementById('pix'), ctx=cv.getContext('2d');
-    var COLS=['#0f172a','#1e3a8a','#2563eb','#3b82f6','#4f46e5','#1d4ed8','#0b1220'];
-    function pixel(mid, done){
-      if(reduce){ mid(); done&&done(); return; }
-      var dpr=Math.min(window.devicePixelRatio||1,2), W=innerWidth, H=innerHeight;
-      cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-      var size=Math.max(26, Math.round(W/34)), cols=Math.ceil(W/size), rows=Math.ceil(H/size), cells=[];
-      for(var y=0;y<rows;y++) for(var x=0;x<cols;x++) cells.push([x,y,COLS[(Math.random()*COLS.length)|0]]);
-      for(var i=cells.length-1;i>0;i--){ var j=(Math.random()*(i+1))|0, t=cells[i]; cells[i]=cells[j]; cells[j]=t; }
-      var T=380, t0=null, phase=0, drawn=0;
-      function step(ts){
-        if(!t0) t0=ts; var p=Math.min(1,(ts-t0)/T), target=Math.floor(p*cells.length);
-        if(phase===0){
-          for(;drawn<target;drawn++){ var c=cells[drawn]; ctx.fillStyle=c[2]; ctx.fillRect(c[0]*size,c[1]*size,size+1,size+1); }
-          if(p>=1){ mid(); phase=1; t0=null; drawn=0;
-            for(var k=cells.length-1;k>0;k--){ var r=(Math.random()*(k+1))|0, q=cells[k]; cells[k]=cells[r]; cells[r]=q; }
-            setTimeout(function(){ requestAnimationFrame(step); },60); return; }
-        } else {
-          for(;drawn<target;drawn++){ var e=cells[drawn]; ctx.clearRect(e[0]*size,e[1]*size,size+1,size+1); }
-          if(p>=1){ ctx.clearRect(0,0,W,H); done&&done(); return; }
-        }
-        requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
+    /* ── Smooth page transition ── */
+    function transition(from, to, dir, mid, done){
+      if(reduce || !from){ mid(); done&&done(); return; }
+      from.style.setProperty('--dir', dir);
+      from.classList.add('leaving');
+      setTimeout(function(){
+        from.classList.remove('leaving');
+        mid();
+        to.style.setProperty('--dir', dir);
+        to.classList.add('entering');
+        setTimeout(function(){ to.classList.remove('entering'); done&&done(); }, 700);
+      }, 380);
     }
-
     /* ── Jess typing + chips ── */
     function runJess(s){
       var jess=s.querySelector('.jess'); if(!jess) return;
@@ -605,7 +593,7 @@
       if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
       busy=true; side.classList.remove('open'); audio.pause(); clearInterval(typer);
       zoop();
-      pixel(function(){ show(i); }, function(){ busy=false; runJess(slides[i]); });
+      transition(slides[cur], slides[i], i>cur?1:-1, function(){ show(i); }, function(){ busy=false; runJess(slides[i]); });
     }
     prevB.onclick=function(){ go(cur-1); };
     nextB.onclick=function(){ go(cur===slides.length-1?0:cur+1); };
