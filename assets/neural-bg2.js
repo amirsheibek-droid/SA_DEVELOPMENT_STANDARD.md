@@ -90,7 +90,8 @@
   for(var q=0;q<ND;q++){ dust.push({x:rnd(-90,90),y:rnd(-55,55),z:rnd(-230,5)});
     var c4=Math.random()<.7?STEEL:(Math.random()<.6?BLUE:GREEN); dc.set([c4.r,c4.g,c4.b,1,1,1],q*6); }
   var dg=new T.BufferGeometry(); dg.setAttribute('position',new T.BufferAttribute(dp,3)); dg.setAttribute('color',new T.BufferAttribute(dc,3));
-  scene.add(new T.LineSegments(dg,new T.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.7,depthWrite:false})));
+  var spawnOff=new T.Vector3();
+  var dustObj; scene.add(dustObj=new T.LineSegments(dg,new T.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.7,depthWrite:false})));
 
   /* ── Glass cubes that crash into each other and shatter ── */
   var boxG=new T.BoxGeometry(1,1,1), edgeG=new T.EdgesGeometry(boxG);
@@ -107,7 +108,7 @@
   function free(list){ for(var i=0;i<list.length;i++) if(!list[i].on) return list[i]; return null; }
   function spawnPair(){
     var A=free(cubes); if(!A) return; A.on=true; var B=free(cubes); if(!B){ A.on=false; return; } B.on=true;
-    var M=new T.Vector3(rnd(-38,38),rnd(-20,20),rnd(-95,-45)), sz=rnd(3.5,7), T0=rnd(1.8,3);
+    var M=new T.Vector3(rnd(-38,38),rnd(-20,20),rnd(-95,-45)).add(spawnOff), sz=rnd(3.5,7), T0=rnd(1.8,3);
     [[A,-1],[B,1]].forEach(function(o){ var c=o[0], s=o[1];
       c.size=sz*rnd(.8,1.15); c.g.scale.setScalar(c.size); c.g.visible=true; c.g.userData.mesh.material.opacity=.6;
       c.p=new T.Vector3(M.x+s*rnd(40,70), M.y+rnd(-18,18), M.z-rnd(10,40));
@@ -115,7 +116,7 @@
   }
   function spawnSolo(){
     var c=free(cubes); if(!c) return; c.on=true; c.size=rnd(2,5); c.g.scale.setScalar(c.size); c.g.visible=true;
-    c.p=new T.Vector3(rnd(-60,60),rnd(-35,35),-220); c.v=new T.Vector3(rnd(-3,3),rnd(-2,2),rnd(10,25));
+    c.p=new T.Vector3(rnd(-60,60),rnd(-35,35),-220).add(spawnOff); c.v=new T.Vector3(rnd(-3,3),rnd(-2,2),rnd(10,25));
     c.rv=new T.Vector3(rnd(-1,1),rnd(-1,1),rnd(-1,1)); c.mate=null; c.solo=true;
   }
   function explode(at, tint){
@@ -136,9 +137,9 @@
   var glowB=dotTex('rgba(80,150,255,1)','rgba(31,107,255,0)'), glowG=dotTex('rgba(60,235,160,1)','rgba(18,217,138,0)');
   NODE_IDS.forEach(function(id,i){
     var v=new T.Vector3().fromArray(NODE_POS[id]);
-    var halo=new T.Sprite(new T.SpriteMaterial({map:i%2?glowG:glowB,transparent:true,depthWrite:false,opacity:.85})); halo.scale.set(4.2,4.2,1); halo.position.copy(v);
-    var core=new T.Sprite(new T.SpriteMaterial({map:DOT,color:0xffffff,transparent:true,depthWrite:false})); core.scale.set(1.1,1.1,1); core.position.copy(v);
-    var ring=new T.Mesh(new T.RingGeometry(1.5,1.62,48),new T.MeshBasicMaterial({color:i%2?0x12d98a:0x1f6bff,transparent:true,opacity:.7,side:T.DoubleSide,depthWrite:false}));
+    var halo=new T.Sprite(new T.SpriteMaterial({map:i%2?glowG:glowB,transparent:true,depthWrite:false,opacity:.85})); halo.scale.set(2.2,2.2,1); halo.position.copy(v);
+    var core=new T.Sprite(new T.SpriteMaterial({map:DOT,color:0xffffff,transparent:true,depthWrite:false})); core.scale.set(.55,.55,1); core.position.copy(v);
+    var ring=new T.Mesh(new T.RingGeometry(.8,.86,48),new T.MeshBasicMaterial({color:i%2?0x12d98a:0x1f6bff,transparent:true,opacity:.7,side:T.DoubleSide,depthWrite:false}));
     ring.position.copy(v);
     nodeGroup.add(halo); nodeGroup.add(core); nodeGroup.add(ring);
     nodes[id]={v:v,halo:halo,core:core,ring:ring,i:i};
@@ -149,13 +150,13 @@
   LINKS.forEach(function(L,k){
     var a=nodes[L[0]].v, b=nodes[L[1]].v, mid=a.clone().add(b).multiplyScalar(.5).add(new T.Vector3(rnd(-3,3),rnd(-3,3),rnd(-3,3)));
     var curve=new T.QuadraticBezierCurve3(a.clone(),mid,b.clone());
-    var tube=new T.Mesh(new T.TubeGeometry(curve,48,.09,6,false),new T.MeshBasicMaterial({color:k%2?0x12a8ff:0x1f6bff,transparent:true,opacity:.28,depthWrite:false}));
+    var tube=new T.Mesh(new T.TubeGeometry(curve,48,.05,6,false),new T.MeshBasicMaterial({color:k%2?0x12a8ff:0x1f6bff,transparent:true,opacity:.28,depthWrite:false}));
     var line=new T.Line(new T.BufferGeometry().setFromPoints(curve.getPoints(60)),new T.LineBasicMaterial({color:k%3?0x1f6bff:0x12d98a,transparent:true,opacity:.75}));
     nodeGroup.add(tube); nodeGroup.add(line);
     // comets: a bright head with a fading tail, drifting slowly along the connector
     var comets=[];
     for(var c=0;c<2;c++){ var parts=[];
-      for(var q=0;q<7;q++){ var sp=new T.Sprite(new T.SpriteMaterial({map:(k+c)%2?glowG:glowB,transparent:true,depthWrite:false,opacity:1-q/7})); var sz=(q?0.7:1.1)*(1-q/9); sp.scale.set(sz,sz,1); nodeGroup.add(sp); parts.push(sp); }
+      for(var q=0;q<7;q++){ var sp=new T.Sprite(new T.SpriteMaterial({map:(k+c)%2?glowG:glowB,transparent:true,depthWrite:false,opacity:1-q/7})); var sz=(q?0.45:0.7)*(1-q/9); sp.scale.set(sz,sz,1); nodeGroup.add(sp); parts.push(sp); }
       comets.push({t:Math.random(),v:rnd(.05,.11),dir:Math.random()<.5?1:-1,parts:parts}); }
     links.push({a:L[0],b:L[1],curve:curve,tube:tube,line:line,comets:comets,boost:0});
   });
@@ -169,9 +170,13 @@
   var curNode='home', travel=null, camPos=new T.Vector3(0,0,0), camLook=new T.Vector3(0,0,-60), tmpA=new T.Vector3(), tmpB=new T.Vector3();
   function narrow(){ return innerWidth<900; }
   function poseFor(id, outPos, outLook){
+    if(id==='home'){   // Home keeps the first view: the whole brain, sitting beside the content
+      if(narrow()){ outPos.set(0,22,190); outLook.set(0,22,0); } else { outPos.set(-44,-2,150); outLook.set(-44,-2,0); }
+      return;
+    }
     var w=nodes[id].v.clone().applyMatrix4(brain.matrixWorld);
-    if(narrow()){ outPos.copy(w).add(tmpA.set(0,3,15)); outLook.copy(w).add(tmpB.set(0,-4.5,-10)); }
-    else { outPos.copy(w).add(tmpA.set(6.5,1.5,15)); outLook.copy(w).add(tmpB.set(-5.5,-.5,-10)); }
+    if(narrow()){ outPos.copy(w).add(tmpA.set(0,4,27)); outLook.copy(w).add(tmpB.set(0,-9,-10)); }
+    else { outPos.copy(w).add(tmpA.set(9,2,26)); outLook.copy(w).add(tmpB.set(-9,-1,-10)); }
   }
   function linkBetween(a,b){ for(var i=0;i<links.length;i++){ var L=links[i]; if((L.a===a&&L.b===b)||(L.a===b&&L.b===a)) return L; } return null; }
   function page(id){
@@ -183,7 +188,7 @@
     travel={t0:performance.now(),dur:reduce?10:1900,fromPos:camPos.clone(),fromLook:camLook.clone()};
   }
   function warp(dir){ speed=mode==='inside'?120:220; rotTarget+=(dir||1)*1.1; shake=mode==='inside'?.4:1; burst(40); if(mode!=='inside' && Math.random()<.9) setTimeout(spawnPair,350); }
-  var enterCb=null, enterT=0, enterFrom=null;
+  var enterCb=null, enterT=0, enterFrom=null, enterSwap=false, inRotY=0;
   function enter(cb){
     if(mode!=='outside'){ cb&&cb(); return; }
     mode='entering'; enterT=performance.now(); enterCb=cb; speed=260; shake=1.2; burst(80); nodeGroup.visible=true;
@@ -214,17 +219,24 @@
       brain.scale.setScalar(1+Math.sin(t*1.3)*.012);
       camPos.set(mx*6,-my*4,0); camLook.set(mx*2,-my*1.5,-60);
     } else if(mode==='entering'){
-      var k=Math.min(1,(performance.now()-enterT)/2600), e=ease(k);          // wall-clock, so slow devices still arrive on time
-      brain.position.lerpVectors(enterFrom.p,tmpV.set(0,0,0),e);
-      brain.scale.setScalar(enterFrom.s+(IN_SCALE-enterFrom.s)*e);
-      brain.rotation.x=enterFrom.rx+(IN_ROT.x-enterFrom.rx)*e; brain.rotation.y=enterFrom.ry+(IN_ROT.y-enterFrom.ry)*e;
-      brain.updateMatrixWorld();
-      var P0=new T.Vector3(), L0=new T.Vector3(); poseFor('home',P0,L0);
-      camPos.lerpVectors(new T.Vector3(0,0,0),P0,e); camLook.lerpVectors(new T.Vector3(0,0,-60),L0,e);
-      if(k>=1){ mode='inside'; curNode='home'; speed=baseSpeed; var cb=enterCb; enterCb=null; cb&&cb(); }
+      var el=performance.now()-enterT;
+      if(el<1300){                                   // 1. the brain rushes at you and swallows you
+        var k=el/1300, e=k*k*k;
+        brain.position.lerpVectors(enterFrom.p,tmpV.set(0,0,45),e); brain.rotation.y+=dt*.6;
+        camPos.set(0,0,0); camLook.set(0,0,-60);
+      } else {
+        if(!enterSwap){ enterSwap=true; brain.position.set(0,0,0); brain.scale.setScalar(IN_SCALE); brain.rotation.copy(IN_ROT); inRotY=IN_ROT.y;
+          curNode='home'; var cb=enterCb; enterCb=null; cb&&cb(); }
+        var k1=Math.min(1,(el-1300)/2400), e1=ease(k1);   // 2. pull back out: the whole mind, with its page nodes lit
+        brain.updateMatrixWorld();
+        var P0=new T.Vector3(), L0=new T.Vector3(); poseFor('home',P0,L0);
+        camPos.lerpVectors(tmpA.set(0,0,-2),P0,e1); camLook.lerpVectors(tmpB.set(0,0,-60),L0,e1);
+        if(k1>=1){ mode='inside'; speed=baseSpeed; }
+      }
     } else {
       // inside: the brain breathes and sways gently; the camera rides node to node
-      brain.rotation.y=IN_ROT.y+Math.sin(t*.12)*.05; brain.rotation.x=IN_ROT.x+Math.sin(t*.17)*.03;
+      if(curNode==='home' && !travel) inRotY+=dt*.07;
+      brain.rotation.y=inRotY+Math.sin(t*.12)*.05; brain.rotation.x=IN_ROT.x+Math.sin(t*.17)*.03;
       brain.scale.setScalar(IN_SCALE*(1+Math.sin(t*1.1)*.006)); brain.updateMatrixWorld();
       var P1=new T.Vector3(), L1=new T.Vector3(); poseFor(curNode,P1,L1);
       if(travel){ var k2=Math.min(1,(performance.now()-travel.t0)/travel.dur), e2=ease(k2);
@@ -236,15 +248,15 @@
     // nodes + comets
     if(nodeGroup.visible){
       NODE_IDS.forEach(function(id){ var n=nodes[id], on=id===curNode, p=1+Math.sin(t*2.2+n.i)*.12;
-        var hs=(on?6.2:4.2)*p; n.halo.scale.set(hs,hs,1); n.halo.material.opacity=on?1:.75;
-        n.ring.lookAt(cam.position); n.ring.rotation.z+=dt*.4; n.ring.scale.setScalar(on?1.35+Math.sin(t*3)*.08:1); });
+        var hs=(on?2.6:2.0)*p; n.halo.scale.set(hs,hs,1); n.halo.material.opacity=on?.8:.6;
+        n.ring.lookAt(cam.position); n.ring.rotation.z+=dt*.4; n.ring.scale.setScalar(on?1.1+Math.sin(t*3)*.06:.85); n.ring.material.opacity=on?.45:.3; });
       links.forEach(function(L){ L.boost*=Math.pow(.25,dt); var hot=(L.a===curNode||L.b===curNode);
         L.tube.material.opacity=.22+(hot?.18:0)+L.boost*.2; L.line.material.opacity=.55+(hot?.3:0);
         L.comets.forEach(function(c){ c.t+=dt*c.v*(1+L.boost*4)*c.dir; if(c.t>1) c.t-=1; if(c.t<0) c.t+=1;
           for(var q=0;q<c.parts.length;q++){ var tt=c.t-c.dir*q*.018; tt=tt<0?tt+1:(tt>1?tt-1:tt); L.curve.getPoint(tt,c.parts[q].position); } }); });
     }
     // brain neurons: pulses always fire
-    core.material.opacity=(mode==='inside'?.06:.26)+Math.sin(t*1.7)*.05;
+    core.material.opacity=((mode==='inside'&&curNode!=='home')?.05:.22)+Math.sin(t*1.7)*.05;
     bpts.material.opacity=mode==='inside'?.8:.95;
     for(var k3=0;k3<NP;k3++){ var p=pulses[k3], E=edges[p.e]; p.t+=dt*p.v;
       if(p.t>=1){ var end=p.fw?E[1]:E[0], nx=adj[end]; p.e=nx.length?nx[(Math.random()*nx.length)|0]:(Math.random()*edges.length)|0;
@@ -254,7 +266,9 @@
     pg.attributes.position.needsUpdate=true;
     // cubes only crash out in space (outside the brain)
     pairT-=dt; soloT-=dt;
-    if(mode==='outside'){ if(pairT<=0){ spawnPair(); pairT=rnd(1.4,2.6); } if(soloT<=0){ spawnSolo(); soloT=rnd(.9,2); } }
+    var cubesOn=mode==='outside'||(mode==='inside'&&curNode==='home'&&!travel);
+    spawnOff.copy(camPos);
+    if(cubesOn){ if(pairT<=0){ spawnPair(); pairT=rnd(1.4,2.6); } if(soloT<=0){ spawnSolo(); soloT=rnd(.9,2); } }
     var worldDz=(speed-baseSpeed)*dt;
     cubes.forEach(function(c){ if(!c.on) return;
       c.p.addScaledVector(c.v,dt); c.p.z+=worldDz+(c.solo?0:baseSpeed*.15*dt);
@@ -262,7 +276,7 @@
       if(c.mate && c.mate.on && c.p.distanceTo(c.mate.p)<(c.size+c.mate.size)*.55){
         var mid=c.p.clone().add(c.mate.p).multiplyScalar(.5); explode(mid);
         c.on=false; c.g.visible=false; c.mate.on=false; c.mate.g.visible=false; return; }
-      if(c.p.z>8||Math.abs(c.p.x)>140||mode!=='outside'&&c.p.z>-20){ c.on=false; c.g.visible=false; }
+      if(c.p.z>spawnOff.z+8||Math.abs(c.p.x-spawnOff.x)>140||!cubesOn){ c.on=false; c.g.visible=false; }
     });
     frags.forEach(function(f){ if(!f.on) return; f.age+=dt; var k2=1-f.age/f.life;
       if(k2<=0){ f.on=false; f.g.visible=false; return; }
@@ -273,6 +287,7 @@
       var s2=4+fl.t*26; fl.s.scale.set(s2,s2,1); fl.s.material.opacity=Math.max(0,.9*(1-fl.t)); });
     // camera
     shake*=Math.pow(.02,dt);
+    dustObj.position.copy(camPos);
     cam.position.copy(camPos); cam.position.x+=(Math.random()-.5)*shake*.6; cam.position.y+=(Math.random()-.5)*shake*.6;
     cam.lookAt(camLook);
     // floating page labels next to the nodes

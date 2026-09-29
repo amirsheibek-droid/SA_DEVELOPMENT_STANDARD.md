@@ -453,11 +453,115 @@ body.wiz main > section{perspective:1600px}
 .asm-piece{will-change:transform,opacity}
 .asm-lock{box-shadow:0 0 0 1px rgba(31,107,255,.55),0 0 26px rgba(31,107,255,.35)!important;transition:box-shadow .5s}
 
+/* =================== BRAINTRIX: enter the mind, pages live in nodes, AI guide =================== */
+body.pre-entry header, body.pre-entry main, body.pre-entry .wz-ctrl, body.pre-entry #cookiePop, body.pre-entry .guide{opacity:0!important;pointer-events:none!important}
+header, main, .wz-ctrl{transition:opacity .9s ease}
+.btx{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.15) 0%,rgba(243,246,251,.55) 60%,rgba(220,228,240,.85) 100%);transition:opacity 1.1s ease,transform 1.4s cubic-bezier(.5,0,.2,1),filter 1.1s}
+.btx.go{opacity:0;transform:scale(1.8);filter:blur(10px);pointer-events:none}
+.btx.gone{display:none}
+.btx-in{max-width:760px}
+.btx-eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);opacity:0;animation:btxUp 1s .2s forwards}
+.btx h1{margin-top:18px;font-size:clamp(3rem,9vw,6.4rem);font-weight:900;letter-spacing:-.04em;line-height:.95;
+  background:linear-gradient(180deg,#0a1530 0%,#34466e 55%,#8c9ab3 100%);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;animation:btxUp 1.1s .4s forwards}
+.btx h1 b{background:linear-gradient(90deg,#1f6bff,#12a8ff 45%,#12d98a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btx p{margin:20px auto 0;max-width:520px;color:var(--mute);font-size:1.08rem;opacity:0;animation:btxUp 1.1s .65s forwards}
+.btx-btn{position:relative;margin-top:44px;width:150px;height:150px;border-radius:50%;border:0;cursor:pointer;color:#fff;font-weight:800;font-size:1.02rem;letter-spacing:.06em;text-transform:uppercase;
+  background:radial-gradient(circle at 35% 30%,#6aa8ff,#1f6bff 45%,#0b3fb8 100%);box-shadow:0 0 0 10px rgba(31,107,255,.12),0 24px 60px rgba(31,107,255,.45),0 0 60px rgba(18,217,138,.35);
+  opacity:0;animation:btxUp 1.1s .9s forwards;transition:transform .25s}
+.btx-btn:hover{transform:scale(1.06)}
+.btx-btn::before,.btx-btn::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:2px solid rgba(31,107,255,.45);animation:btxRing 2.4s ease-out infinite}
+.btx-btn::after{border-color:rgba(18,217,138,.45);animation-delay:1.2s}
+.btx-btn span{display:block;font-size:.66rem;letter-spacing:.2em;opacity:.8;margin-top:4px}
+.btx.go .btx-btn{transform:scale(.2)}
+.btx-foot{position:absolute;bottom:22px;left:0;right:0;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute2)}
+@keyframes btxUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes btxRing{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+#warpFlash.big{background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(255,255,255,.95) 40%,rgba(200,225,255,.6) 70%,transparent 100%);transition:opacity .9s}
+/* page names floating beside their nodes */
+#nodeLabels{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.node-label{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:#1f6bff;padding:5px 11px;border-radius:100px;background:rgba(255,255,255,.72);border:1px solid rgba(31,107,255,.28);box-shadow:0 6px 18px rgba(31,107,255,.15);transition:opacity .35s}
+/* the AI guide */
+.guide{position:fixed;z-index:65;left:20px;bottom:86px;width:min(440px,calc(100vw - 28px));transition:transform .5s cubic-bezier(.2,.9,.25,1.1),opacity .4s}
+.guide.hide{transform:translateY(30px);opacity:0;pointer-events:none}
+.guide-card{border-radius:22px;padding:16px 16px 14px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid rgba(255,255,255,.95);box-shadow:0 24px 60px -18px rgba(20,50,120,.35)}
+.guide-top{display:flex;align-items:center;gap:12px}
+.orb{position:relative;width:46px;height:46px;border-radius:50%;flex:0 0 auto;background:radial-gradient(circle at 35% 30%,#bfe0ff,#1f6bff 55%,#0a3cb0);box-shadow:0 0 20px rgba(31,107,255,.5)}
+.orb::before,.orb::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid rgba(18,217,138,.6);opacity:0}
+.guide.talking .orb::before{animation:btxRing 1.4s ease-out infinite}.guide.talking .orb::after{animation:btxRing 1.4s .7s ease-out infinite}
+.guide.talking .orb{animation:orbPulse .6s ease-in-out infinite alternate}
+@keyframes orbPulse{to{box-shadow:0 0 34px rgba(18,217,138,.75)}}
+.guide-name b{display:block;font-size:.95rem;color:var(--ink)}.guide-name span{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.guide-tools{margin-left:auto;display:flex;gap:6px}
+.guide-tools button{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.8);color:var(--ink);font-size:.9rem;line-height:1;cursor:pointer}
+.guide-text{margin-top:12px;color:var(--ink);font-size:.95rem;line-height:1.55;min-height:3em}
+.guide-text .caret{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:gBlink .8s steps(1) infinite}
+@keyframes gBlink{50%{opacity:0}}
+.guide-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.guide-chips button{padding:10px 15px;border-radius:100px;font-weight:700;font-size:.85rem;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--ink)}
+.guide-chips button.go{background:linear-gradient(135deg,#1f6bff,#0fbf78);color:#fff;border-color:transparent;box-shadow:0 10px 24px -8px rgba(31,107,255,.6)}
+.guide-mini{position:fixed;z-index:65;left:20px;bottom:86px;display:none;align-items:center;gap:10px;padding:8px 16px 8px 8px;border-radius:100px;border:1px solid rgba(255,255,255,.95);
+  background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 14px 34px -12px rgba(20,50,120,.35);cursor:pointer;font-weight:700;color:var(--ink)}
+.guide-mini .orb{width:36px;height:36px}
+.guide-mini.show{display:inline-flex}
+@media(max-width:700px){.guide,.guide-mini{left:12px;bottom:calc(74px + env(safe-area-inset-bottom))}.guide-text{font-size:.9rem}}
+
+/* =================== cards become neurons, wired together inside the brain =================== */
+body.wiz main > section{position:absolute}
+.syn{position:absolute;left:0;top:0;pointer-events:none;z-index:0;overflow:visible}
+.syn path.ax{fill:none;stroke:url(#synGrad);stroke-width:1.6;opacity:.55;stroke-linecap:round}
+.syn path.sig{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:10 520;opacity:.95;filter:drop-shadow(0 0 5px #1f6bff) drop-shadow(0 0 9px #12d98a);animation:synFire var(--d,3.4s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes synFire{from{stroke-dashoffset:530}to{stroke-dashoffset:0}}
+.syn circle.term{fill:#fff;stroke:#1f6bff;stroke-width:1.5;filter:drop-shadow(0 0 5px rgba(31,107,255,.8))}
+.syn circle.term.g{stroke:#12d98a;filter:drop-shadow(0 0 5px rgba(18,217,138,.8))}
+.syn path{stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+.syn.grow path.ax{animation:synGrow 1.2s cubic-bezier(.3,.7,.2,1) forwards}
+@keyframes synGrow{to{stroke-dashoffset:0}}
+.syn path.sig{stroke-dasharray:10 520}
+main > section .wrap{position:relative;z-index:1}
+/* each card is a cell: a glowing nucleus, a living membrane and a gentle drift */
+.card,.step,.promise{border-radius:26px 22px 28px 20px!important}
+.card::after,.step::after,.promise::after{content:"";position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#6aa8ff 45%,#1f6bff);box-shadow:0 0 0 4px rgba(31,107,255,.14),0 0 16px rgba(31,107,255,.7);animation:soma 2.6s ease-in-out infinite}
+.card:nth-child(2n)::after,.step:nth-child(2n)::after,.promise:nth-child(2n)::after{background:radial-gradient(circle at 35% 35%,#fff,#6af0b8 45%,#0fbf78);box-shadow:0 0 0 4px rgba(18,217,138,.14),0 0 16px rgba(18,217,138,.7)}
+.card,.step,.promise{overflow:visible!important}
+.card::before,.step::before{border-radius:26px 22px 0 0}
+@keyframes soma{50%{transform:scale(1.25);box-shadow:0 0 0 7px rgba(31,107,255,.08),0 0 26px rgba(31,107,255,.9)}}
+.neuron{animation:cellDrift var(--cd,7s) ease-in-out infinite;animation-delay:var(--cdl,0s)}
+@keyframes cellDrift{0%,100%{translate:0 0}33%{translate:1.5px -4px}66%{translate:-2px 2px}}
+.neuron.fire{box-shadow:0 1px 0 #fff inset,0 0 0 1px rgba(31,107,255,.45),0 0 34px rgba(31,107,255,.35),0 18px 50px -18px rgba(20,50,120,.28)!important}
+@media(prefers-reduced-motion:reduce){.neuron,.syn path.sig,.card::after,.step::after,.promise::after{animation:none}}
+
 </style>
 </head>
-<body>
+<body class="pre-entry">
 
 <div id="neural" aria-hidden="true"></div>
+<div class="btx" id="btx" role="dialog" aria-label="Enter S·A Intelligent Designs">
+  <div class="btx-in">
+    <div class="btx-eyebrow">S·A Intelligent Designs &middot; SA Marketing Intelligence</div>
+    <h1>Enter the <b>Braintrix</b></h1>
+    <p>We build AI apps and intelligent websites. Step inside the mind that builds them.</p>
+    <button class="btx-btn" id="btxEnter">Enter<span>the mind</span></button>
+  </div>
+  <div class="btx-foot">Sound on for the full experience</div>
+</div>
+<div id="nodeLabels" aria-hidden="true"></div>
+<div class="guide hide" id="guide" role="region" aria-label="S·A AI guide" aria-live="polite">
+  <div class="guide-card">
+    <div class="guide-top">
+      <div class="orb" aria-hidden="true"></div>
+      <div class="guide-name"><b>S·A AI</b><span>Your guide</span></div>
+      <div class="guide-tools"><button id="gVoice" aria-label="Voice on or off" title="Voice on / off">&#128266;</button><button id="gMin" aria-label="Minimise guide" title="Minimise">&minus;</button></div>
+    </div>
+    <div class="guide-text" id="gText"></div>
+    <div class="guide-chips" id="gChips"></div>
+  </div>
+</div>
+<button class="guide-mini" id="gMini" aria-label="Open the AI guide"><span class="orb" aria-hidden="true"></span><span id="gMiniTxt">Show me around</span></button>
+
 <div id="warpFlash" aria-hidden="true"></div>
 <div id="dissolve" aria-hidden="true"></div>
 
@@ -983,6 +1087,7 @@ setTimeout(()=>{
     slides[i].querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
     if(history.replaceState) history.replaceState(null,'','#'+ids[i]);
     if(window.SANeural) SANeural.page(ids[i]);
+    if(window.SAGuide) SAGuide.onPage(ids[i]);
   }
   function go(i){
     if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
@@ -1024,11 +1129,170 @@ setTimeout(()=>{
     var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
     if(Math.abs(dx)>90&&Math.abs(dx)>Math.abs(dy)*2) go(dx<0?cur+1:cur-1);
   },{passive:true});
-  var start=ids.indexOf(location.hash.slice(1)); show(start<0?0:start);
+  show(0);   // everyone starts at Home, inside the brain
+  window.SAWizard={go:go,show:show,index:function(){ return cur; },ids:ids,count:slides.length};
+})();
+</script>
+<script>
+/* ── Braintrix entry + the S·A AI voice guide ── */
+(function(){
+  var btx=document.getElementById('btx'), btn=document.getElementById('btxEnter'), flash=document.getElementById('warpFlash');
+  var guide=document.getElementById('guide'), gText=document.getElementById('gText'), gChips=document.getElementById('gChips'),
+      gMini=document.getElementById('gMini'), gMiniTxt=document.getElementById('gMiniTxt'), gVoice=document.getElementById('gVoice');
+  var LINES={
+    home:"Welcome inside the S·A mind. I'm the S·A AI, your guide to S·A Intelligent Designs, the studio behind SA Marketing Intelligence. We build AI-powered apps and intelligent websites that help businesses work smarter and win more customers. Would you like me to show you around?",
+    packages:"These are our services. Launch is a sharp, single-page website that gets you online and bringing in enquiries fast. Signature is a fully bespoke, multi-page site with its own creative direction. Every package starts with a free mock-up, and hosting is free.",
+    referral:"Our referral programme. Refer a client who takes our care plan, and you keep one hundred percent of their first month's fee. It costs you, and them, nothing extra.",
+    portfolio:"Here's what we've built. Voltz CRM, our voice-first app for sole traders, and NEX License are live. Qlarvia, Contract Analyser and more are being built by our engineering team right now.",
+    process:"Five simple steps. A free consultation, a free mock-up, a fixed written quote, the build, then launch. The common questions below cover costs and what you own.",
+    book:"Ready to build something intelligent? Tell us about your project here, or message us directly. We reply within one working day.",
+    about:"And that's the S·A mind: intelligent websites and mobile apps for specialist niches, across Milton Keynes, Bedford and London. Book your free consultation whenever you're ready."
+  };
+  var paused=false, synth=window.speechSynthesis||null, voice=null, voiceOn=true, tour=false, tourNav=false, typer=null, nextT=null, speakId=0, entered=false;
+  try{ voiceOn=sessionStorage.getItem('saVoice')!=='off'; }catch(e){}
+  function pickVoice(){ if(!synth) return; var vs=synth.getVoices(); if(!vs.length) return;
+    var pref=['Google UK English Female','Serena','Kate','Stephanie','Martha','Microsoft Libby','Microsoft Sonia','Samantha','Karen','Moira','Google US English'];
+    for(var i=0;i<pref.length;i++){ for(var j=0;j<vs.length;j++){ if(vs[j].name.indexOf(pref[i])>-1){ voice=vs[j]; return; } } }
+    for(var k=0;k<vs.length;k++){ if(/^en[-_]GB/i.test(vs[k].lang)){ voice=vs[k]; return; } }
+    for(var m=0;m<vs.length;m++){ if(/^en/i.test(vs[m].lang)){ voice=vs[m]; return; } } }
+  if(synth){ pickVoice(); if(synth.addEventListener) synth.addEventListener('voiceschanged',pickVoice); else synth.onvoiceschanged=pickVoice; }
+  function setVoiceBtn(){ gVoice.innerHTML=voiceOn?'&#128266;':'&#128263;'; gVoice.setAttribute('aria-pressed',voiceOn?'true':'false'); }
+  setVoiceBtn();
+  function stopSpeech(){ speakId++; if(synth) try{ synth.cancel(); }catch(e){} guide.classList.remove('talking'); }
+  function speak(text, done){
+    stopSpeech(); var id=speakId;
+    var finish=function(){ if(id!==speakId) return; guide.classList.remove('talking'); done&&done(); };
+    if(!synth||!voiceOn){ setTimeout(finish, Math.max(3800, text.length*52)); return; }
+    var parts=text.match(/[^.!?]+[.!?]*/g)||[text], i=0; guide.classList.add('talking');
+    (function next(){ if(id!==speakId) return; if(i>=parts.length){ finish(); return; }
+      var u=new SpeechSynthesisUtterance(parts[i++].trim()); if(voice) u.voice=voice; u.lang=voice?voice.lang:'en-GB'; u.rate=1.04; u.pitch=1.06;
+      var guard=setTimeout(next, 9000+u.text.length*90);            // some browsers never fire onend
+      u.onend=u.onerror=function(){ clearTimeout(guard); next(); };
+      try{ synth.speak(u); }catch(e){ clearTimeout(guard); finish(); } })();
+  }
+  function type(text){ clearInterval(typer); var i=0; gText.innerHTML='<span class="caret"></span>';
+    typer=setInterval(function(){ i+=2; gText.innerHTML=text.slice(0,i).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="caret"></span>';
+      if(i>=text.length){ clearInterval(typer); gText.textContent=text; } },18); }
+  function chips(list){ gChips.innerHTML=''; list.forEach(function(c,k){ var b=document.createElement('button'); b.textContent=c[0]; if(k===0) b.className='go'; b.onclick=c[1]; gChips.appendChild(b); }); }
+  function openGuide(){ guide.classList.remove('hide'); gMini.classList.remove('show'); }
+  function minimise(label){ guide.classList.add('hide'); gMiniTxt.textContent=label||(tour?'Tour running':'Show me around'); gMini.classList.add('show'); }
+  function ids(){ return window.SAWizard?SAWizard.ids:[]; }
+  function goNext(){ var W=window.SAWizard; if(!W) return; var i=W.index();
+    if(i>=W.count-1){ endTour(true); return; } tourNav=true; W.go(i+1); }
+  function startTour(fromHere){
+    tour=true; paused=false; openGuide(); clearTimeout(nextT);
+    var W=window.SAWizard; if(!fromHere && W && W.index()!==0){ tourNav=true; W.go(0); return; }
+    if(W && W.index()===0 && !fromHere){ tourNav=true; W.go(1); return; }
+    onPage(ids()[W?W.index():0]);
+  }
+  function pauseTour(){ clearTimeout(nextT); stopSpeech(); paused=true; clearInterval(typer); var W=window.SAWizard; gText.textContent=LINES[ids()[W?W.index():0]]||'';
+    chips([['Resume tour',function(){ paused=false; onPage(ids()[W?W.index():0]); }],['Stop tour',stopTour]]); }
+  function stopTour(){ paused=false; tour=false; clearTimeout(nextT); stopSpeech(); chips([['Continue the tour',function(){ startTour(true); }],['Hide',function(){ minimise(); }]]); }
+  function endTour(){ tour=false; clearTimeout(nextT);
+    chips([['Book a free consultation',function(){ var W=window.SAWizard; if(W) W.go(W.ids.indexOf('book')); minimise('Ask S·A AI'); }],['Start the tour again',function(){ startTour(false); }]]); }
+  function onPage(id){
+    if(!entered) return;
+    var text=LINES[id]||''; clearTimeout(nextT);
+    if(tour && paused){ openGuide(); type(text); chips([['Resume tour',function(){ paused=false; onPage(id); }],['Stop tour',stopTour]]); tourNav=false; return; }
+    if(tour){
+      openGuide(); type(text);
+      chips([['Pause',pauseTour],['Skip',function(){ clearTimeout(nextT); stopSpeech(); goNext(); }],['Stop tour',stopTour]]);
+      speak(text,function(){ if(!tour) return; nextT=setTimeout(goNext, 1400); });
+    } else {
+      stopSpeech();
+      if(!guide.classList.contains('hide')){ type(text); chips([['Show me around from here',function(){ startTour(true); }],['Hide',function(){ minimise(); }]]); }
+    }
+    tourNav=false;
+  }
+  window.SAGuide={onPage:onPage};
+  gVoice.onclick=function(){ voiceOn=!voiceOn; setVoiceBtn(); try{ sessionStorage.setItem('saVoice',voiceOn?'on':'off'); }catch(e){} if(!voiceOn) stopSpeech(); };
+  document.getElementById('gMin').onclick=function(){ minimise(); };
+  gMini.onclick=function(){ openGuide(); if(!tour){ var W=window.SAWizard; startTour(!!(W && W.index()>0)); } };
+  // manual navigation during a tour keeps it going from the new page (handled by onPage)
+
+  // a soft whoosh when the brain pulls you in
+  function whoosh(){ try{ var C=window.AudioContext||window.webkitAudioContext; if(!C) return; var c=new C(), n=c.currentTime, d=2.4;
+    var b=c.createBuffer(1,c.sampleRate*d,c.sampleRate), x=b.getChannelData(0); for(var i=0;i<x.length;i++) x[i]=Math.random()*2-1;
+    var s=c.createBufferSource(); s.buffer=b; var f=c.createBiquadFilter(); f.type='bandpass'; f.Q.value=.9;
+    f.frequency.setValueAtTime(180,n); f.frequency.exponentialRampToValueAtTime(2600,n+d*.8);
+    var g=c.createGain(); g.gain.setValueAtTime(.0001,n); g.gain.exponentialRampToValueAtTime(.22,n+d*.7); g.gain.exponentialRampToValueAtTime(.0001,n+d);
+    var o=c.createOscillator(); o.frequency.setValueAtTime(55,n); o.frequency.exponentialRampToValueAtTime(140,n+d); var og=c.createGain();
+    og.gain.setValueAtTime(.0001,n); og.gain.exponentialRampToValueAtTime(.18,n+d*.75); og.gain.exponentialRampToValueAtTime(.0001,n+d);
+    s.connect(f); f.connect(g); g.connect(c.destination); o.connect(og); og.connect(c.destination); s.start(n); o.start(n); s.stop(n+d); o.stop(n+d); }catch(e){} }
+
+  btn.onclick=function(){
+    if(entered) return;
+    // unlock speech on iPhone/iPad: it has to start inside the tap
+    if(synth){ try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; synth.speak(u); }catch(e){} }
+    whoosh(); btx.classList.add('go');
+    var W=window.SAWizard; if(W) W.show(0);
+    var arrive=function(){
+      entered=true;
+      if(flash){ flash.classList.add('big','on'); setTimeout(function(){ flash.classList.remove('on'); setTimeout(function(){ flash.classList.remove('big'); },900); },180); }
+      document.body.classList.remove('pre-entry'); setTimeout(function(){ btx.classList.add('gone'); },1200);
+      var home=document.getElementById('home'); if(window.SAAssemble) setTimeout(function(){ SAAssemble(home); },120);
+      if(window.SAWire) setTimeout(function(){ SAWire(home); },1500);
+      setTimeout(function(){ openGuide(); type(LINES.home);
+        chips([['Yes, show me around',function(){ startTour(false); }],["I'll explore myself",function(){ stopSpeech(); minimise(); }]]);
+        speak(LINES.home,function(){}); }, 1500);
+    };
+    var arrived=false, once=function(){ if(arrived) return; arrived=true; arrive(); };
+    if(window.SANeural && SANeural.enter) SANeural.enter(once); else setTimeout(once,600);
+    setTimeout(once, 3400);   // never leave anyone stuck at the door
+  };
+  document.addEventListener('keydown',function(e){ if(!entered && (e.key==='Enter'||e.key===' ') && document.activeElement!==btn){ e.preventDefault(); btn.click(); } });
+})();
+</script>
+<script>
+/* ── Neural wiring between the cards: axons grow between neighbouring cells and signals fire along them ── */
+(function(){
+  var NS='http://www.w3.org/2000/svg', CELLS='.card, .step, .promise, .scope-note, .faq-item, .contact-direct';
+  function center(r,o){ return {x:r.left-o.left+r.width/2, y:r.top-o.top, r:r}; }
+  function wire(sec){
+    if(!sec) return; var old=sec.querySelector(':scope > svg.syn'); if(old) old.remove();
+    var host=sec, hr=host.getBoundingClientRect(), off={left:hr.left, top:hr.top-host.scrollTop};
+    var cells=[].slice.call(sec.querySelectorAll(CELLS)).filter(function(el){ return el.offsetParent!==null && !el.closest('.cube-scene'); });
+    var head=sec.querySelector('h1, h2.h');
+    cells.forEach(function(el,i){ el.classList.add('neuron'); el.style.setProperty('--cd',(6+Math.random()*4).toFixed(1)+'s'); el.style.setProperty('--cdl',(-Math.random()*6).toFixed(1)+'s'); });
+    var pts=cells.map(function(el){ var r=el.getBoundingClientRect(); return {el:el, x:r.left-off.left+r.width/2, y:r.top-off.top, cx:r.left-off.left+r.width/2, cy:r.top-off.top+r.height/2, w:r.width, h:r.height, top:r.top-off.top}; });
+    var W=Math.max(host.scrollWidth,host.clientWidth), H=Math.max(host.scrollHeight,host.clientHeight);
+    var svg=document.createElementNS(NS,'svg'); svg.setAttribute('class','syn grow'); svg.setAttribute('width',W); svg.setAttribute('height',H); svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    svg.innerHTML='<defs><linearGradient id="synGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f6bff"/><stop offset=".5" stop-color="#12a8ff"/><stop offset="1" stop-color="#12d98a"/></linearGradient></defs>';
+    var edges=[], seen={};
+    function add(a,b){ var k=a<b?a+'-'+b:b+'-'+a; if(seen[k]) return; seen[k]=1; edges.push([a,b]); }
+    pts.forEach(function(p,i){ var d=pts.map(function(q,j){ return {j:j, d:j===i?1e9:Math.hypot(q.cx-p.cx,q.cy-p.cy)}; }).sort(function(a,b){ return a.d-b.d; });
+      if(d[0]&&d[0].d<1e9) add(i,d[0].j); if(d[1]&&d[1].d<1e9&&d[1].d<d[0].d*1.7) add(i,d[1].j); });
+    function path(x1,y1,x2,y2,g){
+      var mx=(x1+x2)/2, my=(y1+y2)/2, dx=x2-x1, dy=y2-y1, n=Math.hypot(dx,dy)||1, bend=(Math.random()-.5)*Math.min(160,n*.45);
+      var c1x=mx-dy/n*bend, c1y=my+dx/n*bend;
+      var d='M'+x1.toFixed(1)+','+y1.toFixed(1)+' Q'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+x2.toFixed(1)+','+y2.toFixed(1);
+      var ax=document.createElementNS(NS,'path'); ax.setAttribute('d',d); ax.setAttribute('class','ax'); svg.appendChild(ax);
+      var len=ax.getTotalLength?ax.getTotalLength():n; ax.style.setProperty('--len',len.toFixed(0));
+      var sg=document.createElementNS(NS,'path'); sg.setAttribute('d',d); sg.setAttribute('class','sig');
+      sg.style.setProperty('--d',(2.6+Math.random()*2.6).toFixed(2)+'s'); sg.style.setProperty('--dl',(-Math.random()*4).toFixed(2)+'s'); svg.appendChild(sg);
+      [[x1,y1],[x2,y2]].forEach(function(e){ var c=document.createElementNS(NS,'circle'); c.setAttribute('cx',e[0].toFixed(1)); c.setAttribute('cy',e[1].toFixed(1)); c.setAttribute('r','4'); c.setAttribute('class','term'+(g?' g':'')); svg.appendChild(c); });
+    }
+    // attach points: the nucleus on top of each card, or the nearest side
+    function port(p,q){ if(Math.abs(q.cy-p.cy)<p.h*.5){ return {x:p.cx+(q.cx>p.cx?p.w/2:-p.w/2), y:p.cy}; } return q.cy<p.cy?{x:p.cx,y:p.top}:{x:p.cx,y:p.top+p.h}; }
+    edges.forEach(function(E,k){ var a=pts[E[0]], b=pts[E[1]], pa=port(a,b), pb=port(b,a); path(pa.x,pa.y,pb.x,pb.y,k%2); });
+    if(head && pts.length){ var hr2=head.getBoundingClientRect(), hx=hr2.left-off.left+Math.min(hr2.width,420)*.5, hy=hr2.bottom-off.top+6;
+      var near=pts.slice().sort(function(a,b){ return Math.hypot(a.cx-hx,a.top-hy)-Math.hypot(b.cx-hx,b.top-hy); }).slice(0,2);
+      near.forEach(function(p,i){ path(hx+(i?40:-40),hy,p.cx,p.top,i); }); }
+    host.insertBefore(svg,host.firstChild);
+    // cells light up when a signal arrives
+    clearInterval(sec._fireT); sec._fireT=setInterval(function(){ if(!sec.classList.contains('active')) return; var c=cells[(Math.random()*cells.length)|0]; if(!c) return; c.classList.add('fire'); setTimeout(function(){ c.classList.remove('fire'); },700); },900);
+  }
+  window.SAWire=wire;
+  function act(){ return document.querySelector('main > section.active'); }
+  new MutationObserver(function(ms){ ms.forEach(function(m){ var el=m.target;
+    if(el.classList && el.classList.contains('active') && el.classList.contains('entering')) setTimeout(function(){ wire(el); },1150); }); })
+    .observe(document.querySelector('main'),{subtree:true,attributes:true,attributeFilter:['class']});
+  var rT; addEventListener('resize',function(){ clearTimeout(rT); rT=setTimeout(function(){ wire(act()); },250); });
+  document.addEventListener('toggle',function(e){ var s=e.target.closest&&e.target.closest('main > section'); if(s) setTimeout(function(){ wire(s); },60); },true);
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/neural-bg.js?v=3"></script>
+<script src="/assets/neural-bg2.js?v=5"></script>
 
 <script>
 /* ── Site assembly: on every page, the blocks spin in from deep space and clamp together ── */
@@ -1060,7 +1324,6 @@ setTimeout(()=>{
   }
   // run on the first page, then every time the wizard changes page
   window.SAAssemble=assemble;
-  var act=document.querySelector('main > section.active'); if(act) setTimeout(function(){ assemble(act); },60);
   new MutationObserver(function(ms){ ms.forEach(function(m){ var el=m.target;
     if(el.classList && el.classList.contains('active') && el.classList.contains('entering')) assemble(el); }); })
     .observe(document.querySelector('main'),{subtree:true,attributes:true,attributeFilter:['class']});

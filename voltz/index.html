@@ -351,6 +351,8 @@
       border: 1px solid rgba(15,23,42,.12); background: rgba(255,255,255,.7); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
       font-weight: 700; font-size: 13px; color: var(--text); cursor: pointer; box-shadow: 0 8px 22px rgba(15,23,42,.1); }
     .stoptour.show { display: inline-flex; }
+    .pausetour { right: 150px !important; }
+    .pausetour.paused { background: var(--blue); color: #fff; border-color: var(--blue); }
     @media (max-width: 900px) { .tapsound { bottom: 100px; font-size: 15px; padding: 14px 20px; white-space: nowrap; } .stoptour { bottom: 84px; right: 14px; } }
 
     /* ── Bigger Dave ── */
@@ -881,6 +883,7 @@
 
   <button class="tapsound" id="tap-sound">&#128266; Tap anywhere to hear Jess</button>
   <button class="stoptour" id="stop-tour">&#9632; Stop tour</button>
+  <button class="stoptour pausetour" id="pause-tour" aria-pressed="false">&#10074;&#10074; Pause</button>
 
   <!-- Entrance -->
   <div class="gate" id="gate" role="dialog" aria-label="Welcome to Voltz CRM">
@@ -1171,31 +1174,37 @@
 
     /* ── First-visit auto tour ── */
     var auto=false, autoNav=false, autoT=null, needTap=false;
-    var tapEl=document.getElementById('tap-sound'), stopEl=document.getElementById('stop-tour');
+    var tapEl=document.getElementById('tap-sound'), stopEl=document.getElementById('stop-tour'), pauseEl=document.getElementById('pause-tour'), paused=false;
     function autoAfter(line){
-      clearTimeout(autoT); if(!auto) return;
+      clearTimeout(autoT); if(!auto || paused) return;
       var started=Date.now(), minRead=Math.max(3000, line.length*48);
       (function wait(){
-        if(!auto) return;
+        if(!auto || paused) return;
         var playing = soundOn && !needTap && !audio.paused && !audio.ended;
         if(playing || Date.now()-started < (soundOn && !needTap ? 900 : minRead)){ autoT=setTimeout(wait,250); return; }
         autoT=setTimeout(function(){
-          if(!auto) return;
+          if(!auto || paused) return;
           if(cur>=slides.length-1){ stopAuto(); return; }
           autoNav=true; go(cur+1);
         }, 1300);
       })();
     }
     function startAuto(){
-      auto=true; voiceOn=true; stopEl.classList.add('show');
+      auto=true; voiceOn=true; setPaused(false); stopEl.classList.add('show'); pauseEl.classList.add('show');
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
       startMusic();
     }
     function stopAuto(){
-      auto=false; clearTimeout(autoT); stopEl.classList.remove('show'); tapEl.classList.remove('show');
+      auto=false; clearTimeout(autoT); setPaused(false); stopEl.classList.remove('show'); pauseEl.classList.remove('show'); tapEl.classList.remove('show');
       store('voltzTourSeen','1');
     }
     stopEl.onclick=function(e){ e.stopPropagation(); stopAuto(); };
+    // pause / resume the tour: Jess stops mid-sentence and picks up the page again on resume
+    function setPaused(v){ paused=v; pauseEl.classList.toggle('paused',v); pauseEl.setAttribute('aria-pressed',v?'true':'false');
+      pauseEl.innerHTML = v ? '&#9654; Resume tour' : '&#10074;&#10074; Pause'; }
+    pauseEl.onclick=function(e){ e.stopPropagation(); if(!auto) return;
+      if(!paused){ setPaused(true); clearTimeout(autoT); stopVoice(); clearInterval(typer); var s=slides[cur], b=s&&s.querySelector('.jess .bubble'); if(b) b.textContent=s.dataset.jess||''; }
+      else { setPaused(false); var s2=slides[cur]; if(s2) runJess(s2); } };
     // browsers block sound until the visitor taps once: first tap anywhere unlocks Jess
     function unlock(){
       if(!needTap) return; needTap=false; tapEl.classList.remove('show');

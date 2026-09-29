@@ -509,6 +509,32 @@ header, main, .wz-ctrl{transition:opacity .9s ease}
 .guide-mini.show{display:inline-flex}
 @media(max-width:700px){.guide,.guide-mini{left:12px;bottom:calc(74px + env(safe-area-inset-bottom))}.guide-text{font-size:.9rem}}
 
+/* =================== cards become neurons, wired together inside the brain =================== */
+body.wiz main > section{position:absolute}
+.syn{position:absolute;left:0;top:0;pointer-events:none;z-index:0;overflow:visible}
+.syn path.ax{fill:none;stroke:url(#synGrad);stroke-width:1.6;opacity:.55;stroke-linecap:round}
+.syn path.sig{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:10 520;opacity:.95;filter:drop-shadow(0 0 5px #1f6bff) drop-shadow(0 0 9px #12d98a);animation:synFire var(--d,3.4s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes synFire{from{stroke-dashoffset:530}to{stroke-dashoffset:0}}
+.syn circle.term{fill:#fff;stroke:#1f6bff;stroke-width:1.5;filter:drop-shadow(0 0 5px rgba(31,107,255,.8))}
+.syn circle.term.g{stroke:#12d98a;filter:drop-shadow(0 0 5px rgba(18,217,138,.8))}
+.syn path{stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+.syn.grow path.ax{animation:synGrow 1.2s cubic-bezier(.3,.7,.2,1) forwards}
+@keyframes synGrow{to{stroke-dashoffset:0}}
+.syn path.sig{stroke-dasharray:10 520}
+main > section .wrap{position:relative;z-index:1}
+/* each card is a cell: a glowing nucleus, a living membrane and a gentle drift */
+.card,.step,.promise{border-radius:26px 22px 28px 20px!important}
+.card::after,.step::after,.promise::after{content:"";position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#6aa8ff 45%,#1f6bff);box-shadow:0 0 0 4px rgba(31,107,255,.14),0 0 16px rgba(31,107,255,.7);animation:soma 2.6s ease-in-out infinite}
+.card:nth-child(2n)::after,.step:nth-child(2n)::after,.promise:nth-child(2n)::after{background:radial-gradient(circle at 35% 35%,#fff,#6af0b8 45%,#0fbf78);box-shadow:0 0 0 4px rgba(18,217,138,.14),0 0 16px rgba(18,217,138,.7)}
+.card,.step,.promise{overflow:visible!important}
+.card::before,.step::before{border-radius:26px 22px 0 0}
+@keyframes soma{50%{transform:scale(1.25);box-shadow:0 0 0 7px rgba(31,107,255,.08),0 0 26px rgba(31,107,255,.9)}}
+.neuron{animation:cellDrift var(--cd,7s) ease-in-out infinite;animation-delay:var(--cdl,0s)}
+@keyframes cellDrift{0%,100%{translate:0 0}33%{translate:1.5px -4px}66%{translate:-2px 2px}}
+.neuron.fire{box-shadow:0 1px 0 #fff inset,0 0 0 1px rgba(31,107,255,.45),0 0 34px rgba(31,107,255,.35),0 18px 50px -18px rgba(20,50,120,.28)!important}
+@media(prefers-reduced-motion:reduce){.neuron,.syn path.sig,.card::after,.step::after,.promise::after{animation:none}}
+
 </style>
 </head>
 <body class="pre-entry">
@@ -528,7 +554,7 @@ header, main, .wz-ctrl{transition:opacity .9s ease}
   <div class="guide-card">
     <div class="guide-top">
       <div class="orb" aria-hidden="true"></div>
-      <div class="guide-name"><b>Sia</b><span>S·A AI guide</span></div>
+      <div class="guide-name"><b>S·A AI</b><span>Your guide</span></div>
       <div class="guide-tools"><button id="gVoice" aria-label="Voice on or off" title="Voice on / off">&#128266;</button><button id="gMin" aria-label="Minimise guide" title="Minimise">&minus;</button></div>
     </div>
     <div class="guide-text" id="gText"></div>
@@ -1109,13 +1135,13 @@ setTimeout(()=>{
 })();
 </script>
 <script>
-/* ── Braintrix entry + Sia, the AI voice guide ── */
+/* ── Braintrix entry + the S·A AI voice guide ── */
 (function(){
   var btx=document.getElementById('btx'), btn=document.getElementById('btxEnter'), flash=document.getElementById('warpFlash');
   var guide=document.getElementById('guide'), gText=document.getElementById('gText'), gChips=document.getElementById('gChips'),
       gMini=document.getElementById('gMini'), gMiniTxt=document.getElementById('gMiniTxt'), gVoice=document.getElementById('gVoice');
   var LINES={
-    home:"Welcome inside the S·A mind. I'm Sia, the AI guide for S·A Intelligent Designs, the studio behind SA Marketing Intelligence. We build AI-powered apps and intelligent websites that help businesses work smarter and win more customers. Would you like me to show you around?",
+    home:"Welcome inside the S·A mind. I'm the S·A AI, your guide to S·A Intelligent Designs, the studio behind SA Marketing Intelligence. We build AI-powered apps and intelligent websites that help businesses work smarter and win more customers. Would you like me to show you around?",
     packages:"These are our services. Launch is a sharp, single-page website that gets you online and bringing in enquiries fast. Signature is a fully bespoke, multi-page site with its own creative direction. Every package starts with a free mock-up, and hosting is free.",
     referral:"Our referral programme. Refer a client who takes our care plan, and you keep one hundred percent of their first month's fee. It costs you, and them, nothing extra.",
     portfolio:"Here's what we've built. Voltz CRM, our voice-first app for sole traders, and NEX License are live. Qlarvia, Contract Analyser and more are being built by our engineering team right now.",
@@ -1123,7 +1149,7 @@ setTimeout(()=>{
     book:"Ready to build something intelligent? Tell us about your project here, or message us directly. We reply within one working day.",
     about:"And that's the S·A mind: intelligent websites and mobile apps for specialist niches, across Milton Keynes, Bedford and London. Book your free consultation whenever you're ready."
   };
-  var synth=window.speechSynthesis||null, voice=null, voiceOn=true, tour=false, tourNav=false, typer=null, nextT=null, speakId=0, entered=false;
+  var paused=false, synth=window.speechSynthesis||null, voice=null, voiceOn=true, tour=false, tourNav=false, typer=null, nextT=null, speakId=0, entered=false;
   try{ voiceOn=sessionStorage.getItem('saVoice')!=='off'; }catch(e){}
   function pickVoice(){ if(!synth) return; var vs=synth.getVoices(); if(!vs.length) return;
     var pref=['Google UK English Female','Serena','Kate','Stephanie','Martha','Microsoft Libby','Microsoft Sonia','Samantha','Karen','Moira','Google US English'];
@@ -1155,20 +1181,23 @@ setTimeout(()=>{
   function goNext(){ var W=window.SAWizard; if(!W) return; var i=W.index();
     if(i>=W.count-1){ endTour(true); return; } tourNav=true; W.go(i+1); }
   function startTour(fromHere){
-    tour=true; openGuide(); clearTimeout(nextT);
+    tour=true; paused=false; openGuide(); clearTimeout(nextT);
     var W=window.SAWizard; if(!fromHere && W && W.index()!==0){ tourNav=true; W.go(0); return; }
     if(W && W.index()===0 && !fromHere){ tourNav=true; W.go(1); return; }
     onPage(ids()[W?W.index():0]);
   }
-  function stopTour(){ tour=false; clearTimeout(nextT); stopSpeech(); chips([['Continue the tour',function(){ startTour(true); }],['Hide',function(){ minimise(); }]]); }
+  function pauseTour(){ clearTimeout(nextT); stopSpeech(); paused=true; clearInterval(typer); var W=window.SAWizard; gText.textContent=LINES[ids()[W?W.index():0]]||'';
+    chips([['Resume tour',function(){ paused=false; onPage(ids()[W?W.index():0]); }],['Stop tour',stopTour]]); }
+  function stopTour(){ paused=false; tour=false; clearTimeout(nextT); stopSpeech(); chips([['Continue the tour',function(){ startTour(true); }],['Hide',function(){ minimise(); }]]); }
   function endTour(){ tour=false; clearTimeout(nextT);
-    chips([['Book a free consultation',function(){ var W=window.SAWizard; if(W) W.go(W.ids.indexOf('book')); minimise('Ask Sia'); }],['Start the tour again',function(){ startTour(false); }]]); }
+    chips([['Book a free consultation',function(){ var W=window.SAWizard; if(W) W.go(W.ids.indexOf('book')); minimise('Ask S·A AI'); }],['Start the tour again',function(){ startTour(false); }]]); }
   function onPage(id){
     if(!entered) return;
     var text=LINES[id]||''; clearTimeout(nextT);
+    if(tour && paused){ openGuide(); type(text); chips([['Resume tour',function(){ paused=false; onPage(id); }],['Stop tour',stopTour]]); tourNav=false; return; }
     if(tour){
       openGuide(); type(text);
-      chips([['Stop tour',stopTour],['Skip',function(){ clearTimeout(nextT); stopSpeech(); goNext(); }]]);
+      chips([['Pause',pauseTour],['Skip',function(){ clearTimeout(nextT); stopSpeech(); goNext(); }],['Stop tour',stopTour]]);
       speak(text,function(){ if(!tour) return; nextT=setTimeout(goNext, 1400); });
     } else {
       stopSpeech();
@@ -1203,6 +1232,7 @@ setTimeout(()=>{
       if(flash){ flash.classList.add('big','on'); setTimeout(function(){ flash.classList.remove('on'); setTimeout(function(){ flash.classList.remove('big'); },900); },180); }
       document.body.classList.remove('pre-entry'); setTimeout(function(){ btx.classList.add('gone'); },1200);
       var home=document.getElementById('home'); if(window.SAAssemble) setTimeout(function(){ SAAssemble(home); },120);
+      if(window.SAWire) setTimeout(function(){ SAWire(home); },1500);
       setTimeout(function(){ openGuide(); type(LINES.home);
         chips([['Yes, show me around',function(){ startTour(false); }],["I'll explore myself",function(){ stopSpeech(); minimise(); }]]);
         speak(LINES.home,function(){}); }, 1500);
@@ -1214,8 +1244,56 @@ setTimeout(()=>{
   document.addEventListener('keydown',function(e){ if(!entered && (e.key==='Enter'||e.key===' ') && document.activeElement!==btn){ e.preventDefault(); btn.click(); } });
 })();
 </script>
+<script>
+/* ── Neural wiring between the cards: axons grow between neighbouring cells and signals fire along them ── */
+(function(){
+  var NS='http://www.w3.org/2000/svg', CELLS='.card, .step, .promise, .scope-note, .faq-item, .contact-direct';
+  function center(r,o){ return {x:r.left-o.left+r.width/2, y:r.top-o.top, r:r}; }
+  function wire(sec){
+    if(!sec) return; var old=sec.querySelector(':scope > svg.syn'); if(old) old.remove();
+    var host=sec, hr=host.getBoundingClientRect(), off={left:hr.left, top:hr.top-host.scrollTop};
+    var cells=[].slice.call(sec.querySelectorAll(CELLS)).filter(function(el){ return el.offsetParent!==null && !el.closest('.cube-scene'); });
+    var head=sec.querySelector('h1, h2.h');
+    cells.forEach(function(el,i){ el.classList.add('neuron'); el.style.setProperty('--cd',(6+Math.random()*4).toFixed(1)+'s'); el.style.setProperty('--cdl',(-Math.random()*6).toFixed(1)+'s'); });
+    var pts=cells.map(function(el){ var r=el.getBoundingClientRect(); return {el:el, x:r.left-off.left+r.width/2, y:r.top-off.top, cx:r.left-off.left+r.width/2, cy:r.top-off.top+r.height/2, w:r.width, h:r.height, top:r.top-off.top}; });
+    var W=Math.max(host.scrollWidth,host.clientWidth), H=Math.max(host.scrollHeight,host.clientHeight);
+    var svg=document.createElementNS(NS,'svg'); svg.setAttribute('class','syn grow'); svg.setAttribute('width',W); svg.setAttribute('height',H); svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    svg.innerHTML='<defs><linearGradient id="synGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f6bff"/><stop offset=".5" stop-color="#12a8ff"/><stop offset="1" stop-color="#12d98a"/></linearGradient></defs>';
+    var edges=[], seen={};
+    function add(a,b){ var k=a<b?a+'-'+b:b+'-'+a; if(seen[k]) return; seen[k]=1; edges.push([a,b]); }
+    pts.forEach(function(p,i){ var d=pts.map(function(q,j){ return {j:j, d:j===i?1e9:Math.hypot(q.cx-p.cx,q.cy-p.cy)}; }).sort(function(a,b){ return a.d-b.d; });
+      if(d[0]&&d[0].d<1e9) add(i,d[0].j); if(d[1]&&d[1].d<1e9&&d[1].d<d[0].d*1.7) add(i,d[1].j); });
+    function path(x1,y1,x2,y2,g){
+      var mx=(x1+x2)/2, my=(y1+y2)/2, dx=x2-x1, dy=y2-y1, n=Math.hypot(dx,dy)||1, bend=(Math.random()-.5)*Math.min(160,n*.45);
+      var c1x=mx-dy/n*bend, c1y=my+dx/n*bend;
+      var d='M'+x1.toFixed(1)+','+y1.toFixed(1)+' Q'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+x2.toFixed(1)+','+y2.toFixed(1);
+      var ax=document.createElementNS(NS,'path'); ax.setAttribute('d',d); ax.setAttribute('class','ax'); svg.appendChild(ax);
+      var len=ax.getTotalLength?ax.getTotalLength():n; ax.style.setProperty('--len',len.toFixed(0));
+      var sg=document.createElementNS(NS,'path'); sg.setAttribute('d',d); sg.setAttribute('class','sig');
+      sg.style.setProperty('--d',(2.6+Math.random()*2.6).toFixed(2)+'s'); sg.style.setProperty('--dl',(-Math.random()*4).toFixed(2)+'s'); svg.appendChild(sg);
+      [[x1,y1],[x2,y2]].forEach(function(e){ var c=document.createElementNS(NS,'circle'); c.setAttribute('cx',e[0].toFixed(1)); c.setAttribute('cy',e[1].toFixed(1)); c.setAttribute('r','4'); c.setAttribute('class','term'+(g?' g':'')); svg.appendChild(c); });
+    }
+    // attach points: the nucleus on top of each card, or the nearest side
+    function port(p,q){ if(Math.abs(q.cy-p.cy)<p.h*.5){ return {x:p.cx+(q.cx>p.cx?p.w/2:-p.w/2), y:p.cy}; } return q.cy<p.cy?{x:p.cx,y:p.top}:{x:p.cx,y:p.top+p.h}; }
+    edges.forEach(function(E,k){ var a=pts[E[0]], b=pts[E[1]], pa=port(a,b), pb=port(b,a); path(pa.x,pa.y,pb.x,pb.y,k%2); });
+    if(head && pts.length){ var hr2=head.getBoundingClientRect(), hx=hr2.left-off.left+Math.min(hr2.width,420)*.5, hy=hr2.bottom-off.top+6;
+      var near=pts.slice().sort(function(a,b){ return Math.hypot(a.cx-hx,a.top-hy)-Math.hypot(b.cx-hx,b.top-hy); }).slice(0,2);
+      near.forEach(function(p,i){ path(hx+(i?40:-40),hy,p.cx,p.top,i); }); }
+    host.insertBefore(svg,host.firstChild);
+    // cells light up when a signal arrives
+    clearInterval(sec._fireT); sec._fireT=setInterval(function(){ if(!sec.classList.contains('active')) return; var c=cells[(Math.random()*cells.length)|0]; if(!c) return; c.classList.add('fire'); setTimeout(function(){ c.classList.remove('fire'); },700); },900);
+  }
+  window.SAWire=wire;
+  function act(){ return document.querySelector('main > section.active'); }
+  new MutationObserver(function(ms){ ms.forEach(function(m){ var el=m.target;
+    if(el.classList && el.classList.contains('active') && el.classList.contains('entering')) setTimeout(function(){ wire(el); },1150); }); })
+    .observe(document.querySelector('main'),{subtree:true,attributes:true,attributeFilter:['class']});
+  var rT; addEventListener('resize',function(){ clearTimeout(rT); rT=setTimeout(function(){ wire(act()); },250); });
+  document.addEventListener('toggle',function(e){ var s=e.target.closest&&e.target.closest('main > section'); if(s) setTimeout(function(){ wire(s); },60); },true);
+})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/neural-bg2.js?v=2"></script>
+<script src="/assets/neural-bg2.js?v=5"></script>
 
 <script>
 /* ── Site assembly: on every page, the blocks spin in from deep space and clamp together ── */
