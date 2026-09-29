@@ -359,8 +359,23 @@
       position: relative;
       width: 300px;
     }
+    /* Clean iPhone frame: bezel padding + screenshot shown in full, never cropped */
     .feature-phone-wrap .phone-shell {
-      aspect-ratio: 1179/2556;
+      aspect-ratio: auto;
+      padding: 10px;
+      background: #0f172a;
+      border: none;
+      border-radius: 48px;
+      box-shadow: 0 0 0 2px #c8d4e8, 0 24px 60px rgba(15,23,42,0.18);
+    }
+    .feature-phone-wrap .phone-shell::after { display: none; }
+    .feature-phone-wrap .phone-shell img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 660/1434;
+      object-fit: contain;
+      border-radius: 38px;
+      background: #fff;
     }
     /* Glow under phone */
     .feature-phone-wrap::after {
@@ -830,6 +845,59 @@
     .footer-links a:hover { color: var(--blue); }
     .footer-copy { color: var(--muted); font-size: 13px; opacity: 0.6; }
 
+    /* ─── UNIFIED iPHONE FRAMES (polish) ─────────────────────── */
+    /* Same dark bezel on every phone so all screens line up and nothing gets cropped */
+    .dave-phone .phone-shell,
+    .demo-phone-shell {
+      padding: 10px;
+      background: #0f172a;
+      border: none;
+      border-radius: 48px;
+      box-shadow: 0 0 0 2px #c8d4e8, 0 24px 60px rgba(15,23,42,0.18);
+    }
+    .dave-phone .phone-shell::after { display: none; }
+    .dave-phone .phone-shell video {
+      border-radius: 38px;
+      object-fit: cover;
+      background: #fff;
+    }
+    .demo-phone-shell { aspect-ratio: 0.483; }
+    .demo-phone-notch { display: none; }
+    .demo-screen {
+      inset: 10px;
+      border-radius: 38px;
+      background: #fff;
+    }
+    .demo-screen img { object-fit: contain; object-position: center; }
+
+    /* Tidier feature rows: centred block, text never sprawls */
+    .feature-row {
+      max-width: 1000px;
+      gap: 80px;
+      justify-content: center;
+      padding: 96px 40px;
+    }
+    .feature-text { max-width: 440px; }
+
+    /* ─── ALSO IN VOLTZ GRID ─────────────────────────────────── */
+    .more-section { position: relative; z-index: 1; padding: 96px 24px 40px; }
+    .more-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+    .more-inner h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.15; color: var(--text); margin-bottom: 40px;
+    }
+    .more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; text-align: left; }
+    .more-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 18px;
+      padding: 24px; box-shadow: 0 4px 16px rgba(15,23,42,0.05);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .more-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(37,99,235,0.12); }
+    .more-card h4 { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .more-card p { font-size: 14.5px; line-height: 1.6; color: var(--muted); }
+    @media (max-width: 860px) { .more-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .more-grid { grid-template-columns: 1fr; } }
+
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 760px) {
       .feature-row, .feature-row.flip {
@@ -838,7 +906,8 @@
         gap: 36px;
         text-align: center;
       }
-      .feature-phone-wrap { width: 240px; margin: 0 auto; }
+      .feature-phone-wrap { width: 260px; margin: 0 auto; }
+      .feature-text { margin: 0 auto; }
       .dave-info { text-align: center; max-width: 100%; }
       .hero-dave { flex-direction: column; gap: 32px; }
       .dave-phone { width: 185px; }
@@ -968,27 +1037,27 @@
 
           <!-- Screen 0: Mic Orb Home -->
           <div class="demo-screen active" id="screen-0">
-            <img src="/voltz/assets/screens/new-01-mic-orb-home.png" alt="AI Voice Home" width="1290" height="2796">
+            <img src="/voltz/assets/screens/clean-01-home.jpg" alt="AI Voice Home" width="660" height="1434">
           </div>
 
           <!-- Screen 1: Bird's Eye -->
           <div class="demo-screen" id="screen-1">
-            <img src="/voltz/assets/screens/new-02-birds-eye.png" alt="Bird's Eye dashboard" width="1290" height="2796">
+            <img src="/voltz/assets/screens/clean-05-new-client.jpg" alt="Bird's Eye dashboard" width="660" height="1434">
           </div>
 
           <!-- Screen 2: Schedule Calendar -->
           <div class="demo-screen" id="screen-2">
-            <img src="/voltz/assets/screens/new-03-schedule-calendar.png" alt="Schedule calendar" width="1290" height="2796">
+            <img src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Schedule calendar" width="660" height="1434">
           </div>
 
           <!-- Screen 3: Invoice Preview -->
           <div class="demo-screen" id="screen-3">
-            <img src="/voltz/assets/screens/new-07-invoice-preview.png" alt="Invoice preview" width="1290" height="2796">
+            <img src="/voltz/assets/screens/clean-02-birds-eye.jpg" alt="Invoice preview" width="660" height="1434">
           </div>
 
           <!-- Screen 4: Take Payment -->
           <div class="demo-screen" id="screen-4">
-            <img src="/voltz/assets/screens/new-08-take-payment.png" alt="Take payment" width="1290" height="2796">
+            <img src="/voltz/assets/screens/clean-04-command-icons.jpg" alt="Take payment" width="660" height="1434">
             <button class="replay-btn" id="replay-btn" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;">&#8635; Watch again</button>
           </div>
 
@@ -1009,199 +1078,97 @@
 
   <!-- ═══════════════ FEATURE ROWS ═══════════════ -->
 
-  <!-- 01 · AI Voice -->
   <section class="feature-section">
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-01-mic-orb-home.png" alt="AI Voice home" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/clean-01-home.jpg" alt="AI Voice home" loading="lazy" width="660" height="1434">
         </div>
       </div>
       <div class="feature-text reveal from-right">
-        <div class="feature-number">01 / 11</div>
+        <div class="feature-number">01 / 05</div>
         <h3>Speak a Job.<br>Watch It Happen.</h3>
-        <p>Tell Voltz about a job in plain English — the AI books it, creates the client record, and queues up a quote. No typing. No forms. Just talk.</p>
+        <p>Tell Voltz about a job in plain English. The AI books it, creates the client record and queues up a quote. No typing, no forms. Just talk.</p>
         <span class="feature-chip"><span class="cdot"></span>AI Voice · Home</span>
       </div>
     </div>
   </section>
   <div class="row-sep"></div>
-
-  <!-- 02 · Bird's Eye -->
   <section class="feature-section">
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-02-birds-eye.png" alt="Bird's Eye dashboard" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/clean-02-birds-eye.jpg" alt="Bird's Eye dashboard" loading="lazy" width="660" height="1434">
         </div>
       </div>
       <div class="feature-text reveal from-left">
-        <div class="feature-number">02 / 11</div>
-        <h3>Your Business,<br>Bird's Eye View.</h3>
-        <p>Revenue, pipeline, outstanding invoices — your whole operation on one screen, at a glance. Know exactly where you stand before you've even had your first coffee.</p>
+        <div class="feature-number">02 / 05</div>
+        <h3>Your Business,<br>at a Glance.</h3>
+        <p>Jobs today, open quotes, unpaid invoices and cash, all on one screen. Know exactly where you stand before your first coffee.</p>
         <span class="feature-chip"><span class="cdot"></span>Bird's Eye · Dashboard</span>
       </div>
     </div>
   </section>
   <div class="row-sep"></div>
-
-  <!-- 03 · Schedule Calendar -->
   <section class="feature-section">
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-03-schedule-calendar.png" alt="Schedule calendar" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Schedule calendar" loading="lazy" width="660" height="1434">
         </div>
       </div>
       <div class="feature-text reveal from-right">
-        <div class="feature-number">03 / 11</div>
+        <div class="feature-number">03 / 05</div>
         <h3>Schedule.<br>Track. Deliver.</h3>
-        <p>Every job, every client, mapped across your calendar. Drag, reschedule, and reassign without breaking a sweat. Your diary, finally under control.</p>
+        <p>Every job mapped across your calendar. Switch between calendar and list, see what's booked and move things around in seconds.</p>
         <span class="feature-chip"><span class="cdot"></span>Schedule · Calendar</span>
       </div>
     </div>
   </section>
   <div class="row-sep"></div>
-
-  <!-- 04 · Schedule List -->
   <section class="feature-section">
     <div class="feature-row flip">
       <div class="feature-phone-wrap reveal from-right">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-04-schedule-list.png" alt="Schedule list" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/clean-05-new-client.jpg" alt="New client form" loading="lazy" width="660" height="1434">
         </div>
       </div>
       <div class="feature-text reveal from-left">
-        <div class="feature-number">04 / 11</div>
-        <h3>Every Job,<br>Right When You Need It.</h3>
-        <p>List view keeps your day tight, ordered, and actionable. Tap in, see all the details, head out the door. That's it.</p>
-        <span class="feature-chip"><span class="cdot"></span>Schedule · List</span>
+        <div class="feature-number">04 / 05</div>
+        <h3>New Client<br>in Seconds.</h3>
+        <p>Paste or say the client's details and Voltz fills the fields for you. Postcode lookup finds the address. Tap save and you're done.</p>
+        <span class="feature-chip"><span class="cdot"></span>Clients · Quick Add</span>
       </div>
     </div>
   </section>
   <div class="row-sep"></div>
-
-  <!-- 05 · Quote Preview -->
   <section class="feature-section">
     <div class="feature-row">
       <div class="feature-phone-wrap reveal from-left">
         <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-05-quote-preview.png" alt="Quote preview" loading="lazy" width="1290" height="2796">
+          <img src="/voltz/assets/screens/clean-04-command-icons.jpg" alt="Command icons" loading="lazy" width="660" height="1434">
         </div>
       </div>
       <div class="feature-text reveal from-right">
-        <div class="feature-number">05 / 11</div>
-        <h3>Quote in Seconds.<br>Win the Job.</h3>
-        <p>Voltz drafts a professional quote from your voice note. Review it, tweak the numbers, send it — before you've even left the site. First impressions win contracts.</p>
-        <span class="feature-chip"><span class="cdot"></span>Quote Preview</span>
+        <div class="feature-number">05 / 05</div>
+        <h3>Everything<br>One Tap Away.</h3>
+        <p>Parts, quotes, invoices, cashbook, receipts, bookings. Every tool in the business sits on one clean screen of big, easy buttons.</p>
+        <span class="feature-chip"><span class="cdot"></span>Command Centre · Icons</span>
       </div>
     </div>
   </section>
   <div class="row-sep"></div>
-
-  <!-- 06 · AI Voice Speaking -->
-  <section class="feature-section">
-    <div class="feature-row flip">
-      <div class="feature-phone-wrap reveal from-right">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-06-ai-voice-speaking.png" alt="AI Voice speaking" loading="lazy" width="1290" height="2796">
-        </div>
-      </div>
-      <div class="feature-text reveal from-left">
-        <div class="feature-number">06 / 11</div>
-        <h3>Talk to Voltz.<br>It Listens.</h3>
-        <p>Just speak. Voltz picks up every word, understands the context, and does the heavy lifting — booking jobs, raising quotes, and navigating screens, hands-free.</p>
-        <span class="feature-chip"><span class="cdot"></span>AI Voice · Speaking</span>
-      </div>
-    </div>
-  </section>
-  <div class="row-sep"></div>
-
-  <!-- 07 · Invoice Preview -->
-  <section class="feature-section">
-    <div class="feature-row">
-      <div class="feature-phone-wrap reveal from-left">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-07-invoice-preview.png" alt="Invoice preview" loading="lazy" width="1290" height="2796">
-        </div>
-      </div>
-      <div class="feature-text reveal from-right">
-        <div class="feature-number">07 / 11</div>
-        <h3>Invoice the Moment<br>It's Done.</h3>
-        <p>Job complete? Invoice sent. Voltz auto-builds a clean, branded invoice the second you mark a job finished. No chasing paperwork. No forgotten invoices.</p>
-        <span class="feature-chip"><span class="cdot"></span>Invoice Preview</span>
-      </div>
-    </div>
-  </section>
-  <div class="row-sep"></div>
-
-  <!-- 08 · Take Payment -->
-  <section class="feature-section">
-    <div class="feature-row flip">
-      <div class="feature-phone-wrap reveal from-right">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-08-take-payment.png" alt="Take payment" loading="lazy" width="1290" height="2796">
-        </div>
-      </div>
-      <div class="feature-text reveal from-left">
-        <div class="feature-number">08 / 11</div>
-        <h3>Get Paid.<br>On the Spot.</h3>
-        <p>Take card payments right there on site. Cash, card, bank transfer — Voltz logs it instantly, marks the invoice paid, and keeps your cashbook bang up to date.</p>
-        <span class="feature-chip"><span class="cdot"></span>Take Payment</span>
-      </div>
-    </div>
-  </section>
-  <div class="row-sep"></div>
-
-  <!-- 09 · Shop Search -->
-  <section class="feature-section">
-    <div class="feature-row flip">
-      <div class="feature-phone-wrap reveal from-right">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-09-search-products.png" alt="Search products" loading="lazy" width="1290" height="2796">
-        </div>
-      </div>
-      <div class="feature-text reveal from-left">
-        <div class="feature-number">09 / 11</div>
-        <h3>Source Parts Without<br>the Phone Tag.</h3>
-        <p>Search trade suppliers instantly from within Voltz. Find the part, check availability, add it to your quote — all without leaving the app or dialling anyone.</p>
-        <span class="feature-chip"><span class="cdot"></span>Shop · Search</span>
-      </div>
-    </div>
-  </section>
-  <div class="row-sep"></div>
-
-  <!-- 09 · Shop Compare -->
-  <section class="feature-section">
-    <div class="feature-row">
-      <div class="feature-phone-wrap reveal from-left">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-10-compare-products.png" alt="Compare products" loading="lazy" width="1290" height="2796">
-        </div>
-      </div>
-      <div class="feature-text reveal from-right">
-        <div class="feature-number">10 / 11</div>
-        <h3>Compare.<br>Choose. Order.</h3>
-        <p>Side-by-side product comparison across suppliers. Best price, best availability, best fit — clear as day. Make the call and move on.</p>
-        <span class="feature-chip"><span class="cdot"></span>Shop · Compare</span>
-      </div>
-    </div>
-  </section>
-  <div class="row-sep"></div>
-
-  <!-- 10 · Command Pipeline -->
-  <section class="feature-section">
-    <div class="feature-row flip">
-      <div class="feature-phone-wrap reveal from-right">
-        <div class="phone-shell">
-          <img src="/voltz/assets/screens/new-11-command-pipeline.png" alt="Command Centre pipeline" loading="lazy" width="1290" height="2796">
-        </div>
-      </div>
-      <div class="feature-text reveal from-left">
-        <div class="feature-number">11 / 11</div>
-        <h3>Your Pipeline.<br>Commanded.</h3>
-        <p>See every lead, job, quote, and invoice in a single kanban pipeline. Drag cards through stages. Know exactly what needs doing next. Never drop a ball again.</p>
-        <span class="feature-chip"><span class="cdot"></span>Command Centre · Pipeline</span>
+  <section class="more-section">
+    <div class="more-inner">
+      <span class="section-label reveal">Also in Voltz</span>
+      <h2 class="reveal">Everything else a trade business needs</h2>
+      <div class="more-grid">
+        <div class="more-card reveal"><h4>Quotes</h4><p>Voltz drafts a professional quote from your voice note. Tweak it and send it before you leave the site.</p></div>
+        <div class="more-card reveal"><h4>Invoices</h4><p>Mark a job done and a clean, branded invoice is ready to send. No forgotten paperwork.</p></div>
+        <div class="more-card reveal"><h4>Take payment</h4><p>Card, cash or bank transfer, logged on the spot. The invoice is marked paid and your cashbook stays up to date.</p></div>
+        <div class="more-card reveal"><h4>Find parts</h4><p>Search trade suppliers and compare prices side by side without leaving the app.</p></div>
+        <div class="more-card reveal"><h4>Pipeline</h4><p>Every lead, quote, job and invoice in one pipeline, so you always know what needs doing next.</p></div>
+        <div class="more-card reveal"><h4>Cashbook &amp; receipts</h4><p>Snap receipts and track money in and out, ready for your accountant.</p></div>
       </div>
     </div>
   </section>
