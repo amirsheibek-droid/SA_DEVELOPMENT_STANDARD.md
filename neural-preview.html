@@ -1210,17 +1210,18 @@ setTimeout(()=>{
   if(synth){ pickVoice(); if(synth.addEventListener) synth.addEventListener('voiceschanged',pickVoice); else synth.onvoiceschanged=pickVoice; }
   function setVoiceBtn(){ gVoice.innerHTML=voiceOn?'&#128266;':'&#128263;'; gVoice.setAttribute('aria-pressed',voiceOn?'true':'false'); }
   setVoiceBtn();
-  function stopSpeech(){ speakId++; if(synth) try{ synth.cancel(); }catch(e){} guide.classList.remove('talking'); }
+  function stopSpeech(){ speakId++; if(synth && (synth.speaking||synth.pending)) try{ synth.cancel(); }catch(e){} guide.classList.remove('talking'); }
   function speak(text, done){
     stopSpeech(); var id=speakId;
     var finish=function(){ if(id!==speakId) return; guide.classList.remove('talking'); done&&done(); };
     if(!synth||!voiceOn){ setTimeout(finish, Math.max(3800, text.length*52)); return; }
     var parts=text.match(/[^.!?]+[.!?]*/g)||[text], i=0; guide.classList.add('talking');
-    (function next(){ if(id!==speakId) return; if(i>=parts.length){ finish(); return; }
+    // Chrome drops a line spoken straight after cancel(), so give it a beat first
+    setTimeout(function next(){ if(id!==speakId) return; if(i>=parts.length){ finish(); return; }
       var u=new SpeechSynthesisUtterance(parts[i++].trim()); if(voice) u.voice=voice; u.lang=voice?voice.lang:'en-GB'; u.rate=1.04; u.pitch=1.06;
       var guard=setTimeout(next, 9000+u.text.length*90);            // some browsers never fire onend
       u.onend=u.onerror=function(){ clearTimeout(guard); next(); };
-      try{ synth.speak(u); }catch(e){ clearTimeout(guard); finish(); } })();
+      try{ if(synth.paused) synth.resume(); synth.speak(u); }catch(e){ clearTimeout(guard); finish(); } }, 150);
   }
   function type(text){ clearInterval(typer); var i=0; gText.innerHTML='<span class="caret"></span>';
     typer=setInterval(function(){ i+=2; gText.innerHTML=text.slice(0,i).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="caret"></span>';
@@ -1407,8 +1408,8 @@ setTimeout(()=>{
   q('#referral .referral-grid > .card').forEach(function(c){ foldCard(c,'h3','How it works'); });
   q('#portfolio .folio-card').forEach(function(c){ foldCard(c,'.folio-logo-chip, .folio-status, h3','About'); });
   q('#process .step').forEach(function(c){ foldCard(c,'.num, b','Details'); });
-  var faqHead=q('#process .section-head')[1], faq=document.querySelector('#process .faq');
-  foldBlock([faqHead, faq],'Common questions');
+  var faq=document.querySelector('#process .faq');
+  if(faq){ var fh=faq.querySelector('.section-head'); if(fh) fh.remove(); foldBlock([faq],'Common questions'); }
   q('#book .contact-direct').forEach(function(c){ foldCard(c,'h3, .contact-line','Opening hours'); });
   // long intros: two lines, tap to read the rest
   q('main > section p.lede').forEach(function(p){ if(p.scrollHeight>p.clientHeight+4){ p.classList.add('clamped'); p.title='Tap to read more';
@@ -1416,7 +1417,7 @@ setTimeout(()=>{
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/neural-bg2.js?v=6"></script>
+<script src="/assets/neural-bg2.js?v=7"></script>
 
 <script>
 /* ── Site assembly: on every page, the blocks spin in from deep space and clamp together ── */

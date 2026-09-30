@@ -249,11 +249,16 @@
     if(nodeGroup.visible){
       NODE_IDS.forEach(function(id){ var n=nodes[id], on=id===curNode, p=1+Math.sin(t*2.2+n.i)*.12;
         var hs=(on?2.6:2.0)*p; n.halo.scale.set(hs,hs,1); n.halo.material.opacity=on?.8:.6;
-        n.ring.lookAt(cam.position); n.ring.rotation.z+=dt*.4; n.ring.scale.setScalar(on?1.1+Math.sin(t*3)*.06:.85); n.ring.material.opacity=on?.45:.3; });
+        n.halo.getWorldPosition(tmpB); var nd=tmpB.distanceTo(cam.position), nf=Math.max(0,Math.min(1,(nd-12)/24));
+        n.halo.material.opacity*=nf; n.core.material.opacity=nf; n.ring.material.opacity*=nf;
+        n.ring.lookAt(cam.position); n.ring.rotation.z+=dt*.4; n.ring.scale.setScalar(on?1.1+Math.sin(t*3)*.06:.85); n.ring.material.opacity=(on?.45:.3)*nf; });
       links.forEach(function(L){ L.boost*=Math.pow(.25,dt); var hot=(L.a===curNode||L.b===curNode);
         L.tube.material.opacity=.22+(hot?.18:0)+L.boost*.2; L.line.material.opacity=.55+(hot?.3:0);
         L.comets.forEach(function(c){ c.t+=dt*c.v*(1+L.boost*4)*c.dir; if(c.t>1) c.t-=1; if(c.t<0) c.t+=1;
-          for(var q=0;q<c.parts.length;q++){ var tt=c.t-c.dir*q*.018; tt=tt<0?tt+1:(tt>1?tt-1:tt); L.curve.getPoint(tt,c.parts[q].position); } }); });
+          for(var q=0;q<c.parts.length;q++){ var tt=c.t-c.dir*q*.018; tt=tt<0?tt+1:(tt>1?tt-1:tt); L.curve.getPoint(tt,c.parts[q].position);
+            // fade lights that drift right up to the camera so they never smear into big blobs
+            c.parts[q].getWorldPosition(tmpB); var dd=tmpB.distanceTo(cam.position);
+            c.parts[q].material.opacity=(1-q/7)*Math.max(0,Math.min(1,(dd-14)/26)); } }); });
     }
     // brain neurons: pulses always fire
     core.material.opacity=((mode==='inside'&&curNode!=='home')?.05:.22)+Math.sin(t*1.7)*.05;
