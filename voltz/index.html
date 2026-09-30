@@ -629,7 +629,7 @@
   <main class="deck" id="deck">
 
     <!-- 0 · Why Voltz -->
-    <section class="slide" id="why" data-audio="/voltz/assets/jess/why.m4a?v=1" data-title="Why Voltz"
+    <section class="slide" id="why" data-audio="/voltz/assets/jess/why.m4a?v=2" data-title="Why Voltz"
       data-jess="Hey there, I'm Jess, your Voltz assistant. Voltz is built for one-person trade businesses, on purpose. Most field CRMs are made for companies with an office and a dispatcher. I'm made for the person doing the work, running the business from the van. Shall I show you around?"
       data-chips='[["Yes, show me","next"],["Just get the app","get"]]'>
       <div class="slide-inner cards-grid why-grid">
@@ -747,7 +747,7 @@
     </section>
 
     <!-- 8 · Desks -->
-    <section class="slide" id="desks" data-title="Desk views"
+    <section class="slide" id="desks" data-audio="/voltz/assets/jess/desks.m4a?v=3" data-title="Desk views"
       data-jess="Voltz has three desks now. AI Voice puts the mic front and centre, Bird's Eye shows your whole day on one board, and the new Voltz 2.0 desk gives you live money charts, a daily brief and a monthly goal. Switch any time in Account, and your jobs and clients come with you."
       data-chips='[["Can I change the colours?","next"]]'>
       <div class="slide-inner cards-grid">
@@ -1449,11 +1449,26 @@
       fab.onclick=function(){ open(true); };
       document.getElementById('chat-x').onclick=function(){ open(false); };
       function add(text, who){ var d=document.createElement('div'); d.className='msg '+who; d.textContent=text; log.appendChild(d); log.scrollTop=log.scrollHeight; return d; }
+      // Invisible human check: the browser solves a tiny puzzle (about half a second) before each question.
+      // Real visitors never notice; scripts spamming the chat have to pay for every message in CPU time.
+      function humanProof(q){
+        if(!(window.crypto&&crypto.subtle&&window.TextEncoder)) return Promise.resolve(null);
+        var ts=Date.now(), enc=new TextEncoder(), n=0;
+        return new Promise(function(done){
+          (function batch(){
+            var tries=[]; for(var i=0;i<400;i++,n++) tries.push(n);
+            Promise.all(tries.map(function(k){ return crypto.subtle.digest('SHA-256',enc.encode(q+'|'+ts+'|'+k)).then(function(d){ return [k,new Uint8Array(d)]; }); }))
+              .then(function(res){ for(var r=0;r<res.length;r++){ var b=res[r][1]; if(b[0]===0&&(b[1]&0xFC)===0){ done({ts:ts,n:res[r][0]}); return; } }
+                if(n>400000){ done(null); return; } setTimeout(batch,0); });
+          })();
+        });
+      }
       function ask(q){
         q=(q||'').trim(); if(!q||busyChat) return; busyChat=true; if(sug) { sug.remove(); sug=null; }
         add(q,'me'); history.push({role:'user',text:q}); input.value='';
         var t=add('Jess is typing…','bot typing');
-        fetch('https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/site-chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history.slice(-10)})})
+        humanProof(q)
+          .then(function(pw){ return fetch('https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/site-chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history.slice(-10),pow:pw})}); })
           .then(function(r){ return r.json(); })
           .then(function(d){ var a=(d&&d.reply)||"Sorry, I couldn't answer that just now."; t.className='msg bot'; t.textContent=a; history.push({role:'assistant',text:a}); })
           .catch(function(){ t.className='msg bot'; t.textContent="Sorry, I'm having trouble connecting. Please try again, or email contact@samarketingintelligence.com."; })

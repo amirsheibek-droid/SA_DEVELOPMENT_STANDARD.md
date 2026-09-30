@@ -1192,7 +1192,7 @@ setTimeout(()=>{
   var guide=document.getElementById('guide'), gText=document.getElementById('gText'), gChips=document.getElementById('gChips'),
       gMini=document.getElementById('gMini'), gMiniTxt=document.getElementById('gMiniTxt'), gVoice=document.getElementById('gVoice');
   var LINES={
-    home:"Welcome inside the S·A mind. I'm the S·A AI, your guide to S·A Intelligent Designs, the studio behind SA Marketing Intelligence. We build AI-powered apps and intelligent websites that help businesses work smarter and win more customers. Would you like me to show you around?",
+    home:"Welcome inside the S·A mind. I'm your AI guide to S·A Intelligent Designs, the studio behind SA Marketing Intelligence. We build AI-powered apps and intelligent websites that help businesses work smarter and win more customers. Would you like me to show you around?",
     packages:"These are our services. Launch is a sharp, single-page website that gets you online and bringing in enquiries fast. Signature is a fully bespoke, multi-page site with its own creative direction. Every package starts with a free mock-up, and hosting is free.",
     referral:"Our referral programme. Refer a client who takes our care plan, and you keep one hundred percent of their first month's fee. It costs you, and them, nothing extra.",
     portfolio:"Here's what we've built. Voltz CRM, our voice-first app for sole traders, and NEX License are live. Qlarvia, Contract Analyser and more are being built by our engineering team right now.",
@@ -1210,7 +1210,22 @@ setTimeout(()=>{
   if(synth){ pickVoice(); if(synth.addEventListener) synth.addEventListener('voiceschanged',pickVoice); else synth.onvoiceschanged=pickVoice; }
   function setVoiceBtn(){ gVoice.innerHTML=voiceOn?'&#128266;':'&#128263;'; gVoice.setAttribute('aria-pressed',voiceOn?'true':'false'); }
   setVoiceBtn();
-  function stopSpeech(){ speakId++; if(synth && (synth.speaking||synth.pending)) try{ synth.cancel(); }catch(e){} guide.classList.remove('talking'); }
+  // Jess's recorded Gemini voice for every page; the browser voice is only a fallback if a file fails.
+  var AUDIO={home:'/assets/voice/sa-home.m4a?v=1',packages:'/assets/voice/sa-packages.m4a?v=1',referral:'/assets/voice/sa-referral.m4a?v=1',
+    portfolio:'/assets/voice/sa-portfolio.m4a?v=1',process:'/assets/voice/sa-process.m4a?v=1',book:'/assets/voice/sa-book.m4a?v=1',about:'/assets/voice/sa-about.m4a?v=1'};
+  var player=new Audio(); player.preload='auto';
+  function stopSpeech(){ speakId++; try{ player.pause(); }catch(e){} player.onended=player.onerror=null;
+    if(synth && (synth.speaking||synth.pending)) try{ synth.cancel(); }catch(e){} guide.classList.remove('talking'); }
+  function speakRecorded(id, text, done){
+    stopSpeech(); var myId=speakId;
+    var finish=function(){ if(myId!==speakId) return; guide.classList.remove('talking'); done&&done(); };
+    if(!voiceOn){ setTimeout(finish, Math.max(3800, text.length*52)); return; }
+    var src=AUDIO[id]; if(!src){ speak(text, done); return; }
+    var fallback=function(){ if(myId!==speakId) return; player.onended=player.onerror=null; speak(text, done); };
+    player.onended=finish; player.onerror=fallback;
+    try{ player.src=src; player.currentTime=0; guide.classList.add('talking');
+      var pr=player.play(); if(pr && pr.catch) pr.catch(fallback); }catch(e){ fallback(); }
+  }
   function speak(text, done){
     stopSpeech(); var id=speakId;
     var finish=function(){ if(id!==speakId) return; guide.classList.remove('talking'); done&&done(); };
@@ -1250,14 +1265,17 @@ setTimeout(()=>{
     if(tour){
       openGuide(); type(text);
       chips([['Pause',pauseTour],['Skip',function(){ clearTimeout(nextT); stopSpeech(); goNext(); }],['Stop tour',stopTour]]);
-      speak(text,function(){ if(!tour) return; nextT=setTimeout(goNext, 1400); });
+      speakRecorded(id, text, function(){ if(!tour) return; nextT=setTimeout(goNext, 1400); });
     } else {
       stopSpeech();
       if(!guide.classList.contains('hide')){ type(text); chips([['Show me around from here',function(){ startTour(true); }],['Hide',function(){ minimise(); }]]); }
     }
     tourNav=false;
   }
-  window.SAGuide={onPage:onPage};
+  // AI guide switched off for now (owner request 30 Sep 2026). Set to true to bring it back.
+  var GUIDE_ON=false;
+  window.SAGuide={onPage:function(id){ if(GUIDE_ON) onPage(id); }};
+  if(!GUIDE_ON){ guide.style.display='none'; gMini.style.display='none'; }
   gVoice.onclick=function(){ voiceOn=!voiceOn; setVoiceBtn(); try{ sessionStorage.setItem('saVoice',voiceOn?'on':'off'); }catch(e){} if(!voiceOn) stopSpeech(); };
   document.getElementById('gMin').onclick=function(){ minimise(); };
   gMini.onclick=function(){ openGuide(); if(!tour){ var W=window.SAWizard; startTour(!!(W && W.index()>0)); } };
@@ -1277,6 +1295,9 @@ setTimeout(()=>{
     if(entered) return;
     // unlock speech on iPhone/iPad: it has to start inside the tap
     if(synth){ try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; synth.speak(u); }catch(e){} }
+    // unlock audio inside the tap (iPhone), then warm every recording
+    try{ player.src=AUDIO.home; player.muted=true; var pp=player.play(); if(pp&&pp.then) pp.then(function(){ player.pause(); player.currentTime=0; player.muted=false; }).catch(function(){ player.muted=false; }); else player.muted=false; }catch(e){}
+    Object.keys(AUDIO).forEach(function(k){ try{ fetch(AUDIO[k]); }catch(e){} });
     whoosh(); btx.classList.add('go');
     var W=window.SAWizard; if(W) W.show(0);
     var arrive=function(){
@@ -1285,9 +1306,9 @@ setTimeout(()=>{
       document.body.classList.remove('pre-entry'); setTimeout(function(){ btx.classList.add('gone'); },1200);
       var home=document.getElementById('home'); if(window.SAAssemble) setTimeout(function(){ SAAssemble(home); },120);
       if(window.SAWire) setTimeout(function(){ SAWire(home); },1500);
-      setTimeout(function(){ openGuide(); type(LINES.home);
+      if(GUIDE_ON) setTimeout(function(){ openGuide(); type(LINES.home);
         chips([['Yes, show me around',function(){ startTour(false); }],["I'll explore myself",function(){ stopSpeech(); minimise(); }]]);
-        speak(LINES.home,function(){}); }, 1500);
+        speakRecorded('home', LINES.home, function(){}); }, 1500);
     };
     var arrived=false, once=function(){ if(arrived) return; arrived=true; arrive(); };
     if(window.SANeural && SANeural.enter) SANeural.enter(once); else setTimeout(once,600);
