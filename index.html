@@ -537,6 +537,53 @@ main > section .wrap{position:relative;z-index:1}
 .node-burst{position:fixed;z-index:3;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,#fff 0%,rgba(120,180,255,.9) 35%,rgba(18,217,138,0) 70%);animation:nodeBurst 1.3s cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes nodeBurst{0%{transform:scale(.2);opacity:1}35%{transform:scale(9);opacity:.85}100%{transform:scale(16);opacity:0}}
+
+/* =================== calmer pages: headline, short intro, compact cards, details on tap =================== */
+main > section p.lede{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:620px}
+main > section p.lede.open{-webkit-line-clamp:unset;display:block}
+main > section p.lede.clamped{cursor:pointer}
+.fold-more{display:none}
+.folded.open .fold-more{display:block;animation:foldIn .35s ease}
+@keyframes foldIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.more-btn{margin-top:12px;display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:100px;border:1px solid rgba(31,107,255,.3);background:rgba(255,255,255,.7);
+  color:var(--accent);font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.more-btn i{font-style:normal;transition:transform .25s}
+.folded.open > .more-btn i{transform:rotate(180deg)}
+.section-fold{margin-top:22px;text-align:center}
+.section-fold > .more-btn{margin:0 auto}
+.section-fold .fold-more{text-align:left}
+.promise{padding:14px 16px}
+.promise b{margin-bottom:0}
+.step p, .promise span{margin-top:8px}
+.pack-card .for{margin:8px 0 4px}
+.folio-card h3{margin-top:2px}
+.step{padding:18px}
+@media(max-width:700px){.promise-grid{gap:10px}.steps{gap:10px}}
+
+/* =================== thoughts: one idea at a time, opened out of the brain =================== */
+.folded:not(.section-fold){cursor:pointer}
+.folded:not(.section-fold):hover{transform:translateY(-3px)}
+.folded .more-btn{border-color:rgba(18,217,138,.45);color:#0a8f5a}
+.folded .more-btn::before{content:"";width:7px;height:7px;border-radius:50%;background:#12d98a;box-shadow:0 0 8px #12d98a;animation:soma 2s infinite}
+.thought-ov{position:fixed;inset:0;z-index:75;display:flex;align-items:center;justify-content:center;padding:18px;
+  background:radial-gradient(ellipse at center,rgba(243,246,251,.35),rgba(220,228,240,.72));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .35s}
+.thought-ov.show{opacity:1;pointer-events:auto}
+.thought{position:relative;width:min(560px,94vw);max-height:min(76vh,680px);overflow:auto;border-radius:28px;padding:26px 24px 20px;
+  background:rgba(255,255,255,.9);border:1px solid #fff;box-shadow:0 0 0 1px rgba(31,107,255,.18),0 30px 80px -20px rgba(20,50,120,.45),0 0 60px rgba(31,107,255,.18)}
+.thought::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:28px 28px 0 0;background:linear-gradient(90deg,#1f6bff,#12a8ff,#12d98a)}
+.thought .fold-more{display:block}
+.thought .more-btn{display:none}
+.thought h3{font-size:1.35rem;margin-bottom:6px}
+.thought b{font-size:1.15rem}
+.thought .card,.thought .step,.thought .promise{all:unset;display:block}
+.th-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.th-top .dot{width:9px;height:9px;border-radius:50%;background:#12d98a;box-shadow:0 0 10px #12d98a}
+.th-x{margin-left:auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:#fff;font-size:18px;line-height:1;cursor:pointer;color:var(--ink)}
+.th-nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+.th-nav button{padding:10px 16px;border-radius:100px;border:1px solid var(--border);background:#fff;font-weight:700;cursor:pointer;color:var(--ink)}
+.th-nav button.go{background:linear-gradient(135deg,#1f6bff,#0fbf78);color:#fff;border-color:transparent}
+.th-nav span{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--mute)}
 </style>
 </head>
 <body class="pre-entry">
@@ -1091,6 +1138,7 @@ setTimeout(()=>{
     if(history.replaceState) history.replaceState(null,'','#'+ids[i]);
     if(window.SANeural) SANeural.page(ids[i]);
     if(window.SAGuide) SAGuide.onPage(ids[i]);
+    if(window.SAThought) SAThought.close();
   }
   function go(i){
     if(busy) return; if(i>=slides.length) i=0; if(i<0||i===cur) return;
@@ -1292,6 +1340,78 @@ setTimeout(()=>{
     .observe(document.querySelector('main'),{subtree:true,attributes:true,attributeFilter:['class']});
   var rT; addEventListener('resize',function(){ clearTimeout(rT); rT=setTimeout(function(){ wire(act()); },250); });
   document.addEventListener('toggle',function(e){ var s=e.target.closest&&e.target.closest('main > section'); if(s) setTimeout(function(){ wire(s); },60); },true);
+})();
+</script>
+<script>
+/* ── Calmer pages: keep the essentials visible, tuck details behind a tap ── */
+(function(){
+  function mk(label){ var b=document.createElement('button'); b.type='button'; b.className='more-btn'; b.innerHTML=label+' <i>&#9662;</i>'; return b; }
+  function rewire(el){ var sec=el.closest('main > section'); if(sec && window.SAWire) setTimeout(function(){ SAWire(sec); },60); }
+  // fold a card: keep matching children, hide the rest behind "More"
+  function foldCard(card, keepSel, label){
+    if(card.classList.contains('folded')) return;
+    var kids=[].slice.call(card.children), hide=kids.filter(function(k){ return !k.matches(keepSel); });
+    if(!hide.length) return;
+    var box=document.createElement('div'); box.className='fold-more';
+    hide.forEach(function(k){ box.appendChild(k); });
+    var btn=mk(label||'More');
+    card.appendChild(btn); card.appendChild(box); card.classList.add('folded');
+    btn.firstChild.nodeValue=' '+(label||'More')+' ';
+    btn.addEventListener('click',function(e){ e.stopPropagation(); openThought(card); });
+    card.addEventListener('click',function(e){ if(e.target.closest('a, button, input, select, textarea')) return; openThought(card); });
+  }
+  // fold a whole block (e.g. costs, FAQ) into one tap
+  function foldBlock(els, label){
+    els=els.filter(Boolean); if(!els.length) return;
+    var wrap=document.createElement('div'); wrap.className='section-fold folded';
+    els[0].parentNode.insertBefore(wrap, els[0]);
+    var btn=mk(label), box=document.createElement('div'); box.className='fold-more';
+    els.forEach(function(e){ box.appendChild(e); });
+    wrap.appendChild(btn); wrap.appendChild(box);
+    wrap.dataset.title=label;
+    btn.addEventListener('click',function(){ openThought(wrap); });
+  }
+  // ── the thought panel: one card at a time, popped out of the brain ──
+  var ov=document.createElement('div'); ov.className='thought-ov'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true');
+  ov.innerHTML='<div class="thought"><div class="th-top"><span class="dot"></span><span class="th-label">Thought</span><button class="th-x" aria-label="Close">&times;</button></div><div class="th-body"></div><div class="th-nav"><button class="th-prev">&lsaquo; Back</button><span class="th-count"></span><button class="th-next go">Next &rsaquo;</button></div></div>';
+  document.body.appendChild(ov);
+  var panel=ov.querySelector('.thought'), body=ov.querySelector('.th-body'), list=[], idx=0;
+  function thoughtsIn(el){ var sec=el.closest('main > section'); return sec?[].slice.call(sec.querySelectorAll('.folded')):[el]; }
+  function render(){ var el=list[idx]; body.innerHTML=''; var c=el.cloneNode(true); c.classList.remove('folded','open','neuron','fire','asm-piece','asm-lock');
+    c.querySelectorAll('.more-btn').forEach(function(b){ b.remove(); });
+    if(el.dataset.title && el.classList.contains('section-fold')){ var h=document.createElement('h3'); h.textContent=el.dataset.title; body.appendChild(h); }
+    body.appendChild(c);
+    ov.querySelector('.th-count').textContent=(idx+1)+' / '+list.length;
+    ov.querySelector('.th-prev').style.visibility=idx>0?'visible':'hidden';
+    ov.querySelector('.th-next').innerHTML=idx<list.length-1?'Next &rsaquo;':'Done';
+    var r=el.getBoundingClientRect(), vw=innerWidth, vh=innerHeight;
+    panel.animate([{transform:'translate('+((r.left+r.width/2)-vw/2).toFixed(0)+'px,'+((r.top+r.height/2)-vh/2).toFixed(0)+'px) scale(.25)',opacity:0},
+                   {transform:'none',opacity:1}],{duration:480,easing:'cubic-bezier(.2,.9,.25,1.15)'});
+    list.forEach(function(x){ x.classList.remove('fire'); }); el.classList.add('fire');
+    if(window.SANeural && SANeural.warp) try{ SANeural.warp(0); }catch(e){}
+  }
+  function openThought(el){ list=thoughtsIn(el); idx=Math.max(0,list.indexOf(el)); ov.classList.add('show'); render(); }
+  function closeThought(){ ov.classList.remove('show'); list.forEach(function(x){ x.classList.remove('fire'); }); }
+  ov.addEventListener('click',function(e){ if(e.target===ov) closeThought(); });
+  ov.querySelector('.th-x').onclick=closeThought;
+  ov.querySelector('.th-prev').onclick=function(){ if(idx>0){ idx--; render(); } };
+  ov.querySelector('.th-next').onclick=function(){ if(idx<list.length-1){ idx++; render(); } else closeThought(); };
+  document.addEventListener('keydown',function(e){ if(!ov.classList.contains('show')) return; e.stopPropagation();
+    if(e.key==='Escape') closeThought(); if(e.key==='ArrowRight') ov.querySelector('.th-next').click(); if(e.key==='ArrowLeft') ov.querySelector('.th-prev').click(); },true);
+  window.SAThought={close:closeThought};
+  var q=function(s,r){ return [].slice.call((r||document).querySelectorAll(s)); };
+  q('#home .promise').forEach(function(c){ foldCard(c,'b','Why'); });
+  q('#packages .pack-card').forEach(function(c){ foldCard(c,'h3, .for, .btn','What’s included'); });
+  foldBlock([document.querySelector('#packages .cost-mini'), document.querySelector('#packages .scope-note')],'Costs and scope');
+  q('#referral .referral-grid > .card').forEach(function(c){ foldCard(c,'h3','How it works'); });
+  q('#portfolio .folio-card').forEach(function(c){ foldCard(c,'.folio-logo-chip, .folio-status, h3','About'); });
+  q('#process .step').forEach(function(c){ foldCard(c,'.num, b','Details'); });
+  var faqHead=q('#process .section-head')[1], faq=document.querySelector('#process .faq');
+  foldBlock([faqHead, faq],'Common questions');
+  q('#book .contact-direct').forEach(function(c){ foldCard(c,'h3, .contact-line','Opening hours'); });
+  // long intros: two lines, tap to read the rest
+  q('main > section p.lede').forEach(function(p){ if(p.scrollHeight>p.clientHeight+4){ p.classList.add('clamped'); p.title='Tap to read more';
+    p.addEventListener('click',function(){ p.classList.toggle('open'); rewire(p); }); } });
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
