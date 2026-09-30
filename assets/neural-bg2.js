@@ -301,7 +301,19 @@
   var labels=null, lwrap=document.getElementById('nodeLabels');
   if(lwrap){ labels={}; NODE_IDS.forEach(function(id){ var d=document.createElement('div'); d.className='node-label'; d.textContent=NODE_NAME[id]; lwrap.appendChild(d); labels[id]=d; }); }
   function loop(){ if(!running) return; var dt=Math.min(clock.getDelta(),.05); frame(dt); renderer.render(scene,cam); requestAnimationFrame(loop); }
-  window.SANeural={warp:warp,page:page,enter:enter,mode:function(){ return mode; }};
+  // where a page's node will sit on screen once the camera has arrived (so text can pop out of it)
+  var tcam=new T.PerspectiveCamera(60,1,0.1,500);
+  function nodeScreen(id){
+    if(!nodes[id]) return null;
+    tcam.aspect=cam.aspect; tcam.updateProjectionMatrix();
+    brain.updateMatrixWorld();
+    var P=new T.Vector3(), L=new T.Vector3(); poseFor(id,P,L);
+    tcam.position.copy(P); tcam.lookAt(L); tcam.updateMatrixWorld();
+    var v=nodes[id].v.clone().applyMatrix4(brain.matrixWorld).project(tcam);
+    if(v.z>1) return null;
+    return { x:(v.x+1)/2*innerWidth, y:(1-v.y)/2*innerHeight };
+  }
+  window.SANeural={warp:warp,page:page,enter:enter,mode:function(){ return mode; },nodeScreen:nodeScreen};
   if(reduce){ window.SANeural.enter=function(cb){ mode='inside'; nodeGroup.visible=true; brain.position.set(0,0,0); brain.scale.setScalar(IN_SCALE); brain.rotation.copy(IN_ROT); frame(.016); renderer.render(scene,cam); cb&&cb(); };
     window.SANeural.warp=function(){}; window.SANeural.page=function(id){ curNode=nodes[id]?id:'home'; if(mode==='inside'){ frame(.016); renderer.render(scene,cam); } };
     brain.position.copy(OUT_POS); frame(.016); renderer.render(scene,cam); return; }

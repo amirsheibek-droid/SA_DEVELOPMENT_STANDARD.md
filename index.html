@@ -534,6 +534,9 @@ main > section .wrap{position:relative;z-index:1}
 .neuron.fire{box-shadow:0 1px 0 #fff inset,0 0 0 1px rgba(31,107,255,.45),0 0 34px rgba(31,107,255,.35),0 18px 50px -18px rgba(20,50,120,.28)!important}
 @media(prefers-reduced-motion:reduce){.neuron,.syn path.sig,.card::after,.step::after,.promise::after{animation:none}}
 
+.node-burst{position:fixed;z-index:3;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#fff 0%,rgba(120,180,255,.9) 35%,rgba(18,217,138,0) 70%);animation:nodeBurst 1.3s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes nodeBurst{0%{transform:scale(.2);opacity:1}35%{transform:scale(9);opacity:.85}100%{transform:scale(16);opacity:0}}
 </style>
 </head>
 <body class="pre-entry">
@@ -1292,7 +1295,7 @@ setTimeout(()=>{
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/neural-bg2.js?v=5"></script>
+<script src="/assets/neural-bg2.js?v=6"></script>
 
 <script>
 /* ── Site assembly: on every page, the blocks spin in from deep space and clamp together ── */
@@ -1307,17 +1310,21 @@ setTimeout(()=>{
     // top-to-bottom, left-to-right like a robot building it
     parts.sort(function(a,b){ var ra=a.getBoundingClientRect(), rb=b.getBoundingClientRect(); return (ra.top-rb.top)*1.2+(ra.left-rb.left)*.4; });
     var first=!seen[sec.id]; seen[sec.id]=1;
+    // every block pops out of this page's node inside the brain and flies to its place
+    var N=(window.SANeural && SANeural.nodeScreen && SANeural.mode()==='inside') ? SANeural.nodeScreen(sec.id) : null;
+    if(!N) N={x:innerWidth*(innerWidth<900?.5:.72), y:innerHeight*(innerWidth<900?.3:.42)};
+    var burst=document.createElement('div'); burst.className='node-burst'; burst.style.left=N.x+'px'; burst.style.top=N.y+'px';
+    document.body.appendChild(burst); setTimeout(function(){ burst.remove(); },1400);
     parts.forEach(function(el,k){
       var big=el.matches('.card, .step, .promise');
-      var sx=rnd(-1,1)*(small?260:620), sy=rnd(-1,1)*(small?300:420), sz=rnd(-1400,-500);
-      var spin=first?1:.45;
+      var r=el.getBoundingClientRect(), dx=N.x-(r.left+r.width/2), dy=N.y-(r.top+r.height/2);
       var a=el.animate([
-        {opacity:0, transform:'perspective(1400px) translate3d('+sx+'px,'+sy+'px,'+sz+'px) rotateX('+rnd(-220,220)*spin+'deg) rotateY('+rnd(-260,260)*spin+'deg) rotateZ('+rnd(-60,60)*spin+'deg) scale(.55)'},
-        {opacity:1, offset:.62, transform:'perspective(1400px) translate3d(0,0,90px) rotateX(0) rotateY(0) scale(1.03)'},
-        {opacity:1, offset:.8, transform:'perspective(1400px) translate3d(0,0,90px)'},
-        {opacity:1, offset:.9, transform:'perspective(1400px) translate3d(0,0,-6px)'},
-        {opacity:1, transform:'perspective(1400px) translate3d(0,0,0)'}
-      ],{duration:big?(small?900:1100):(small?750:900), delay:120+k*(small?45:60), easing:'cubic-bezier(.25,.8,.3,1)', fill:'backwards'});
+        {opacity:0, transform:'translate('+dx.toFixed(0)+'px,'+dy.toFixed(0)+'px) scale(.04)'},
+        {opacity:1, offset:.2, transform:'translate('+(dx*.78).toFixed(0)+'px,'+(dy*.78).toFixed(0)+'px) scale(.3)'},
+        {opacity:1, offset:.62, transform:'translate('+(-dx*.03).toFixed(0)+'px,'+(-dy*.03).toFixed(0)+'px) scale(1.05)'},
+        {opacity:1, offset:.82, transform:'translate(0,0) scale(.985)'},
+        {opacity:1, transform:'translate(0,0) scale(1)'}
+      ],{duration:big?(small?850:1000):(small?700:820), delay:160+k*(small?45:55), easing:'cubic-bezier(.22,.8,.3,1)', fill:'backwards'});
       el.classList.add('asm-piece');
       if(big) a.onfinish=function(){ el.classList.add('asm-lock'); setTimeout(function(){ el.classList.remove('asm-lock'); },450); };
     });
