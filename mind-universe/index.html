@@ -371,6 +371,30 @@ body.voyage #dock{opacity:.25}
 #presence{display:inline-flex;align-items:center;gap:8px;color:var(--green)}
 .pdot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:beat 1.6s infinite}
 @keyframes beat{50%{opacity:.4}}
+
+.shelf{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:24px auto 0;perspective:900px}
+.book{width:140px;height:200px;border-radius:4px 10px 10px 4px;padding:16px 12px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;color:#f5ead0;
+  background:linear-gradient(90deg,rgba(0,0,0,.35) 0 8px,transparent 8px),linear-gradient(160deg,var(--bc),#0d0d14);box-shadow:0 18px 40px -16px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,220,150,.25);transition:transform .35s;transform:rotateY(-14deg)}
+.book:hover{transform:rotateY(0) translateY(-6px)}
+.b-t{font-weight:800;font-size:.95rem;line-height:1.2;font-family:var(--ar),serif}
+.b-a{font-size:.68rem;opacity:.8;line-height:1.3}
+.b-l{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#ffc44d}
+
+.sharechip{display:inline-flex;align-items:center;gap:6px;margin:0 6px 12px;padding:5px 12px;border-radius:999px;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);box-shadow:inset 0 0 0 1px var(--line)}
+.sharechip.on{color:var(--green);box-shadow:inset 0 0 0 1px rgba(25,240,176,.5);background:rgba(25,240,176,.06)}
+.sharelist{max-width:420px;margin:12px auto 0;text-align:left}
+.sharerow{display:flex;align-items:center;justify-content:space-between;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:.92rem}
+.sharerow input{display:none}
+.sharerow i{width:38px;height:22px;border-radius:22px;background:var(--line);position:relative;transition:.2s;flex:0 0 auto}
+.sharerow i::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s}
+.sharerow input:checked + i{background:var(--green);box-shadow:0 0 12px -2px var(--green)}
+.sharerow input:checked + i::after{left:19px}
+.sharerow.off{opacity:.55;cursor:default}.sharerow em{font-style:normal;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute2)}
+.grid30{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;max-width:440px;margin:10px auto 0}
+.grid30 button{aspect-ratio:1;border-radius:8px;font:600 .72rem var(--mono);box-shadow:inset 0 0 0 1px var(--line);color:var(--mute)}
+.grid30 button.on{background:#ffd27a;color:#2a1d00;box-shadow:0 0 12px -2px #ffd27a}
+.dk.unk i{display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-weight:700;font-size:.72rem;color:var(--mute)}
+.dk.unk i::after{display:none}
 @media(max-width:899px){
   #stage{left:0;right:0;top:auto;bottom:86px;transform:none;max-height:58vh;padding:44px 20px 20px;
     background:linear-gradient(180deg,transparent 0,var(--glow) 60px,var(--glow) 100%);-webkit-mask-image:none;mask-image:none}
@@ -509,7 +533,8 @@ body.voyage #dock{opacity:.25}
     {from:'2026-11-01',id:'l14',t:'Your story is still being written',b:'Today is a page, not the whole book.'},
     {from:'2026-12-01',id:'l15',t:'Light travels far',b:'A kind word you say today can still be shining in someone years from now.'}
   ];
-  D.push({id:'stories',name:'Stories of the Prophets',col:'#ffc44d',pos:[64,66,-44],yaw:-.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','stories'],['goals','stories'],['progress','stories']);
+  D.push({id:'stories',name:'Books',col:'#ffc44d',pos:[64,66,-44],yaw:-.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','stories'],['goals','stories'],['progress','stories']);
+  D.push({id:'ramadan',name:'Ramadan',col:'#ffd27a',pos:[0,96,-60],yaw:0,dist:32,scale:1.15}); MAIN.push(D[D.length-1]); L.push(['goals','ramadan'],['stories','ramadan'],['listen','ramadan']);
   D.push({id:'listen',name:'Listen',col:'#19f0b0',pos:[-60,64,-40],yaw:.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','listen'],['mood','listen'],['goals','listen']);
   /* ── 50 more things ── */
   // Rooms of the mind: personal collections gathered around a Rooms hub
@@ -775,7 +800,7 @@ body.voyage #dock{opacity:.25}
   try{ S=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ S={}; }
   S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[];
   S.focus=S.focus||{}; S.habits=S.habits||[{id:'water',n:'Water (glasses)',t:8,c:'#2ee6ff'},{id:'sleep',n:'Sleep (hours)',t:8,c:'#a45cff'},{id:'move',n:'Move (minutes)',t:30,c:'#19f0b0'},{id:'read',n:'Read (pages)',t:10,c:'#ffc44d'}];
-  S.log=S.log||{}; S.links=S.links||[]; S.videos=S.videos||[]; S.albums=S.albums||['Childhood','Precious','Family','Travel','Drawings']; if(S.albums.indexOf('Drawings')<0) S.albums.push('Drawings'); S.album=S.album||'Precious'; S.ideas=S.ideas||[]; S.vision=S.vision||''; S.visited=S.visited||{}; S.keep=S.keep||{}; S.theme=S.theme||'dark';
+  S.log=S.log||{}; S.share=S.share||{}; S.ram=S.ram||{juz:{},fast:{}}; S.links=S.links||[]; S.videos=S.videos||[]; S.albums=S.albums||['Childhood','Precious','Family','Travel','Drawings','Ramadan']; if(S.albums.indexOf('Ramadan')<0) S.albums.push('Ramadan'); if(S.albums.indexOf('Drawings')<0) S.albums.push('Drawings'); S.album=S.album||'Precious'; S.ideas=S.ideas||[]; S.vision=S.vision||''; S.visited=S.visited||{}; S.keep=S.keep||{}; S.theme=S.theme||'dark';
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){ toast('Storage is full'); } }
   // pictures and videos live in IndexedDB (too big for localStorage)
   var DB=null;
@@ -815,10 +840,11 @@ body.voyage #dock{opacity:.25}
         ['connect','In your mind',(window.MU_VISITORS&&MU_VISITORS.length)?MU_VISITORS.map(function(v){ return v.name; }).join(', '):'Just you right now','#19f0b0',(window.MU_VISITORS&&MU_VISITORS.length)?100:0]
       ];
       return eb('Home','#ffffff')+'<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2><p>Your whole mind, from the outside. Tap any light to travel in.</p>'+
-        '<div class="hstats">'+rows.map(function(r,i){ return '<button class="hstat" '+(r[0]!=='me'?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
+        '<div class="hstats">'+rows.map(function(r,i){ var unk=false; return '<button class="hstat" '+(r[0]!=='me'&&!unk?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
         '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button></div>'+
-        '<details class="hmore"><summary>Today’s quests &middot; '+qd+'/'+qt+'</summary><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return '<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button></li>'; }).join('')+'</ul>'+
+        '<details class="hmore"><summary>Today’s quests &middot; '+qd+'/'+qt+'</summary><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return true?'<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button></li>':'<li style="--dot:#cfd6ff"><span>? Find this neuron to unlock its quest</span></li>'; }).join('')+'</ul>'+
           '<p class="small"><b>Mind Vision</b> (50 coins): every hidden light reveals itself for a minute.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision · 50':(50-S.coins)+' coins to go')+'</button></div></details>'+
+        '<details class="hmore"><summary>Privacy \u00B7 who can see what</summary>'+privacyHTML()+'</details>'+
         '<details class="hmore"><summary>Profile &amp; settings</summary>'+(p.photo?'<img src="'+p.photo+'" alt="" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block">':'')+
           '<input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
           '<div class="row"><button class="ghost" data-act="photo">&#9673; Photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
@@ -885,9 +911,17 @@ body.voyage #dock{opacity:.25}
 
     rooms:function(){ return eb('Rooms','#ffd6a5')+'<h2>The rooms of your mind.</h2><p>Each room is a small neuron around this one. Fly close, or choose below.</p><ul class="thread" style="--c:#ffd6a5">'+H_ROOMS.map(function(r){ var n=(S.cols[r.id]||[]).length; return '<li style="--dot:'+r.c+'"><button data-go="'+r.id+'" style="text-align:left"><b>'+esc(r.n)+'</b></button>'+(n?'<span class="meta">'+n+' saved</span>':'')+'</li>'; }).join('')+'</ul>'; },
 
-    stories:function(){ return eb('Stories of the Prophets','#ffc44d')+'<h2>Stories of the Prophets.</h2><p>Full series from much-loved scholars. Press play and drift through the universe &mdash; past the Earth and the planets, and back through your mind &mdash; while you listen.</p>'+
-        '<ul class="thread" style="--c:#ffc44d">'+STORIES.map(function(x,i){ return '<li><button data-story="'+i+'" style="text-align:left"><b>&#9654; '+esc(x.t)+'</b></button><span class="meta">'+esc(x.by)+'</span></li>'; }).join('')+'</ul>'+
-        '<p class="small">More scholars coming soon.</p>'; },
+    stories:function(){ return eb('The Library','#ffc44d')+'<h2>Books to read quietly.</h2><p>The Qur\u2019an, the stories of the Prophets, the life of the Prophet \uFDFA, hadith and classical wisdom. When a book is open, every sound goes quiet.</p>'+
+        BOOKS.map(function(x){ return x.k; }).filter(function(k,i,a){ return a.indexOf(k)===i; }).map(function(cat){ return '<h3>'+esc(cat)+'</h3><div class="shelf">'+BOOKS.map(function(x,i){ return x.k!==cat?'':'<button class="book" data-book="'+i+'" style="--bc:'+x.c+'"><span class="b-t">'+esc(x.t)+'</span><span class="b-a">'+esc(x.a)+'</span><span class="b-l">'+esc(x.l)+'</span></button>'; }).join('')+'</div>'; }).join('')+
+        '<p class="small">More books from Imam al-Ghazali, Imam Ibn al-Jawzi and other classical scholars are being added.</p>'; },
+
+    ramadan:function(){ var start=new Date('2027-02-08T00:00:00'), days=Math.ceil((start-new Date())/864e5), juz=Object.keys(S.ram.juz).length, fast=Object.keys(S.ram.fast).length;
+      return eb('Ramadan','#ffd27a')+shareChip('ramadan')+'<h2>'+(days>0?days+' days until Ramadan':'Ramadan Mubarak')+'</h2><p>Expected to begin on Monday 8 February 2027, depending on the sighting of the moon. Prepare your heart, your plans and your memories here.</p>'+
+        '<h3>Qur’an journey · '+juz+' / 30 juz</h3><div class="grid30">'+Array.from({length:30},function(_,i){ return '<button class="'+(S.ram.juz[i+1]?'on':'')+'" data-juz="'+(i+1)+'">'+(i+1)+'</button>'; }).join('')+'</div>'+
+        '<h3>Fasts · '+fast+' / 30</h3><div class="grid30">'+Array.from({length:30},function(_,i){ return '<button class="'+(S.ram.fast[i+1]?'on':'')+'" data-fast="'+(i+1)+'">'+(i+1)+'</button>'; }).join('')+'</div>'+
+        '<h3>Ramadan memories</h3><p class="small">Photos and videos of iftars, nights and the people you share them with.</p><div class="row"><button class="btn" data-act="ramAdd" style="--c:#ffd27a">Add photos or videos</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="ramFile"><div class="gal" id="ramGal"></div>'+
+        '<p class="small">Want to plan the month? <button class="link" data-go="goals" style="margin:0">Set Ramadan goals</button></p>'; },
+    privacy:function(){ return ''; },
     listen:function(){ var Y=function(q){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q); };
       return eb('Listen','#19f0b0')+'<h2>Listen.</h2><p>The Qur\'an from more than 240 reciters, plus nasheeds and lectures.</p>'+
         '<h3>Qur\'an</h3><input class="field" id="qrSearch" placeholder="Search reciters (e.g. Alafasi, Sudais, Minshawi)" autocomplete="off"><select class="field" id="qrRec"><option>Loading reciters…</option></select><select class="field" id="qrSurah"></select>'+
@@ -900,8 +934,8 @@ body.voyage #dock{opacity:.25}
         '<ul class="thread" style="--c:#4f7dff"><li>"Help me plan a calmer week."</li><li>"Give me three ideas to reach my goal."</li><li>"What could this hadith mean for my day?"</li></ul>'+
         '<p class="small">Coming soon as a paid upgrade. It will be built carefully: it supports reflection, it never diagnoses, and it points to real help when someone needs it.</p>'; },
     connect:function(){ return eb('Community','#cfd6ff')+'<h2>The community of minds.</h2><p class="lead">A chat room for authorised members only &mdash; and the chance to visit each other’s minds, fly through them and explore.</p>'+
-        '<ul class="thread" style="--c:#cfd6ff"><li><b>Authorised members only</b><span class="meta">every member is verified and approved before they can join</span></li><li><b>The community room</b><span class="meta">talk freely, share ideas, wisdom and wins</span></li><li><b>Visit each other’s minds</b><span class="meta">fly through another member’s universe and explore the neurons they choose to share</span></li><li><b>See who\u2019s visiting</b><span class="meta">when a friend is inside your mind, a green dot with their name appears in your stats</span></li><li><b>Talk to them instantly</b><span class="meta">tap their green dot to open a private, secure chat while they explore</span></li><li><b>You stay in control</b><span class="meta">your diary, vault and anything private is never visible to anyone</span></li></ul>'+
-        '<p class="small">Opening soon. Your mind stays completely private until then.</p>'; },
+        '<ul class="thread" style="--c:#cfd6ff"><li><b>Authorised members only</b><span class="meta">every member is verified and approved before they can join</span></li><li><b>The community room</b><span class="meta">talk freely, share ideas, wisdom and wins</span></li><li><b>Visit each other’s minds</b><span class="meta">fly through another member’s universe and explore the neurons they choose to share</span></li><li><b>See who\u2019s visiting</b><span class="meta">when a friend is inside your mind, a green dot with their name appears in your stats</span></li><li><b>Talk to them instantly</b><span class="meta">tap their green dot to open a private, secure chat while they explore</span></li><li><b>Remember: friends can look around</b><span class="meta">a connected friend can fly through your mind and open any neuron you have made visible &mdash; switch off anything you want to keep to yourself, like your diary</span></li><li><b>You stay in control</b><span class="meta">your diary, vault and anything private is never visible to anyone</span></li></ul>'+
+        privacyHTML()+'<p class="small">Opening soon. Your mind stays completely private until then.</p>'; },
     sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
         '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
     light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); }
@@ -932,7 +966,7 @@ body.voyage #dock{opacity:.25}
 
   /* ── showing a neuron's words ── */
   var shown=null, busy=false, cur='me';
-  function pageHTML(id){ var d=byId[id]; if(!d) return ''; return questLine(id)+pageBody(id); }
+  function pageHTML(id){ var d=byId[id]; if(!d) return ''; var chip=(id!=='ramadan'&&SHAREABLE.some(function(x){ return x[0]===id; }))?shareChip(id):''; return questLine(id)+chip+pageBody(id); }
   function pageBody(id){ var d=byId[id];
     if(d.kind==='hadith') return hadithPage((window.H_HADITH||[]).filter(function(h){ return h.id===id; })[0]);
     if(d.kind==='light') return lightPage(H_LIGHT.filter(function(x){ return x.id===id; })[0]);
@@ -949,7 +983,7 @@ body.voyage #dock{opacity:.25}
   function retract(done){ var pg=stage.querySelector('.pg'); shown=null; haze.classList.remove('on'); stage.classList.remove('live'); if(!pg){ done&&done(); return; } pg.classList.add('out'); setTimeout(function(){ stage.innerHTML=''; done&&done(); },380); }
   function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id&&!M.isFree()) return; if(typeof endFly==='function'&&document.body.classList.contains('flying')) endFly(); busy=true; cur=id; vaultOpen=false; document.body.classList.remove('voyage'); FX('warp');
     retract(function(){ var dur=M.go(id,arrive)||0; if(dur>600) electronRun(id,dur); paintDock(); }); 
-    function arrive(){ busy=false; document.getElementById('electron').classList.remove('on'); document.getElementById('readout').classList.remove('on'); M.fire(id); FX('statics',.6,.8); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); if(byId[id].hidden){ discovered(id); coinsBonus(2,'mystery found'); } }
+    function arrive(){ busy=false; document.getElementById('electron').classList.remove('on'); document.getElementById('readout').classList.remove('on'); M.fire(id); FX('statics',.6,.8); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); var lb0=labels[id]; if(lb0){ lb0.querySelector('span').textContent=byId[id].name; lb0.style.setProperty('--c',byId[id].col); lb0.classList.remove('hid'); } if(byId[id].hidden){ discovered(id); coinsBonus(2,'mystery found'); } }
       if(id==='progress') setTimeout(function(){ quest('progress'); },1200); emerge(id); paintDock(); var un=M.unexploredFrom(id).length; if(un) setTimeout(function(){ if(shown===id) toast(un+(un===1?' unexplored path leads':' unexplored paths lead')+' from here'); },2600); } }
 
   /* a calm travelling sound: a soft swell of air and chords for the length of the journey, then a gentle chime on arrival */
@@ -990,6 +1024,7 @@ body.voyage #dock{opacity:.25}
     if(byId[id]&&byId[id].kind==='play') startGame(id);
     if(EX[id]) EX[id]();
     if(id==='listen') initListen();
+    if(id==='ramadan') paintRam();
     if(id==='progress') drawChart(document.getElementById('chart'));
     if(id==='gallery') paintGallery();
     if(id==='draw') initPad();
@@ -1388,11 +1423,11 @@ body.voyage #dock{opacity:.25}
   S.media=S.media||{}; S.mediaLimit=S.mediaLimit||30;
   function mediaLeft(){ return Math.max(0,S.mediaLimit*60-(S.media[today()]||0)); }
   function fmt(s){ return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-  setInterval(function(){ if(!mwin.classList.contains('on')) return; var k=today(); S.media[k]=(S.media[k]||0)+1; if(S.media[k]%15===0) save();
+  setInterval(function(){ if(!mwin.classList.contains('on')||mwin.dataset.free==='1') return; var k=today(); S.media[k]=(S.media[k]||0)+1; if(S.media[k]%15===0) save();
     var left=mediaLeft(); document.getElementById('mwTitle').setAttribute('data-left',fmt(left)+' left today');
     if(left===300) toast('5 minutes of media time left today');
     if(left<=0){ closeWin(); save(); setTimeout(function(){ toast('That’s your media time for today ✦ your mind is waiting'); },500); } },1000);
-  var _open=openWin; openWin=function(u,ti,html){ if(mediaLeft()<=0){ toast('Media time is used up for today — come back tomorrow'); return; } _open(u,ti,html); };
+  var _open=openWin; openWin=function(u,ti,html){ mwin.dataset.free='0'; if(mediaLeft()<=0){ toast('Media time is used up for today — come back tomorrow'); return; } _open(u,ti,html); };
 
 
   /* ── doorways: step through a door into a clean room for your plans and tasks ── */
@@ -1420,6 +1455,23 @@ body.voyage #dock{opacity:.25}
 
 
   /* ── Stories of the Prophets: a small player while you voyage through the universe ── */
+  var hushed=null;
+  function hushAll(){ if(hushed) return; hushed={amb:window.MUAmb?MUAmb.current():'off',fx:window.SAFX?!SAFX.isOff():false};
+    if(window.MUAmb) MUAmb.play('off'); if(window.SAFX) SAFX.setOn(false); if(QR.audio&&!QR.audio.paused) QR.audio.pause(); if(FlySnd) FlySnd.stop(); }
+  function unhush(){ if(!hushed) return; var h=hushed; hushed=null; if(window.SAFX) SAFX.setOn(h.fx); if(window.MUAmb&&h.amb&&h.amb!=='off') MUAmb.play(h.amb); }
+  var _closeWin=closeWin; closeWin=function(){ _closeWin(); if(mwin.dataset.free==='1'){ mwin.dataset.free='0'; unhush(); } };
+  document.getElementById('mwX').onclick=closeWin;
+  var BOOKS=[
+    {k:'The Qur’an',t:'The Meaning of the Glorious Koran',a:'tr. Marmaduke Pickthall (1930)',l:'English',id:'in.ernet.dli.2015.216140',c:'#1f4f3a'},
+    {k:'Stories of the Prophets',t:'Qisas al-Anbiya',a:'Imam Ibn Kathir',l:'Arabic',id:'iqraaEBook54',c:'#2a4f6b'},
+    {k:'Prophet Muhammad ﷺ',t:'As-Sirah an-Nabawiyyah',a:'Ibn Hisham',l:'Arabic',id:'Sirat_Ibn_Hisham',c:'#5a3a1f'},
+    {k:'Hadith',t:'Al-Arbaʿin an-Nawawiyyah',a:'Imam an-Nawawi',l:'Arabic',id:'20210807',c:'#4a2a5f'},
+    {k:'Hadith',t:'Riyad as-Salihin',a:'Imam an-Nawawi',l:'Arabic',id:'newton_ph_yahoo_20150204',c:'#3a2f6b'},
+    {k:'Classical wisdom',t:'The Confessions of al-Ghazali',a:'Imam al-Ghazali · tr. Claud Field (1909)',l:'English',id:'confessionsofalg00ghaziala',c:'#2f3a6b'},
+    {k:'Classical wisdom',t:'The Alchemy of Happiness',a:'Imam al-Ghazali · tr. Claud Field (1910)',l:'English',id:'alchemyofhappine00ghaz',c:'#6b3a2a'}
+  ];
+  stage.addEventListener('click',function(e){ var b=e.target.closest('[data-book]'); if(!b) return; var x=BOOKS[+b.dataset.book];
+    hushAll(); mwin.dataset.free='1'; document.getElementById('mwTitle').removeAttribute('data-left'); _open('https://archive.org/details/'+x.id,x.t,'<iframe src="https://archive.org/embed/'+x.id+'" allowfullscreen></iframe>'); });
   var STORIES=[
     {t:'Stories of the Prophets (full series)',by:'Mufti Ismail Menk',list:'PL91A52895904B094C'},
     {t:'Lessons from the Stories of the Prophets',by:'Mufti Ismail Menk',list:'PLC466F1D802E87A7E'},
@@ -1438,6 +1490,23 @@ body.voyage #dock{opacity:.25}
   /* presence: friends inside your mind (filled by the community service once it is live) */
   window.MU_VISITORS=window.MU_VISITORS||[];
   window.setVisitors=function(list){ MU_VISITORS=list||[]; var el=document.getElementById('presence'); el.hidden=!MU_VISITORS.length; document.getElementById('presenceTxt').textContent=MU_VISITORS.map(function(v){ return v.name; }).join(', ')+(MU_VISITORS.length===1?' is in your mind':' are in your mind'); if(shown==='me') render('me'); };
+
+  /* ── sharing with connected friends: you decide, neuron by neuron ── */
+  var SHAREABLE=[['ramadan','Ramadan'],['gallery','Memories'],['goals','Goals'],['studio','Creative studio'],['progress','Progress'],['trackers','Trackers'],['mood','Mood'],['todo','To-do'],['plan','Plan'],['draw','Magic drawing'],['diary','Diary'],['r_dreams','Dream journal'],['r_people','People'],['r_bucket','Bucket list'],['r_wins','Small wins'],['r_library','Library'],['r_quotes','Quotes'],['r_timeline','Life timeline'],['r_places','Places I love'],['r_grat','Gratitude jar']];
+  function shared(id){ return !!S.share[id]; }
+  function shareChip(id){ return '<button class="sharechip'+(shared(id)?' on':'')+'" data-share="'+id+'">'+(shared(id)?'◉ Visible to your connected friends':'○ Private — only you can see this')+'</button>'; }
+  function privacyHTML(){ return '<h3>Who can see what</h3><p class="small">Connected friends can fly through your mind and explore every neuron you switch on here. Everything is private until you switch it on. Your secret vault is always private.</p><div class="sharelist">'+
+      SHAREABLE.map(function(x){ return '<label class="sharerow"><span>'+esc(x[1])+'</span><input type="checkbox" data-sharebox="'+x[0]+'" '+(shared(x[0])?'checked':'')+'><i></i></label>'; }).join('')+'<label class="sharerow off"><span>Secret vault</span><em>always private</em></label></div>'; }
+  stage.addEventListener('click',function(e){ var b=e.target.closest('[data-share]'); if(b){ S.share[b.dataset.share]=!shared(b.dataset.share); save(); toast(shared(b.dataset.share)?'Your connected friends will be able to see this':'Now private — only you'); render(shown); return; }
+    var j=e.target.closest('[data-juz]'); if(j){ var n=j.dataset.juz; if(S.ram.juz[n]) delete S.ram.juz[n]; else { S.ram.juz[n]=Date.now(); FX('zoop',.6); } save(); render('ramadan'); return; }
+    var f=e.target.closest('[data-fast]'); if(f){ var m=f.dataset.fast; if(S.ram.fast[m]) delete S.ram.fast[m]; else { S.ram.fast[m]=Date.now(); FX('zoop',.6); } save(); render('ramadan'); return; }
+    if(e.target.closest('[data-act="ramAdd"]')){ var rf=document.getElementById('ramFile'); rf.onchange=function(){ var files=[].slice.call(rf.files); Promise.all(files.map(function(file){ var isV=/^video/.test(file.type);
+        if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now(),album:'Ramadan'}); });
+        return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now(),album:'Ramadan'}); })).then(function(){ toast(shared('ramadan')?'Added — visible to your connected friends':'Added — private to you'); paintRam(); }); }; rf.click(); } });
+  stage.addEventListener('change',function(e){ var c=e.target; if(c.dataset&&c.dataset.sharebox){ S.share[c.dataset.sharebox]=c.checked; save(); toast(c.checked?'Visible to your connected friends':'Private — only you'); } });
+  function paintRam(){ var el=document.getElementById('ramGal'); if(!el) return; mAll().then(function(list){ list=list.filter(function(m){ return m.album==='Ramadan'; }).sort(function(a,b){ return b.ts-a.ts; });
+      el.innerHTML=list.length?list.map(function(m){ var src=m.type==='video'?URL.createObjectURL(m.blob):m.url; return '<figure>'+(m.type==='video'?'<video src="'+src+'" muted loop playsinline autoplay></video>':'<img src="'+src+'" alt="">')+'<button data-del-media="'+m.id+'" aria-label="Remove">&#10005;</button></figure>'; }).join(''):'<p class="empty">No Ramadan memories yet.</p>'; }); }
+
   /* goals floating in space: glowing progress orbs orbiting the Goals neuron */
   var goalOrbs=[];
   function goalCanvas(g,c){ var cv=document.createElement('canvas'); cv.width=cv.height=256; var x=cv.getContext('2d'), tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?dn/tot:0;
@@ -1453,8 +1522,9 @@ body.voyage #dock{opacity:.25}
 
   /* labels and dock */
   var lw=document.getElementById('labels'), labels={};
-  function labelText(d){ return d.hidden&&!S.visited[d.id]?'?':d.name; }
-  DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':'')+(d.hidden?' hid':''); b.dataset.go=d.id; b.style.setProperty('--c',d.hidden&&!S.visited[d.id]?'#cfd6ff':d.col); b.innerHTML='<i></i><span>'+esc(labelText(d))+'</span>'; lw.appendChild(b); labels[d.id]=b; });
+  function unknown(d){ return !!d.hidden&&!S.visited[d.id]; }
+  function labelText(d){ return unknown(d)?'?':d.name; }
+  DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':'')+(unknown(d)?' hid':''); b.dataset.go=d.id; b.style.setProperty('--c',unknown(d)?'#cfd6ff':d.col); b.innerHTML='<i></i><span>'+esc(labelText(d))+'</span>'; lw.appendChild(b); labels[d.id]=b; });
   lw.addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   M.onFrame(function(){ var tr=M.travelling(); moveGoalOrbs(performance.now()/1000); moveIdeaOrbs(performance.now()/1000); if(typeof moveGuide==='function') moveGuide();
     DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr||M.isFree())&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(visionOn()||((!d.mini||s.dist<90)&&(!d.hidden||S.visited[d.id]||s.dist<150)));
@@ -1462,7 +1532,7 @@ body.voyage #dock{opacity:.25}
       el.style.opacity=(tr?.35:Math.max(.45,Math.min(1,1.3-s.dist/320))).toFixed(2); el.style.pointerEvents=tr?'none':'auto';
       el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(0,-50%)'; }); });
   var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','rooms','stories','listen','gallery','studio','portals','draw','ai','connect'];
-  function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML='<div class="dk myst" title="Hidden lights you have found"><i>?</i><span>'+mm.n+' / '+mm.t+'<br>found</span></div>'+'<button class="dk" data-fly="1" style="--c:#ffffff"><i style="background:linear-gradient(135deg,var(--blue),var(--pink))"></i><span>Fly</span></button>'+DOCK.map(function(id){ var d=byId[id]; return '<button class="dk'+(id===cur?' here':'')+(QUESTS[id]&&!qDone(id)?' q':'')+'" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+esc(d.name)+'</span></button>'; }).join(''); }
+  function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML='<div class="dk myst" title="Hidden lights you have found"><i>?</i><span>'+mm.n+' / '+mm.t+'<br>found</span></div>'+'<button class="dk" data-fly="1" style="--c:#ffffff"><i style="background:linear-gradient(135deg,var(--blue),var(--pink))"></i><span>Fly</span></button>'+DOCK.map(function(id){ var d=byId[id]; var dkn=id==='me'||S.visited[id]; return '<button class="dk'+(id===cur?' here':'')+(dkn?'':' unk')+(QUESTS[id]&&!qDone(id)&&dkn?' q':'')+'" data-go="'+id+'" style="--c:'+(dkn?d.col:'#cfd6ff')+'"><i>'+(dkn?'':'?')+'</i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+(dkn?esc(d.name):'?')+'</span></button>'; }).join(''); }
   document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   paintDock();
 
