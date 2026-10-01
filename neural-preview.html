@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Intelligent Website Design &amp; Niche Mobile App Development | SA Intelligent Designs</title>
-<meta name="description" content="SA Intelligent Designs builds intelligent websites with full SEO support and develops mobile applications for specialist niches, serving Milton Keynes, Bedford and London. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
+<meta name="description" content="SA Intelligent Designs builds intelligent websites with full SEO support and develops mobile applications for specialist niches, for clients anywhere in the world. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
 <meta name="robots" content="noindex">
-<meta name="author" content="SA Intelligent Designs — a Bedford &amp; Milton Keynes tech community">
+<meta name="author" content="SA Intelligent Designs">
 <meta name="theme-color" content="#f3f6fb">
 <link rel="canonical" href="https://www.samarketingintelligence.com/">
 <meta property="og:type" content="website">
@@ -32,10 +32,10 @@
       "alternateName": "SA Marketing Intelligence",
       "url": "https://www.samarketingintelligence.com/",
       "description": "Intelligent website design with full SEO support, and mobile application development for specialist niches. Free mock-up before commitment, fixed written quotes and free hosting.",
-      "areaServed": [{"@type":"City","name":"Milton Keynes"},{"@type":"City","name":"London"},{"@type":"City","name":"Bedford"},"GB"],
+      "areaServed": "Worldwide",
       "priceRange": "££",
       "email": "Contact@samarketingintelligence.com",
-      "contactPoint": [{"@type":"ContactPoint","contactType":"customer service","email":"Contact@samarketingintelligence.com","areaServed":["Milton Keynes","London","Bedford","GB"],"availableLanguage":"English"}],
+      "contactPoint": [{"@type":"ContactPoint","contactType":"customer service","email":"Contact@samarketingintelligence.com","areaServed":"Worldwide","availableLanguage":"English"}],
       "knowsAbout": ["Website design","Web development","SEO","Mobile application development","Brand identity"],
       "makesOffer": [
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Launch — single-page website design","description":"A sharp, single-page website with mobile-first build, contact form, Google Business integration and foundational SEO."}},
@@ -485,6 +485,51 @@ body.flying #flyChip{display:none}
 .guide span{position:absolute;left:0;top:40px;transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#0f9e66;text-shadow:0 0 8px #fff,0 0 3px #fff;font-weight:700}
 .guide.off span{top:24px}
 
+
+.ch-more{flex-basis:100%;display:flex;justify-content:center;gap:26px;margin-top:4px}
+.ch-more button{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-shadow:0 0 8px #fff}
+.ch-more button:hover{color:var(--blue)}
+@media(max-width:899px){.ch-more{flex-direction:column;align-items:center;gap:14px}}
+
+
+/* ── the Vault, free-flowing: no cards, memories drifting along an axon ── */
+#p-portfolio .folio-grid{display:block;position:relative;margin-top:26px;padding-left:34px;max-width:720px}
+#p-portfolio .folio-grid::before{content:"";position:absolute;left:9px;top:10px;bottom:10px;width:2px;background:linear-gradient(var(--blue),var(--green),rgba(31,107,255,.15));opacity:.5}
+#p-portfolio .card{background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:0;padding:0;text-shadow:0 0 16px rgba(246,249,253,.95)}
+#p-portfolio .folio-card{position:relative;display:grid;grid-template-columns:150px 1fr;column-gap:24px;align-items:center;margin:0 0 30px}
+#p-portfolio .folio-card:nth-child(even){margin-left:min(7vw,70px)}
+#p-portfolio .folio-card::before{content:"";position:absolute;left:-30px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--blue),0 0 14px 3px rgba(31,107,255,.45)}
+#p-portfolio .folio-card:nth-child(even)::before{left:calc(-30px - min(7vw,70px))}
+#p-portfolio .folio-card::after{content:"";position:absolute;left:-20px;top:50%;height:1.5px;width:14px;background:rgba(31,107,255,.4)}
+#p-portfolio .folio-card:nth-child(even)::after{left:calc(-20px - min(7vw,70px));width:calc(14px + min(7vw,70px))}
+#p-portfolio .folio-logo-chip{grid-row:1/span 3;background:none;border:0;padding:0;margin:0;height:auto;min-height:70px;justify-content:flex-start;overflow:visible;animation:drift 7s ease-in-out infinite}
+#p-portfolio .folio-card:nth-child(2n) .folio-logo-chip{animation-delay:-2.3s}
+#p-portfolio .folio-card:nth-child(3n) .folio-logo-chip{animation-delay:-4.1s}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+#p-portfolio .folio-logo-chip img{max-height:74px;max-width:150px;mix-blend-mode:multiply;filter:drop-shadow(0 8px 14px rgba(31,107,255,.12))}
+#p-portfolio .folio-logo-chip.folio-logo-text{background:none}
+#p-portfolio .folio-logo-chip.folio-logo-text span{font-size:1.45rem;background:linear-gradient(110deg,var(--ink),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+#p-portfolio .folio-logo-chip.folio-logo-text span b{color:var(--green);-webkit-text-fill-color:var(--green)}
+#p-portfolio .folio-status{border:0;padding:0;margin:0 0 4px;display:inline-flex;align-items:center;gap:7px;background:none}
+#p-portfolio .folio-status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px 2px currentColor}
+#p-portfolio .folio-card h3{font-size:1.15rem;margin:0}
+#p-portfolio .folio-card p{margin-top:4px;font-size:.92rem}
+#p-portfolio .folio-top{grid-template-columns:190px 1fr;margin-bottom:40px}
+#p-portfolio .folio-top .folio-logo-chip{grid-row:1/span 3;height:auto}
+#p-portfolio .folio-top h3{font-size:1.6rem;letter-spacing:-.03em}
+#p-portfolio .folio-top p{font-size:1rem}
+#p-portfolio .vz-chip{flex-direction:row;gap:12px;align-items:center}
+#p-portfolio .vz-chip img{height:72px;max-height:72px}
+#p-portfolio .vz-word{font-size:1.7rem}
+@media(max-width:899px){
+  #p-portfolio .folio-grid{padding-left:26px}
+  #p-portfolio .folio-card,#p-portfolio .folio-top{grid-template-columns:1fr;margin-left:0!important}
+  #p-portfolio .folio-card::before{left:-23px!important;top:24px}
+  #p-portfolio .folio-card::after{display:none}
+  #p-portfolio .folio-logo-chip{grid-row:auto;margin-bottom:8px;min-height:0}
+  #p-portfolio .folio-logo-chip img{max-height:56px}
+}
+
 /* no JavaScript or no WebGL: show everything as a plain page */
 .nojs .pg{display:block;position:static}
 @media (prefers-reduced-motion: reduce){.pg > *,.pg.out > *{animation-duration:.01s}}
@@ -494,7 +539,7 @@ body.flying #flyChip{display:none}
 <div id="neural" aria-hidden="true"></div>
 
 <div class="btx" id="btx" role="dialog" aria-label="Enter SA Intelligent Designs">
-  <div class="btx-eyebrow">SA Intelligent Designs &middot; built by the community</div>
+  <div class="btx-eyebrow">SA Intelligent Designs &middot; by a mystery designer</div>
   <h1>Enter the <b class="grad">Braintrix</b></h1>
   <p>We build AI apps and intelligent websites. Step inside the mind that builds them &mdash; every light in here is a neuron, and some of them are hiding something.</p>
   <button class="btx-btn" id="btxEnter">Enter<span>the mind</span></button>
@@ -521,9 +566,10 @@ body.flying #flyChip{display:none}
 <div id="toast"></div>
 <div id="ambMenu" role="menu" aria-label="Soundscapes"></div>
 <div id="choice" role="group" aria-label="How would you like to explore?">
-  <div class="ask0" id="ask0">You're inside. Where now?</div>
-  <button class="ch" type="button" data-fly><b>Fly freely</b><span>Take the controls. Steer anywhere &mdash; fly into a light to open it.</span></button>
-  <button class="ch g" type="button" data-go="core"><b>Take me to the core</b><span>One quiet thought about who we are. Then you're free.</span></button>
+  <div class="ask0" id="ask0">You're inside. Which way?</div>
+  <button class="ch" type="button" data-go="guild"><b>I'm an engineer</b><span>Our worldwide tech community is coming soon &mdash; register early.</span></button>
+  <button class="ch g" type="button" data-go="build"><b>I need an engineer</b><span>Describe your project out loud &mdash; we'll shape it into a plan.</span></button>
+  <div class="ch-more"><button type="button" data-fly>&#10022; Fly freely and explore</button><button type="button" data-go="core">Take me to the core</button></div>
 </div>
 <div id="flyHelp" role="dialog" aria-label="How to explore">
   <div class="fh-in">
@@ -567,7 +613,8 @@ body.flying #flyChip{display:none}
     <h1 class="decode">Ideas go in. Intelligence comes out.</h1>
     <p>Websites and apps for specialist niches &mdash; with a free mock-up before you commit.</p>
     <button class="go big" type="button" data-fly>Fly off and explore</button>
-    <a class="go" href="#build" data-go="build">Tell the Architect your idea</a>
+    <a class="go" href="#guild" data-go="guild">I'm an engineer</a>
+    <a class="go" href="#build" data-go="build">I need an engineer</a>
     <p class="hunt" id="hunt"></p>
   </article>
 
@@ -631,21 +678,21 @@ body.flying #flyChip{display:none}
     <div class="eye">The Origin &middot; About</div>
     <h2 class="decode">Memory recovered.</h2>
     <div class="log" id="log" data-text="&gt; who built this mind?
-Nobody in particular. SA Intelligent Designs is built by a community of local developers, engineers and designers.
-&gt; where?
-Bedford, Milton Keynes and the towns around them &mdash; in person or fully remote.
+A designer who prefers to stay a mystery.
 &gt; what do they make?
 Intelligent websites, apps and software for specialist niches.
+&gt; where?
+Anywhere. Every project is run remotely, worldwide.
 &gt; how?
 A free mock-up first. Fixed written quotes. No lock-in.
-&gt; can I join?
-Yes &mdash; membership is free. Find the community neuron."></div>
-    <p><a class="go" href="#guild" data-go="guild">App developer, engineer or designer? Join the tech community &mdash; free</a></p>
+&gt; what's next?
+A worldwide community for engineers is coming soon."></div>
+    <p><a class="go" href="#guild" data-go="guild">Engineer or developer? Register early for the community</a></p>
     <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a></p>
     <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising.</p></details>
     <details class="legal" id="cookies"><summary>Cookies</summary><p>Strictly necessary browser storage only (your sound setting, which neurons you've found, and your unsent brief), cleared when you close the tab. No analytics, tracking or advertising cookies.</p></details>
     <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill.</p></details>
-    <p class="whisper">&copy; 2026 SA Intelligent Designs &middot; built by the Bedford &amp; Milton Keynes tech community</p>
+    <p class="whisper">&copy; 2026 SA Intelligent Designs &middot; by a mystery designer</p>
   </article>
 
   <!-- ECHOES (faq) -->
@@ -664,7 +711,7 @@ Yes &mdash; membership is free. Find the community neuron."></div>
   <!-- THE VAULT (portfolio) -->
   <article class="pg" id="p-portfolio" data-node="portfolio" data-wide="1">
     <div class="eye">The Vault &middot; Portfolio</div>
-    <h2 class="decode">Products and brands built by the SA community.</h2>
+    <h2 class="decode">Products and brands built by SA Intelligent Designs.</h2>
     <p>The brands we've designed and launched, and the applications our engineering team is building right now.</p>
 <div class="folio-grid">
         <div class="card folio-card folio-top">
@@ -680,7 +727,7 @@ Yes &mdash; membership is free. Find the community neuron."></div>
           <div class="folio-logo-chip folio-logo-text"><span>Spare<b>Drive</b></span></div>
           <span class="folio-status" style="color:#b7791f">Pending</span>
           <h3>SpareDrive</h3>
-          <p>Currently in development with the SA community &mdash; launching soon.</p>
+          <p>Currently in development at SA Intelligent Designs &mdash; launching soon.</p>
         </div>
         <div class="card folio-card">
           <div class="folio-logo-chip"><img src="data:image/webp;base64,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" alt="Qlarvia software intelligence platform logo" loading="lazy" decoding="async" width="400" height="108"></div>
@@ -718,19 +765,19 @@ Yes &mdash; membership is free. Find the community neuron."></div>
 
   <!-- THE ARCHITECT (brief) -->
   <article class="pg" id="p-build" data-node="build" data-wide="1">
-    <div class="eye">The Architect &middot; voice hub</div>
+    <div class="eye">Find an engineer &middot; the Architect</div>
     <div id="arch"></div>
   </article>
 
   <!-- THE GUILD (membership club for builders) -->
   <article class="pg" id="p-guild" data-node="guild">
-    <div class="eye">Join the tech community &middot; free membership</div>
+    <div class="eye">Join as an engineer &middot; coming soon</div>
     <div id="guildWiz"></div>
   </article>
 
   <!-- THE PULSE (community news) -->
   <article class="pg" id="p-news" data-node="news">
-    <div class="eye">The Pulse &middot; community news</div>
+    <div class="eye">The Pulse &middot; news</div>
     <h2 class="decode">What's moving in the mind.</h2>
     <div class="news" id="news"></div>
   </article>
@@ -755,13 +802,13 @@ window.SA_DESTS=[
   {id:'referral', name:'The Gift',      hint:'a gift is waiting',     pos:[46,34,30],     yaw:-.7,  dist:30, c:'g'},
   {id:'about',    name:'The Origin',    hint:'an old memory',         pos:[-50,-26,30],   yaw:.8,   dist:30, c:'b'},
   {id:'faq',      name:'Echoes',        hint:'voices echo here',      pos:[-26,42,-92],   yaw:.25,  dist:30, c:'g'},
-  {id:'build',    name:'The Architect', hint:'',                      pos:[8,-42,-104],   yaw:-.1,  dist:33, c:'g', scale:1.2, found:true},
-  {id:'guild',    name:'The Community',     hint:'a gathering of local builders', pos:[-104,4,-150], yaw:.6, dist:31, c:'b', scale:1.15},
+  {id:'build',    name:'Find an engineer', hint:'',                      pos:[36,-8,-46],    yaw:-.35, dist:33, c:'g', scale:1.25, found:true},
+  {id:'guild',    found:true, name:'Join as an engineer',     hint:'engineers gather here', pos:[-34,-6,-44], yaw:.35, dist:31, c:'b', scale:1.25},
   {id:'news',     name:'The Pulse',     hint:'a pulse of fresh signals', pos:[78,-64,48], yaw:-.9, dist:30, c:'g'},
   {id:'portfolio',name:'The Vault',     hint:'a sealed vault, far away', pos:[150,52,-215], yaw:-.6, dist:40, c:'b', scale:1.5, shift:.6},
   {id:'secret',   name:'Hidden neuron', hint:'',                      pos:[-170,-74,-190],yaw:.9,   dist:26, c:'g', scale:.55, secret:true}
 ];
-window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core','process'],['core','build'],['services','process'],['services','faq'],
+window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core','about'],['core','process'],['core','build'],['services','process'],['services','faq'],
   ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret'],['build','guild'],['faq','guild'],['services','guild'],['core','news'],['referral','news'],['news','process']];
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -832,7 +879,11 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     {id:'ocean',  name:'Ocean waves'},
     {id:'forest', name:'Forest night'},
     {id:'space',  name:'Deep space'},
-    {id:'chords', name:'Calm chords'}
+    {id:'chords', name:'Calm chords'},
+    {id:'electric', name:'Electric current'},
+    {id:'synthwave', name:'Synthwave drive'},
+    {id:'cyber', name:'Cyber pulse'},
+    {id:'datastream', name:'Data stream'}
   ];
   function ac(){ if(!ctx){ ctx=new AC(); master=ctx.createGain(); master.gain.value=0; master.connect(ctx.destination); } if(ctx.state==='suspended') ctx.resume(); return ctx; }
   function noise(){ if(noiseBuf) return noiseBuf; var len=ctx.sampleRate*4, b=ctx.createBuffer(2,len,ctx.sampleRate);
@@ -906,6 +957,50 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       }
       chord(); every(8000,chord);
     }
+
+    ,electric:function(){ // live wires: mains hum, crackle and the odd zap
+      var lp=f('lowpass',240,1.2), hum=g(.09); lp.connect(hum); hum.connect(master);
+      [50,100,150].forEach(function(fr,i){ var o=osc('sawtooth',fr), a=g(.5/(i+1)); o.connect(a); a.connect(lp); }); lfo(.3,.03,hum.gain);
+      var s=src(), hp=f('highpass',5200), cr=g(0); s.connect(hp); hp.connect(cr); cr.connect(master);
+      every(60,function(){ if(Math.random()<.22){ var t=ctx.currentTime; cr.gain.setValueAtTime(.05+Math.random()*.07,t); cr.gain.exponentialRampToValueAtTime(.0001,t+.03+Math.random()*.05); } });
+      var e=echo(.28,.3);
+      every(3400,function(){ if(Math.random()<.55){ var t=ctx.currentTime, o=ctx.createOscillator(), bp=ctx.createBiquadFilter(), v=ctx.createGain(); o.type='sawtooth';
+        o.frequency.setValueAtTime(1800+Math.random()*1400,t); o.frequency.exponentialRampToValueAtTime(140,t+.22); bp.type='bandpass'; bp.frequency.value=1200; bp.Q.value=3;
+        v.gain.setValueAtTime(.0001,t); v.gain.exponentialRampToValueAtTime(.06,t+.01); v.gain.exponentialRampToValueAtTime(.0001,t+.26); o.connect(bp); bp.connect(v); v.connect(e); v.connect(master); o.start(t); o.stop(t+.3); } });
+    },
+    synthwave:function(){ // night drive: arpeggiated bass, warm pads, soft snare
+      var lp=f('lowpass',800,4), bus=g(1); lp.connect(bus); bus.connect(master); lfo(.07,500,lp.frequency); var e=echo(.375,.35); bus.connect(e);
+      var prog=[[110,130.8,164.8],[87.3,110,130.8],[130.8,164.8,196],[98,123.5,146.8]], step=0, beat=60/96/4;
+      function note(fr,len,type,vol,dest){ var t=ctx.currentTime, o=ctx.createOscillator(), v=ctx.createGain(); o.type=type; o.frequency.value=fr;
+        v.gain.setValueAtTime(.0001,t); v.gain.exponentialRampToValueAtTime(vol,t+.01); v.gain.exponentialRampToValueAtTime(.0001,t+len); o.connect(v); v.connect(dest); o.start(t); o.stop(t+len+.05); }
+      every(beat*1000,function(){ var bar=Math.floor(step/16)%4, c=prog[bar], s=step%16;
+        note(c[s%3]/2,beat*.9,'sawtooth',.07,lp);
+        if(s===0) c.forEach(function(fr){ note(fr*2,beat*15,'triangle',.022,lp); });
+        if(s===4||s===12){ var t=ctx.currentTime, n=ctx.createBufferSource(); n.buffer=noise(); var hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1800; var v=ctx.createGain();
+          v.gain.setValueAtTime(.06,t); v.gain.exponentialRampToValueAtTime(.0001,t+.18); n.connect(hp); hp.connect(v); v.connect(e); v.connect(master); n.start(t,Math.random()*3); n.stop(t+.2); }
+        step++; });
+    },
+    cyber:function(){ // minimal techno: soft kick, ticking hats, plucked bass
+      var beat=60/118/4, step=0, blp=f('lowpass',420,6); blp.connect(g(1)).connect(master); lfo(.05,260,blp.frequency); var e=echo(.38,.3);
+      every(beat*1000,function(){ var t=ctx.currentTime, s=step%16;
+        if(s%4===0){ var k=ctx.createOscillator(), kv=ctx.createGain(); k.frequency.setValueAtTime(130,t); k.frequency.exponentialRampToValueAtTime(42,t+.18);
+          kv.gain.setValueAtTime(.22,t); kv.gain.exponentialRampToValueAtTime(.0001,t+.3); k.connect(kv); kv.connect(master); k.start(t); k.stop(t+.32); }
+        if(s%4===2){ var n=ctx.createBufferSource(); n.buffer=noise(); var hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=7000; var hv=ctx.createGain();
+          hv.gain.setValueAtTime(.035,t); hv.gain.exponentialRampToValueAtTime(.0001,t+.05); n.connect(hp); hp.connect(hv); hv.connect(master); n.start(t,Math.random()*3); n.stop(t+.06); }
+        if([0,3,6,10,11,14].indexOf(s)>=0){ var b=ctx.createOscillator(), bv=ctx.createGain(); b.type='sawtooth'; b.frequency.value=[55,55,65.4,49][Math.floor(step/16)%4];
+          bv.gain.setValueAtTime(.0001,t); bv.gain.exponentialRampToValueAtTime(.09,t+.005); bv.gain.exponentialRampToValueAtTime(.0001,t+beat*1.6); b.connect(bv); bv.connect(blp); b.start(t); b.stop(t+beat*2); }
+        if(s===13 && Math.random()<.5) pling([880,1047,1319][(Math.random()*3)|0],.02,.5,e);
+        step++; });
+    },
+    datastream:function(){ // data flowing past: quick bleeps, glitches and a low bed
+      var lp=f('lowpass',260); lp.connect(master); var o=osc('sine',55), a=g(.12); o.connect(a); a.connect(lp); lfo(.04,2,o.frequency);
+      var e=echo(.19,.45), scale=[523,587,659,784,880,1047,1175,1319,1568];
+      every(110,function(){ if(Math.random()<.42){ var t=ctx.currentTime, q=ctx.createOscillator(), v=ctx.createGain(), pn=ctx.createStereoPanner?ctx.createStereoPanner():null; q.type=Math.random()<.5?'square':'triangle';
+        q.frequency.value=scale[(Math.random()*scale.length)|0]*(Math.random()<.2?2:1); v.gain.setValueAtTime(.0001,t); v.gain.exponentialRampToValueAtTime(.018,t+.004); v.gain.exponentialRampToValueAtTime(.0001,t+.07);
+        q.connect(v); if(pn){ pn.pan.value=Math.random()*2-1; v.connect(pn); pn.connect(e); pn.connect(master); } else { v.connect(e); v.connect(master); } q.start(t); q.stop(t+.09); } });
+      every(2900,function(){ if(Math.random()<.4){ var t=ctx.currentTime, n=ctx.createBufferSource(); n.buffer=noise(); var bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=3000; bp.Q.value=10; var v=ctx.createGain();
+        for(var i=0;i<5;i++){ v.gain.setValueAtTime(i%2?0:.05,t+i*.03); } v.gain.setValueAtTime(0,t+.16); n.connect(bp); bp.connect(v); v.connect(master); n.start(t,Math.random()*3); n.stop(t+.2); } });
+    }
   };
   function stop(){ timers.forEach(function(id){ clearInterval(id); clearTimeout(id); }); timers=[];
     var old=nodes; nodes=[]; old.forEach(function(n){ try{ n.stop&&n.stop(); }catch(e){} try{ n.disconnect(); }catch(e){} }); }
@@ -955,10 +1050,10 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     function fallback(text,done){ var S=window.speechSynthesis; if(!S||!text){ setTimeout(done||function(){},300); return; }
       try{ S.cancel(); }catch(e){} var u=new SpeechSynthesisUtterance(text); u.lang='en-GB'; var fin=false; function f(){ if(fin) return; fin=true; done&&done(); } u.onend=f; u.onerror=f; setTimeout(f,Math.max(3500,text.length*85)); S.speak(u); }
     return {
-      unlock:function(){ if(unlocked) return; unlocked=true; try{ el.muted=true; el.src='/assets/voice/arch/mind-inside.m4a?v=1'; var pr=el.play(); if(pr&&pr.then) pr.then(function(){ el.pause(); el.currentTime=0; el.muted=false; }).catch(function(){ el.muted=false; }); else el.muted=false; }catch(e){} },
+      unlock:function(){ if(unlocked) return; unlocked=true; try{ el.muted=true; el.src='/assets/voice/arch/mind-inside.m4a?v=2'; var pr=el.play(); if(pr&&pr.then) pr.then(function(){ el.pause(); el.currentTime=0; el.muted=false; }).catch(function(){ el.muted=false; }); else el.muted=false; }catch(e){} },
       play:function(id,text,done){ if(!on){ setTimeout(function(){ done&&done(); },250); return; }
         this.stop(); cb=done||null; try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(true); }catch(e){}
-        el.muted=false; el.src='/assets/voice/arch/'+id+'.m4a?v=1';
+        el.muted=false; el.src='/assets/voice/arch/'+id+'.m4a?v='+(id==='mind-inside'?2:1);
         var failed=false; function fail(){ if(failed) return; failed=true; var c=cb; cb=null; fallback(text,function(){ try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(false); }catch(e){} c&&c(); }); }
         el.onerror=fail; var pr=el.play(); if(pr&&pr.catch) pr.catch(fail); },
       stop:function(){ try{ el.pause(); }catch(e){} cb=null; try{ window.speechSynthesis&&speechSynthesis.cancel(); }catch(e){} },
@@ -974,7 +1069,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     document.getElementById('foundBar').style.width=(n/total*100)+'%'; }
   function hiddenLeft(){ return total-Object.keys(found).length; }
   function huntText(){ var left=hiddenLeft(); return left<=0?'Every neuron found. You know this mind inside out.':(total+' neurons live in this mind \u2014 '+left+' still hidden'+(found.secret?'.':'. One of them is very hard to find.')); }
-  function paintHunt(){ var h=document.getElementById('hunt'); if(h) h.textContent=huntText(); var a=document.getElementById('ask0'); if(a) a.textContent='You\'re inside. '+total+' neurons to find \u2014 where now?'; }
+  function paintHunt(){ var h=document.getElementById('hunt'); if(h) h.textContent=huntText(); }
   function discover(id){ if(found[id]) return false; found[id]=1; ss('saFound',JSON.stringify(found)); paintFound();
     labels[id] && labels[id].classList.add('found'); setTimeout(function(){ paintDock&&paintDock(); },0);
     var n=Object.keys(found).length; toast(n===total?'Whole mind mapped \u2014 every neuron found':byId[id].name+' found \u00B7 '+n+' of '+total+' \u00B7 '+(total-n)+' still hidden'); paintHunt(); return true; }
@@ -987,7 +1082,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     b.innerHTML='<i></i><span class="n">'+d.name+'</span><span class="h">'+(d.hint||d.name)+'</span>'; lw.appendChild(b); labels[d.id]=b; });
   paintFound(); paintHunt();
 
-  var cur=null, busy=false, shown=null;
+  var cur=null, busy=false, shown=null, skip={}, fromFlight=false, visited={};
   M.onFrame(function(){
     var travelling=M.travelling();
     DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id);
@@ -998,7 +1093,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       el.style.opacity=op.toFixed(2); el.style.pointerEvents=travelling?'none':'auto';
       el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(0,-50%) scale('+sc.toFixed(2)+')'; });
     // guide: a beacon on the nearest hidden neuron while you fly
-    if(guideEl){ var gOn=M.isFree() && guideId && !found[guideId] && !(flyHelp&&flyHelp.classList.contains('on'));
+    if(guideEl){ var gOn=M.isFree() && guideId && !visited[guideId] && !(flyHelp&&flyHelp.classList.contains('on'));
       if(!gOn){ guideEl.classList.remove('on'); }
       else { var gs=M.screenOf(guideId), W=innerWidth, H=innerHeight, m=60, cx=W/2, cy=H/2, x=gs.x, y=gs.y, off=false;
         if(!gs.on){ x=cx+(cx-x)*1e3; y=cy+(cy-y)*1e3; }
@@ -1042,7 +1137,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   /* travelling between neurons */
   var readout=document.getElementById('readout'), electron=document.getElementById('electron');
   function travelTo(id,opts){
-    if(!byId[id]||busy) return; opts=opts||{};
+    if(!byId[id]||busy) return; opts=opts||{}; fromFlight=!!opts.fromFlight; visited[id]=1;
     if(id===cur && shown===id) return;
     busy=true; var from=cur; cur=id; endFly(); hideChoice(); try{ paintDock(); }catch(e){}
     history.replaceState(null,'',byId[id].secret?location.pathname:'#'+id);
@@ -1083,7 +1178,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     cards.forEach(function(c,i){ setTimeout(function(){ c.classList.add('in'); FX('zoop',.4); },700+i*140); }); }
 
   document.addEventListener('click',function(e){ var a=e.target.closest('[data-go]'); if(!a) return; e.preventDefault();
-    if(!document.body.classList.contains('inside')) return; travelTo(a.dataset.go,{type:a.dataset.type}); });
+    if(!document.body.classList.contains('inside')) return; delete skip[a.dataset.go]; travelTo(a.dataset.go,{type:a.dataset.type}); });
   addEventListener('resize',function(){ if(shown) placeDrift(); });
 
   /* text that decodes out of neural noise */
@@ -1095,9 +1190,9 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   /* The Pulse — newest first. Add a line here to post an update. */
   var NEWS=[
     {d:'1 Oct 2026',t:'The Braintrix is open',b:'Our new home is a mind you can fly through. Eleven neurons, one of them very well hidden. Happy hunting.'},
-    {d:'1 Oct 2026',t:'Join the tech community: free membership for local builders',b:'App developers, engineers, designers and architects across Bedford, Milton Keynes and the local tech scene can now join the SA community for free.'},
+    {d:'1 Oct 2026',t:'Coming soon: a worldwide tech community',b:'Engineers, developers and designers anywhere in the world will be able to join free. Register early in the \u201CI\'m an engineer\u201D neuron.'},
     {d:'1 Oct 2026',t:'Talk to the Architect',b:'Describe your idea out loud and watch the blueprint draw itself. No forms, no typing.'},
-    {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built in the community.'}
+    {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built by SA Intelligent Designs.'}
   ];
   (function(){ var el=document.getElementById('news'); if(!el) return; el.innerHTML=NEWS.map(function(n){ return '<div class="nw"><div class="nw-d">'+n.d+'</div><h3>'+n.t+'</h3><p>'+n.b+'</p></div>'; }).join(''); })();
 
@@ -1349,7 +1444,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     function render(){
       clearTimeout(advT); stopListen();
       var q=probe?{id:probe.key,kind:'voice',say:probe.say,isProbe:true}:Q[step], n=Q.length-1;
-      if(sent){ root.innerHTML='<h2 class="decode">Signal received.</h2><p>Thank you'+(S.name?', '+esc(S.name.split(' ')[0]):'')+'. Your sketch plan is with our engineers &mdash; expect a reply within one working day to arrange your free consultation.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; root.querySelectorAll('.decode').forEach(decode); return; }
+      if(sent){ root.innerHTML='<h2 class="decode">Signal received.</h2><p>Thank you'+(S.name?', '+esc(S.name.split(' ')[0]):'')+'. Your sketch plan is with us &mdash; expect a reply within one working day to arrange your free consultation.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; root.querySelectorAll('.decode').forEach(decode); return; }
       var h='<div class="arch-step">Signal '+Math.min(step,n)+' / '+n+'<span class="bar"><i style="width:'+(step/n*100)+'%"></i></span><button type="button" class="vtog" data-a="voice">'+(voiceOn?'&#128266; Voice on':'&#128263; Voice off')+'</button></div>';
       h+='<div class="arch-grid"><div class="arch-talk">';
       h+='<div class="ask" id="aAsk"></div>';
@@ -1476,16 +1571,16 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   })();
 
   /* The Guild — developers, engineers and architects apply to join SA Intelligent */
-  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Join the community',
+  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Register early',
     Q:function(A){ return [
-      {k:'intro',kind:'intro',btn:'Join free',ask:function(){ return 'Join the SA tech community. Membership is free.'; },sub:'For app developers, engineers, designers and architects across Bedford, Milton Keynes and the local tech scene. Members get matched to real client projects, set their own rates and meet other builders. About three minutes.'},
+      {k:'intro',kind:'intro',btn:'Register early',ask:function(){ return 'The SA tech community is coming soon. Register early and you\'ll be first in.'; },sub:'For app developers, engineers, designers and architects anywhere in the world. Membership will be free. Tell us who you are, what you offer and what you charge &mdash; about three minutes.'},
       {k:'role',kind:'one',ask:function(){ return 'What do you build?'; },opts:function(){ return ['Web developer','Mobile engineer','Full-stack developer','Solutions architect','UI / UX designer','AI / ML engineer','Something else']; },ack:function(){ return A.role+'. Welcome.'; }},
       {k:'experience',kind:'one',ask:function(){ return 'How long have you been doing it professionally?'; },opts:function(){ return ['Under 2 years','2–5 years','5–10 years','10+ years']; },ack:function(){ return A.experience+' of experience.'; }},
       {k:'skills',kind:'many',other:true,ask:function(){ return 'Which tools are you strongest in?'; },sub:'Pick your best — not everything you\'ve touched.',opts:function(){ return ['React','React Native','Next.js','Node.js','Python','Swift','Kotlin','Flutter','Supabase / Postgres','AWS / GCP','AI & LLMs','Three.js / WebGL','SEO','Figma']; },ack:function(){ return lst(A.skills).length+' core skills logged.'; }},
       {k:'services',kind:'many',other:true,ask:function(){ return 'What would you offer SA clients?'; },opts:function(){ return ['Full builds','Front-end','Back-end & APIs','Mobile apps','AI integrations','Architecture & code reviews','Design & prototyping','DevOps & hosting','Maintenance & support']; },ack:function(){ return 'Services captured.'; }},
       {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Pick how you usually price, then your rate. Members set their own rates.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
       {k:'availability',kind:'one',ask:function(){ return 'How much time could you give?'; },opts:function(){ return ['Full-time','Part-time','Evenings & weekends','Project by project']; },ack:function(){ return 'Availability: '+A.availability.toLowerCase()+'.'; }},
-      {k:'based',kind:'short',ask:function(){ return 'Where are you based, and how do you like to work?'; },ph:function(){ return 'e.g. Milton Keynes — remote or on-site'; },ack:function(){ return 'Based: '+A.based+'.'; }},
+      {k:'based',kind:'short',ask:function(){ return 'Where are you based, and how do you like to work?'; },ph:function(){ return 'e.g. Lisbon, Lagos or Leeds — remote, hybrid or on-site'; },ack:function(){ return 'Based: '+A.based+'.'; }},
       {k:'links',kind:'short',optional:true,ask:function(){ return 'Where can we see your work?'; },ph:function(){ return 'GitHub, portfolio, LinkedIn or App Store links (optional)'; },ack:function(){ return A.links?'Links saved — we\'ll take a look.':'No links — we can talk it through.'; }},
       {k:'pitch',kind:'long',ask:function(){ return 'In a line or two, what makes your work stand out?'; },ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part we read twice.'; }},
       {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'An SA engineer will reply within a few working days.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
@@ -1497,26 +1592,28 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       if(A.rate) s+='Charges <em>'+esc(A.rate)+'</em> ('+esc((A.rateBasis||'').toLowerCase())+'), available <em>'+esc((A.availability||'').toLowerCase())+'</em>. ';
       if(A.pitch) s+='“'+esc(A.pitch)+'”'; return s; },
     plain:function(A){ return 'TECH COMMUNITY MEMBERSHIP — from the Braintrix\n\n'+lines([['Role',A.role],['Experience',A.experience],['Skills',join(A.skills)],['Services offered',join(A.services)],['Pricing',A.rateBasis],['Rate',A.rate],['Availability',A.availability],['Based / works',A.based],['Links',A.links],['Stand-out',A.pitch],['Name',A.name],['Email',A.email]]); },
-    subject:function(A){ return 'Tech community membership (free) — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
+    subject:function(A){ return 'Tech community early registration — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
     fields:function(A){ return {role:A.role||'',rate:(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':''),availability:A.availability||''}; },
-    done:function(A){ return '<h2 class="decode">Welcome to the community.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. Your free membership request is in &mdash; we\'ll verify your profile and be in touch within a few working days.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+    done:function(A){ return '<h2 class="decode">You\'re on the early list.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll be in touch as soon as the community opens.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
   });
 
   /* ══ FREE FLIGHT ══ */
   var choice=document.getElementById('choice'), thrust=document.getElementById('thrust'), flyNear=document.getElementById('flyNear');
-  function showChoice(){ choice.classList.add('on'); FX('statics',.4,.6); Jess.play('mind-inside',"You're inside the mind. Eleven neurons are waiting to be found. Fly freely, or let me take you to the core."); }
+  function showChoice(){ choice.classList.add('on'); FX('statics',.4,.6); Jess.play('mind-inside',"You're inside the mind. Are you an engineer looking to join, or do you need an engineer for your project? Pick a path, or fly freely and explore."); }
   function hideChoice(){ choice.classList.remove('on'); }
   var flyHelp=document.getElementById('flyHelp'), guideId=null, guideEl=document.getElementById('guide'), guideTxt=document.getElementById('guideTxt');
   function pickGuide(){ var from=byId[cur]||byId.core, best=null, bd=1e9;
-    DESTS.forEach(function(d){ if(found[d.id]||d.secret) return; var dx=d.pos[0]-from.pos[0], dy=d.pos[1]-from.pos[1], dz=d.pos[2]-from.pos[2], dd=dx*dx+dy*dy+dz*dz; if(dd<bd){ bd=dd; best=d.id; } });
+    if(!visited.guild) return 'guild'; if(!visited.build) return 'build';
+    DESTS.forEach(function(d){ if(found[d.id]||d.secret||visited[d.id]) return; var dx=d.pos[0]-from.pos[0], dy=d.pos[1]-from.pos[1], dz=d.pos[2]-from.pos[2], dd=dx*dx+dy*dy+dz*dz; if(dd<bd){ bd=dd; best=d.id; } });
     return best; }
   function firstFlight(){ return Object.keys(found).filter(function(k){ return !byId[k].found; }).length===0; }
-  function startFly(){
+  function startFly(keep){
     if(!document.body.classList.contains('inside')||busy) return;
     hideChoice(); Jess.stop();
-    guideId=pickGuide();
-    retract(function(){ if(!M.freeStart(guideId)) return; document.body.classList.add('flying'); FX('warp'); history.replaceState(null,'',location.pathname);
-      if(ss('saFlyHelp')!=='1') showFlyHelp(); });
+    if(cur && shown) skip[cur]=1;
+    guideId=keep?null:pickGuide();
+    retract(function(){ if(!M.freeStart(keep?null:guideId)) return; if(keep){ guideId=pickGuide(); M.freeThrust(1); } document.body.classList.add('flying'); FX('warp'); history.replaceState(null,'',location.pathname);
+      if(!keep && ss('saFlyHelp')!=='1') showFlyHelp(); });
   }
   function showFlyHelp(){
     var L=isMob()?['<b>Hold down anywhere</b> to fly &mdash; your first neuron is straight ahead','<b>Drag</b> while holding to steer','Get near a light and tap <b>Enter</b> to open it','Or tap any light in the strip below to jump there']
@@ -1527,10 +1624,10 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   }
   document.getElementById('fhGo').addEventListener('click',function(){ ss('saFlyHelp','1'); flyHelp.classList.remove('on'); FX('zoop',.7); });
   var enterPill=document.getElementById('enterPill'), nearId=null;
-  enterPill.addEventListener('click',function(e){ e.stopPropagation(); if(nearId) travelTo(nearId); });
+  enterPill.addEventListener('click',function(e){ e.stopPropagation(); if(nearId){ skip[nearId]=1; travelTo(nearId,{fromFlight:true}); } });
   function endFly(){ if(flyHelp) flyHelp.classList.remove('on'); if(enterPill){ enterPill.hidden=true; nearId=null; } document.body.classList.remove('flying'); thrust.classList.remove('on'); M.freeThrust(0); M.freeTurn(0); M.freeTilt(0); flyNear.textContent=''; }
   document.addEventListener('click',function(e){ var f=e.target.closest('[data-fly]'); if(!f) return; e.preventDefault(); FX('zoop',.7); startFly(); });
-  M.onNear(function(id){ if(busy) return; travelTo(id); });
+  M.onNear(function(id){ if(busy||skip[id]) return; skip[id]=1; travelTo(id,{fromFlight:true}); });
   // drag to steer
   var drag=null;
   addEventListener('pointerdown',function(e){ if(!M.isFree()||e.target.closest('button,a,input,textarea,.nl,#flyHelp')) return; drag={x:e.clientX,y:e.clientY,id:e.pointerId}; });
@@ -1538,21 +1635,22 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(e){ if(drag&&e.pointerId===drag.id) drag=null; }); });
   // hold to fly
   function hold(on){ M.freeThrust(on?1:0); thrust.classList.toggle('on',on); if(on) FX('zoop',.5); }
-  thrust.addEventListener('pointerdown',function(e){ e.preventDefault(); try{ thrust.setPointerCapture(e.pointerId); }catch(_){} hold(true); });
+  thrust.addEventListener('pointerdown',function(e){ e.preventDefault(); if(!M.isFree() && fromFlight && shown){ startFly(true); return; } try{ thrust.setPointerCapture(e.pointerId); }catch(_){} hold(true); });
   ['pointerup','pointercancel','lostpointercapture'].forEach(function(n){ thrust.addEventListener(n,function(){ hold(false); }); });
   thrust.addEventListener('contextmenu',function(e){ e.preventDefault(); });
   // keys
   var K={};
   function keys(){ var f=(K.w||K.arrowup||K[' '])?1:((K.s||K.arrowdown)?-.45:0); M.freeThrust(f); thrust.classList.toggle('on',f>0);
     M.freeTurn((K.a||K.arrowleft)?1:((K.d||K.arrowright)?-1:0)); M.freeTilt(K.r?1:(K.f?-1:0)); }
-  addEventListener('keydown',function(e){ if(!M.isFree()||e.target.closest('input,textarea')) return; var k=e.key.toLowerCase(); if(k==='enter'&&nearId){ e.preventDefault(); travelTo(nearId); return; }
+  addEventListener('keydown',function(e){ if(e.target.closest('input,textarea')) return; var k=e.key.toLowerCase();
+    if(!M.isFree()){ if(fromFlight && shown && !busy && (k==='w'||k===' '||k==='arrowup')){ e.preventDefault(); startFly(true); } return; } if(k==='enter'&&nearId){ e.preventDefault(); skip[nearId]=1; travelTo(nearId,{fromFlight:true}); return; }
     if(['w','a','s','d','r','f',' ','arrowup','arrowdown','arrowleft','arrowright'].indexOf(k)<0) return; e.preventDefault(); K[k]=1; keys(); });
   addEventListener('keyup',function(e){ var k=e.key.toLowerCase(); if(K[k]){ delete K[k]; if(M.isFree()) keys(); } });
   addEventListener('wheel',function(e){ if(!M.isFree()) return; M.freeKick(-e.deltaY*.06); },{passive:true});
   // what's ahead
   setInterval(function(){ if(!M.isFree()) return; var n=M.nearest(); if(!n.id) return; var d=byId[n.id];
     flyNear.textContent=(d.secret&&!found[n.id])?(n.dist<90?'\u00B7 faint signal nearby \u00B7':''):'nearest \u00B7 '+(found[n.id]?d.name:(d.hint||d.name))+' \u00B7 '+Math.round(n.dist)+'m';
-    var close=n.dist<(d.scale||1)*16+14;
+    var close=n.dist<(d.scale||1)*16+14 && !skip[n.id];
     if(close){ nearId=n.id; enterPill.hidden=false; enterPill.innerHTML='&#9673; Enter '+(found[n.id]?d.name:(d.secret?'the faint signal':'this neuron')); } else { nearId=null; enterPill.hidden=true; } },200);
 
 
@@ -1578,7 +1676,8 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       if(dy>90){ FX('zoop',.5); retract(); history.replaceState(null,'',location.pathname); } y0=null; dy=0; });
   })();
   // touch & hold anywhere to fly; drag to steer
-  addEventListener('pointerdown',function(e){ if(!isMob()||!M.isFree()||e.target.closest('button,a,input,textarea,.nl,#dock,#flyHelp')) return; M.freeThrust(1); document.body.classList.add('touching'); });
+  addEventListener('pointerdown',function(e){ if(fromFlight && shown && !M.isFree() && !busy && !e.target.closest('#stage,button,a,input,textarea,.nl,#dock,#flyHelp,#ambMenu')){ startFly(true); return; }
+    if(!isMob()||!M.isFree()||e.target.closest('button,a,input,textarea,.nl,#dock,#flyHelp')) return; M.freeThrust(1); document.body.classList.add('touching'); });
   ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(){ if(isMob()&&M.isFree()){ M.freeThrust(0); document.body.classList.remove('touching'); } }); });
   function hintText(){ var el=document.getElementById('flyHint'); if(el) el.innerHTML=isMob()?'Touch &amp; hold to fly &middot; drag to steer &middot; fly into a light':'Drag to steer &middot; hold to fly &middot; W A S D or arrows &middot; fly into a light to open it'; }
   hintText(); if(mob.addEventListener) mob.addEventListener('change',hintText);
