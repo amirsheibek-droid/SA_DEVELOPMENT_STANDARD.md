@@ -172,6 +172,76 @@ body.inside #dock{opacity:1;pointer-events:auto}
 .care{max-width:520px;margin:18px auto 0;font-size:.88rem;color:var(--mute);line-height:1.6}
 .care b{color:var(--ink)}
 
+
+/* ── travel: the electron screen with % ── */
+#electron{position:fixed;inset:0;z-index:35;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .45s}
+#electron.on{opacity:1}
+.atom{width:min(44vw,230px);height:min(44vw,230px)}
+.atom svg{width:100%;height:100%;overflow:visible}
+.atom .orbit{fill:none;stroke:var(--c1,rgba(46,230,255,.6));stroke-width:1.2}
+.atom .orbit.b{stroke:rgba(164,92,255,.65)}.atom .orbit.c{stroke:rgba(255,79,168,.6)}
+.atom .nuc{fill:#fff;filter:drop-shadow(0 0 10px var(--cyan)) drop-shadow(0 0 22px var(--purple))}
+.atom .spin{transform-origin:125px 125px;animation:spin 1.6s linear infinite}
+.atom .spin.b{animation-duration:1.1s;animation-direction:reverse}.atom .spin.c{animation-duration:2.2s}
+.atom .el{fill:var(--cyan);filter:drop-shadow(0 0 6px var(--cyan))}.atom .el.b{fill:var(--pink);filter:drop-shadow(0 0 6px var(--pink))}
+.e-count{font-family:var(--mono);font-weight:700;font-size:clamp(2.6rem,8vw,4.2rem);margin-top:16px;text-shadow:0 0 18px var(--bg)}
+.e-count small{font-size:.4em;color:var(--mute)}
+.e-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-top:6px;text-align:center;padding:0 20px}
+.e-log{font-family:var(--mono);font-size:.7rem;color:var(--mute);margin-top:12px;height:3.6em;overflow:hidden;text-align:center;line-height:1.2em}
+.e-rain{position:fixed;top:0;bottom:0;width:13vw;font-family:var(--mono);font-size:.68rem;line-height:1.25;color:rgba(46,230,255,.35);overflow:hidden;white-space:pre;padding:10px}
+.e-rain.l{left:0}.e-rain.r{right:0;text-align:right;color:rgba(255,79,168,.35)}
+@media(max-width:780px){.e-rain{width:20vw;font-size:.58rem}}
+/* ── sound ── */
+#soundMenu{position:fixed;z-index:38;top:58px;right:16px;display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:var(--glow);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 1px var(--line);opacity:0;transform:translateY(-6px);pointer-events:none;transition:.25s;min-width:220px}
+#soundMenu.on{opacity:1;transform:none;pointer-events:auto}
+#soundMenu .h{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute2);padding:4px 10px 6px}
+#soundMenu button{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border-radius:12px;font-weight:600;font-size:.9rem}
+#soundMenu button:hover{background:var(--soft)}
+#soundMenu button i{width:9px;height:9px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--cyan)}
+#soundMenu button[aria-pressed=true]{color:var(--cyan)}
+#soundMenu button[aria-pressed=true] i{background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+#soundMenu .vol{display:flex;align-items:center;gap:10px;padding:8px 12px;font-family:var(--mono);font-size:.62rem;color:var(--mute)}
+#soundMenu input[type=range]{flex:1;accent-color:var(--cyan)}
+/* ── goals floating in the page too ── */
+.gfloat{display:flex;flex-wrap:wrap;justify-content:center;gap:34px 40px;margin:26px auto 0;max-width:640px}
+.gorb{width:170px;display:flex;flex-direction:column;align-items:center;text-align:center;animation:float 6s ease-in-out infinite}
+.gorb:nth-child(2n){animation-delay:-2s;margin-top:26px}.gorb:nth-child(3n){animation-delay:-4s}
+.gorb .ring{width:110px;height:110px;box-shadow:0 0 30px -6px var(--c,var(--purple))}
+.gorb h3{margin:12px 0 2px;font-size:1rem}
+.gorb .next{font-size:.66rem}
+.gorb .steps{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+.gorb .steps button{padding:5px 10px;border-radius:999px;font-size:.72rem;box-shadow:inset 0 0 0 1px var(--line)}
+.gorb .steps button.done{background:var(--c,var(--purple));color:#fff;box-shadow:0 0 12px -2px var(--c,var(--purple));text-decoration:line-through}
+.gorb input{font-size:.8rem!important;margin-top:8px!important}
+.gorb .rm{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute2);margin-top:6px}
+
+.dk.myst{cursor:default}.dk.myst i{display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-weight:700;color:var(--ink);background:radial-gradient(circle at 35% 30%,var(--soft),transparent 75%);box-shadow:0 0 0 1.5px var(--line),0 0 14px -4px #cfd6ff}
+.nl.hid span{letter-spacing:.3em}
+
+/* ── free flight ── */
+body.flying,body.flying #neural,body.flying #neural canvas{touch-action:none;-webkit-user-select:none;user-select:none}
+#flyui{position:fixed;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .5s}
+body.flying #flyui{opacity:1}
+.cross{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;box-shadow:inset 0 0 0 1.5px rgba(46,230,255,.55)}
+body.flying.touching .cross{box-shadow:inset 0 0 0 2px var(--green),0 0 30px -6px var(--green)}
+.flynear{position:absolute;left:50%;top:calc(50% + 40px);transform:translateX(-50%);font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);white-space:nowrap;text-shadow:0 0 8px var(--bg)}
+.flyhint{position:absolute;left:50%;top:70px;transform:translateX(-50%);font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:center;white-space:nowrap;text-shadow:0 0 8px var(--bg)}
+.thrust{position:absolute;left:50%;bottom:110px;transform:translateX(-50%);pointer-events:auto;width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;font-weight:700;color:#fff;background:radial-gradient(circle at 50% 40%,rgba(164,92,255,.9),rgba(79,125,255,.7));box-shadow:0 0 0 1.5px rgba(46,230,255,.5),0 0 34px -6px var(--purple);user-select:none;-webkit-user-select:none;touch-action:none}
+.thrust.on{background:radial-gradient(circle at 50% 40%,#5bf3c4,#12b877);box-shadow:0 0 0 2px var(--green),0 0 50px 4px rgba(25,240,176,.6)}
+.enter-pill{position:absolute;left:50%;top:calc(50% + 70px);transform:translateX(-50%);pointer-events:auto;padding:12px 22px;border-radius:999px;font-weight:800;color:#fff;background:linear-gradient(110deg,var(--blue),var(--purple) 60%,var(--pink));box-shadow:0 10px 30px -8px rgba(164,92,255,.8);white-space:nowrap}
+.guide{position:fixed;left:0;top:0;z-index:23;pointer-events:none;opacity:0;transition:opacity .4s}
+.guide.on{opacity:1}
+.guide .g-ring{position:absolute;left:-28px;top:-28px;width:56px;height:56px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--gold),0 0 24px 2px rgba(255,196,77,.5);animation:ping 1.6s ease-out infinite}
+.guide .g-arrow{display:none;position:absolute;left:-14px;top:-14px;width:28px;height:28px;transform:rotate(var(--ang,0deg))}
+.guide .g-arrow::before{content:"";position:absolute;left:4px;top:2px;border:10px solid transparent;border-bottom:16px solid var(--gold);filter:drop-shadow(0 0 6px rgba(255,196,77,.8))}
+.guide.off .g-ring{display:none}.guide.off .g-arrow{display:block}
+.guide span{position:absolute;left:0;top:36px;transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 8px var(--bg);font-weight:700}
+#flyHelp{position:fixed;inset:0;z-index:37;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .4s}
+#flyHelp.on{opacity:1;pointer-events:auto}
+.fh-in{max-width:420px;text-align:center;padding:26px;border-radius:26px;background:var(--glow);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 1px var(--line),0 30px 70px -30px var(--purple)}
+.fh-in h3{font-size:1.5rem;font-weight:800;margin:8px 0}
+.fh-in p{color:var(--mute);line-height:1.6;margin-top:6px}
+@media(max-width:899px){.thrust{display:none}.flyhint{white-space:normal;width:86vw}}
 @media(max-width:899px){
   #stage{left:0;right:0;top:auto;bottom:86px;transform:none;max-height:58vh;padding:44px 20px 20px;
     background:linear-gradient(180deg,transparent 0,var(--glow) 60px,var(--glow) 100%);-webkit-mask-image:none;mask-image:none}
@@ -186,15 +256,46 @@ body.inside #dock{opacity:1;pointer-events:auto}
 
 <div class="gate" id="gate">
   <div class="eye">Mind Universe</div>
-  <h1>Enter your <span class="grad">mind</span></h1>
-  <p>Your moods, thoughts, goals and memories &mdash; living as glowing neurons in your own universe. Private, and only on this device.</p>
+  <h1>Your home for <span class="grad">thought</span></h1>
+  <p>Your moods, ideas, goals and memories &mdash; living as glowing neurons in your own universe. Private, and only on this device.</p>
   <input id="gName" placeholder="What should your mind call you?" autocomplete="given-name" maxlength="30">
   <button class="enter" id="gEnter">Enter</button>
   <small>Your private universe &mdash; saved only on this device</small>
 </div>
 
 <div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
-<div class="hud tools"><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div class="hud tools"><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div id="soundMenu" role="menu" aria-label="Sound">
+  <div class="h">Soundtrack</div>
+  <button type="button" data-snd="off"><i></i>Silence</button>
+  <button type="button" data-snd="chords"><i></i>Calm chords</button>
+  <button type="button" data-snd="mine"><i></i><span id="mineName">Add your own music&hellip;</span></button>
+  <div class="vol">VOL <input type="range" id="sndVol" min="0" max="100" value="60"></div>
+  <div class="h">Effects</div>
+  <button type="button" data-fx="1"><i></i><span id="fxName">Neuron sounds on</span></button>
+  <div class="h">While flying</div>
+  <button type="button" data-flysnd="1"><i></i><span id="flySndName">Flight drone on</span></button>
+  <input type="file" accept="audio/*" class="file" id="sndFile">
+</div>
+<div id="flyui" aria-hidden="true">
+  <div class="cross"></div><div class="flynear" id="flyNear"></div><div class="flyhint" id="flyHint"></div>
+  <button class="thrust" id="thrust" type="button" aria-label="Hold to fly">HOLD<br>TO FLY</button>
+  <button class="enter-pill" id="enterPill" type="button" hidden></button>
+</div>
+<div class="guide" id="guide"><i class="g-ring"></i><i class="g-arrow"></i><span id="guideTxt"></span></div>
+<div id="flyHelp" role="dialog" aria-label="How to fly"><div class="fh-in"><div class="eyebrow">Free flight</div><h3>Hold down and fly</h3><p id="fhText"></p><button class="btn" type="button" id="fhGo">Let's fly</button></div></div>
+<div id="electron" aria-hidden="true">
+  <div class="e-rain l" id="rainL"></div><div class="e-rain r" id="rainR"></div>
+  <div class="atom"><svg viewBox="0 0 250 250">
+    <g class="spin"><ellipse class="orbit" cx="125" cy="125" rx="110" ry="38"/><circle class="el" cx="235" cy="125" r="6"/></g>
+    <g class="spin b"><ellipse class="orbit b" cx="125" cy="125" rx="110" ry="38" transform="rotate(60 125 125)"/><circle class="el b" cx="15" cy="125" r="6" transform="rotate(60 125 125)"/></g>
+    <g class="spin c"><ellipse class="orbit c" cx="125" cy="125" rx="110" ry="38" transform="rotate(-60 125 125)"/><circle class="el" cx="235" cy="125" r="6" transform="rotate(-60 125 125)"/></g>
+    <circle class="nuc" cx="125" cy="125" r="15"/>
+  </svg></div>
+  <div class="e-count"><span id="eNum">000</span><small>%</small></div>
+  <div class="e-label" id="eLabel">Travelling</div>
+  <div class="e-log" id="eLog"></div>
+</div>
 <div id="labels"></div>
 <div id="haze"></div>
 <div id="readout"></div>
@@ -207,7 +308,7 @@ body.inside #dock{opacity:1;pointer-events:auto}
 /* ── the map of the mind ── */
 (function(){
   var D=[
-    {id:'me',      name:'You',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:34, scale:1.4},
+    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:34, scale:1.4},
     {id:'mood',    name:'Mood',         col:'#ff4fa8', pos:[-40,10,-30],   yaw:.5,   dist:30, scale:1.15},
     {id:'progress',name:'Progress',     col:'#2ee6ff', pos:[42,14,-34],    yaw:-.5,  dist:34, scale:1.15},
     {id:'diary',   name:'Diary',        col:'#ffc44d', pos:[-32,-24,-62],  yaw:.35,  dist:30},
@@ -218,15 +319,17 @@ body.inside #dock{opacity:1;pointer-events:auto}
     {id:'gallery', name:'Memories',     col:'#ff4fa8', pos:[72,-2,-94],    yaw:-.6,  dist:36},
     {id:'draw',    name:'Magic drawing',col:'#ff6bd6', pos:[-58,40,-124],  yaw:.4,   dist:32},
     {id:'ai',      name:'Talk to AI',   col:'#4f7dff', pos:[58,42,-126],   yaw:-.4,  dist:30},
+    {id:'portals', name:'Portals',      col:'#ff4f6d', pos:[-98,-32,-132], yaw:.5,   dist:32},
+    {id:'studio',  name:'Creative studio',col:'#ffc44d', pos:[98,-36,-132], yaw:-.5,  dist:32, scale:1.1},
     {id:'connect', name:'Connections',  col:'#cfd6ff', pos:[0,8,-170],     yaw:0,    dist:32},
-    {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-120,12,-40],  yaw:.9,   dist:34, scale:1.2},
-    {id:'light',   name:'Light',        col:'#19f0b0', pos:[120,10,-44],   yaw:-.9,  dist:34, scale:1.2}
+    {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-120,12,-40],  yaw:.9,   dist:34, scale:1.2, hidden:true},
+    {id:'light',   name:'Light',        col:'#19f0b0', pos:[120,10,-44],   yaw:-.9,  dist:34, scale:1.2, hidden:true}
   ];
   var L=[['me','mood'],['me','progress'],['me','diary'],['me','todo'],['me','goals'],['me','plan'],['mood','progress'],['goals','plan'],['plan','todo'],
-    ['diary','trackers'],['todo','gallery'],['goals','draw'],['goals','ai'],['draw','connect'],['ai','connect'],['mood','sage'],['progress','light'],['trackers','sage'],['gallery','light']];
+    ['diary','trackers'],['todo','gallery'],['goals','draw'],['goals','ai'],['draw','connect'],['ai','connect'],['mood','sage'],['progress','light'],['trackers','sage'],['gallery','light'],['trackers','portals'],['diary','portals'],['gallery','studio'],['goals','studio'],['todo','studio'],['portals','connect'],['studio','connect']];
   var TH={}; (window.H_THEMES||[]).forEach(function(t){ TH[t.id]=t; });
   (window.H_HADITH||[]).forEach(function(h,i,arr){ var a=i/arr.length*Math.PI*2, r=24+(i%3)*6;
-    D.push({id:h.id,name:h.title,col:(TH[h.theme]||{}).col||'#ffc44d',pos:[-120+Math.cos(a)*r*.6,12+Math.sin(a)*r,-40+Math.cos(a)*r],yaw:.9,dist:20,scale:.55,mini:true,kind:'hadith'});
+    D.push({id:h.id,name:h.title,col:(TH[h.theme]||{}).col||'#ffc44d',pos:[-120+Math.cos(a)*r*.6,12+Math.sin(a)*r,-40+Math.cos(a)*r],yaw:.9,dist:20,scale:.55,mini:true,kind:'hadith',hidden:true});
     L.push(['sage',h.id]); });
   window.H_LIGHT=[
     {t:'Small steps count',b:'Tiny actions done often change more than big plans done once.'},
@@ -243,13 +346,68 @@ body.inside #dock{opacity:1;pointer-events:auto}
     {t:'Be your own friend',b:'Speak to yourself the way you would speak to someone you love.'}
   ];
   H_LIGHT.forEach(function(x,i){ var a=i/H_LIGHT.length*Math.PI*2, r=22+(i%3)*6; x.id='l'+(i+1);
-    D.push({id:x.id,name:x.t,col:['#19f0b0','#2ee6ff','#ffc44d','#ff4fa8','#a45cff'][i%5],pos:[120+Math.cos(a)*r*.6,10+Math.sin(a)*r,-44+Math.cos(a)*r],yaw:-.9,dist:20,scale:.55,mini:true,kind:'light'});
+    D.push({id:x.id,name:x.t,col:['#19f0b0','#2ee6ff','#ffc44d','#ff4fa8','#a45cff'][i%5],pos:[120+Math.cos(a)*r*.6,10+Math.sin(a)*r,-44+Math.cos(a)*r],yaw:-.9,dist:20,scale:.55,mini:true,kind:'light',hidden:true});
     L.push(['light',x.id]); });
   window.H_DESTS=D; window.H_LINKS=L;
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="assets/mind-space.js?v=1"></script>
+<script src="assets/mind-space.js?v=2"></script>
+<script>
+/* ── Calm neuron-signal sound effects: soft synapse pings on taps, a travelling signal on page changes ── */
+(function(){
+  var ctx=null, on=true;
+  try{ on=localStorage.getItem('mindu.fx')!=='off'; }catch(e){}
+  var btn=null;
+  function paint(){ if(!btn) return; btn.classList.toggle('off',!on); btn.setAttribute('aria-pressed',on?'true':'false'); btn.innerHTML=on?'&#9835; Sound':'&#9835; Muted'; }
+  paint();
+  function ac(){ if(!ctx){ var C=window.AudioContext||window.webkitAudioContext; if(!C) return null; ctx=new C(); } if(ctx.state==='suspended') ctx.resume(); return ctx; }
+  function noise(c,len){ var b=c.createBuffer(1,Math.max(1,Math.floor(c.sampleRate*len)),c.sampleRate), d=b.getChannelData(0); for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; var s=c.createBufferSource(); s.buffer=b; return s; }
+  function env(g,t,a,peak,rel){ g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(peak,t+a); g.gain.exponentialRampToValueAtTime(0.0001,t+a+rel); }
+  // calm neuron signals: soft synapse pings with a gentle echo
+  var bus=null;
+  function out(c){
+    if(bus) return bus;
+    bus=c.createGain(); bus.gain.value=1;
+    var d=c.createDelay(1); d.delayTime.value=.19; var fb=c.createGain(); fb.gain.value=.28; var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2600;
+    bus.connect(c.destination); bus.connect(d); d.connect(lp); lp.connect(fb); fb.connect(d); lp.connect(c.destination);
+    return bus;
+  }
+  function ping(c,t,freq,vol,len,glide){
+    var o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(freq,t); if(glide) o.frequency.exponentialRampToValueAtTime(freq*glide,t+len*.6);
+    var g=c.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol,t+.008); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
+    o.connect(g); g.connect(out(c)); o.start(t); o.stop(t+len+.05);
+  }
+  // tap: a single neuron firing (two soft pings)
+  function zoop(strength){
+    var c=ac(); if(!c||!on) return; var t=c.currentTime, k=strength||1;
+    ping(c,t,880,.035*k,.22,1.08); ping(c,t+.07,1320,.022*k,.26,1.04);
+  }
+  // thought opening: a quiet shimmer of high signals
+  function statics(len,strength){
+    var c=ac(); if(!c||!on) return; var t=c.currentTime, k=strength||1;
+    [1568,2093,2637].forEach(function(f,i){ ping(c,t+i*.06,f,.014*k,.5,1.0); });
+  }
+  // page change: a signal travelling along the connector (rising cascade + soft low swell)
+  function warp(){
+    var c=ac(); if(!c||!on) return; var t=c.currentTime;
+    [523,659,784,988,1175].forEach(function(f,i){ ping(c,t+i*.055,f,.024,.3,1.02); });
+    var o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(196,t); o.frequency.exponentialRampToValueAtTime(294,t+.7);
+    var g=c.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(.02,t+.25); g.gain.exponentialRampToValueAtTime(0.0001,t+.9);
+    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.95);
+  }
+  window.SAFX={zoop:zoop,statics:statics,warp:warp,isOff:function(){ return !on; },setOn:function(v){ on=!!v; try{ localStorage.setItem('mindu.fx',on?'on':'off'); }catch(e){} }};
+  if(btn) btn.addEventListener('click',function(e){ e.stopPropagation(); on=!on; paint(); try{ sessionStorage.setItem('saSfx',on?'on':'off'); }catch(_){}; if(on) zoop(); });
+  // taps anywhere interactive get a soft zoop (page changes and thoughts play their own sound)
+  document.addEventListener('click',function(e){
+    if(!e.target.closest) return;
+    if(e.target.closest('#soundMenu, #gEnter, #thrust')) return;
+    if(e.target.closest('.wz-btn, header nav a, .wz-dots button, .folded, .more-btn, .th-next, .th-prev')) return;
+    if(e.target.closest('a, button, input[type=submit], summary, .card, .promise, .step')) zoop(.8);
+  },true);
+})();
+
+</script>
 <script>
 (function(){
   var M=window.HMind, DESTS=window.H_DESTS, byId={}; DESTS.forEach(function(d){ byId[d.id]=d; });
@@ -264,7 +422,7 @@ body.inside #dock{opacity:1;pointer-events:auto}
   try{ S=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ S={}; }
   S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[];
   S.focus=S.focus||{}; S.habits=S.habits||[{id:'water',n:'Water (glasses)',t:8,c:'#2ee6ff'},{id:'sleep',n:'Sleep (hours)',t:8,c:'#a45cff'},{id:'move',n:'Move (minutes)',t:30,c:'#19f0b0'},{id:'read',n:'Read (pages)',t:10,c:'#ffc44d'}];
-  S.log=S.log||{}; S.visited=S.visited||{}; S.keep=S.keep||{}; S.theme=S.theme||'dark';
+  S.log=S.log||{}; S.links=S.links||[]; S.videos=S.videos||[]; S.albums=S.albums||['Childhood','Precious','Family','Travel','Drawings']; if(S.albums.indexOf('Drawings')<0) S.albums.push('Drawings'); S.album=S.album||'Precious'; S.ideas=S.ideas||[]; S.vision=S.vision||''; S.visited=S.visited||{}; S.keep=S.keep||{}; S.theme=S.theme||'dark';
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){ toast('Storage is full'); } }
   // pictures and videos live in IndexedDB (too big for localStorage)
   var DB=null;
@@ -289,11 +447,11 @@ body.inside #dock{opacity:1;pointer-events:auto}
   /* ── pages ── */
   var PAGES={
     me:function(){ var p=S.profile, lastMood=S.moods[0], left=S.todos.filter(function(t){ return !t.done; }).length;
-      return eb('Your centre','#ffffff')+(p.photo?'<img src="'+p.photo+'" alt="" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block;box-shadow:0 0 0 2px #fff,0 0 30px -4px var(--purple)">':'')+
+      return eb('Home','#ffffff')+(p.photo?'<img src="'+p.photo+'" alt="" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block;box-shadow:0 0 0 2px #fff,0 0 30px -4px var(--purple)">':'')+
         '<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2>'+
         '<p class="lead">'+esc(p.line||'Every light around you is part of you. Fly to one to begin.')+'</p>'+
-        '<div class="stats"><div><b>'+(lastMood&&lastMood.day===today()?esc(lastMood.m):'—')+'</b><span>Mood today</span></div><div><b>'+left+'</b><span>To-dos left</span></div><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+Object.keys(S.visited).filter(function(k){ return byId[k]&&byId[k].kind==='hadith'; }).length+'/'+(window.H_HADITH||[]).length+'</b><span>Hadith read</span></div></div>'+
-        '<div class="row"><button class="link" data-go="mood">How are you feeling?</button><button class="link" data-go="plan">Today\'s plan</button></div>'+
+        '<div class="stats"><div><b>'+(lastMood&&lastMood.day===today()?esc(lastMood.m):'—')+'</b><span>Mood today</span></div><div><b>'+left+'</b><span>To-dos left</span></div><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+mysteries().n+'/'+mysteries().t+'</b><span>Mysteries found</span></div></div>'+
+        '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button><button class="link" data-go="plan">Today\'s plan</button></div>'+
         '<h3>Your profile</h3><input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
         '<div class="row"><button class="ghost" data-act="photo">&#9673; Add a photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
         '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
@@ -312,14 +470,15 @@ body.inside #dock{opacity:1;pointer-events:auto}
         (S.notes.length?'<ul class="thread">'+S.notes.map(function(n){ return '<li><button class="x" data-del-note="'+n.id+'" aria-label="Delete">&#10005;</button><b>'+esc(n.title||'Untitled')+'</b><br>'+esc(n.text).replace(/\n/g,'<br>')+'<span class="meta">'+nice(n.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">Your first entry will appear here.</p>'); },
     todo:function(){ return eb('To-do','#19f0b0')+'<h2>Things to do.</h2><input class="field" id="tText" placeholder="Add something to do, then press Enter" maxlength="120">'+
         (S.todos.length?'<ul class="thread">'+S.todos.map(function(t){ return '<li class="'+(t.done?'done':'')+'"><button class="x" data-del-todo="'+t.id+'">&#10005;</button><label><input type="checkbox" data-todo="'+t.id+'" '+(t.done?'checked':'')+'>'+esc(t.text)+'</label></li>'; }).join('')+'</ul><button class="ghost" data-act="clearDone">Clear finished</button>':'<p class="empty">Nothing yet. What\'s one small thing you could do today?</p>'); },
-    goals:function(){ var h=eb('Goals','#a45cff')+'<h2>Where you\'re heading.</h2><p>Add a goal and the steps to reach it. Your mind shows how far you\'ve come.</p>'+
-        '<input class="field" id="gTitle" placeholder="A goal (e.g. Run 5k, learn Arabic)" maxlength="80"><input class="field" id="gWhy" placeholder="Why it matters to you" maxlength="140"><div class="row"><button class="btn" data-act="addGoal">Add goal</button></div>';
-      S.goals.forEach(function(g){ var tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?Math.round(dn/tot*100):0, nx=g.steps.filter(function(s){ return !s.done; })[0];
-        h+='<div class="goal"><div class="ring" style="--p:'+pc+'"><b>'+pc+'%</b></div><h3>'+esc(g.title)+'</h3>'+(g.why?'<p class="small">'+esc(g.why)+'</p>':'')+
-          (nx?'<div class="next">Next: '+esc(nx.text)+'</div>':(tot?'<div class="next">Goal complete. Beautiful.</div>':''))+
-          '<ul class="thread">'+g.steps.map(function(s){ return '<li class="'+(s.done?'done':'')+'"><label><input type="checkbox" data-step="'+g.id+':'+s.id+'" '+(s.done?'checked':'')+'>'+esc(s.text)+'</label></li>'; }).join('')+'</ul>'+
-          '<input class="field" data-addstep="'+g.id+'" placeholder="Add a step, then press Enter" maxlength="100"><button class="ghost" data-del-goal="'+g.id+'">Remove goal</button></div>'; });
-      if(!S.goals.length) h+='<p class="empty">No goals yet.</p>';
+    goals:function(){ var h=eb('Goals','#a45cff')+'<h2>Where you\'re heading.</h2><p>Each goal floats in your mind and fills with light as you take its steps.</p>'+
+        '<input class="field" id="gTitle" placeholder="A goal (e.g. Run 5k, learn Arabic)" maxlength="60"><input class="field" id="gWhy" placeholder="Why it matters to you" maxlength="140"><div class="row"><button class="btn" data-act="addGoal">Add goal</button></div><div class="gfloat">';
+      var cols=['#a45cff','#2ee6ff','#ff4fa8','#ffc44d','#19f0b0','#ff8a3d'];
+      S.goals.forEach(function(g,gi){ var tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?Math.round(dn/tot*100):0, nx=g.steps.filter(function(s){ return !s.done; })[0], c=cols[gi%cols.length];
+        h+='<div class="gorb" style="--c:'+c+'"><div class="ring" style="--p:'+pc+'"><b>'+pc+'%</b></div><h3>'+esc(g.title)+'</h3>'+
+          (nx?'<div class="next">Next: '+esc(nx.text)+'</div>':(tot?'<div class="next">Complete &#10022;</div>':'<div class="next">Add your first step</div>'))+
+          '<div class="steps">'+g.steps.map(function(s){ return '<button class="'+(s.done?'done':'')+'" data-stepbtn="'+g.id+':'+s.id+'">'+esc(s.text)+'</button>'; }).join('')+'</div>'+
+          '<input class="field" data-addstep="'+g.id+'" placeholder="+ step, then Enter" maxlength="60"><button class="rm" data-del-goal="'+g.id+'">remove</button></div>'; });
+      h+='</div>'; if(!S.goals.length) h+='<p class="empty">No goals yet &mdash; add one and watch it appear in your mind.</p>';
       return h; },
     plan:function(){ var f=S.focus[today()]||['','',''], steps=[];
       S.goals.forEach(function(g){ var nx=g.steps.filter(function(s){ return !s.done; })[0]; if(nx) steps.push({g:g.title,t:nx.text}); });
@@ -333,24 +492,41 @@ body.inside #dock{opacity:1;pointer-events:auto}
         h+='<div class="habit" style="--hc:'+x.c+'"><b>'+esc(x.n)+'</b><div class="count"><button data-hab="'+x.id+'" data-d="-1">&minus;</button><span>'+v+' / '+x.t+'</span><button data-hab="'+x.id+'" data-d="1">+</button></div><div class="dots">'+dots+'</div></div>'; });
       h+='<input class="field" id="hName" placeholder="New tracker (e.g. Prayers)" maxlength="40"><input class="field" id="hTarget" type="number" min="1" max="999" placeholder="Daily target (e.g. 5)"><div class="row"><button class="btn" data-act="addHabit">Add tracker</button></div>';
       return h; },
-    gallery:function(){ return eb('Memories','#ff4fa8')+'<h2>Your memories.</h2><p>Add photos and videos. The pictures also float around this neuron in your mind.</p><div class="row"><button class="btn" data-act="addMedia">Add photos or videos</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile"><div class="gal" id="gal"><p class="empty">Loading…</p></div>'; },
+    gallery:function(){ return eb('Memories','#ff4fa8')+'<h2>Your memories.</h2><p>Childhood moments, precious days, the people you love. Photos float around this neuron in your mind.</p>'+
+        '<div class="row">'+S.albums.map(function(al){ return '<button class="ghost" data-album="'+esc(al)+'" style="'+(al===S.album?'color:var(--pink)':'')+'">'+(al===S.album?'&#9673; ':'')+esc(al)+'</button>'; }).join('')+'<button class="ghost" data-act="addAlbum">+ album</button></div>'+
+        '<div class="row"><button class="btn" data-act="addMedia" style="--c:#ff4fa8">Add to '+esc(S.album)+'</button><button class="ghost" data-act="aiImage">&#10022; Create with AI (paid)</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile"><div class="gal" id="gal"><p class="empty">Loading…</p></div>'; },
     draw:function(){ return eb('Magic drawing','#ff6bd6')+'<h2>Draw anything.</h2><p>Glowing brushes for whatever is on your mind. Save it to your memories.</p><div class="drawwrap"><canvas id="pad"></canvas></div>'+
         '<div class="swatches">'+['#2ee6ff','#a45cff','#ff4fa8','#ffc44d','#19f0b0','#ffffff'].map(function(c,i){ return '<button data-sw="'+c+'" class="'+(i===0?'sel':'')+'" style="--sc:'+c+'"></button>'; }).join('')+'</div>'+
         '<div class="row"><button class="ghost" data-act="padSize">&#9679; Brush size</button><button class="ghost" data-act="padClear">Clear</button><button class="btn" data-act="padSave">Save to memories</button></div>'+
-        '<p class="small" style="margin-top:18px">&#10022; <b>AI magic</b> &mdash; turn your sketch into art or bring it to life &mdash; is coming as a paid upgrade.</p>'; },
+        '<div class="row"><button class="ghost" data-act="aiImage">&#10022; Turn my drawing into AI art (paid)</button></div>'; },
+
+    portals:function(){ var L=[{n:'YouTube',u:'https://www.youtube.com',c:'#ff4f6d'},{n:'Google',u:'https://www.google.com',c:'#4f7dff'},{n:'Facebook',u:'https://www.facebook.com',c:'#2ee6ff'},{n:'Instagram',u:'https://www.instagram.com',c:'#ff4fa8'}].concat(S.links.map(function(l){ return {n:l.n,u:l.u,c:'#ffc44d',id:l.id}; }));
+      return eb('Portals','#ff4f6d')+'<h2>Doorways to your world.</h2><p>Step out to the web and come straight back to your mind. Facebook, Instagram and most sites open in a new tab; YouTube videos can play right here.</p>'+
+        '<div class="orbs">'+L.map(function(l){ return '<a class="orb" href="'+esc(l.u)+'" target="_blank" rel="noopener" style="--oc:'+l.c+'"><i></i><span>'+esc(l.n)+'</span></a>'+(l.id?'<button class="x" data-del-link="'+l.id+'" title="Remove" style="margin-left:-18px;color:var(--mute2)">&#10005;</button>':''); }).join('')+'</div>'+
+        '<input class="field" id="lName" placeholder="Name a new doorway (e.g. My bank, LinkedIn)" maxlength="30"><input class="field" id="lUrl" placeholder="https://..." maxlength="300"><div class="row"><button class="btn" data-act="addLink" style="--c:#ff4f6d">Add doorway</button></div>'+
+        '<h3>Watch here</h3><input class="field" id="yt" placeholder="Paste a YouTube link, then press Enter" maxlength="300"><div id="ytBox"></div>'+
+        (S.videos.length?'<ul class="thread" style="--c:#ff4f6d">'+S.videos.slice(0,6).map(function(v){ return '<li><button data-yt="'+esc(v)+'" style="text-align:left">&#9654; youtu.be/'+esc(v)+'</button></li>'; }).join('')+'</ul>':''); },
+    studio:function(){ var h=eb('Creative studio','#ffc44d')+'<h2>What do you want to create?</h2><p>A space for your work, your projects and your wildest ideas. Every idea you save floats around this neuron.</p>'+
+        '<textarea class="field" id="sVision" placeholder="Your vision: what do you want to achieve in your work or life?" maxlength="400">'+esc(S.vision)+'</textarea><div class="row"><button class="ghost" data-act="saveVision">Save vision</button></div>'+
+        '<h3>Catch an idea</h3><input class="field" id="sIdea" placeholder="An idea, then press Enter" maxlength="90"><div class="row"><button class="btn" data-act="spark" style="--c:#ffc44d">&#10022; Spark me</button></div><p class="lead" id="sparkTxt" style="min-height:1.6em"></p>';
+      h+=S.ideas.length?'<div class="gfloat">'+S.ideas.map(function(x,i){ var c=['#ffc44d','#ff4fa8','#2ee6ff','#a45cff','#19f0b0'][i%5]; return '<div class="gorb" style="--c:'+c+'"><div class="ring" style="--p:100;width:70px;height:70px"><b>&#10022;</b></div><h3>'+esc(x.t)+'</h3><button class="rm" data-del-idea="'+x.id+'">let go</button></div>'; }).join('')+'</div>':'<p class="empty">No ideas yet. Press "Spark me" if you need a nudge.</p>';
+      return h; },
     ai:function(){ return eb('Talk to AI','#4f7dff')+'<h2>A companion for your thoughts.</h2><p class="lead">Talk things through, get ideas, plan your day, or reflect on a hadith &mdash; with an AI that knows your goals and moods (only if you allow it).</p>'+
         '<ul class="thread" style="--c:#4f7dff"><li>"Help me plan a calmer week."</li><li>"Give me three ideas to reach my goal."</li><li>"What could this hadith mean for my day?"</li></ul>'+
         '<p class="small">Coming soon as a paid upgrade. It will be built carefully: it supports reflection, it never diagnoses, and it points to real help when someone needs it.</p>'; },
-    connect:function(){ return eb('Connections','#cfd6ff')+'<h2>Minds that connect.</h2><p class="lead">Soon you\'ll be able to link your mind with friends and family &mdash; see their shared neurons glow beside yours, and send each other light.</p><p class="small">Coming later, with full privacy controls: nothing is shared unless you choose it.</p>'; },
-    sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Each golden light around the Sage holds a saying of the Prophet &#65018;. Fly to one, or choose below.</p>'+
-        '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+(S.visited[h.id]?'<span class="meta">read</span>':'')+'</li>'; }).join('')+'</ul>'; },
-    light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind. Each one is a neuron you can visit.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'; }
+    connect:function(){ return eb('Connections','#cfd6ff')+'<h2>Minds that connect.</h2><p class="lead">Invite the people you trust into your mind. They can fly around, see the neurons you choose to share &mdash; your memories, goals or ideas &mdash; and leave a little light behind.</p>'+
+        '<ul class="thread" style="--c:#cfd6ff"><li><b>Special connections</b><span class="meta">only people you approve can visit</span></li><li><b>You choose what they see</b><span class="meta">share a single album, a goal, or nothing at all</span></li><li><b>See their minds too</b><span class="meta">their universe appears as a new galaxy beside yours</span></li></ul>'+
+        '<p class="small">Coming with accounts. Your mind stays completely private until then.</p>'; },
+    sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
+        '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
+    light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); }
   };
+  function hiddenNote(k){ var all=DESTS.filter(function(d){ return d.kind===k; }), f=all.filter(function(d){ return S.visited[d.id]; }).length; return '<p class="empty">'+(f?f+' found \u00B7 ':'')+(all.length-f)+' still hidden around here. Fly close to discover them.</p>'; }
   function eb(t,c){ return '<div class="eyebrow" style="--c:'+c+'">'+t+'</div>'; }
   function hadithPage(h){ var th=(window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{name:'',col:'#ffc44d'};
     return eb(th.name,th.col)+'<h2>'+esc(h.title)+'</h2><div class="ar">'+h.ar+'</div><p class="en">&ldquo;'+esc(h.en)+'&rdquo;</p><div class="src">'+esc(h.src)+'</div>'+
       '<div class="row"><button class="btn" data-act="narrate" style="--c:'+th.col+'">&#9654; Hear the Sage</button><button class="ghost" data-act="keep">'+(S.keep[h.id]?'&#9733; Kept':'&#9734; Keep')+'</button></div>'+
-      '<button class="link" data-act="nextHadith" style="--c:'+th.col+'">Next saying</button><button class="link" data-go="sage" style="--c:'+th.col+'">All sayings</button>'+
+      '<button class="link" data-act="nextHadith" style="--c:'+th.col+'">Next found saying</button><button class="link" data-go="sage" style="--c:'+th.col+'">All sayings</button>'+
       '<p class="verify">Text and reference being checked against the source collections before the Sage\'s recorded voice is added.</p>'; }
   function lightPage(x){ return eb('Light','#19f0b0')+'<h2>'+esc(x.t)+'</h2><p class="lead">'+esc(x.b)+'</p><button class="link" data-act="nextLight">Next light</button><button class="link" data-go="light">All lights</button>'; }
 
@@ -366,20 +542,38 @@ body.inside #dock{opacity:1;pointer-events:auto}
     after(id,pg); }
   function emerge(id){ shown=id; stage.classList.add('live'); haze.classList.add('on'); stage.scrollTop=0; render(id); }
   function retract(done){ var pg=stage.querySelector('.pg'); shown=null; haze.classList.remove('on'); stage.classList.remove('live'); if(!pg){ done&&done(); return; } pg.classList.add('out'); setTimeout(function(){ stage.innerHTML=''; done&&done(); },380); }
-  function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id) return; busy=true; cur=id;
-    retract(function(){ var dur=M.go(id,arrive)||0; if(dur>600) readoutRun(id,dur); paintDock(); });
-    function arrive(){ busy=false; document.getElementById('readout').classList.remove('on'); M.fire(id); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); } emerge(id); paintDock(); } }
+  function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id&&!M.isFree()) return; if(typeof endFly==='function'&&document.body.classList.contains('flying')) endFly(); busy=true; cur=id; FX('warp');
+    retract(function(){ var dur=M.go(id,arrive)||0; if(dur>600) electronRun(id,dur); paintDock(); }); 
+    function arrive(){ busy=false; document.getElementById('electron').classList.remove('on'); document.getElementById('readout').classList.remove('on'); M.fire(id); FX('statics',.6,.8); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); if(byId[id].hidden) discovered(id); } emerge(id); paintDock(); } }
+  function electronRun(id,dur){
+    var el=document.getElementById('electron'), num=document.getElementById('eNum'), log=document.getElementById('eLog'), rl=document.getElementById('rainL'), rr=document.getElementById('rainR'), d=byId[id];
+    document.getElementById('eLabel').textContent='Synaptic link \u00B7 travelling to '+(d.hidden&&!S.visited[id]?'an unknown light':d.name);
+    var ax=String(2+Math.floor(Math.random()*40)).padStart(2,'0');
+    var LOG=['firing along axon '+ax,'crossing '+(2+Math.floor(Math.random()*6))+' synapses','charging the signal','locking onto '+d.name,'arrived \u2014 opening'];
+    el.classList.add('on'); var t0=performance.now(), last=-1;
+    function rain(){ var s=''; for(var i=0;i<46;i++){ for(var j=0;j<10;j++) s+=Math.random()<.5?'0':'1'; s+='\n'; } return s; }
+    (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur), e=1-Math.pow(1-k,2.2); num.textContent=String(Math.round(e*100)).padStart(3,'0');
+      var li=Math.min(LOG.length-1,Math.floor(k*LOG.length)); if(li!==last){ last=li; log.innerHTML=LOG.slice(Math.max(0,li-2),li+1).map(function(x,i,a){ return '<div style="opacity:'+(i===a.length-1?1:.45)+'">&gt; '+x+'</div>'; }).join(''); }
+      if(Math.random()<.5){ rl.textContent=rain(); rr.textContent=rain(); }
+      if(k<1&&el.classList.contains('on')) requestAnimationFrame(tick); })();
+  }
+  function mysteries(){ var all=DESTS.filter(function(d){ return d.hidden; }); return {n:all.filter(function(d){ return S.visited[d.id]; }).length,t:all.length}; }
+  function discovered(id){ var d=byId[id], m=mysteries(), lb=labels[id]; if(lb){ lb.querySelector('span').textContent=d.name; lb.style.setProperty('--c',d.col); }
+    toast('\u2726 Mystery found \u00B7 '+m.n+' of '+m.t); paintDock(); }
   function readoutRun(id,dur){ var r=document.getElementById('readout'), t0=performance.now(); r.classList.add('on');
     (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur); r.textContent='◉ travelling to '+byId[id].name+' · '+String(Math.round(k*100)).padStart(3,'0')+'%'; if(k<1&&r.classList.contains('on')) requestAnimationFrame(tick); })(); }
 
   /* after a page appears: wire up its live parts */
   var selMood=null, padState={c:'#2ee6ff',w:6};
   function after(id,pg){
+
+    if(id==='portals'){ var y=document.getElementById('yt'); y&&y.addEventListener('keydown',function(e){ if(e.key==='Enter'){ var m=(y.value||'').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/); if(!m){ toast('That doesn\'t look like a YouTube link'); return; } if(S.videos.indexOf(m[1])<0){ S.videos.unshift(m[1]); save(); } playYT(m[1]); } }); }
+    if(id==='studio'){ var si=document.getElementById('sIdea'); si&&si.addEventListener('keydown',function(e){ if(e.key==='Enter'&&si.value.trim()){ S.ideas.unshift({id:Date.now(),t:si.value.trim()}); save(); M.fire('studio'); render('studio'); refreshIdeaOrbs(); } }); }
     if(id==='progress') drawChart(document.getElementById('chart'));
     if(id==='gallery') paintGallery();
     if(id==='draw') initPad();
     if(id==='todo'){ var f=document.getElementById('tText'); f&&f.addEventListener('keydown',function(e){ if(e.key==='Enter'&&f.value.trim()){ S.todos.unshift({id:Date.now(),text:f.value.trim(),done:false}); save(); render('todo'); setTimeout(function(){ var g=document.getElementById('tText'); g&&g.focus(); },50); } }); }
-    pg.querySelectorAll('[data-addstep]').forEach(function(inp){ inp.addEventListener('keydown',function(e){ if(e.key==='Enter'&&inp.value.trim()){ var g=S.goals.filter(function(x){ return String(x.id)===inp.dataset.addstep; })[0]; if(g){ g.steps.push({id:Date.now(),text:inp.value.trim(),done:false}); save(); render('goals'); } } }); });
+    pg.querySelectorAll('[data-addstep]').forEach(function(inp){ inp.addEventListener('keydown',function(e){ if(e.key==='Enter'&&inp.value.trim()){ var g=S.goals.filter(function(x){ return String(x.id)===inp.dataset.addstep; })[0]; if(g){ g.steps.push({id:Date.now(),text:inp.value.trim(),done:false}); save(); render('goals'); refreshGoalOrbs(); } } }); });
     pg.querySelectorAll('[data-focus]').forEach(function(inp){ inp.addEventListener('change',function(){ var f=S.focus[today()]||['','','']; f[+inp.dataset.focus]=inp.value.trim(); S.focus[today()]=f; save(); toast('Plan saved'); }); });
   }
   stage.addEventListener('click',function(e){
@@ -390,33 +584,47 @@ body.inside #dock{opacity:1;pointer-events:auto}
     if(b.dataset.delTodo){ S.todos=S.todos.filter(function(x){ return String(x.id)!==b.dataset.delTodo; }); save(); render('todo'); return; }
     if(b.dataset.delNote){ if(!confirm('Delete this diary entry?')) return; S.notes=S.notes.filter(function(x){ return String(x.id)!==b.dataset.delNote; }); save(); render('diary'); return; }
     if(b.dataset.step){ var pr=b.dataset.step.split(':'), g=S.goals.filter(function(x){ return String(x.id)===pr[0]; })[0]; if(g){ var st=g.steps.filter(function(x){ return String(x.id)===pr[1]; })[0]; if(st){ st.done=b.checked; if(st.done){ logDay('step'); M.fire('goals'); } save(); setTimeout(function(){ render('goals'); },250); } } return; }
-    if(b.dataset.delGoal){ if(!confirm('Remove this goal?')) return; S.goals=S.goals.filter(function(x){ return String(x.id)!==b.dataset.delGoal; }); save(); render('goals'); return; }
+    if(b.dataset.stepbtn){ var q=b.dataset.stepbtn.split(':'), gg=S.goals.filter(function(x){ return String(x.id)===q[0]; })[0]; if(gg){ var ss2=gg.steps.filter(function(x){ return String(x.id)===q[1]; })[0]; if(ss2){ ss2.done=!ss2.done; if(ss2.done){ logDay('step'); M.fire('goals'); } save(); render('goals'); refreshGoalOrbs(); } } return; }
+    if(b.dataset.delGoal){ if(!confirm('Remove this goal?')) return; S.goals=S.goals.filter(function(x){ return String(x.id)!==b.dataset.delGoal; }); save(); render('goals'); refreshGoalOrbs(); return; }
     if(b.dataset.hab){ var k=today(); S.log[k]=S.log[k]||{}; var key='h_'+b.dataset.hab; S.log[k][key]=Math.max(0,(S.log[k][key]||0)+(+b.dataset.d)); save(); M.fire('trackers'); render('trackers'); return; }
     if(b.dataset.sw){ padState.c=b.dataset.sw; stage.querySelectorAll('[data-sw]').forEach(function(x){ x.classList.toggle('sel',x===b); }); return; }
     if(b.dataset.delMedia){ mDel(b.dataset.delMedia).then(function(){ paintGallery(); refreshBoards(); }); return; }
+
+    if(b.dataset.album){ S.album=b.dataset.album; save(); render('gallery'); refreshBoards(); return; }
+    if(b.dataset.delLink){ S.links=S.links.filter(function(x){ return String(x.id)!==b.dataset.delLink; }); save(); render('portals'); return; }
+    if(b.dataset.delIdea){ S.ideas=S.ideas.filter(function(x){ return String(x.id)!==b.dataset.delIdea; }); save(); render('studio'); refreshIdeaOrbs(); return; }
+    if(b.dataset.yt){ playYT(b.dataset.yt); return; }
     var a=b.dataset.act; if(!a) return;
+    if(a==='fly'){ startFly(); return; }
     if(a==='logMood'){ if(!selMood){ toast('Tap a mood light first'); return; } var note=(document.getElementById('mNote').value||'').trim();
       S.moods.unshift({m:selMood,note:note,ts:Date.now(),day:today()}); logDay('mood'); save(); M.fire('mood'); toast('Mood saved'); updateChartBoard();
       if(selMood==='Low'||selMood==='Anxious'){ render('mood'); var c=document.createElement('p'); c.className='care'; c.innerHTML='Thank you for being honest with yourself. Be gentle today &mdash; a slow breath, a short walk, or talking to someone you trust can help. If things feel too heavy, <b>Samaritans are free on 116 123</b> (UK), any time.'; stage.querySelector('.pg').insertBefore(c,stage.querySelector('.pg').children[3]); }
       else render('mood'); selMood=null; return; }
     if(a==='addNote'){ var tx=(document.getElementById('dText').value||'').trim(); if(!tx){ toast('Write something first'); return; } S.notes.unshift({id:Date.now(),title:(document.getElementById('dTitle').value||'').trim(),text:tx,ts:Date.now()}); logDay('note'); save(); M.fire('diary'); toast('Saved to your diary'); render('diary'); return; }
     if(a==='clearDone'){ S.todos=S.todos.filter(function(t){ return !t.done; }); save(); render('todo'); return; }
-    if(a==='addGoal'){ var gt=(document.getElementById('gTitle').value||'').trim(); if(!gt){ toast('Name your goal first'); return; } S.goals.unshift({id:Date.now(),title:gt,why:(document.getElementById('gWhy').value||'').trim(),steps:[]}); save(); M.fire('goals'); render('goals'); return; }
+    if(a==='addGoal'){ var gt=(document.getElementById('gTitle').value||'').trim(); if(!gt){ toast('Name your goal first'); return; } S.goals.unshift({id:Date.now(),title:gt,why:(document.getElementById('gWhy').value||'').trim(),steps:[]}); save(); M.fire('goals'); render('goals'); refreshGoalOrbs(); return; }
     if(a==='addHabit'){ var hn=(document.getElementById('hName').value||'').trim(), ht=+document.getElementById('hTarget').value||1; if(!hn){ toast('Name your tracker'); return; } S.habits.push({id:'c'+Date.now(),n:hn,t:ht,c:['#ff4fa8','#ffc44d','#2ee6ff','#a45cff','#19f0b0'][S.habits.length%5]}); save(); render('trackers'); return; }
     if(a==='saveProfile'){ S.profile.name=(document.getElementById('pName').value||'').trim(); S.profile.line=(document.getElementById('pLine').value||'').trim(); save(); toast('Profile saved'); render('me'); return; }
     if(a==='photo'){ var f=document.getElementById('pPhoto'); f.onchange=function(){ var file=f.files[0]; if(!file) return; shrink(file,320).then(function(url){ S.profile.photo=url; save(); render('me'); }); }; f.click(); return; }
     if(a==='export'){ var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}), u=URL.createObjectURL(blob), l=document.createElement('a'); l.href=u; l.download='mind-universe-'+today()+'.json'; l.click(); setTimeout(function(){ URL.revokeObjectURL(u); },2000); return; }
     if(a==='wipe'){ if(!confirm('Delete everything in your mind on this device? This cannot be undone.')) return; localStorage.removeItem(KEY); indexedDB.deleteDatabase('mindu-media'); location.reload(); return; }
     if(a==='addMedia'){ var mf=document.getElementById('mFile'); mf.onchange=function(){ var files=[].slice.call(mf.files); Promise.all(files.map(function(file){ var isV=/^video/.test(file.type);
-        if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now()}); });
-        return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now()}); })).then(function(){ toast('Added to your memories'); M.fire('gallery'); paintGallery(); refreshBoards(); }); }; mf.click(); return; }
+        if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now(),album:S.album}); });
+        return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now(),album:S.album}); })).then(function(){ toast('Added to your memories'); M.fire('gallery'); paintGallery(); refreshBoards(); }); }; mf.click(); return; }
     if(a==='padClear'){ var c=document.getElementById('pad'); c.getContext('2d').clearRect(0,0,c.width,c.height); return; }
     if(a==='padSize'){ padState.w=padState.w>=18?3:padState.w+5; toast('Brush size '+padState.w); return; }
-    if(a==='padSave'){ var pc=document.getElementById('pad'); mPut({id:'m'+Date.now(),type:'image',url:pc.toDataURL('image/png'),ts:Date.now(),drawing:true}).then(function(){ toast('Saved to your memories'); refreshBoards(); }); return; }
+    if(a==='padSave'){ var pc=document.getElementById('pad'); mPut({id:'m'+Date.now(),type:'image',url:pc.toDataURL('image/png'),ts:Date.now(),drawing:true,album:'Drawings'}).then(function(){ toast('Saved to your memories'); refreshBoards(); }); return; }
+
+    if(a==='addAlbum'){ var nm=prompt('Name your new album (e.g. School days)'); if(nm&&nm.trim()){ nm=nm.trim().slice(0,24); if(S.albums.indexOf(nm)<0) S.albums.push(nm); S.album=nm; save(); render('gallery'); } return; }
+    if(a==='aiImage'){ toast('AI images are a paid upgrade — coming soon'); return; }
+    if(a==='addLink'){ var ln=(document.getElementById('lName').value||'').trim(), lu=(document.getElementById('lUrl').value||'').trim(); if(!ln||!/^https?:\/\//i.test(lu)){ toast('Add a name and a link starting with https://'); return; } S.links.push({id:Date.now(),n:ln,u:lu}); save(); render('portals'); return; }
+    if(a==='saveVision'){ S.vision=(document.getElementById('sVision').value||'').trim(); save(); toast('Vision saved'); M.fire('studio'); return; }
+    if(a==='spark'){ var SP=['Combine two things you love into one project.','What would you build if you knew it could not fail?','Solve one small annoyance you had this week.','Teach something you know in a fresh way.','Make the simplest possible version today.','Ask: who would this help most?','Turn a memory into a design, a story or a product.','Remove one step from something you do every day.','Borrow an idea from nature.','What would your childhood self want you to make?','Do it badly first, then make it better.','Write the headline before you build the thing.','Give yourself 20 minutes and a hard limit.','Make it for one person you know.','Flip it: what is the opposite of the obvious idea?'];
+      document.getElementById('sparkTxt').textContent='“'+SP[(Math.random()*SP.length)|0]+'”'; M.fire('studio'); return; }
     if(a==='narrate'){ narrate(shown); return; }
     if(a==='keep'){ S.keep[shown]=!S.keep[shown]; save(); render(shown); return; }
-    if(a==='nextHadith'){ var H=window.H_HADITH||[], i=H.map(function(h){ return h.id; }).indexOf(shown); travelTo(H[(i+1)%H.length].id); return; }
-    if(a==='nextLight'){ var j=H_LIGHT.map(function(x){ return x.id; }).indexOf(shown); travelTo(H_LIGHT[(j+1)%H_LIGHT.length].id); return; }
+    if(a==='nextHadith'){ var H=(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }), i=H.map(function(h){ return h.id; }).indexOf(shown); if(H.length<2){ toast('Explore to find more wisdom'); return; } travelTo(H[(i+1)%H.length].id); return; }
+    if(a==='nextLight'){ var LL=H_LIGHT.filter(function(x){ return S.visited[x.id]; }), j=LL.map(function(x){ return x.id; }).indexOf(shown); if(LL.length<2){ toast('Explore to find more light'); return; } travelTo(LL[(j+1)%LL.length].id); return; }
   });
   function shrink(file,max){ return new Promise(function(res){ var r=new FileReader(); r.onload=function(){ var im=new Image(); im.onload=function(){ var k=Math.min(1,max/Math.max(im.width,im.height)), c=document.createElement('canvas'); c.width=im.width*k; c.height=im.height*k; c.getContext('2d').drawImage(im,0,0,c.width,c.height); res(c.toDataURL('image/jpeg',.85)); }; im.src=r.result; }; r.readAsDataURL(file); }); }
 
@@ -447,10 +655,10 @@ body.inside #dock{opacity:1;pointer-events:auto}
 
   /* memories: list + pictures floating around the neuron */
   var boards=[];
-  function paintGallery(){ var el=document.getElementById('gal'); if(!el) return; mAll().then(function(list){ list.sort(function(a,b){ return b.ts-a.ts; });
+  function paintGallery(){ var el=document.getElementById('gal'); if(!el) return; mAll().then(function(list){ list=list.filter(function(m){ return m.type!=='music' && (m.album||(m.drawing?'Drawings':'Precious'))===S.album; }); list.sort(function(a,b){ return b.ts-a.ts; });
       if(!list.length){ el.innerHTML='<p class="empty">No memories yet.</p>'; return; }
       el.innerHTML=list.map(function(m){ var src=m.type==='video'?URL.createObjectURL(m.blob):m.url; return '<figure>'+(m.type==='video'?'<video src="'+src+'" muted loop playsinline autoplay></video>':'<img src="'+src+'" alt="">')+'<button data-del-media="'+m.id+'" aria-label="Remove">&#10005;</button></figure>'; }).join(''); }); }
-  function refreshBoards(){ boards.forEach(function(b){ b.remove(); }); boards=[]; mAll().then(function(list){ list.filter(function(m){ return m.type==='image'; }).sort(function(a,b){ return b.ts-a.ts; }).slice(0,6).forEach(function(m,i){
+  function refreshBoards(){ boards.forEach(function(b){ b.remove(); }); boards=[]; mAll().then(function(list){ list.filter(function(m){ return m.type==='image' && (m.album||(m.drawing?'Drawings':'Precious'))===S.album; }).sort(function(a,b){ return b.ts-a.ts; }).slice(0,6).forEach(function(m,i){
       var im=new Image(); im.onload=function(){ var a=i/6*Math.PI*2, r=17, w=9, h=w*im.height/im.width; boards.push(M.addBillboard('gallery',im,w,h,[Math.cos(a)*r,Math.sin(a)*r*.7,Math.sin(a)*6])); }; im.src=m.url; }); }); }
 
   /* drawing pad with glowing brushes */
@@ -462,26 +670,155 @@ body.inside #dock{opacity:1;pointer-events:auto}
 
   function streak(){ var n=0; for(var i=0;i<365;i++){ var d=new Date(); d.setDate(d.getDate()-i); var lg=S.log[today(d)]; if(lg&&Object.keys(lg).length) n++; else if(i>0) break; } return n; }
 
+
+
+  function playYT(v){ var box=document.getElementById('ytBox'); if(!box) return; box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v+'?autoplay=1&rel=0" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="width:100%;max-width:560px;aspect-ratio:16/9;border:0;border-radius:18px;margin:14px auto 0;display:block;box-shadow:0 0 0 1px var(--line),0 20px 50px -20px #ff4f6d"></iframe>'; }
+  /* ideas floating around the Creative studio */
+  var ideaOrbs=[];
+  function ideaCanvas(txt,c){ var cv=document.createElement('canvas'); cv.width=320; cv.height=160; var x=cv.getContext('2d');
+    var gr=x.createRadialGradient(160,80,8,160,80,150); gr.addColorStop(0,c+'66'); gr.addColorStop(1,c+'00'); x.fillStyle=gr; x.fillRect(0,0,320,160);
+    x.fillStyle='#fff'; x.font='bold 24px Inter, sans-serif'; x.textAlign='center'; x.textBaseline='middle'; x.shadowColor='rgba(0,0,0,.6)'; x.shadowBlur=6;
+    var words=txt.split(' '), lines=[''], li=0; words.forEach(function(w){ if((lines[li]+' '+w).length>20){ lines.push(w); li++; } else lines[li]=(lines[li]+' '+w).trim(); }); lines=lines.slice(0,3);
+    lines.forEach(function(l,i){ x.fillText(l,160,80+(i-(lines.length-1)/2)*28); }); return cv; }
+  function refreshIdeaOrbs(){ ideaOrbs.forEach(function(o){ o.b.remove(); }); ideaOrbs=[]; S.ideas.slice(0,8).forEach(function(x,i){ var b=M.addBillboard('studio',ideaCanvas(x.t,['#ffc44d','#ff4fa8','#2ee6ff','#a45cff','#19f0b0'][i%5]),12,6,[0,0,0]); if(b) ideaOrbs.push({b:b,i:i,n:Math.min(8,S.ideas.length)}); }); }
+  function moveIdeaOrbs(t){ var sd=byId.studio; if(!sd||!ideaOrbs.length) return; ideaOrbs.forEach(function(o){ var a=-t*.1+o.i/o.n*Math.PI*2, r=18; o.b.sprite.position.set(sd.pos[0]+Math.cos(a)*r, sd.pos[1]+Math.sin(t*.5+o.i)*2+Math.sin(a)*6, sd.pos[2]+Math.sin(a)*r*.6); }); }
+  /* goals floating in space: glowing progress orbs orbiting the Goals neuron */
+  var goalOrbs=[];
+  function goalCanvas(g,c){ var cv=document.createElement('canvas'); cv.width=cv.height=256; var x=cv.getContext('2d'), tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?dn/tot:0;
+    var gr=x.createRadialGradient(128,104,10,128,104,96); gr.addColorStop(0,c+'55'); gr.addColorStop(1,c+'00'); x.fillStyle=gr; x.beginPath(); x.arc(128,104,96,0,Math.PI*2); x.fill();
+    x.lineWidth=10; x.strokeStyle='rgba(255,255,255,.15)'; x.beginPath(); x.arc(128,104,62,0,Math.PI*2); x.stroke();
+    x.strokeStyle=c; x.shadowColor=c; x.shadowBlur=18; x.lineCap='round'; x.beginPath(); x.arc(128,104,62,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.max(.02,pc)); x.stroke(); x.shadowBlur=0;
+    x.fillStyle='#fff'; x.font='bold 34px JetBrains Mono, monospace'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(Math.round(pc*100)+'%',128,104);
+    x.font='bold 22px Inter, sans-serif'; x.shadowColor='rgba(0,0,0,.6)'; x.shadowBlur=6; var title=g.title.length>20?g.title.slice(0,19)+'…':g.title; x.fillText(title,128,206); return cv; }
+  function refreshGoalOrbs(){ goalOrbs.forEach(function(o){ o.b.remove(); }); goalOrbs=[]; var cols=['#a45cff','#2ee6ff','#ff4fa8','#ffc44d','#19f0b0','#ff8a3d'];
+    S.goals.slice(0,8).forEach(function(g,i){ var b=M.addBillboard('goals',goalCanvas(g,cols[i%cols.length]),11,11,[0,0,0]); if(b) goalOrbs.push({b:b,i:i,n:Math.min(8,S.goals.length)}); }); }
+  function moveGoalOrbs(t){ var gd=byId.goals; if(!gd||!goalOrbs.length) return; goalOrbs.forEach(function(o){ var a=t*.12+o.i/o.n*Math.PI*2, r=19;
+      o.b.sprite.position.set(gd.pos[0]+Math.cos(a)*r, gd.pos[1]+Math.sin(t*.6+o.i)*2.2+Math.sin(a)*5, gd.pos[2]+Math.sin(a)*r*.6); }); }
+
   /* labels and dock */
   var lw=document.getElementById('labels'), labels={};
-  DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':''); b.dataset.go=d.id; b.style.setProperty('--c',d.col); b.innerHTML='<i></i><span>'+esc(d.name)+'</span>'; lw.appendChild(b); labels[d.id]=b; });
+  function labelText(d){ return d.hidden&&!S.visited[d.id]?'?':d.name; }
+  DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':'')+(d.hidden?' hid':''); b.dataset.go=d.id; b.style.setProperty('--c',d.hidden&&!S.visited[d.id]?'#cfd6ff':d.col); b.innerHTML='<i></i><span>'+esc(labelText(d))+'</span>'; lw.appendChild(b); labels[d.id]=b; });
   lw.addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
-  M.onFrame(function(){ var tr=M.travelling();
-    DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr)&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(!d.mini||s.dist<90);
+  M.onFrame(function(){ var tr=M.travelling(); moveGoalOrbs(performance.now()/1000); moveIdeaOrbs(performance.now()/1000); if(typeof moveGuide==='function') moveGuide();
+    DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr||M.isFree())&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(!d.mini||s.dist<90)&&(!d.hidden||S.visited[d.id]||s.dist<150);
       if(!vis){ el.style.opacity='0'; el.style.pointerEvents='none'; return; }
       el.style.opacity=(tr?.35:Math.max(.45,Math.min(1,1.3-s.dist/320))).toFixed(2); el.style.pointerEvents=tr?'none':'auto';
       el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(0,-50%)'; }); });
-  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','gallery','draw','ai','connect','sage','light'];
-  function paintDock(){ document.getElementById('dockRow').innerHTML=DOCK.map(function(id){ var d=byId[id]; return '<button class="dk'+(id===cur?' here':'')+'" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+esc(d.name)+'</span></button>'; }).join(''); }
-  document.getElementById('dock').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
+  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','gallery','studio','portals','draw','ai','connect'];
+  function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML='<div class="dk myst" title="Hidden lights you have found"><i>?</i><span>'+mm.n+' / '+mm.t+'<br>found</span></div>'+'<button class="dk" data-fly="1" style="--c:#ffffff"><i style="background:linear-gradient(135deg,var(--blue),var(--pink))"></i><span>Fly</span></button>'+DOCK.map(function(id){ var d=byId[id]; return '<button class="dk'+(id===cur?' here':'')+'" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+esc(d.name)+'</span></button>'; }).join(''); }
+  document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   paintDock();
+
+
+  /* ── sound: calm chords (made in the browser) or the person's own music ── */
+  var Snd=(function(){
+    var ctx=null, master=null, nodes=[], timers=[], mode='off', audio=null, vol=(S.vol==null?.6:S.vol);
+    function ac(){ if(!ctx){ var C=window.AudioContext||window.webkitAudioContext; if(!C) return null; ctx=new C(); master=ctx.createGain(); master.gain.value=0; master.connect(ctx.destination); } if(ctx.state==='suspended') ctx.resume(); return ctx; }
+    function stopChords(){ timers.forEach(function(x){ clearInterval(x); clearTimeout(x); }); timers=[]; nodes.forEach(function(n){ try{ n.stop&&n.stop(); }catch(e){} try{ n.disconnect(); }catch(e){} }); nodes=[]; }
+    function chords(){ var c=ac(); if(!c) return; stopChords();
+      var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=900; lp.Q.value=.6; nodes.push(lp);
+      var d=c.createDelay(2); d.delayTime.value=.5; var fb=c.createGain(); fb.gain.value=.35; var dl=c.createBiquadFilter(); dl.type='lowpass'; dl.frequency.value=2400; nodes.push(d,fb,dl);
+      lp.connect(master); lp.connect(d); d.connect(dl); dl.connect(fb); fb.connect(d); dl.connect(master);
+      var prog=[[130.8,164.8,196,246.9],[110,130.8,164.8,196],[87.3,110,130.8,164.8],[98,123.5,146.8,196]], k=0;
+      function ping(fr){ var t=c.currentTime, o=c.createOscillator(), v=c.createGain(); o.type='sine'; o.frequency.value=fr; v.gain.setValueAtTime(.0001,t); v.gain.exponentialRampToValueAtTime(.018,t+.02); v.gain.exponentialRampToValueAtTime(.0001,t+2.2); o.connect(v); v.connect(d); v.connect(master); o.start(t); o.stop(t+2.3); }
+      function chord(){ var t=c.currentTime, ch=prog[k++%prog.length];
+        ch.forEach(function(fr,i){ [0,7].forEach(function(det){ var o=c.createOscillator(), v=c.createGain(); o.type='triangle'; o.frequency.value=fr*(i===3?2:1); o.detune.value=det-3;
+          v.gain.setValueAtTime(.0001,t); v.gain.linearRampToValueAtTime(.035,t+2.2); v.gain.linearRampToValueAtTime(.03,t+6); v.gain.linearRampToValueAtTime(.0001,t+8.6); o.connect(v); v.connect(lp); o.start(t); o.stop(t+8.8); }); });
+        timers.push(setTimeout(function(){ ping(ch[(Math.random()*4)|0]*4); },1800)); }
+      chord(); timers.push(setInterval(chord,8000));
+      var t0=c.currentTime; master.gain.cancelScheduledValues(t0); master.gain.setValueAtTime(master.gain.value,t0); master.gain.linearRampToValueAtTime(vol,t0+2.5); }
+    function fadeChords(){ if(!ctx) return; var t=ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value,t); master.gain.linearRampToValueAtTime(0,t+.8); setTimeout(stopChords,900); }
+    function playMine(){ return mGet('__music').then(function(rec){ if(!rec){ document.getElementById('sndFile').click(); return false; }
+        if(!audio){ audio=new Audio(); audio.loop=true; } audio.src=URL.createObjectURL(rec.blob); audio.volume=vol; audio.play().catch(function(){}); return true; }); }
+    function set(m){ if(m==='mine'){ playMine().then(function(ok){ if(!ok) return; fadeChords(); mode='mine'; S.snd='mine'; save(); paint(); }); return; }
+      if(audio){ audio.pause(); }
+      if(m==='chords'){ chords(); } else fadeChords();
+      mode=m; S.snd=m; save(); paint(); }
+    function paint(){ document.querySelectorAll('[data-snd]').forEach(function(b){ b.setAttribute('aria-pressed',b.dataset.snd===mode); });
+      document.getElementById('soundBtn').innerHTML='&#9835; '+(mode==='off'?'Sound off':mode==='chords'?'Calm chords':'My music'); }
+    function setVol(v){ vol=v; S.vol=v; save(); if(audio) audio.volume=v; if(ctx&&mode==='chords'){ var t=ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value,t); master.gain.linearRampToValueAtTime(v,t+.3); } }
+    return {set:set,paint:paint,setVol:setVol,mode:function(){ return mode; },vol:function(){ return vol; },
+      useFile:function(file){ mPut({id:'__music',type:'music',name:file.name,blob:file,ts:Date.now()}).then(function(){ document.getElementById('mineName').textContent='My music: '+file.name.slice(0,22); set('mine'); }); }};
+  })();
+  function mGet(id){ return db().then(function(d){ return new Promise(function(res){ var q=d.transaction('m').objectStore('m').get(id); q.onsuccess=function(){ res(q.result); }; q.onerror=function(){ res(null); }; }); }); }
+  var soundMenu=document.getElementById('soundMenu');
+  document.getElementById('soundBtn').onclick=function(e){ e.stopPropagation(); soundMenu.classList.toggle('on'); };
+  soundMenu.addEventListener('click',function(e){ var b=e.target.closest('[data-snd]'); if(!b) return; e.stopPropagation(); Snd.set(b.dataset.snd); });
+  document.addEventListener('click',function(e){ if(!e.target.closest('#soundMenu,#soundBtn')) soundMenu.classList.remove('on'); });
+  document.getElementById('sndFile').onchange=function(){ var f=this.files[0]; if(f) Snd.useFile(f); };
+  document.getElementById('sndVol').value=Math.round(Snd.vol()*100);
+  document.getElementById('sndVol').oninput=function(){ Snd.setVol(this.value/100); };
+  mGet('__music').then(function(r){ if(r) document.getElementById('mineName').textContent='My music: '+r.name.slice(0,22); });
+  Snd.paint();
+
+
+  /* ── sound effects (calm neuron pings) ── */
+  var FX=function(n){ var a=[].slice.call(arguments,1); try{ window.SAFX&&SAFX[n].apply(null,a); }catch(e){} };
+  function paintFx(){ var on=!(window.SAFX&&SAFX.isOff()); var b=document.querySelector('[data-fx]'); if(b) b.setAttribute('aria-pressed',on); document.getElementById('fxName').textContent='Neuron sounds '+(on?'on':'off'); }
+  soundMenu.addEventListener('click',function(e){ var b=e.target.closest('[data-fx]'); if(!b) return; e.stopPropagation(); SAFX.setOn(SAFX.isOff()); paintFx(); FX('zoop'); });
+  paintFx();
+
+  /* ── flight soundtrack: a soft drone that rises with your speed ── */
+  var FlySnd=(function(){ var ctx=null, o1,o2,lp,g, on=localStorage.getItem('mindu.flysnd')!=='off';
+    function start(){ if(!on) return; var C=window.AudioContext||window.webkitAudioContext; if(!C) return; if(!ctx){ ctx=new C(); } if(ctx.state==='suspended') ctx.resume(); if(g) return;
+      g=ctx.createGain(); g.gain.value=0; lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=300; lp.Q.value=4;
+      o1=ctx.createOscillator(); o1.type='sawtooth'; o1.frequency.value=55; o2=ctx.createOscillator(); o2.type='triangle'; o2.frequency.value=82.4;
+      var n=ctx.createBufferSource(), b=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate), d=b.getChannelData(0); for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; n.buffer=b; n.loop=true;
+      var nf=ctx.createBiquadFilter(); nf.type='bandpass'; nf.frequency.value=900; nf.Q.value=.7; var ng=ctx.createGain(); ng.gain.value=.25;
+      o1.connect(lp); o2.connect(lp); n.connect(nf); nf.connect(ng); ng.connect(lp); lp.connect(g); g.connect(ctx.destination); o1.start(); o2.start(); n.start();
+      var t=ctx.currentTime; g.gain.linearRampToValueAtTime(.05,t+1.2); }
+    function stop(){ if(!g) return; var t=ctx.currentTime, gg=g; gg.gain.cancelScheduledValues(t); gg.gain.setValueAtTime(gg.gain.value,t); gg.gain.linearRampToValueAtTime(0,t+.8); var a=o1,b2=o2; setTimeout(function(){ try{ a.stop(); b2.stop(); }catch(e){} },900); g=null; }
+    function speed(v){ if(!g) return; var t=ctx.currentTime, k=Math.min(1,Math.abs(v)); lp.frequency.setTargetAtTime(300+k*1600,t,.2); g.gain.setTargetAtTime(.05+k*.07,t,.2); o1.frequency.setTargetAtTime(55+k*30,t,.3); }
+    return {start:start,stop:stop,speed:speed,on:function(){ return on; },set:function(v){ on=v; localStorage.setItem('mindu.flysnd',v?'on':'off'); if(!v) stop(); else if(document.body.classList.contains('flying')) start(); }};
+  })();
+  function paintFlySnd(){ var b=document.querySelector('[data-flysnd]'); b.setAttribute('aria-pressed',FlySnd.on()); document.getElementById('flySndName').textContent='Flight drone '+(FlySnd.on()?'on':'off'); }
+  soundMenu.addEventListener('click',function(e){ var b=e.target.closest('[data-flysnd]'); if(!b) return; e.stopPropagation(); FlySnd.set(!FlySnd.on()); paintFlySnd(); });
+  paintFlySnd();
+
+  /* ── free flight ── */
+  var flyHelp=document.getElementById('flyHelp'), thrust=document.getElementById('thrust'), enterPill=document.getElementById('enterPill'), flyNear=document.getElementById('flyNear');
+  var guideEl=document.getElementById('guide'), guideTxt=document.getElementById('guideTxt'), guideId=null, nearId=null, skip={}, thr=0;
+  function isMob(){ return innerWidth<900; }
+  function pickGuide(){ var from=byId[cur]||byId.me, best=null, bd=1e9;
+    DESTS.forEach(function(d){ if(!d.hidden||S.visited[d.id]) return; var dx=d.pos[0]-from.pos[0], dy=d.pos[1]-from.pos[1], dz=d.pos[2]-from.pos[2], dd=dx*dx+dy*dy+dz*dz; if(dd<bd){ bd=dd; best=d.id; } }); return best; }
+  function startFly(){ if(!document.body.classList.contains('inside')||busy) return; if(cur&&shown) skip[cur]=1; guideId=pickGuide();
+    retract(function(){ if(!M.freeStart(guideId)) return; document.body.classList.add('flying'); FX('warp'); FlySnd.start();
+      document.getElementById('flyHint').textContent=isMob()?'Touch & hold to fly · drag to steer':'Drag to steer · hold the button, W or Space to fly · A / D to turn';
+      if(localStorage.getItem('mindu.flyhelp')!=='1'){ document.getElementById('fhText').innerHTML=isMob()?'<b>Touch and hold</b> anywhere to fly. <b>Drag</b> to steer. A golden ring points to a hidden light &mdash; go and find it.':'<b>Hold</b> the fly button (or W / Space) to fly. <b>Drag</b> to look around. A golden ring points to a hidden light &mdash; go and find it.'; flyHelp.classList.add('on'); } paintDock(); }); }
+  function endFly(){ document.body.classList.remove('flying','touching'); flyHelp.classList.remove('on'); M.freeThrust(0); M.freeTurn(0); thrust.classList.remove('on'); enterPill.hidden=true; nearId=null; flyNear.textContent=''; FlySnd.stop(); }
+  document.getElementById('fhGo').onclick=function(){ localStorage.setItem('mindu.flyhelp','1'); flyHelp.classList.remove('on'); FX('zoop'); };
+  M.onNear(function(id){ if(busy||skip[id]) return; skip[id]=1; endFly(); travelTo(id); });
+  enterPill.onclick=function(e){ e.stopPropagation(); if(nearId){ var id=nearId; skip[id]=1; endFly(); travelTo(id); } };
+  var drag=null;
+  addEventListener('pointerdown',function(e){ if(!M.isFree()||e.target.closest('button,a,input,textarea,.nl,#dock,#flyHelp,#soundMenu,#stage')) return; drag={x:e.clientX,y:e.clientY,id:e.pointerId}; if(isMob()){ M.freeThrust(1); thr=1; document.body.classList.add('touching'); } });
+  addEventListener('pointermove',function(e){ if(!drag||e.pointerId!==drag.id) return; M.freeLook(e.clientX-drag.x,e.clientY-drag.y); drag.x=e.clientX; drag.y=e.clientY; });
+  ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(e){ if(drag&&e.pointerId===drag.id){ drag=null; if(isMob()){ M.freeThrust(0); thr=0; document.body.classList.remove('touching'); } } }); });
+  function hold(on){ M.freeThrust(on?1:0); thr=on?1:0; thrust.classList.toggle('on',on); }
+  thrust.addEventListener('pointerdown',function(e){ e.preventDefault(); try{ thrust.setPointerCapture(e.pointerId); }catch(_){} hold(true); });
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(n){ thrust.addEventListener(n,function(){ hold(false); }); });
+  var K={};
+  function keys(){ var f=(K.w||K.arrowup||K[' '])?1:((K.s||K.arrowdown)?-.45:0); M.freeThrust(f); thr=f; thrust.classList.toggle('on',f>0); M.freeTurn((K.a||K.arrowleft)?1:((K.d||K.arrowright)?-1:0)); }
+  addEventListener('keydown',function(e){ if(!M.isFree()||e.target.closest('input,textarea')) return; var k=e.key.toLowerCase(); if(k==='enter'&&nearId){ e.preventDefault(); enterPill.click(); return; } if(k==='escape'){ endFly(); travelTo(cur||'me'); return; }
+    if(['w','a','s','d',' ','arrowup','arrowdown','arrowleft','arrowright'].indexOf(k)<0) return; e.preventDefault(); K[k]=1; keys(); });
+  addEventListener('keyup',function(e){ var k=e.key.toLowerCase(); if(K[k]){ delete K[k]; if(M.isFree()) keys(); } });
+  addEventListener('wheel',function(e){ if(M.isFree()) M.freeKick(-e.deltaY*.06); },{passive:true});
+  setInterval(function(){ if(!M.isFree()) return; FlySnd.speed(thr); var n=M.nearest(); if(!n.id) return; var d=byId[n.id], known=!d.hidden||S.visited[n.id];
+    flyNear.textContent='nearest · '+(known?d.name:'an unknown light')+' · '+Math.round(n.dist)+'m';
+    var close=n.dist<(d.scale||1)*16+12&&!skip[n.id]; if(close){ nearId=n.id; enterPill.hidden=false; enterPill.innerHTML='&#9673; Enter '+(known?esc(d.name):'the unknown light'); } else { nearId=null; enterPill.hidden=true; } },200);
+  function moveGuide(){ var on=M.isFree()&&guideId&&!S.visited[guideId]&&!flyHelp.classList.contains('on'); if(!on){ guideEl.classList.remove('on'); return; }
+    var gs=M.screenOf(guideId), W=innerWidth, H=innerHeight, m=60, cx=W/2, cy=H/2, x=gs.x, y=gs.y, off=false;
+    if(!gs.on){ x=cx+(cx-x)*1e3; y=cy+(cy-y)*1e3; }
+    if(x<m||x>W-m||y<m+40||y>H-m-90||!gs.on){ off=true; var dx=x-cx, dy=y-cy, k=Math.min(Math.abs((cx-m)/(dx||1e-6)),Math.abs((cy-m-60)/(dy||1e-6))); x=cx+dx*k; y=cy+dy*k; guideEl.style.setProperty('--ang',(Math.atan2(dy,dx)*180/Math.PI+90).toFixed(1)+'deg'); }
+    guideEl.classList.add('on'); guideEl.classList.toggle('off',off); guideEl.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)';
+    guideTxt.textContent=off?'turn this way':(gs.dist<60?'almost there':'something hidden'); }
 
   /* the gate */
   var gate=document.getElementById('gate'), gName=document.getElementById('gName');
   if(S.profile.name){ gName.value=S.profile.name; }
-  function enter(){ var n=gName.value.trim(); if(n){ S.profile.name=n; save(); } gate.classList.add('gone');
+  function enter(){ var n=gName.value.trim(); if(n){ S.profile.name=n; save(); } gate.classList.add('gone'); Snd.set(S.snd==='off'?'off':(S.snd==='mine'?'mine':'chords'));
     M.enter(function(){ document.body.classList.add('inside'); cur='me'; M.setTheme(S.theme);
-      chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard(); refreshBoards();
+      chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard(); refreshBoards(); refreshGoalOrbs(); refreshIdeaOrbs();
       var last=S.moods[0]; if(last) M.setColor('mood',moodOf(last.m).c);
       setTimeout(function(){ M.fire('me'); emerge('me'); },2300); }); }
   document.getElementById('gEnter').onclick=enter;

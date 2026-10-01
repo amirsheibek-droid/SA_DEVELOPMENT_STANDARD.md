@@ -193,6 +193,9 @@
       comets.push({t:Math.random(),v:rnd(.05,.1)*60/Math.max(60,dl),dir:Math.random()<.5?1:-1,parts:parts}); }
     axons.push({a:L[0],b:L[1],curve:curve,tube:tube,line:line,comets:comets,boost:0,len:dl,secret:A.secret||B.secret});
   });
+  function routeBetween(a,b){ if(!a||!b||a===b) return null; var prev={}, q=[a], seen={}; seen[a]=1;
+    while(q.length){ var n=q.shift(); if(n===b) break; axons.forEach(function(L){ var m=L.a===n?L.b:(L.b===n?L.a:null); if(m && !seen[m]){ seen[m]=1; prev[m]=n; q.push(m); } }); }
+    if(!seen[b]) return null; var path=[b]; while(path[0]!==a) path.unshift(prev[path[0]]); return path; }
   function axonBetween(a,b){ for(var i=0;i<axons.length;i++){ var L=axons[i]; if((L.a===a&&L.b===b)||(L.a===b&&L.b===a)) return L; } return null; }
 
   // dust streaks — always rushing toward the viewer, faster while you travel
@@ -239,8 +242,17 @@
     var lift=V(0,dist*.12,0);
     var curve=new T.CubicBezierCurve3(camPos.clone(), camPos.clone().addScaledVector(dirv,dist*.3).add(side).add(lift), P1.clone().addScaledVector(dirv,-dist*.3).add(side).add(lift), P1.clone());
     var A=axonBetween(from,id); if(A) A.boost=2.5;
-    var dur=reduce?10:Math.max(2600,Math.min(5600,1500+dist*16));
-    travel={t0:performance.now(),dur:dur,curve:curve,fromLook:camLook.clone(),toLook:L1,cb:cb,to:id};
+    var dur=reduce?10:Math.max(2600,Math.min(5600,1500+dist*16)), la=.06;
+    var route=reduce?null:routeBetween(from,id);
+    if(route && route.length>1){
+      var pts=[camPos.clone()], up=V(0,1.8,0);
+      for(var r=0;r<route.length-1;r++){ var ax=axonBetween(route[r],route[r+1]); if(!ax) continue; var fw=ax.a===route[r]; ax.boost=3;
+        for(var sI=1;sI<=16;sI++){ var tt=sI/17; ax.curve.getPoint(fw?tt:1-tt,tmpA); pts.push(tmpA.clone().add(up)); } }
+      pts.push(P1.clone());
+      curve=new T.CatmullRomCurve3(pts,false,'centripetal',.5);
+      dur=Math.max(3800,Math.min(9500,2400+curve.getLength()*13)); la=.02;
+    }
+    travel={t0:performance.now(),dur:dur,curve:curve,fromLook:camLook.clone(),toLook:L1,cb:cb,to:id,la:la};
     fpul.burst(60);
     return dur;
   }
@@ -313,7 +325,7 @@
       else if(travel){
         var k2=Math.min(1,(performance.now()-travel.t0)/travel.dur), e2=ease(k2);
         travel.curve.getPoint(e2,camPos);
-        travel.curve.getPoint(Math.min(1,e2+.06),tmpA);
+        travel.curve.getPoint(Math.min(1,e2+(travel.la||.06)),tmpA);
         if(e2>.94) tmpA.copy(travel.toLook);
         var lookAhead=tmpB.copy(camLook);
         if(k2<.18) lookAhead.lerpVectors(travel.fromLook,tmpA,smooth(0,.18,k2));
