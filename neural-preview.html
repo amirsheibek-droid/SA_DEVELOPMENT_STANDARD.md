@@ -828,7 +828,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   var btx=document.getElementById('btx');
   function enter(){ if(document.body.classList.contains('inside')) return; FX('warp'); btx.classList.add('gone');
     var target=(location.hash||'').slice(1); if(!byId[target]||byId[target].secret) target='core';
-    M.enter(function(){ document.body.classList.add('inside'); cur='core'; setTimeout(function(){ M.fire('core'); emerge('core');
+    M.enter(function(){ document.body.classList.add('inside'); cur='core'; setTimeout(function(){ if(cur!=='core'||busy||shown) return; M.fire('core'); emerge('core');
         if(target!=='core') setTimeout(function(){ travelTo(target); },1400); },2300); }); }
   document.getElementById('btxEnter').addEventListener('click',enter);
   addEventListener('keydown',function(e){ if(e.key==='Enter' && !document.body.classList.contains('inside') && document.activeElement===document.body) enter(); });
