@@ -6,7 +6,7 @@
 <title>Intelligent Website Design &amp; Niche Mobile App Development | SA Intelligent Designs</title>
 <meta name="description" content="SA Intelligent Designs builds intelligent websites with full SEO support and develops mobile applications for specialist niches, serving Milton Keynes, Bedford and London. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
 <meta name="robots" content="noindex">
-<meta name="author" content="SA Intelligent Designs — SA Marketing Intelligence">
+<meta name="author" content="SA Intelligent Designs — a Bedford &amp; Milton Keynes tech community">
 <meta name="theme-color" content="#f3f6fb">
 <link rel="canonical" href="https://www.samarketingintelligence.com/">
 <meta property="og:type" content="website">
@@ -35,8 +35,7 @@
       "areaServed": [{"@type":"City","name":"Milton Keynes"},{"@type":"City","name":"London"},{"@type":"City","name":"Bedford"},"GB"],
       "priceRange": "££",
       "email": "Contact@samarketingintelligence.com",
-      "telephone": "+447712673747",
-      "contactPoint": [{"@type":"ContactPoint","telephone":"+447712673747","contactType":"customer service","email":"Contact@samarketingintelligence.com","areaServed":["Milton Keynes","London","Bedford","GB"],"availableLanguage":"English"}],
+      "contactPoint": [{"@type":"ContactPoint","contactType":"customer service","email":"Contact@samarketingintelligence.com","areaServed":["Milton Keynes","London","Bedford","GB"],"availableLanguage":"English"}],
       "knowsAbout": ["Website design","Web development","SEO","Mobile application development","Brand identity"],
       "makesOffer": [
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Launch — single-page website design","description":"A sharp, single-page website with mobile-first build, contact form, Google Business integration and foundational SEO."}},
@@ -401,6 +400,66 @@ body.flying #flyChip{display:none}
   .e-count{font-size:3rem}
 }
 
+
+/* ── soundscape picker ── */
+#ambMenu{position:fixed;z-index:38;top:64px;right:22px;display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:rgba(250,252,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 0 0 1px rgba(31,107,255,.22),0 20px 50px -20px rgba(31,107,255,.5);opacity:0;transform:translateY(-8px) scale(.97);transform-origin:100% 0;pointer-events:none;transition:.25s}
+#ambMenu.on{opacity:1;transform:none;pointer-events:auto}
+.amb-h{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);padding:4px 10px 8px}
+#ambMenu button{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 14px 10px 10px;border-radius:12px;font-weight:600;font-size:.92rem}
+#ambMenu button:hover{background:rgba(31,107,255,.07)}
+#ambMenu button i{width:9px;height:9px;border-radius:50%;border:2px solid var(--blue)}
+#ambMenu button[aria-pressed="true"]{color:var(--blue)}
+#ambMenu button[aria-pressed="true"] i{background:var(--green);border-color:var(--green);box-shadow:0 0 10px 2px rgba(18,217,138,.7)}
+#ambBtn span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:bottom}
+.hunt{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;color:var(--blue);margin-top:18px}
+@media(max-width:899px){
+  #ambBtn span{display:none}
+  #ambMenu{top:auto;bottom:calc(130px + env(safe-area-inset-bottom));right:12px;left:12px;transform-origin:50% 100%}
+  #ambMenu button{padding:12px 14px 12px 10px}
+}
+
+
+/* ── the voice Architect ── */
+.arch-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start;margin-top:6px}
+.arch-step .vtog{margin-left:auto;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.mic-row{display:flex;align-items:center;gap:16px;margin-top:20px}
+.mic{position:relative;flex:0 0 auto;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#fff,#e6eeff);box-shadow:0 0 0 1.5px rgba(31,107,255,.45),0 0 30px -6px rgba(31,107,255,.6)}
+.mic span{position:absolute;left:50%;top:50%;width:16px;height:24px;margin:-15px 0 0 -8px;border-radius:9px;border:2.5px solid var(--blue)}
+.mic span::after{content:"";position:absolute;left:50%;top:26px;width:22px;height:10px;margin-left:-11px;border:2.5px solid var(--blue);border-top:0;border-radius:0 0 12px 12px}
+.mic::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(18,217,138,.5);animation:ping 2.2s ease-out infinite}
+.mic.on{background:radial-gradient(circle at 50% 38%,#6ff0be,#12b877);box-shadow:0 0 0 2px var(--green),0 0 40px 4px rgba(18,217,138,.6)}
+.mic.on span,.mic.on span::after{border-color:#fff}
+.mic.on::after{animation-duration:1s}
+.mic-row.big .mic{width:96px;height:96px}
+.mic-row.big .mic span{transform:scale(1.35)}
+.heard{color:var(--mute);font-size:.98rem;line-height:1.5;min-height:1.5em}
+.heard.live{color:var(--ink);font-style:italic}
+.adv{height:2px;background:rgba(31,107,255,.12);margin-top:14px;border-radius:2px;overflow:hidden;max-width:300px}
+.adv i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--green))}
+.bp{width:100%;height:auto;aspect-ratio:420/320;border-radius:16px;background:rgba(244,248,255,.75);box-shadow:inset 0 0 0 1px rgba(31,107,255,.2)}
+.bp-grid line{stroke:rgba(31,107,255,.07);stroke-width:1}
+.bp-ln{stroke:rgba(31,107,255,.45);stroke-width:1.2;stroke-dasharray:4 5;animation:flow 1.4s linear infinite}
+.bp-core circle{stroke:var(--blue);stroke-width:1.5;filter:drop-shadow(0 0 10px rgba(31,107,255,.45))}
+.bp-t{font:800 12px var(--sans);fill:var(--ink);text-anchor:middle}
+.bp-s{font:500 8.5px var(--mono);fill:var(--mute);text-anchor:middle;letter-spacing:.04em}
+.bp-node circle{fill:#fff;stroke:var(--green);stroke-width:2;filter:drop-shadow(0 0 6px rgba(18,217,138,.7))}
+.bp-node text{font:600 9.5px var(--sans);fill:var(--ink);text-anchor:middle}
+.bp-node.ghost{opacity:.45}
+.bp-user rect{fill:#fff;stroke:rgba(31,107,255,.5)}.bp-user text,.bp-plat text{font:600 8.5px var(--mono);text-anchor:middle;fill:var(--blue)}
+.bp-plat rect{fill:#fff;stroke:rgba(18,217,138,.6)}.bp-plat text{fill:#0f9e66}
+.bp-hint{font:500 10px var(--mono);fill:var(--mute2);text-anchor:middle}
+.pop{animation:bpPop .7s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes bpPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:1100px){.arch-grid{grid-template-columns:1fr}.bp{order:-1;max-height:250px}}
+/* ── the Pulse ── */
+.news{margin-top:10px;max-width:600px}
+.nw{position:relative;padding:14px 0 14px 26px;border-left:2px solid rgba(31,107,255,.18)}
+.nw::before{content:"";position:absolute;left:-7px;top:20px;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--green),0 0 12px 3px rgba(18,217,138,.5)}
+.nw-d{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.nw h3{margin:4px 0 2px}
+.nw p{margin-top:4px}
+
 /* no JavaScript or no WebGL: show everything as a plain page */
 .nojs .pg{display:block;position:static}
 @media (prefers-reduced-motion: reduce){.pg > *,.pg.out > *{animation-duration:.01s}}
@@ -410,7 +469,7 @@ body.flying #flyChip{display:none}
 <div id="neural" aria-hidden="true"></div>
 
 <div class="btx" id="btx" role="dialog" aria-label="Enter SA Intelligent Designs">
-  <div class="btx-eyebrow">SA Intelligent Designs &middot; SA Marketing Intelligence</div>
+  <div class="btx-eyebrow">SA Intelligent Designs &middot; built by the community</div>
   <h1>Enter the <b class="grad">Braintrix</b></h1>
   <p>We build AI apps and intelligent websites. Step inside the mind that builds them &mdash; every light in here is a neuron, and some of them are hiding something.</p>
   <button class="btx-btn" id="btxEnter">Enter<span>the mind</span></button>
@@ -422,10 +481,11 @@ body.flying #flyChip{display:none}
   <span class="word"><b>SA</b> INTELLIGENT DESIGNS</span>
 </a>
 <div class="hud hud-tools">
+  <button class="chip" id="ambBtn" type="button" aria-label="Choose a soundscape">&#8779; <span>Soundscape</span></button>
   <button class="chip" id="flyChip" type="button" data-fly>&#10022; Fly</button>
   <button class="chip sfx-btn" id="sfxBtn" type="button" aria-pressed="true" title="Sound effects on / off">&#9835; Sound</button>
 </div>
-<div class="hud hud-found" id="found" aria-live="polite">Neurons discovered <b id="foundN">1</b> / <span id="foundT">10</span><span class="bar"><i id="foundBar"></i></span></div>
+<div class="hud hud-found" id="found" aria-live="polite">Neurons discovered <b id="foundN">1</b> / <span id="foundT">11</span><span class="bar"><i id="foundBar"></i></span></div>
 <div class="hud hud-hint" id="hint">Tap any light to travel &middot; or take the controls and fly</div>
 
 <svg id="wire" aria-hidden="true"><defs><linearGradient id="wg" x1="0" x2="1"><stop offset="0" stop-color="#12d98a"/><stop offset="1" stop-color="#1f6bff"/></linearGradient></defs><path id="wireP" d=""/><circle id="wireC" r="0"/></svg>
@@ -434,8 +494,9 @@ body.flying #flyChip{display:none}
 <div id="sparks"></div>
 <button class="drift" id="drift" type="button" data-fly>&#10022; Fly off</button>
 <div id="toast"></div>
+<div id="ambMenu" role="menu" aria-label="Soundscapes"></div>
 <div id="choice" role="group" aria-label="How would you like to explore?">
-  <div class="ask0">You're inside. Where now?</div>
+  <div class="ask0" id="ask0">You're inside. Where now?</div>
   <button class="ch" type="button" data-fly><b>Fly freely</b><span>Take the controls. Steer anywhere &mdash; fly into a light to open it.</span></button>
   <button class="ch g" type="button" data-go="core"><b>Take me to the core</b><span>One quiet thought about who we are. Then you're free.</span></button>
 </div>
@@ -472,6 +533,7 @@ body.flying #flyChip{display:none}
     <p>Websites and apps for specialist niches &mdash; with a free mock-up before you commit.</p>
     <button class="go big" type="button" data-fly>Fly off and explore</button>
     <a class="go" href="#build" data-go="build">Tell the Architect your idea</a>
+    <p class="hunt" id="hunt"></p>
   </article>
 
   <!-- THE FORGE (services) -->
@@ -534,19 +596,21 @@ body.flying #flyChip{display:none}
     <div class="eye">The Origin &middot; About</div>
     <h2 class="decode">Memory recovered.</h2>
     <div class="log" id="log" data-text="&gt; who built this mind?
-SA Intelligent Designs &mdash; part of SA Marketing Intelligence.
-&gt; what do they make?
-Intelligent, SEO-supported websites and mobile apps for specialist niches.
+Nobody in particular. SA Intelligent Designs is built by a community of local developers, engineers and designers.
 &gt; where?
-Milton Keynes, Bedford and London &mdash; in person or fully remote.
+Bedford, Milton Keynes and the towns around them &mdash; in person or fully remote.
+&gt; what do they make?
+Intelligent websites, apps and software for specialist niches.
 &gt; how?
-A free mock-up first. Fixed written quotes. Free hosting. No lock-in."></div>
-    <p><a class="go" href="#guild" data-go="guild">Developer, engineer or architect? Join the Guild</a></p>
-    <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a> <a class="go" href="tel:+447712673747">+44 7712 673747</a> <a class="go" href="https://wa.me/447712673747" target="_blank" rel="noopener">WhatsApp</a></p>
+A free mock-up first. Fixed written quotes. No lock-in.
+&gt; can I join?
+Yes &mdash; membership is free. Find the community neuron."></div>
+    <p><a class="go" href="#guild" data-go="guild">App developer, engineer or designer? Join the tech community &mdash; free</a></p>
+    <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a></p>
     <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising.</p></details>
     <details class="legal" id="cookies"><summary>Cookies</summary><p>Strictly necessary browser storage only (your sound setting, which neurons you've found, and your unsent brief), cleared when you close the tab. No analytics, tracking or advertising cookies.</p></details>
     <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill.</p></details>
-    <p class="whisper">&copy; 2026 SA Intelligent Designs &middot; Part of SA Marketing Intelligence</p>
+    <p class="whisper">&copy; 2026 SA Intelligent Designs &middot; built by the Bedford &amp; Milton Keynes tech community</p>
   </article>
 
   <!-- ECHOES (faq) -->
@@ -565,7 +629,7 @@ A free mock-up first. Fixed written quotes. Free hosting. No lock-in."></div>
   <!-- THE VAULT (portfolio) -->
   <article class="pg" id="p-portfolio" data-node="portfolio" data-wide="1">
     <div class="eye">The Vault &middot; Portfolio</div>
-    <h2 class="decode">Brands and products built under SA Marketing Intelligence.</h2>
+    <h2 class="decode">Products and brands built by the SA community.</h2>
     <p>The brands we've designed and launched, and the applications our engineering team is building right now.</p>
 <div class="folio-grid">
         <div class="card folio-card">
@@ -612,15 +676,22 @@ A free mock-up first. Fixed written quotes. Free hosting. No lock-in."></div>
   </article>
 
   <!-- THE ARCHITECT (brief) -->
-  <article class="pg" id="p-build" data-node="build">
-    <div class="eye">The Architect &middot; Start a project</div>
+  <article class="pg" id="p-build" data-node="build" data-wide="1">
+    <div class="eye">The Architect &middot; voice hub</div>
     <div id="arch"></div>
   </article>
 
   <!-- THE GUILD (membership club for builders) -->
   <article class="pg" id="p-guild" data-node="guild">
-    <div class="eye">The Guild &middot; SA Intelligent membership</div>
+    <div class="eye">Join the tech community &middot; free membership</div>
     <div id="guildWiz"></div>
+  </article>
+
+  <!-- THE PULSE (community news) -->
+  <article class="pg" id="p-news" data-node="news">
+    <div class="eye">The Pulse &middot; community news</div>
+    <h2 class="decode">What's moving in the mind.</h2>
+    <div class="news" id="news"></div>
   </article>
 
   <!-- THE HIDDEN NEURON -->
@@ -644,12 +715,13 @@ window.SA_DESTS=[
   {id:'about',    name:'The Origin',    hint:'an old memory',         pos:[-50,-26,30],   yaw:.8,   dist:30, c:'b'},
   {id:'faq',      name:'Echoes',        hint:'voices echo here',      pos:[-26,42,-92],   yaw:.25,  dist:30, c:'g'},
   {id:'build',    name:'The Architect', hint:'',                      pos:[8,-42,-104],   yaw:-.1,  dist:33, c:'g', scale:1.2, found:true},
-  {id:'guild',    name:'The Guild',     hint:'a gathering of builders', pos:[-104,4,-150], yaw:.6, dist:31, c:'b', scale:1.15},
+  {id:'guild',    name:'The Community',     hint:'a gathering of local builders', pos:[-104,4,-150], yaw:.6, dist:31, c:'b', scale:1.15},
+  {id:'news',     name:'The Pulse',     hint:'a pulse of fresh signals', pos:[78,-64,48], yaw:-.9, dist:30, c:'g'},
   {id:'portfolio',name:'The Vault',     hint:'a sealed vault, far away', pos:[150,52,-215], yaw:-.6, dist:40, c:'b', scale:1.5, shift:.6},
   {id:'secret',   name:'Hidden neuron', hint:'',                      pos:[-170,-74,-190],yaw:.9,   dist:26, c:'g', scale:.55, secret:true}
 ];
 window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core','process'],['core','build'],['services','process'],['services','faq'],
-  ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret'],['build','guild'],['faq','guild'],['services','guild']];
+  ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret'],['build','guild'],['faq','guild'],['services','guild'],['core','news'],['referral','news'],['news','process']];
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="/assets/mind-bg.js?v=4"></script>
@@ -708,6 +780,123 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
 })();
 </script>
 <script>
+/* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
+(function(){
+  var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
+  var ctx=null, master=null, cur=null, nodes=[], timers=[], noiseBuf=null, vol=.55;
+  var LIST=[
+    {id:'off',    name:'Silence'},
+    {id:'neural', name:'Neural hum'},
+    {id:'rain',   name:'Soft rain'},
+    {id:'ocean',  name:'Ocean waves'},
+    {id:'forest', name:'Forest night'},
+    {id:'space',  name:'Deep space'},
+    {id:'chords', name:'Calm chords'}
+  ];
+  function ac(){ if(!ctx){ ctx=new AC(); master=ctx.createGain(); master.gain.value=0; master.connect(ctx.destination); } if(ctx.state==='suspended') ctx.resume(); return ctx; }
+  function noise(){ if(noiseBuf) return noiseBuf; var len=ctx.sampleRate*4, b=ctx.createBuffer(2,len,ctx.sampleRate);
+    for(var ch=0;ch<2;ch++){ var d=b.getChannelData(ch), last=0; for(var i=0;i<len;i++){ var w=Math.random()*2-1; last=(last+.02*w)/1.02; d[i]=last*3.5*.6+w*.4*.25; } }
+    return noiseBuf=b; }
+  function src(){ var s=ctx.createBufferSource(); s.buffer=noise(); s.loop=true; s.loopStart=Math.random(); s.start(0,Math.random()*3); nodes.push(s); return s; }
+  function g(v){ var n=ctx.createGain(); n.gain.value=v; nodes.push(n); return n; }
+  function f(type,freq,q){ var n=ctx.createBiquadFilter(); n.type=type; n.frequency.value=freq; if(q) n.Q.value=q; nodes.push(n); return n; }
+  function osc(type,freq){ var o=ctx.createOscillator(); o.type=type; o.frequency.value=freq; o.start(); nodes.push(o); return o; }
+  function lfo(freq,depth,param){ var o=osc('sine',freq), d=g(depth); o.connect(d); d.connect(param); }
+  function every(ms,fn){ var id=setInterval(fn,ms); timers.push(id); }
+  function later(ms,fn){ var id=setTimeout(fn,ms); timers.push(id); }
+  function pling(freq,vol,len,dest){ var t=ctx.currentTime, o=ctx.createOscillator(), e=ctx.createGain(); o.type='sine'; o.frequency.value=freq;
+    e.gain.setValueAtTime(.0001,t); e.gain.exponentialRampToValueAtTime(vol,t+.02); e.gain.exponentialRampToValueAtTime(.0001,t+len);
+    o.connect(e); e.connect(dest||master); o.start(t); o.stop(t+len+.05); }
+  function echo(time,fb){ var d=ctx.createDelay(2); d.delayTime.value=time; var k=g(fb), lp=f('lowpass',2400); d.connect(lp); lp.connect(k); k.connect(d); lp.connect(master); nodes.push(d); return d; }
+
+  var BUILD={
+    neural:function(){ // warm drone with a slow filter breath and the odd synapse ping
+      var lp=f('lowpass',420,.7); lp.connect(g(1)).connect(master);
+      [55,82.4,110.2,164.8].forEach(function(fr,i){ var o=osc(i%2?'triangle':'sine',fr), a=g(i<2?.16:.06); o.detune.value=(i-1.5)*6; o.connect(a); a.connect(lp); });
+      lfo(.05,240,lp.frequency);
+      var e=echo(.42,.35), notes=[659,784,880,988,1175];
+      every(2600,function(){ if(Math.random()<.6) pling(notes[(Math.random()*notes.length)|0],.025,1.6,e); });
+    },
+    rain:function(){ // steady hiss + rooftop drops
+      var s=src(), bp=f('bandpass',1400,.6), hp=f('highpass',500), a=g(.32); s.connect(hp); hp.connect(bp); bp.connect(a); a.connect(master);
+      var s2=src(), lp=f('lowpass',380), a2=g(.18); s2.connect(lp); lp.connect(a2); a2.connect(master);
+      lfo(.07,.05,a.gain);
+      every(70,function(){ if(Math.random()<.5){ var t=ctx.currentTime, o=ctx.createBufferSource(); o.buffer=noise(); var h=ctx.createBiquadFilter(); h.type='bandpass'; h.frequency.value=2500+Math.random()*4000; h.Q.value=8;
+        var e=ctx.createGain(); e.gain.setValueAtTime(.0001,t); e.gain.exponentialRampToValueAtTime(.05+Math.random()*.05,t+.004); e.gain.exponentialRampToValueAtTime(.0001,t+.06);
+        o.connect(h); h.connect(e); e.connect(master); o.start(t,Math.random()*3); o.stop(t+.08); } });
+    },
+    ocean:function(){ // swells that roll in and draw back
+      var s=src(), lp=f('lowpass',600,.5), a=g(.0); s.connect(lp); lp.connect(a); a.connect(master);
+      var s2=src(), hp=f('highpass',2200), a2=g(0); s2.connect(hp); hp.connect(a2); a2.connect(master);
+      function wave(){ var t=ctx.currentTime, d=6+Math.random()*4, pk=.45+Math.random()*.25;
+        a.gain.cancelScheduledValues(t); a.gain.setValueAtTime(a.gain.value,t); a.gain.linearRampToValueAtTime(pk,t+d*.45); a.gain.linearRampToValueAtTime(.08,t+d);
+        lp.frequency.cancelScheduledValues(t); lp.frequency.setValueAtTime(lp.frequency.value,t); lp.frequency.linearRampToValueAtTime(1500,t+d*.45); lp.frequency.linearRampToValueAtTime(420,t+d);
+        a2.gain.cancelScheduledValues(t); a2.gain.setValueAtTime(0,t); a2.gain.linearRampToValueAtTime(.05,t+d*.5); a2.gain.linearRampToValueAtTime(0,t+d*.8);
+        later(d*1000,wave); }
+      wave();
+    },
+    forest:function(){ // night wind, crickets and a far-off bird
+      var s=src(), lp=f('lowpass',500,.8), a=g(.22); s.connect(lp); lp.connect(a); a.connect(master); lfo(.06,260,lp.frequency); lfo(.09,.08,a.gain);
+      var cr=osc('sine',4400), am=g(0), out=g(.018); cr.connect(am); am.connect(out); out.connect(master);
+      every(900,function(){ var t=ctx.currentTime; for(var i=0;i<3;i++){ var s0=t+i*.07; am.gain.setValueAtTime(0,s0); am.gain.linearRampToValueAtTime(1,s0+.012); am.gain.linearRampToValueAtTime(0,s0+.045); } });
+      var cr2=osc('sine',5100), am2=g(0), out2=g(.012); cr2.connect(am2); am2.connect(out2); out2.connect(master);
+      later(450,function(){ every(1300,function(){ var t=ctx.currentTime; for(var i=0;i<4;i++){ var s0=t+i*.06; am2.gain.setValueAtTime(0,s0); am2.gain.linearRampToValueAtTime(1,s0+.01); am2.gain.linearRampToValueAtTime(0,s0+.04); } }); });
+      var e=echo(.33,.3);
+      every(7000,function(){ if(Math.random()<.5){ var t=ctx.currentTime, o=ctx.createOscillator(), v=ctx.createGain(); o.type='sine';
+        o.frequency.setValueAtTime(1900,t); o.frequency.exponentialRampToValueAtTime(2600,t+.12); o.frequency.exponentialRampToValueAtTime(1700,t+.3);
+        v.gain.setValueAtTime(.0001,t); v.gain.exponentialRampToValueAtTime(.02,t+.03); v.gain.exponentialRampToValueAtTime(.0001,t+.35); o.connect(v); v.connect(e); o.start(t); o.stop(t+.4); } });
+    },
+    space:function(){ // vast low drone with drifting shimmer
+      var lp=f('lowpass',300); lp.connect(master);
+      [36.7,55,73.4].forEach(function(fr,i){ var o=osc('sine',fr), a=g(.17-i*.04); o.connect(a); a.connect(lp); lfo(.03+i*.02,1.5,o.frequency); });
+      var e=echo(.9,.55);
+      var sh=[osc('sine',1320),osc('sine',1760),osc('sine',1980)];
+      sh.forEach(function(o,i){ var a=g(0); o.connect(a); a.connect(e); lfo(.04+i*.03,.01,a.gain); lfo(.02+i*.01,18,o.frequency); });
+      var s=src(), bp=f('bandpass',900,2), a2=g(.04); s.connect(bp); bp.connect(a2); a2.connect(master); lfo(.025,500,bp.frequency);
+    },
+    chords:function(){ // slow, soft pad progression
+      var lp=f('lowpass',900,.6), bus=g(1); lp.connect(bus); bus.connect(master); var e=echo(.5,.35); bus.connect(e);
+      var prog=[[130.8,164.8,196,246.9],[110,130.8,164.8,196],[87.3,110,130.8,164.8],[98,123.5,146.8,196]], k=0;
+      function chord(){ var t=ctx.currentTime, c=prog[k++%prog.length];
+        c.forEach(function(fr,i){ [0,7].forEach(function(det){ var o=ctx.createOscillator(), v=ctx.createGain(); o.type='triangle'; o.frequency.value=fr*(i===3?2:1); o.detune.value=det-3;
+          v.gain.setValueAtTime(.0001,t); v.gain.linearRampToValueAtTime(.035,t+2.2); v.gain.linearRampToValueAtTime(.03,t+6); v.gain.linearRampToValueAtTime(.0001,t+8.6);
+          o.connect(v); v.connect(lp); o.start(t); o.stop(t+8.8); }); });
+        later(1800,function(){ pling(c[(Math.random()*4)|0]*4,.018,2.2,e); });
+      }
+      chord(); every(8000,chord);
+    }
+  };
+  function stop(){ timers.forEach(function(id){ clearInterval(id); clearTimeout(id); }); timers=[];
+    var old=nodes; nodes=[]; old.forEach(function(n){ try{ n.stop&&n.stop(); }catch(e){} try{ n.disconnect(); }catch(e){} }); }
+  function play(id){
+    try{ sessionStorage.setItem('saAmb',id); }catch(e){}
+    if(id==='off'||!BUILD[id]){ if(ctx){ var t=ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value,t); master.gain.linearRampToValueAtTime(0,t+1); setTimeout(stop,1100); } cur='off'; paint(); return; }
+    ac(); var t0=ctx.currentTime;
+    master.gain.cancelScheduledValues(t0); master.gain.setValueAtTime(master.gain.value,t0); master.gain.linearRampToValueAtTime(0,t0+.6);
+    setTimeout(function(){ stop(); BUILD[id](); var t=ctx.currentTime; master.gain.setValueAtTime(0,t); master.gain.linearRampToValueAtTime(vol,t+2.5); },650);
+    cur=id; paint();
+  }
+  document.addEventListener('visibilitychange',function(){ if(!ctx) return; if(document.hidden) ctx.suspend(); else if(cur&&cur!=='off') ctx.resume(); });
+
+  /* the picker */
+  var btn=document.getElementById('ambBtn'), menu=document.getElementById('ambMenu');
+  function nameOf(id){ for(var i=0;i<LIST.length;i++) if(LIST[i].id===id) return LIST[i].name; return 'Silence'; }
+  function paint(){ if(btn) btn.innerHTML='&#8779; <span>'+(cur&&cur!=='off'?nameOf(cur):'Soundscape')+'</span>';
+    if(menu) menu.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',b.dataset.amb===(cur||'off')); }); }
+  if(menu){ menu.innerHTML='<div class="amb-h">Choose your soundscape</div>'+LIST.map(function(s){ return '<button type="button" data-amb="'+s.id+'"><i></i>'+s.name+'</button>'; }).join('');
+    menu.addEventListener('click',function(e){ var b=e.target.closest('[data-amb]'); if(!b) return; play(b.dataset.amb); setTimeout(function(){ menu.classList.remove('on'); },250); }); }
+  if(btn) btn.addEventListener('click',function(e){ e.stopPropagation(); menu.classList.toggle('on'); });
+  document.addEventListener('click',function(e){ if(menu && !e.target.closest('#ambMenu,#ambBtn,[data-ambopen]')) menu.classList.remove('on'); });
+  document.addEventListener('click',function(e){ if(e.target.closest('[data-ambopen]')){ e.preventDefault(); menu.classList.toggle('on'); } });
+  var saved=null; try{ saved=sessionStorage.getItem('saAmb'); }catch(e){}
+  cur=saved||'off'; paint();
+  // a saved choice resumes on the first tap (browsers need a gesture before audio)
+  if(saved && saved!=='off'){ var once=function(){ removeEventListener('pointerdown',once,true); play(saved); }; addEventListener('pointerdown',once,true); }
+  window.SAAmbience={play:play,list:LIST,current:function(){ return cur; },duck:function(on){ if(!ctx||!cur||cur==='off') return; var t0=ctx.currentTime; master.gain.cancelScheduledValues(t0); master.gain.setValueAtTime(master.gain.value,t0); master.gain.linearRampToValueAtTime(on?vol*.15:vol,t0+.4); }};
+})();
+
+</script>
+<script>
 (function(){
   var M=window.SAMind, DESTS=window.SA_DESTS, byId={}; DESTS.forEach(function(d){ byId[d.id]=d; });
   var stage=document.getElementById('stage'), haze=document.getElementById('haze'), drift=document.getElementById('drift');
@@ -722,9 +911,12 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   var total=DESTS.length;
   function paintFound(){ var n=Object.keys(found).length; document.getElementById('foundN').textContent=n; document.getElementById('foundT').textContent=total;
     document.getElementById('foundBar').style.width=(n/total*100)+'%'; }
+  function hiddenLeft(){ return total-Object.keys(found).length; }
+  function huntText(){ var left=hiddenLeft(); return left<=0?'Every neuron found. You know this mind inside out.':(total+' neurons live in this mind \u2014 '+left+' still hidden'+(found.secret?'.':'. One of them is very hard to find.')); }
+  function paintHunt(){ var h=document.getElementById('hunt'); if(h) h.textContent=huntText(); var a=document.getElementById('ask0'); if(a) a.textContent='You\'re inside. '+total+' neurons to find \u2014 where now?'; }
   function discover(id){ if(found[id]) return false; found[id]=1; ss('saFound',JSON.stringify(found)); paintFound();
     labels[id] && labels[id].classList.add('found'); setTimeout(function(){ paintDock&&paintDock(); },0);
-    var n=Object.keys(found).length; toast(n===total?'Whole mind mapped — every neuron found':'Neuron discovered: '+byId[id].name); return true; }
+    var n=Object.keys(found).length; toast(n===total?'Whole mind mapped \u2014 every neuron found':byId[id].name+' found \u00B7 '+n+' of '+total+' \u00B7 '+(total-n)+' still hidden'); paintHunt(); return true; }
   var toastT; function toast(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(function(){ el.classList.remove('on'); },2600); }
 
   /* labels sitting on every neuron */
@@ -732,7 +924,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.c==='g'?' g':'')+(found[d.id]?' found':'')+(d.secret?' secret':'');
     b.dataset.go=d.id; b.setAttribute('aria-label',found[d.id]||!d.hint?d.name:'Unknown neuron: '+d.hint);
     b.innerHTML='<i></i><span class="n">'+d.name+'</span><span class="h">'+(d.hint||d.name)+'</span>'; lw.appendChild(b); labels[d.id]=b; });
-  paintFound();
+  paintFound(); paintHunt();
 
   var cur=null, busy=false, shown=null;
   M.onFrame(function(){
@@ -781,6 +973,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     if(id===cur && shown===id) return;
     busy=true; var from=cur; cur=id; endFly(); hideChoice(); try{ paintDock(); }catch(e){}
     history.replaceState(null,'',byId[id].secret?location.pathname:'#'+id);
+    try{ if(shown==='build') Arch.stop(); }catch(e){}
     retract(function(){
       FX('warp');
       var dur=M.go(id,arrive)||0;
@@ -792,7 +985,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       var fresh=discover(id);
       if(id==='portfolio') unlockVault();
       emerge(id);
-      if(opts.type) setTimeout(function(){ Arch.preset('type',opts.type,2); },50);
+      if(opts.type) setTimeout(function(){ Arch.preset('type',opts.type); },50);
     }
   }
   function readoutRun(id,dur){ var t0=performance.now(), name=found[id]?byId[id].name:'unknown neuron'; readout.classList.add('on');
@@ -825,6 +1018,15 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     (function tick(){ var k=Math.min(1,(performance.now()-t0)/d), n=Math.floor(full.length*k), s=full.slice(0,n);
       for(var i=n;i<full.length;i++) s+=full[i]===' '?' ':G[(Math.random()*G.length)|0];
       el.textContent=s; if(k<1) requestAnimationFrame(tick); })(); }
+
+  /* The Pulse — newest first. Add a line here to post an update. */
+  var NEWS=[
+    {d:'1 Oct 2026',t:'The Braintrix is open',b:'Our new home is a mind you can fly through. Eleven neurons, one of them very well hidden. Happy hunting.'},
+    {d:'1 Oct 2026',t:'Join the tech community: free membership for local builders',b:'App developers, engineers, designers and architects across Bedford, Milton Keynes and the local tech scene can now join the SA community for free.'},
+    {d:'1 Oct 2026',t:'Talk to the Architect',b:'Describe your idea out loud and watch the blueprint draw itself. No forms, no typing.'},
+    {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built in the community.'}
+  ];
+  (function(){ var el=document.getElementById('news'); if(!el) return; el.innerHTML=NEWS.map(function(n){ return '<div class="nw"><div class="nw-d">'+n.d+'</div><h3>'+n.t+'</h3><p>'+n.b+'</p></div>'; }).join(''); })();
 
   /* what's hidden behind each neuron */
   var SPECIAL={
@@ -881,9 +1083,8 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       else if(q.kind==='short'||q.kind==='long'){ a=(q.kind==='long'?'<textarea class="field" data-f="txt" rows="3" placeholder="'+esc(q.ph())+'">'+esc(A[q.k]||'')+'</textarea>':'<input class="field" data-f="txt" placeholder="'+esc(q.ph())+'" value="'+esc(A[q.k]||'')+'">')+nav(true); }
       else if(q.kind==='contact'){ a='<label class="field-l">Your name</label><input class="field" data-f="name" autocomplete="name" value="'+esc(A.name||'')+'">'+
           '<label class="field-l">Email</label><input class="field" data-f="email" type="email" autocomplete="email" value="'+esc(A.email||'')+'">'+
-          '<label class="field-l">Phone (optional)</label><input class="field" data-f="phone" type="tel" autocomplete="tel" value="'+esc(A.phone||'')+'">'+
-          '<div class="opts">'+['Email','Phone call','WhatsApp'].map(function(o){ return '<button class="opt" aria-pressed="'+((A.pref||'Email')===o)+'" data-p="'+o+'">'+o+'</button>'; }).join('')+'</div><div class="err"></div>'+nav(true); }
-      else if(q.kind==='review'){ a='<p class="vision">'+cfg.vision(A)+'</p><p class="sub">We\'ll reply to <b>'+esc(A.email)+'</b>'+(A.phone?' or '+esc(A.phone):'')+'.</p>'+
+          '<div class="err"></div>'+nav(true); }
+      else if(q.kind==='review'){ a='<p class="vision">'+cfg.vision(A)+'</p><p class="sub">We\'ll reply to <b>'+esc(A.email)+'</b>.</p>'+
           '<input type="checkbox" data-f="bot" style="display:none" tabindex="-1" autocomplete="off">'+
           '<div class="arch-nav"><button class="send" data-a="send">'+cfg.sendLabel+'</button><button class="back" data-a="back">&larr; Edit</button></div><div class="err"></div><p class="whisper">Sent by email only &mdash; never stored, never added to a mailing list.</p>'; }
       ans.innerHTML=a;
@@ -899,7 +1100,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
         if(!arr.length && !q.optional){ shake(); return false; } A[q.k]=lst(A[q.k]); }
       if(q.kind==='one' && !A[q.k]){ shake(); return false; }
       if(q.kind==='rate'){ A[q.k]=(F('txt').value||'').trim(); if(!A[q.k+'Basis']||!A[q.k]){ shake(); return false; } }
-      if(q.kind==='contact'){ A.name=F('name').value.trim(); A.email=F('email').value.trim(); A.phone=F('phone').value.trim();
+      if(q.kind==='contact'){ A.name=F('name').value.trim(); A.email=F('email').value.trim(); A.phone='';
         if(!A.name){ err('What should we call you?'); return false; } if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A.email)){ err('That email doesn\'t look quite right.'); return false; } }
       return true; }
     function err(t){ var e=root.querySelector('.err'); if(e) e.textContent=t; shake(); }
@@ -928,45 +1129,281 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     return { start:function(){ render(); }, preset:function(k,v,skipTo){ if(sent) return; A[k]=v; if(i<skipTo) i=skipTo; save(); render(); } };
   }
   function lines(rows){ return rows.filter(function(r){ return r[1]; }).map(function(r){ return r[0]+': '+r[1]; }).join('\n'); }
-  var CONTACT_WHISPER='<p class="whisper">Prefer to talk? <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a> &middot; <a href="tel:+447712673747">+44 7712 673747</a> &middot; <a href="https://wa.me/447712673747" target="_blank" rel="noopener">WhatsApp</a></p>';
 
-  /* The Architect — clients describe what they want built */
-  var Arch=Wizard({root:'arch',key:'saBrief',node:'build',sendLabel:'Send to SA engineers',
-    Q:function(A){ function isApp(){ return /app/i.test(A.type||''); } return [
-      {k:'intro',kind:'intro',ask:function(){ return "I'm the Architect. Tell me what you'd like built and I'll turn it into a brief for SA's engineers."; },sub:'About two minutes. One question at a time.',extra:CONTACT_WHISPER},
-      {k:'type',kind:'one',ask:function(){ return 'What are we building together?'; },opts:function(){ return ['A website','A mobile app','A website and an app','Not sure yet']; },ack:function(){ return 'Noted — '+A.type.toLowerCase()+'.'; }},
-      {k:'idea',kind:'long',ask:function(){ return 'In a sentence or two, what is the idea?'; },ph:function(){ return isApp()?'e.g. An app that lets dog walkers book, track and get paid for walks':'e.g. A site for my bakery that takes celebration-cake orders'; },ack:function(){ return 'Got the idea.'; }},
-      {k:'business',kind:'short',optional:true,ask:function(){ return "What's the business or project called?"; },ph:function(){ return 'Business or project name (optional)'; },ack:function(){ return A.business?'Hello, '+A.business+'.':'No name yet — that\'s fine.'; }},
-      {k:'audience',kind:'many',other:true,ask:function(){ return 'Who is it for?'; },opts:function(){ return ['My customers','The general public','Other businesses','My own team','A specific community']; },ack:function(){ return 'Built for '+join(A.audience).toLowerCase()+'.'; }},
-      {k:'goal',kind:'one',ask:function(){ return "What's the one thing it must do brilliantly?"; },opts:function(){ return isApp()?['Save people time','Take bookings','Take payments','Track and manage work','Connect people','Something else']:['Win enquiries','Take bookings','Sell online','Show off my work','Build trust','Something else']; },ack:function(){ return 'Above all: '+A.goal.toLowerCase()+'.'; }},
-      {k:'features',kind:'many',other:true,optional:true,ask:function(){ return 'Which of these does it need?'; },sub:'Pick as many as you like.',opts:function(){ return isApp()?['User accounts','Payments','Push notifications','AI features','Maps & location','Chat or messaging','Calendar & booking','Admin dashboard','Works offline']:['Contact form','Online booking','Online shop','Blog or news','Gallery','Reviews','Member login','Multiple languages']; },ack:function(){ return lst(A.features).length?lst(A.features).length+' features captured.':'We\'ll suggest features together.'; }},
-      {k:'feel',kind:'many',ask:function(){ return 'How should it feel?'; },opts:function(){ return ['Clean & minimal','Bold & vibrant','Premium & dark','Warm & friendly','Futuristic']; },ack:function(){ return 'Feel: '+join(A.feel).toLowerCase()+'.'; }},
-      {k:'inspo',kind:'short',optional:true,ask:function(){ return 'Any websites or apps you love the look of?'; },ph:function(){ return 'Names or links (optional)'; },ack:function(){ return A.inspo?'I\'ll study those.':'Fresh canvas, then.'; }},
-      {k:'have',kind:'many',ask:function(){ return 'What do you already have?'; },opts:function(){ return ['A logo','A domain name','A current website','Brand colours','Photos & words','Nothing yet']; },ack:function(){ return 'Starting point logged.'; }},
-      {k:'timeline',kind:'one',ask:function(){ return 'When would you like it live?'; },opts:function(){ return ['As soon as possible','Within 1–3 months','3–6 months','Just exploring']; },ack:function(){ return 'Timeline: '+A.timeline.toLowerCase()+'.'; }},
-      {k:'budget',kind:'one',ask:function(){ return 'Roughly what budget do you have in mind?'; },sub:'Every build is still quoted in writing first.',opts:function(){ return isApp()?['Under £3k','£3k–£10k','£10k–£25k','£25k+','Not sure — advise me']:['Under £1k','£1k–£3k','£3k–£7k','£7k+','Not sure — advise me']; },ack:function(){ return 'Budget noted.'; }},
-      {k:'you',kind:'contact',ask:function(){ return 'Last thing — who am I speaking with?'; },sub:'So an engineer can reply within one working day.',ack:function(){ return 'Nice to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
-      {k:'review',kind:'review',ask:function(){ return "Here's your vision."; }}
-    ]; },
-    vision:function(A){ var s='You\'d like <em>'+esc((A.type||'something').toLowerCase())+'</em>'+(A.business?' for <em>'+esc(A.business)+'</em>':'')+'. ';
-      if(A.idea) s+=esc(A.idea.replace(/\.?$/,'.'))+' ';
-      if(lst(A.audience).length) s+='It\'s for <em>'+esc(join(A.audience).toLowerCase())+'</em>, ';
-      if(A.goal) s+='and above all it must <em>'+esc(A.goal.toLowerCase())+'</em>. ';
-      if(lst(A.features).length) s+='Must-haves: '+esc(join(A.features).toLowerCase())+'. ';
-      if(lst(A.feel).length) s+='It should feel <em>'+esc(join(A.feel).toLowerCase())+'</em>'+(A.inspo?', inspired by '+esc(A.inspo):'')+'. ';
-      if(lst(A.have).length) s+='You already have '+esc(join(A.have).toLowerCase())+'. ';
-      if(A.timeline) s+='Timeline: '+esc(A.timeline.toLowerCase())+'. ';
-      if(A.budget) s+='Budget: '+esc(A.budget)+'.'; return s; },
-    plain:function(A){ return 'PROJECT BRIEF — from the Braintrix\n\n'+lines([['Building',A.type],['Idea',A.idea],['Business / project',A.business],['For',join(A.audience)],['Must do brilliantly',A.goal],['Features',join(A.features)],['Feel',join(A.feel)],['Inspiration',A.inspo],['Already has',join(A.have)],['Timeline',A.timeline],['Budget',A.budget],['Name',A.name],['Email',A.email],['Phone',A.phone],['Prefers contact by',A.pref],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',Object.keys(found).length+' / '+total]]); },
-    subject:function(A){ return 'New '+(A.type||'project').toLowerCase()+' brief — '+(A.name||'')+' (SA Intelligent Designs)'; },
-    fields:function(A){ return {business:A.business||'',package:A.type||'',budget:A.budget||'',timeline:A.timeline||''}; },
-    done:function(A){ return '<h2 class="decode">Signal received.</h2><p>Thank you'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. Your brief is with our engineers — expect a reply within one working day to arrange your free consultation.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
-  });
+  /* The Architect — a voice hub. It asks, listens, probes and sketches the plan live.
+     Everything runs in the visitor's browser (speech in, speech out, the sketch) — no AI bill. */
+  var Arch=(function(){
+    var root=document.getElementById('arch'), SR=window.SpeechRecognition||window.webkitSpeechRecognition, SYN=window.speechSynthesis;
+    var S={}; try{ S=JSON.parse(ss('saArch')||'{}'); }catch(e){}
+    ['types','mods','users','plat','probed','feel','have'].forEach(function(k){ S[k]=S[k]||[]; }); S.ans=S.ans||{};
+    var step=S.step||0, sent=false, rec=null, voiceOn=ss('saArchVoice')!=='off', probe=null, probesHere=0, advT=null, lastNew=[];
+    function save(){ S.step=step; ss('saArch',JSON.stringify(S)); }
+
+    var TYPES=['Website','Mobile app','Web app / software','CRM','AI assistant or automation','Online shop','Booking system','Internal tool or dashboard','Marketplace','Something else'];
+    var TYPE_KW={'Website':/website|site\b|web page/,'Mobile app':/mobile|phone app|\bapp\b|iphone|android/,'Web app / software':/software|web app|platform|saas|system/,'CRM':/\bcrm\b|customer relationship/,
+      'AI assistant or automation':/\bai\b|a\.i\.|artificial|automat|chat ?bot|assistant/,'Online shop':/shop|store|e-?commerce|sell online/,'Booking system':/booking|appointment|reservation/,
+      'Internal tool or dashboard':/internal|dashboard|back office|tool for (my|our) team/,'Marketplace':/marketplace|two-sided|vendors/};
+    var MODS=[
+      {id:'accounts',n:'User accounts',kw:/log ?in|sign ?up|account|member|profile|register/},
+      {id:'booking',n:'Bookings & calendar',kw:/book|appointment|schedul|calendar|reserv|slot|availability/},
+      {id:'payments',n:'Payments',kw:/\bpay|card|stripe|checkout|invoice|subscription|deposit|charge|billing/},
+      {id:'crm',n:'Customer records (CRM)',kw:/\bcrm\b|customer (record|list|data|details)|clients?\b|leads?\b|pipeline|follow.?up/},
+      {id:'ai',n:'AI assistant',kw:/\bai\b|a\.i\.|artificial|chat ?bot|gpt|assistant|automat|predict|smart/},
+      {id:'shop',n:'Online shop',kw:/shop|sell|store|products?\b|basket|cart|orders?\b|e-?commerce/},
+      {id:'dashboard',n:'Dashboard & reports',kw:/dashboard|report|analytic|stats|metric|insight|numbers/},
+      {id:'notify',n:'Notifications & reminders',kw:/notif|remind|alert|text message|sms|push/},
+      {id:'chat',n:'Messaging',kw:/messag|\bchat\b|inbox|talk to each other/},
+      {id:'maps',n:'Maps & location',kw:/\bmaps?\b|location|gps|nearby|near me|route|deliver|track(ing)? (the )?(driver|van|order)/},
+      {id:'content',n:'Content & blog',kw:/blog|article|news|content|posts?\b/},
+      {id:'gallery',n:'Gallery & media',kw:/gallery|photos?|portfolio|images?|videos?/},
+      {id:'admin',n:'Admin & team roles',kw:/admin|manage (staff|the team)|staff|team members|roles|permissions/},
+      {id:'docs',n:'Documents & e-sign',kw:/document|files?\b|upload|contract|pdf|e-?sign/},
+      {id:'marketplace',n:'Marketplace & matching',kw:/marketplace|vendors?|sellers?|listings?|match(ing)?/},
+      {id:'seo',n:'SEO & enquiries',kw:/\bseo\b|google|enquir|found online|rank/}
+    ];
+    var MOD={}; MODS.forEach(function(m){ MOD[m.id]=m; });
+    var SCREENS={accounts:['Sign up & log in','Profile'],booking:['Pick a time','My bookings','Calendar (admin)'],payments:['Checkout','Receipts & invoices'],crm:['Customer list','Customer record','Follow-ups'],
+      ai:['Assistant (chat or voice)','AI results & actions'],shop:['Catalogue','Basket & checkout','Orders'],dashboard:['Dashboard','Reports'],notify:['Notification centre','Reminder settings'],chat:['Inbox','Conversation'],
+      maps:['Map view','Location search'],content:['Articles','Editor'],gallery:['Gallery'],admin:['Admin panel','Team & roles'],docs:['Documents','Upload & sign'],marketplace:['Listings','Seller dashboard','Search & match'],seo:['Landing pages','Enquiry form']};
+    var TYPE_MODS={'CRM':['crm','dashboard'],'AI assistant or automation':['ai'],'Online shop':['shop','payments'],'Booking system':['booking','notify'],'Internal tool or dashboard':['dashboard','admin'],
+      'Marketplace':['marketplace','accounts','payments'],'Website':['seo'],'Mobile app':['accounts','notify'],'Web app / software':['accounts','dashboard']};
+    var USERS=[{n:'Customers',kw:/customer|client|buyer|shopper|guest/},{n:'Your team',kw:/staff|team|employee|engineer|worker|colleague|technician/},{n:'Admins',kw:/admin|manager|owner|myself|\bme\b/},
+      {n:'The public',kw:/public|anyone|everyone|visitors?|people/},{n:'Businesses',kw:/business|compan|b2b|trade/},{n:'Patients',kw:/patient/},{n:'Students',kw:/student|learner|pupil/},{n:'Drivers',kw:/driver|courier/}];
+    var PLAT=[{n:'iPhone',kw:/iphone|\bios\b|apple/},{n:'Android',kw:/android/},{n:'Web',kw:/\bweb\b|browser|website|online|desktop|laptop/}];
+    var PROBE={booking:'Who makes the bookings — your customers, your team, or both? And should people pay when they book?',
+      payments:'How should the money come in — one-off card payments, subscriptions, or invoices?',
+      crm:'What do you need to remember about each customer — contact details, job history, notes, deals?',
+      ai:'What should the AI actually do — answer questions, write things, analyse data, or take actions for people?',
+      shop:'Roughly how many products — and is it delivery, collection or digital downloads?',
+      dashboard:'Which numbers matter most to you, day to day?',
+      marketplace:'Who are the two sides of the marketplace, and how do you make money between them?',
+      chat:'Who needs to message whom — customers to you, or users to each other?',
+      maps:'What does location do for people — find things nearby, track a journey, or plan routes?',
+      docs:'What kind of documents — contracts, reports, photos? And do people need to sign them?'};
+    var GENERIC='Tell me a little more — what problem does it solve, and who has that problem today?';
+
+    var Q=[
+      {id:'intro',kind:'intro',say:"Hi, I'm the Architect. I'll ask a few quick questions — just talk, and watch your idea take shape on the blueprint."},
+      {id:'type',kind:'chips',multi:true,say:'What are we building? Pick one or more — or just tell me.',opts:TYPES},
+      {id:'idea',kind:'voice',probe:true,say:'Tell me the idea. What should it do, and who is it for?'},
+      {id:'users',kind:'chips',multi:true,say:'Who will use it day to day?',opts:['Customers','Your team','Admins','The public','Businesses']},
+      {id:'must',kind:'voice',probe:false,say:'If it could only do one thing brilliantly, what would that be?'},
+      {id:'feel',kind:'chips',multi:true,say:'How should it feel?',opts:['Clean & minimal','Bold & vibrant','Premium & dark','Warm & friendly','Futuristic']},
+      {id:'have',kind:'chips',multi:true,say:'What do you already have?',opts:['A logo','A domain name','A current website or app','Brand colours','Content & photos','Nothing yet']},
+      {id:'timeline',kind:'chips',say:'When would you like it live?',opts:['As soon as possible','Within 1–3 months','3–6 months','Just exploring']},
+      {id:'budget',kind:'chips',say:'Roughly what budget do you have in mind? Every build is still quoted in writing first.',opts:['Under £3k','£3k–£10k','£10k–£25k','£25k+','Not sure — advise me']},
+      {id:'name',kind:'voice',say:"What's your name — and the business name, if there is one?"},
+      {id:'email',kind:'email',say:"Last thing — pop your email in, so we can send you the sketch plan."},
+      {id:'review',kind:'review',say:"Here's your sketch plan."}
+    ];
+    function cleanName(t){ t=(t||'').replace(/^(hi|hello|hey)[,!. ]*/i,'').replace(/^(my name is|my name's|i'm|i am|this is|it's|its)\s+/i,'').trim();
+      var m=t.split(/\s+(?:from|and the business is|and my business is|and the company is|at|of|and i run|business is|company is|called)\s+/i);
+      return {name:(m[0]||'').replace(/[.,!?]+$/,'').split(/\s+/).slice(0,3).join(' '),biz:(m[1]||'').replace(/[.,!?]+$/,'').trim()}; }
+    function cap(s){ return s.replace(/\b\w/g,function(c){ return c.toUpperCase(); }); }
+
+    /* ── analysing what they say: the blueprint shape-shifts as they talk ── */
+    function analyse(text,commit){
+      var t=' '+(text||'').toLowerCase()+' ', added=[];
+      MODS.forEach(function(m){ if(m.kw.test(t) && S.mods.indexOf(m.id)<0){ if(commit) S.mods.push(m.id); added.push('m:'+m.id); } });
+      USERS.forEach(function(u){ if(u.kw.test(t) && S.users.indexOf(u.n)<0){ if(commit) S.users.push(u.n); added.push('u:'+u.n); } });
+      PLAT.forEach(function(p){ if(p.kw.test(t) && S.plat.indexOf(p.n)<0){ if(commit) S.plat.push(p.n); added.push('p:'+p.n); } });
+      if(commit){ Object.keys(TYPE_KW).forEach(function(k){ if(TYPE_KW[k].test(t) && S.types.indexOf(k)<0) S.types.push(k); }); }
+      return added;
+    }
+    function typeMods(){ S.types.forEach(function(ty){ (TYPE_MODS[ty]||[]).forEach(function(id){ if(S.mods.indexOf(id)<0) S.mods.push(id); }); });
+      if(S.types.indexOf('Mobile app')>=0){ if(S.plat.indexOf('iPhone')<0) S.plat.push('iPhone'); if(S.plat.indexOf('Android')<0) S.plat.push('Android'); }
+      if(/Website|Web app|CRM|Online shop|Internal|Marketplace|Booking/.test(S.types.join(' ')) && S.plat.indexOf('Web')<0) S.plat.push('Web'); }
+
+    /* ── the blueprint ── */
+    var seen={};
+    function draw(preview){
+      var svg=document.getElementById('bp'); if(!svg) return;
+      var mods=S.mods.slice(), users=S.users.slice(), plat=S.plat.slice();
+      if(preview){ preview.forEach(function(a){ var k=a.split(':'); if(k[0]==='m') mods.push(k[1]); if(k[0]==='u') users.push(k[1]); if(k[0]==='p') plat.push(k[1]); }); }
+      var W=420,H=320,cx=210,cy=160,h='<defs><radialGradient id="bpg"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e3edff"/></radialGradient></defs>';
+      h+='<g class="bp-grid">'; for(var gx=20;gx<W;gx+=20) h+='<line x1="'+gx+'" y1="0" x2="'+gx+'" y2="'+H+'"/>'; for(var gy=20;gy<H;gy+=20) h+='<line x1="0" y1="'+gy+'" x2="'+W+'" y2="'+gy+'"/>'; h+='</g>';
+      var n=mods.length, pts=mods.map(function(id,i){ var a=-Math.PI/2+(i/(Math.max(n,1)))*Math.PI*2; return [cx+Math.cos(a)*(n>8?160:145),cy+Math.sin(a)*(n>8?112:100)]; });
+      pts.forEach(function(p){ h+='<line class="bp-ln" x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'"/>'; });
+      var title=S.biz||(S.types[0]||'Your idea');
+      h+='<g class="bp-core"><circle cx="'+cx+'" cy="'+cy+'" r="40" fill="url(#bpg)"/><text x="'+cx+'" y="'+(cy-2)+'" class="bp-t">'+esc(title.length>18?title.slice(0,17)+'…':title)+'</text><text x="'+cx+'" y="'+(cy+13)+'" class="bp-s">'+esc(S.types.slice(0,2).join(' + ').slice(0,28)||'listening…')+'</text></g>';
+      mods.forEach(function(id,i){ var p=pts[i], m=MOD[id], fresh=!seen['m'+id], ghost=preview&&S.mods.indexOf(id)<0;
+        h+='<g class="bp-node'+(fresh?' pop':'')+(ghost?' ghost':'')+'" style="transform-origin:'+p[0].toFixed(1)+'px '+p[1].toFixed(1)+'px"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="7"/><text x="'+p[0].toFixed(1)+'" y="'+(p[1]+(p[1]<cy?-13:20)).toFixed(1)+'">'+esc(m.n)+'</text></g>';
+        if(!ghost) seen['m'+id]=1; });
+      users.forEach(function(u,i){ var x=24+i*82; h+='<g class="bp-user'+(seen['u'+u]?'':' pop')+'" style="transform-origin:'+(x+36)+'px 16px"><rect x="'+x+'" y="6" rx="10" width="74" height="20"/><text x="'+(x+37)+'" y="20">'+esc(u)+'</text></g>'; if(!(preview&&S.users.indexOf(u)<0)) seen['u'+u]=1; });
+      plat.forEach(function(p,i){ var x=W-24-(i+1)*72+4; h+='<g class="bp-plat'+(seen['p'+p]?'':' pop')+'" style="transform-origin:'+(x+32)+'px '+(H-16)+'px"><rect x="'+x+'" y="'+(H-26)+'" rx="10" width="64" height="20"/><text x="'+(x+32)+'" y="'+(H-12)+'">'+esc(p)+'</text></g>'; if(!(preview&&S.plat.indexOf(p)<0)) seen['p'+p]=1; });
+      if(!mods.length) h+='<text x="'+cx+'" y="'+(cy+70)+'" class="bp-hint">Your blueprint draws itself as you talk</text>';
+      svg.innerHTML=h;
+    }
+
+    /* ── voice out (free browser speech; swaps to recorded Jess audio if files exist) ── */
+    var VOICE=null;
+    function pickVoice(){ if(!SYN) return null; var vs=SYN.getVoices(); if(!vs.length) return null;
+      var pref=['Google UK English Female','Serena','Kate','Martha','Microsoft Libby','Microsoft Sonia','Samantha','Karen','Moira','Tessa'];
+      for(var i=0;i<pref.length;i++){ for(var j=0;j<vs.length;j++) if(vs[j].name.indexOf(pref[i])>=0) return vs[j]; }
+      for(var k=0;k<vs.length;k++) if(/en-GB/i.test(vs[k].lang)) return vs[k]; return vs[0]; }
+    if(SYN) SYN.onvoiceschanged=function(){ VOICE=pickVoice(); };
+    function speak(text,done){
+      if(!voiceOn||!SYN){ setTimeout(done,350); return; }
+      try{ if(SYN.speaking) SYN.cancel(); }catch(e){}
+      duck(true);
+      setTimeout(function(){ var u=new SpeechSynthesisUtterance(text.replace(/—/g,',')); VOICE=VOICE||pickVoice(); if(VOICE) u.voice=VOICE; u.lang='en-GB'; u.rate=1.02; u.pitch=1.04;
+        var fin=false; function end(){ if(fin) return; fin=true; duck(false); done&&done(); }
+        u.onend=end; u.onerror=end; setTimeout(end,Math.max(4000,text.length*90)); SYN.speak(u); },150);
+    }
+    function duck(on){ try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(on); }catch(e){} }
+
+    /* ── voice in ── */
+    function stopListen(){ if(rec){ var r=rec; rec=null; try{ r.onend=null; r.stop(); }catch(e){} } micUI(false); duck(false); }
+    function listen(onDone){
+      if(!SR){ return false; } stopListen(); if(SYN&&SYN.speaking) try{ SYN.cancel(); }catch(e){}
+      var r=new SR(), fin='', cur='', got=false, t0=Date.now(), last=Date.now(), timer;
+      r.lang='en-GB'; r.interimResults=true; r.continuous=true;
+      r.onresult=function(e){ cur=''; for(var i=e.resultIndex;i<e.results.length;i++){ var tr=e.results[i][0].transcript; if(e.results[i].isFinal) fin+=tr+' '; else cur+=tr; }
+        got=true; last=Date.now(); heard(fin+cur,true); var add=analyse(fin+cur,false); if(add.length){ draw(add); add.forEach(function(){}); if(add.length>lastNew.length){ FX('zoop',.5); M.fire('build'); } lastNew=add; } };
+      r.onerror=function(ev){ if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){ SRdenied=true; heard('Microphone blocked — allow it in your browser, or type below.',false); fallbackBox(); } };
+      r.onend=function(){ clearInterval(timer); if(rec!==r) return; rec=null; micUI(false); duck(false); lastNew=[]; onDone((fin+cur).trim()); };
+      timer=setInterval(function(){ var now=Date.now(); if((got&&now-last>2800)||(!got&&now-t0>9000)||now-t0>90000){ try{ r.stop(); }catch(e){} } },300);
+      try{ r.start(); rec=r; micUI(true); duck(true); heard('Listening…',false); }catch(e){ return false; }
+      return true;
+    }
+    var SRdenied=false;
+    function micUI(on){ var b=document.getElementById('aMic'); if(b) b.classList.toggle('on',on); }
+    function heard(t,live){ var el=document.getElementById('aHeard'); if(el){ el.textContent=t; el.classList.toggle('live',!!live); } }
+    function fallbackBox(){ var f=document.getElementById('aType'); if(f) f.hidden=false; }
+
+    /* ── rendering a step ── */
+    function render(){
+      clearTimeout(advT); stopListen();
+      var q=probe?{id:probe.key,kind:'voice',say:probe.say,isProbe:true}:Q[step], n=Q.length-1;
+      if(sent){ root.innerHTML='<h2 class="decode">Signal received.</h2><p>Thank you'+(S.name?', '+esc(S.name.split(' ')[0]):'')+'. Your sketch plan is with our engineers &mdash; expect a reply within one working day to arrange your free consultation.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; root.querySelectorAll('.decode').forEach(decode); return; }
+      var h='<div class="arch-step">Signal '+Math.min(step,n)+' / '+n+'<span class="bar"><i style="width:'+(step/n*100)+'%"></i></span><button type="button" class="vtog" data-a="voice">'+(voiceOn?'&#128266; Voice on':'&#128263; Voice off')+'</button></div>';
+      h+='<div class="arch-grid"><div class="arch-talk">';
+      h+='<div class="ask" id="aAsk"></div>';
+      if(q.kind==='intro'){ h+='<div class="mic-row big"><button class="mic" id="aMic" type="button" data-a="begin" aria-label="Start talking to the Architect"><span></span></button><div class="heard">Tap to begin &mdash; your voice does the rest.</div></div>'+
+        '<p class="whisper">Rather write? <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a></p>'; }
+      else if(q.kind==='chips'){ var curSel=q.multi?(q.id==='type'?S.types:(S[q.id]||[])):[S.ans[q.id]];
+        h+='<div class="opts">'+q.opts.map(function(o){ return '<button class="opt" type="button" aria-pressed="'+(curSel.indexOf(o)>=0)+'" data-o="'+esc(o)+'">'+esc(o)+'</button>'; }).join('')+'</div>';
+        h+=micRow('Or just say it')+nav(q.multi); }
+      else if(q.kind==='voice'){ h+=micRow(SR&&!SRdenied?'Tap the mic and talk &mdash; I\'m listening':'Voice isn\'t available in this browser &mdash; type below')+
+        '<textarea class="field" id="aType" rows="3" placeholder="Type your answer" '+(SR&&!SRdenied?'hidden':'')+'>'+esc(S.ans[q.id]||'')+'</textarea>'+
+        '<div class="arch-nav"><button class="send" type="button" data-a="next">Continue</button><button class="back" type="button" data-a="redo">&#8635; Say it again</button>'+(step>0?'<button class="back" type="button" data-a="back">&larr; Back</button>':'')+'</div><div class="adv"><i id="advBar"></i></div>'; }
+      else if(q.kind==='email'){ h+='<input class="field" id="aEmail" type="email" autocomplete="email" placeholder="you@business.com" value="'+esc(S.email||'')+'"><div class="err" id="aErr"></div>'+nav(true); }
+      else if(q.kind==='review'){ h+=planHTML()+'<input type="checkbox" id="aBot" style="display:none" tabindex="-1" autocomplete="off"><div class="arch-nav"><button class="send" type="button" data-a="send">Send my sketch plan</button><button class="back" type="button" data-a="back">&larr; Edit</button></div><div class="err" id="aErr"></div><p class="whisper">Sent by email only &mdash; never stored, never added to a mailing list.</p>'; }
+      h+='</div><svg class="bp" id="bp" viewBox="0 0 420 320" aria-label="Live blueprint of your idea"></svg></div>';
+      root.innerHTML=h; draw();
+      var text=q.say, ask=document.getElementById('aAsk'), c=0;
+      var ty=setInterval(function(){ c+=2; ask.innerHTML=esc(text.slice(0,c))+'<span class="c"></span>'; if(c>=text.length){ clearInterval(ty); ask.textContent=text; } },20);
+      if(q.kind==='intro') return;            // wait for the tap (browsers need it before the mic or voice)
+      speak(text,function(){ if(probe||Q[step]===q){ if(q.kind==='voice' && SR && !SRdenied) listen(onVoice); } });
+      if(q.kind==='review') FX('statics',.5,.8);
+    }
+    function micRow(label){ return '<div class="mic-row"><button class="mic" id="aMic" type="button" data-a="mic" aria-label="Tap to talk"><span></span></button><div class="heard" id="aHeard">'+label+'</div></div>'; }
+    function nav(withNext){ return '<div class="arch-nav">'+(withNext?'<button class="send" type="button" data-a="next">Continue</button>':'')+(step>0?'<button class="back" type="button" data-a="back">&larr; Back</button>':'')+'</div>'; }
+
+    function curQ(){ return probe?{id:probe.key,kind:'voice',isProbe:true}:Q[step]; }
+    function onVoice(text){
+      var q=curQ(); if(!text){ heard('I didn\'t catch that &mdash; tap the mic when you\'re ready.',false); document.getElementById('aHeard').innerHTML='I didn\'t catch that &mdash; tap the mic when you\'re ready.'; return; }
+      if(q.kind==='chips'){ return matchChips(q,text); }
+      if(q.id==='name'){ var cn=cleanName(text); S.name=cap(cn.name); if(cn.biz) S.biz=cap(cn.biz); }
+      S.ans[q.id]=(S.ans[q.id]&&q.isProbe?S.ans[q.id]+' ':'')+text;
+      var ta=document.getElementById('aType'); if(ta) ta.value=S.ans[q.id];
+      analyse(text,true); draw(); save();
+      heard('“'+text+'”',false);
+      autoAdvance();
+    }
+    function autoAdvance(){ var bar=document.getElementById('advBar'); if(bar){ bar.style.transition='none'; bar.style.width='0'; void bar.offsetWidth; bar.style.transition='width 2.2s linear'; bar.style.width='100%'; }
+      advT=setTimeout(next,2300); }
+    function matchChips(q,text){ var t=text.toLowerCase(), hit=[];
+      q.opts.forEach(function(o){ var words=o.toLowerCase().replace(/[^a-z0-9£ ]/g,' ').split(/\s+/).filter(function(w){ return w.length>3||/^(crm|ai|app|web|3k|10k|25k)$/.test(w); });
+        if(words.some(function(w){ return t.indexOf(w)>=0; })) hit.push(o); });
+      if(q.id==='type'){ Object.keys(TYPE_KW).forEach(function(k){ if(TYPE_KW[k].test(t) && hit.indexOf(k)<0) hit.push(k); }); }
+      if(q.id==='timeline'){ if(/asap|soon|now|urgent/.test(t)) hit=['As soon as possible']; else if(/explor|not sure|just looking/.test(t)) hit=['Just exploring']; }
+      if(q.id==='budget' && /not sure|don.?t know|advise/.test(t)) hit=['Not sure — advise me'];
+      analyse(text,true);
+      if(!hit.length){ var hd=document.getElementById('aHeard'); if(hd) hd.innerHTML='“'+esc(text)+'” &mdash; tap the closest option.'; draw(); save(); return; }
+      if(!q.multi) hit=hit.slice(0,1);
+      hit.forEach(function(o){ select(q,o,true); });
+      root.querySelectorAll('.opt').forEach(function(b){ var o=b.dataset.o.replace(/&amp;/g,'&'); b.setAttribute('aria-pressed',isSel(q,o)); });
+      heard('“'+text+'”',false); draw(); save(); setTimeout(next,1200);
+    }
+    function isSel(q,o){ if(q.id==='type') return S.types.indexOf(o)>=0; if(q.multi) return (S[q.id]||[]).indexOf(o)>=0; return S.ans[q.id]===o; }
+    function select(q,o,force){
+      if(q.id==='type'){ var i=S.types.indexOf(o); if(i>=0&&!force) S.types.splice(i,1); else if(i<0) S.types.push(o); typeMods(); }
+      else if(q.id==='users'){ var j=S.users.indexOf(o); if(j>=0&&!force) S.users.splice(j,1); else if(j<0) S.users.push(o); }
+      else if(q.multi){ S[q.id]=S[q.id]||[]; var k=S[q.id].indexOf(o); if(k>=0&&!force) S[q.id].splice(k,1); else if(k<0) S[q.id].push(o); }
+      else S.ans[q.id]=o;
+      FX('zoop',.6); M.fire('build'); draw(); save();
+    }
+    function next(){
+      clearTimeout(advT); stopListen(); try{ SYN&&SYN.cancel(); }catch(e){}
+      var q=curQ();
+      if(q.kind==='voice'){ var ta=document.getElementById('aType'); if(ta && !ta.hidden && ta.value.trim() && ta.value.trim()!==S.ans[q.id]){ S.ans[q.id]=ta.value.trim(); analyse(S.ans[q.id],true); if(q.id==='name'){ var cn=cleanName(S.ans.name); S.name=cap(cn.name); if(cn.biz) S.biz=cap(cn.biz); } }
+        if(!S.ans[q.id] && !q.isProbe){ heard('Tap the mic and tell me first.',false); var m=document.getElementById('aMic'); if(m&&m.animate) m.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:400}); return; } }
+      if(q.kind==='chips'){ var any=q.id==='type'?S.types.length:(q.multi?(S[q.id]||[]).length:S.ans[q.id]); if(q.id==='users') any=S.users.length; if(!any){ heard('Pick one, or tell me.',false); return; } }
+      if(q.kind==='email'){ var em=(document.getElementById('aEmail').value||'').trim(); if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ document.getElementById('aErr').textContent='That email doesn\'t look quite right.'; return; } S.email=em; }
+      // probing: dig into what they just said before moving on
+      var base=probe?probe.base:Q[step];
+      if(base.probe){ var pq=nextProbe(base); if(pq){ probe=pq; probesHere++; save(); FX('zoop',.7); render(); return; } }
+      probe=null; probesHere=0;
+      if(step<Q.length-1){ step++; save(); FX('zoop',.8); M.fire('build'); render(); }
+    }
+    function nextProbe(base){
+      if(probesHere>=2) return null;
+      for(var i=0;i<S.mods.length;i++){ var id=S.mods[i]; if(PROBE[id] && S.probed.indexOf(id)<0){ S.probed.push(id); return {key:base.id+'_'+id,say:PROBE[id],base:base}; } }
+      var words=(S.ans[base.id]||'').split(/\s+/).length;
+      if(words<12 && S.probed.indexOf('generic_'+base.id)<0){ S.probed.push('generic_'+base.id); return {key:base.id+'_more',say:GENERIC,base:base}; }
+      return null;
+    }
+    function back(){ clearTimeout(advT); stopListen(); if(probe){ probe=null; probesHere=0; render(); return; } if(step>0){ step--; save(); FX('zoop',.5); render(); } }
+
+    /* ── the sketch plan ── */
+    function phases(){ var m=S.mods.slice(); var core=m.slice(0,Math.min(4,m.length)), rest=m.slice(4); return {p1:core,p2:rest}; }
+    function planHTML(){ var ph=phases(), L='';
+      L+='<p class="vision">'+(S.biz?'<em>'+esc(S.biz)+'</em> — ':'')+'<em>'+esc(S.types.join(' + ')||'a new product')+'</em>'+(S.plat.length?' for '+esc(join(S.plat)):'')+'. '+esc((S.ans.idea||'').replace(/\.?$/,'.'))+'</p>';
+      L+='<div class="split"><div><h3>Who it\'s for</h3><ul class="lines g">'+(S.users.length?S.users:['To be confirmed']).map(function(u){ return '<li>'+esc(u)+'</li>'; }).join('')+'</ul></div>';
+      L+='<div><h3>Must do brilliantly</h3><p>'+esc(S.ans.must||'—')+'</p></div></div>';
+      L+='<h3>Core modules &amp; key screens</h3><ul class="lines">'+S.mods.map(function(id){ return '<li><b>'+esc(MOD[id].n)+'</b><small>'+esc((SCREENS[id]||[]).join(' · '))+'</small></li>'; }).join('')+'</ul>';
+      L+='<h3>Suggested build phases</h3><ul class="lines g"><li><b>Phase 1 — launch</b><small>'+esc(ph.p1.map(function(id){ return MOD[id].n; }).join(', ')||'Scoped together at consultation')+'</small></li>'+(ph.p2.length?'<li><b>Phase 2 — grow</b><small>'+esc(ph.p2.map(function(id){ return MOD[id].n; }).join(', '))+'</small></li>':'')+'</ul>';
+      L+='<p class="sub">Feel: '+esc(join(S.feel)||'—')+' · Has: '+esc(join(S.have)||'—')+' · Timeline: '+esc(S.ans.timeline||'—')+' · Budget: '+esc(S.ans.budget||'—')+'</p>';
+      L+='<p class="sub">We\'ll reply to <b>'+esc(S.email||'')+'</b>.</p>';
+      return L; }
+    function planText(){ var ph=phases(), extra=Object.keys(S.ans).filter(function(k){ return /_/.test(k); }).map(function(k){ return '  • '+k.replace(/_/,' → ')+': '+S.ans[k]; }).join('\n');
+      return 'SKETCH PLAN — from the Architect (voice)\n\n'+lines([['Name',S.name],['Business',S.biz],['Email',S.email],['Building',S.types.join(', ')],['Platforms',S.plat.join(', ')],['Users',S.users.join(', ')],['The idea',S.ans.idea],['Must do brilliantly',S.ans.must]])+
+        (extra?'\n\nFollow-up answers:\n'+extra:'')+
+        '\n\nCore modules & screens:\n'+S.mods.map(function(id){ return '  • '+MOD[id].n+' — '+(SCREENS[id]||[]).join(', '); }).join('\n')+
+        '\n\nPhase 1: '+ph.p1.map(function(id){ return MOD[id].n; }).join(', ')+(ph.p2.length?'\nPhase 2: '+ph.p2.map(function(id){ return MOD[id].n; }).join(', '):'')+
+        '\n\n'+lines([['Feel',join(S.feel)],['Already has',join(S.have)],['Timeline',S.ans.timeline],['Budget',S.ans.budget],['Said (name answer)',S.ans.name],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',Object.keys(found).length+' / '+total]]); }
+    function send(btn){
+      if(document.getElementById('aBot').checked) return;
+      btn.disabled=true; btn.textContent='Transmitting…';
+      var body={access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'SA Intelligent Designs — the Architect',subject:'New sketch plan — '+(S.name||'')+(S.biz?' ('+S.biz+')':'')+' — '+(S.types.join(', ')||'project'),
+        name:S.name||'',email:S.email,replyto:S.email,business:S.biz||'',package:S.types.join(', '),budget:S.ans.budget||'',timeline:S.ans.timeline||'',message:planText(),botcheck:false};
+      fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)})
+        .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed'); sent=true; ss('saArch','{}'); M.fire('build'); FX('warp'); speak('Signal received. Thank you'+(S.name?', '+S.name.split(' ')[0]:'')+'. We will be in touch within one working day.',function(){}); render(); })
+        .catch(function(){ btn.disabled=false; btn.textContent='Send my sketch plan'; document.getElementById('aErr').innerHTML='That didn\'t transmit. Try again, or email <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a>.'; });
+    }
+
+    root.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var q=curQ();
+      if(b.dataset.o!==undefined){ clearTimeout(advT); var o=b.dataset.o.replace(/&amp;/g,'&');
+        if(q.multi){ select(q,o,false); b.setAttribute('aria-pressed',isSel(q,o)); }
+        else { select(q,o,true); root.querySelectorAll('.opt').forEach(function(x){ x.setAttribute('aria-pressed',x===b); }); setTimeout(next,350); }
+        return; }
+      var a=b.dataset.a;
+      if(a==='begin'){ step=1; save(); FX('warp'); render(); }
+      else if(a==='mic'){ if(rec){ try{ rec.stop(); }catch(_){} } else { clearTimeout(advT); if(!listen(onVoice)) fallbackBox(); } }
+      else if(a==='redo'){ clearTimeout(advT); var qq=curQ(); if(qq.isProbe) delete S.ans[qq.id]; else S.ans[qq.id]=''; save(); if(!listen(onVoice)) fallbackBox(); }
+      else if(a==='next') next(); else if(a==='back') back(); else if(a==='send') send(b);
+      else if(a==='voice'){ voiceOn=!voiceOn; ss('saArchVoice',voiceOn?'on':'off'); if(!voiceOn) try{ SYN.cancel(); }catch(_){} b.innerHTML=voiceOn?'&#128266; Voice on':'&#128263; Voice off'; }
+    });
+    root.addEventListener('keydown',function(e){ if(e.key==='Enter' && e.target.id==='aEmail'){ e.preventDefault(); next(); } });
+    return { start:function(){ render(); }, stop:function(){ clearTimeout(advT); stopListen(); try{ SYN&&SYN.cancel(); }catch(e){} },
+      preset:function(k,v){ if(sent) return; var map={'A website':'Website','A mobile app':'Mobile app'}; var ty=map[v]||v; if(S.types.indexOf(ty)<0) S.types.push(ty); typeMods(); if(step<2){ step=2; } save(); render(); } };
+  })();
 
   /* The Guild — developers, engineers and architects apply to join SA Intelligent */
-  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Request membership',
+  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Join the community',
     Q:function(A){ return [
-      {k:'intro',kind:'intro',btn:'Apply to join',ask:function(){ return 'The Guild is where builders join SA Intelligent.'; },sub:'A membership club for developers, engineers, designers and architects who want to build real products with us. Tell us who you are, what you offer and what you charge &mdash; about three minutes.'},
+      {k:'intro',kind:'intro',btn:'Join free',ask:function(){ return 'Join the SA tech community. Membership is free.'; },sub:'For app developers, engineers, designers and architects across Bedford, Milton Keynes and the local tech scene. Members get matched to real client projects, set their own rates and meet other builders. About three minutes.'},
       {k:'role',kind:'one',ask:function(){ return 'What do you build?'; },opts:function(){ return ['Web developer','Mobile engineer','Full-stack developer','Solutions architect','UI / UX designer','AI / ML engineer','Something else']; },ack:function(){ return A.role+'. Welcome.'; }},
       {k:'experience',kind:'one',ask:function(){ return 'How long have you been doing it professionally?'; },opts:function(){ return ['Under 2 years','2–5 years','5–10 years','10+ years']; },ack:function(){ return A.experience+' of experience.'; }},
       {k:'skills',kind:'many',other:true,ask:function(){ return 'Which tools are you strongest in?'; },sub:'Pick your best — not everything you\'ve touched.',opts:function(){ return ['React','React Native','Next.js','Node.js','Python','Swift','Kotlin','Flutter','Supabase / Postgres','AWS / GCP','AI & LLMs','Three.js / WebGL','SEO','Figma']; },ack:function(){ return lst(A.skills).length+' core skills logged.'; }},
@@ -977,17 +1414,17 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       {k:'links',kind:'short',optional:true,ask:function(){ return 'Where can we see your work?'; },ph:function(){ return 'GitHub, portfolio, LinkedIn or App Store links (optional)'; },ack:function(){ return A.links?'Links saved — we\'ll take a look.':'No links — we can talk it through.'; }},
       {k:'pitch',kind:'long',ask:function(){ return 'In a line or two, what makes your work stand out?'; },ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part we read twice.'; }},
       {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'An SA engineer will reply within a few working days.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
-      {k:'review',kind:'review',ask:function(){ return 'Your Guild profile.'; }}
+      {k:'review',kind:'review',ask:function(){ return 'Your community profile.'; }}
     ]; },
     vision:function(A){ var s='<em>'+esc(A.name||'You')+'</em> — '+esc((A.role||'builder').toLowerCase())+' with <em>'+esc((A.experience||'').toLowerCase())+'</em> of experience'+(A.based?', based in '+esc(A.based):'')+'. ';
       if(lst(A.skills).length) s+='Strongest in '+esc(join(A.skills))+'. ';
       if(lst(A.services).length) s+='Offers '+esc(join(A.services).toLowerCase())+'. ';
       if(A.rate) s+='Charges <em>'+esc(A.rate)+'</em> ('+esc((A.rateBasis||'').toLowerCase())+'), available <em>'+esc((A.availability||'').toLowerCase())+'</em>. ';
       if(A.pitch) s+='“'+esc(A.pitch)+'”'; return s; },
-    plain:function(A){ return 'GUILD MEMBERSHIP REQUEST — from the Braintrix\n\n'+lines([['Role',A.role],['Experience',A.experience],['Skills',join(A.skills)],['Services offered',join(A.services)],['Pricing',A.rateBasis],['Rate',A.rate],['Availability',A.availability],['Based / works',A.based],['Links',A.links],['Stand-out',A.pitch],['Name',A.name],['Email',A.email],['Phone',A.phone],['Prefers contact by',A.pref]]); },
-    subject:function(A){ return 'Guild membership request — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
+    plain:function(A){ return 'TECH COMMUNITY MEMBERSHIP — from the Braintrix\n\n'+lines([['Role',A.role],['Experience',A.experience],['Skills',join(A.skills)],['Services offered',join(A.services)],['Pricing',A.rateBasis],['Rate',A.rate],['Availability',A.availability],['Based / works',A.based],['Links',A.links],['Stand-out',A.pitch],['Name',A.name],['Email',A.email]]); },
+    subject:function(A){ return 'Tech community membership (free) — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
     fields:function(A){ return {role:A.role||'',rate:(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':''),availability:A.availability||''}; },
-    done:function(A){ return '<h2 class="decode">You\'re in the queue.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. An SA engineer will review your profile and reply within a few working days.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+    done:function(A){ return '<h2 class="decode">Welcome to the community.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. Your free membership request is in &mdash; we\'ll verify your profile and be in touch within a few working days.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
   });
 
   /* ══ FREE FLIGHT ══ */
@@ -1031,7 +1468,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   var dockRow=document.getElementById('dockRow');
   function paintDock(){
     if(!dockRow) return;
-    var h='<button class="dk fly" type="button" data-fly><i>&#10022;</i><span>Fly</span></button>';
+    var h='<button class="dk fly" type="button" data-fly><i>&#10022;</i><span>Fly</span></button><button class="dk fly" type="button" data-ambopen><i>&#8779;</i><span>Sound</span></button>';
     DESTS.forEach(function(d){ if(d.secret && !found[d.id]) return;
       var f=!!found[d.id]; h+='<button class="dk'+(d.c==='g'?' g':'')+(f?' found':'')+(d.id===cur?' here':'')+'" type="button" data-go="'+d.id+'"><i>'+(f?'':'?')+'</i><span>'+(f?d.name.replace(/^The /,''):'unknown')+'</span></button>'; });
     dockRow.innerHTML=h;
