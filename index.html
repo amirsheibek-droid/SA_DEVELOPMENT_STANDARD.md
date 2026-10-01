@@ -674,7 +674,7 @@ details.legal{margin-left:auto;margin-right:auto}
 
 <div id="choice" role="group" aria-label="How would you like to explore?">
   <div class="ask0" id="ask0">You're inside. Which way?</div>
-  <button class="ch" type="button" data-go="guild"><b>I'm an engineer</b><span>Our worldwide tech community is coming soon &mdash; register early.</span></button>
+  <button class="ch" type="button" data-go="guild"><b>I'm an engineer</b><span>Join our engineer network free &mdash; we'll reach out when a project needs your skills.</span></button>
   <button class="ch g" type="button" data-go="build"><b>I need an engineer</b><span>Describe your project &mdash; we'll shape it into a plan.</span></button>
   <div class="ch-more"><button type="button" data-fly>&#10022; Fly freely and explore</button><button type="button" data-go="core">Take me to the core</button></div>
 </div>
@@ -786,13 +786,13 @@ Intelligent websites, apps and software for specialist niches.
 Anywhere. Every project is run remotely, worldwide.
 &gt; how?
 A free mock-up first. Fixed written quotes. No lock-in.
-&gt; what's next?
-A worldwide community for engineers is coming soon."></div>
-    <p><a class="go" href="#guild" data-go="guild">Engineer or developer? Register early for the community</a></p>
+&gt; engineers?
+Join the network free. When a project needs your skills, we call."></div>
+    <p><a class="go" href="#guild" data-go="guild">Engineer or developer? Join the network free</a></p>
     <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a></p>
     <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising.</p></details>
     <details class="legal" id="cookies"><summary>Cookies</summary><p>Strictly necessary browser storage only (your sound setting, which neurons you've found, and your unsent brief), cleared when you close the tab. No analytics, tracking or advertising cookies.</p></details>
-    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill.</p></details>
+    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill. <b>Engineer network.</b> Joining is free. If we place you on a client project, SA Intelligent Designs keeps an agreed percentage of the project fee, confirmed in writing before work starts.</p></details>
     <p class="whisper">&copy; 2026 SA Intelligent Designs &middot; by a mystery designer</p>
   </article>
 
@@ -805,6 +805,7 @@ A worldwide community for engineers is coming soon."></div>
       <button aria-expanded="false">Do I see anything before I pay?</button><div class="a">Yes. Every package begins with a complimentary working mock-up, so you can review the direction before committing to anything.</div>
       <button aria-expanded="false">Do you build mobile apps?</button><div class="a">Yes &mdash; for specialist niches. Voltz CRM, our voice-first app for self-employed tradespeople, is live on the App Store, and Contract Analyser is in development.</div>
       
+      <button aria-expanded="false">I'm an engineer &mdash; how does joining work?</button><div class="a">Joining the network is free. Tell us your skills, rates and availability, and when a client project needs your expertise we'll get in touch with the details. If you take it on, SA Intelligent Designs keeps an agreed percentage of the project fee &mdash; always confirmed with you before work starts.</div>
       <button aria-expanded="false">Am I tied into a contract?</button><div class="a">No. The care plan is optional, billed in advance and can be cancelled any time. You own your domain in your own name.</div>
     </div>
   </article>
@@ -870,9 +871,9 @@ A worldwide community for engineers is coming soon."></div>
     <div id="arch"></div>
   </article>
 
-  <!-- THE GUILD (membership club for builders) -->
+  <!-- THE GUILD (engineer network: free to join, SA takes a % when a project is placed) -->
   <article class="pg" id="p-guild" data-node="guild">
-    <div class="eye">Join as an engineer &middot; coming soon</div>
+    <div class="eye">Join as an engineer &middot; free</div>
     <div id="guildWiz"></div>
   </article>
 
@@ -1325,7 +1326,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   /* The Pulse — newest first. Add a line here to post an update. */
   var NEWS=[
     {d:'1 Oct 2026',t:'The Braintrix is open',b:'Our new home is a mind you can fly through. Eleven neurons, one of them very well hidden. Happy hunting.'},
-    {d:'1 Oct 2026',t:'Coming soon: a worldwide tech community',b:'Engineers, developers and designers anywhere in the world will be able to join free. Register early in the \u201CI\'m an engineer\u201D neuron.'},
+    {d:'1 Oct 2026',t:'Now open: the SA engineer network',b:'Software developers, engineers and AI specialists anywhere in the world can join free. When a client project needs your expertise, we\'ll reach out. Join in the \u201CI\'m an engineer\u201D neuron.'},
     {d:'1 Oct 2026',t:'Meet the Architect',b:'Describe your idea in a few words and watch the blueprint draw itself as you type.'},
     {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built by SA Intelligent Designs.'}
   ];
@@ -1708,36 +1709,36 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       preset:function(k,v){ if(sent) return; var map={'A website':'Website','A mobile app':'Mobile app'}; var ty=map[v]||v; if(S.types.indexOf(ty)<0) S.types.push(ty); typeMods(); if(step<2){ step=2; } save(); render(); } };
   })();
 
-  /* The Guild — developers, engineers and architects apply to join SA Intelligent */
-  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Register early',
+  /* The Guild — engineers join the network; SA reaches out when a client project fits */
+  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Join the network',
     Q:function(A){ return [
-      {k:'intro',kind:'intro',btn:'Register early',ask:function(){ return 'The SA tech community is coming soon. Register early and you\'ll be first in.'; },sub:'For app developers, engineers, designers and architects anywhere in the world. Membership will be free. Tell us who you are, what you offer and what you charge &mdash; about three minutes.'},
+      {k:'intro',kind:'intro',btn:'Join free',ask:function(){ return 'Join the SA engineer network.'; },sub:'For software developers, engineers, AI specialists, designers and architects anywhere in the world. Joining is free. When a client project needs your expertise, we\'ll reach out with the details. If you take it on, SA Intelligent Designs keeps an agreed percentage of the project fee &mdash; confirmed with you before any work starts. Tell us who you are, what you offer and what you charge &mdash; about three minutes.'},
       {k:'role',kind:'one',ask:function(){ return 'What do you build?'; },opts:function(){ return ['Web developer','Mobile engineer','Full-stack developer','Solutions architect','UI / UX designer','AI / ML engineer','Something else']; },ack:function(){ return A.role+'. Welcome.'; }},
       {k:'experience',kind:'one',ask:function(){ return 'How long have you been doing it professionally?'; },opts:function(){ return ['Under 2 years','2–5 years','5–10 years','10+ years']; },ack:function(){ return A.experience+' of experience.'; }},
       {k:'skills',kind:'many',other:true,ask:function(){ return 'Which tools are you strongest in?'; },sub:'Pick your best — not everything you\'ve touched.',opts:function(){ return ['React','React Native','Next.js','Node.js','Python','Swift','Kotlin','Flutter','Supabase / Postgres','AWS / GCP','AI & LLMs','Three.js / WebGL','Figma']; },ack:function(){ return lst(A.skills).length+' core skills logged.'; }},
       {k:'services',kind:'many',other:true,ask:function(){ return 'What would you offer SA clients?'; },opts:function(){ return ['Full builds','Front-end','Back-end & APIs','Mobile apps','AI integrations','Architecture & code reviews','Design & prototyping','DevOps & hosting','Maintenance & support']; },ack:function(){ return 'Services captured.'; }},
-      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Pick how you usually price, then your rate. Members set their own rates.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
+      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Pick how you usually price, then your rate. You set your own rates; SA\'s percentage is agreed per project.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
       {k:'availability',kind:'one',ask:function(){ return 'How much time could you give?'; },opts:function(){ return ['Full-time','Part-time','Evenings & weekends','Project by project']; },ack:function(){ return 'Availability: '+A.availability.toLowerCase()+'.'; }},
       {k:'based',kind:'short',ask:function(){ return 'Where are you based, and how do you like to work?'; },ph:function(){ return 'e.g. Lisbon, Lagos or Leeds — remote, hybrid or on-site'; },ack:function(){ return 'Based: '+A.based+'.'; }},
       {k:'links',kind:'short',optional:true,ask:function(){ return 'Where can we see your work?'; },ph:function(){ return 'GitHub, portfolio, LinkedIn or App Store links (optional)'; },ack:function(){ return A.links?'Links saved — we\'ll take a look.':'No links — we can talk it through.'; }},
       {k:'pitch',kind:'long',ask:function(){ return 'In a line or two, what makes your work stand out?'; },ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part we read twice.'; }},
-      {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'An SA engineer will reply within a few working days.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
-      {k:'review',kind:'review',ask:function(){ return 'Your community profile.'; }}
+      {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'We\'ll confirm you\'re in the network within a few working days.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
+      {k:'review',kind:'review',ask:function(){ return 'Your engineer profile.'; }}
     ]; },
     vision:function(A){ var s='<em>'+esc(A.name||'You')+'</em> — '+esc((A.role||'builder').toLowerCase())+' with <em>'+esc((A.experience||'').toLowerCase())+'</em> of experience'+(A.based?', based in '+esc(A.based):'')+'. ';
       if(lst(A.skills).length) s+='Strongest in '+esc(join(A.skills))+'. ';
       if(lst(A.services).length) s+='Offers '+esc(join(A.services).toLowerCase())+'. ';
       if(A.rate) s+='Charges <em>'+esc(A.rate)+'</em> ('+esc((A.rateBasis||'').toLowerCase())+'), available <em>'+esc((A.availability||'').toLowerCase())+'</em>. ';
       if(A.pitch) s+='“'+esc(A.pitch)+'”'; return s; },
-    plain:function(A){ return 'TECH COMMUNITY MEMBERSHIP — from the Braintrix\n\n'+lines([['Role',A.role],['Experience',A.experience],['Skills',join(A.skills)],['Services offered',join(A.services)],['Pricing',A.rateBasis],['Rate',A.rate],['Availability',A.availability],['Based / works',A.based],['Links',A.links],['Stand-out',A.pitch],['Name',A.name],['Email',A.email]]); },
-    subject:function(A){ return 'Tech community early registration — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
+    plain:function(A){ return 'ENGINEER NETWORK SIGN-UP — from the Braintrix\n\n'+lines([['Role',A.role],['Experience',A.experience],['Skills',join(A.skills)],['Services offered',join(A.services)],['Pricing',A.rateBasis],['Rate',A.rate],['Availability',A.availability],['Based / works',A.based],['Links',A.links],['Stand-out',A.pitch],['Name',A.name],['Email',A.email]]); },
+    subject:function(A){ return 'Engineer network sign-up — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
     fields:function(A){ return {role:A.role||'',rate:(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':''),availability:A.availability||''}; },
-    done:function(A){ return '<h2 class="decode">You\'re on the early list.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll be in touch as soon as the community opens.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+    done:function(A){ return '<h2 class="decode">You\'re in the network.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. Joining is free &mdash; we\'ll be in touch when a client project needs your expertise.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
   });
 
   /* ══ FREE FLIGHT ══ */
   var choice=document.getElementById('choice'), thrust=document.getElementById('thrust'), flyNear=document.getElementById('flyNear');
-  function showChoice(){ choice.classList.add('on'); FX('statics',.4,.6); Jess.play('mind-inside',"You're inside the mind. Are you an engineer looking to join, or do you need an engineer for your project? Pick a path, or fly freely and explore."); }
+  function showChoice(){ choice.classList.add('on'); FX('statics',.4,.6); Jess.play('mind-inside',"You're inside the mind. Are you an engineer looking to join our network, or do you need an engineer for your project? Pick a path, or fly freely and explore."); }
   function hideChoice(){ choice.classList.remove('on'); }
   var flyHelp=document.getElementById('flyHelp'), guideId=null, guideEl=document.getElementById('guide'), guideTxt=document.getElementById('guideTxt');
   function pickGuide(){ var from=byId[cur]||byId.core, best=null, bd=1e9;
