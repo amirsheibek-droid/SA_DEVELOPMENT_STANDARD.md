@@ -238,9 +238,39 @@
 
   /* inside, the brain's outline wraps the whole mind: zoom out at Home to see its shape */
   function brainShell(){ brain.visible=true; brain.position.set(0,-6,-95); brain.scale.setScalar(13); brain.rotation.set(-.05,Math.PI/2,0);
-    bpts.material.size=small?3.2:2.8; bpts.material.opacity=.42;
-    brain.children.forEach(function(c){ if(c.type==='LineSegments'&&c!==bpts) c.material.opacity=.07; if(c.type==='Points'&&c!==bpts) c.material.size=small?4.5:4; if(c.type==='Sprite') c.visible=false; });
+    bpts.material.size=small?7:6; bpts.material.opacity=.55;
+    brain.children.forEach(function(c){ if(c.type==='LineSegments'&&c!==bpts) c.material.opacity=.16; if(c.type==='Points'&&c!==bpts) c.material.size=small?4.5:4; if(c.type==='Sprite') c.visible=false; });
     scene.fog.far=520; }
+
+  /* ── the voyage: drift through space, past the Earth and the planets, and back into the mind ── */
+  var planets=new T.Group(); planets.visible=false; scene.add(planets); var PL=[];
+  function ptex(kind){ var c=document.createElement('canvas'); c.width=512; c.height=256; var g=c.getContext('2d'), i, x, y;
+    function blob(col,n,rmin,rmax){ g.fillStyle=col; for(i=0;i<n;i++){ x=Math.random()*512; y=30+Math.random()*196; var r=rmin+Math.random()*(rmax-rmin); g.beginPath(); g.ellipse(x,y,r*1.6,r,Math.random()*3,0,Math.PI*2); g.fill(); g.beginPath(); g.ellipse(x-512,y,r*1.6,r,0,0,Math.PI*2); g.fill(); } }
+    if(kind==='earth'){ g.fillStyle='#1d5fb8'; g.fillRect(0,0,512,256); blob('#2f8f4e',26,10,34); blob('#7a6a3a',10,6,16); g.fillStyle='#eef6ff'; g.fillRect(0,0,512,14); g.fillRect(0,242,512,14); }
+    else if(kind==='clouds'){ g.clearRect(0,0,512,256); blob('rgba(255,255,255,.55)',60,4,16); }
+    else if(kind==='moon'){ g.fillStyle='#9a9ca3'; g.fillRect(0,0,512,256); blob('rgba(70,72,80,.5)',40,3,14); }
+    else if(kind==='mars'){ g.fillStyle='#b5532c'; g.fillRect(0,0,512,256); blob('rgba(120,40,20,.6)',30,6,20); g.fillStyle='#f3e2d6'; g.fillRect(0,0,512,8); }
+    else if(kind==='jupiter'||kind==='saturn'){ var cols=kind==='jupiter'?['#c9a27a','#e8d3b5','#a87c56','#f1e4cf','#b8865f']:['#d9c18f','#efe0b9','#c4a66e','#f4e9cc'];
+      for(y=0;y<256;y+=8){ g.fillStyle=cols[(y/8+(Math.random()<.3?1:0))%cols.length|0]; g.fillRect(0,y,512,8); } if(kind==='jupiter'){ g.fillStyle='#b5523a'; g.beginPath(); g.ellipse(330,160,26,14,0,0,Math.PI*2); g.fill(); } }
+    else if(kind==='ring'){ c.width=256; c.height=8; g=c.getContext('2d'); for(x=0;x<256;x++){ g.fillStyle='rgba(225,205,160,'+(.15+.6*Math.abs(Math.sin(x*.21)*Math.sin(x*.05)))+')'; g.fillRect(x,0,1,8); } }
+    var t2=new T.CanvasTexture(c); return t2; }
+  function planet(kind,pos,r){ var m=new T.Mesh(new T.SphereGeometry(r,48,32),new T.MeshPhongMaterial({map:ptex(kind),shininess:kind==='earth'?25:5,fog:false})); m.position.set(pos[0],pos[1],pos[2]); planets.add(m); PL.push({m:m,r:r,kind:kind}); return m; }
+  (function(){ var sun=new T.Sprite(new T.SpriteMaterial({map:dotTex('rgba(255,240,200,1)','rgba(255,170,60,0)'),transparent:true,depthWrite:false,fog:false,blending:T.AdditiveBlending})); sun.scale.set(420,420,1); sun.position.set(900,300,1350); planets.add(sun);
+    var sl=new T.PointLight(0xfff1d6,1.6,0,0); sl.position.copy(sun.position); planets.add(sl); planets.add(new T.AmbientLight(0x334466,.35));
+    var earth=planet('earth',[-130,0,520],34); var cl=new T.Mesh(new T.SphereGeometry(34.8,48,32),new T.MeshPhongMaterial({map:ptex('clouds'),transparent:true,depthWrite:false,fog:false})); earth.add(cl); earth.userData.clouds=cl;
+    var atm=new T.Sprite(new T.SpriteMaterial({map:dotTex('rgba(90,170,255,.5)','rgba(90,170,255,0)'),transparent:true,depthWrite:false,fog:false,blending:T.AdditiveBlending})); atm.scale.set(96,96,1); earth.add(atm);
+    planet('moon',[-50,40,470],9); planet('mars',[190,30,760],20); planet('jupiter',[-300,-40,980],70);
+    var sat=planet('saturn',[330,70,1180],52); var ring=new T.Mesh(new T.RingGeometry(66,110,96),new T.MeshBasicMaterial({map:ptex('ring'),transparent:true,side:T.DoubleSide,depthWrite:false,fog:false}));
+    var rp=ring.geometry.attributes.position, uv=ring.geometry.attributes.uv, v3=new T.Vector3(); for(var i=0;i<rp.count;i++){ v3.fromBufferAttribute(rp,i); uv.setXY(i,(v3.length()-66)/44,.5); }
+    ring.rotation.x=-1.2; ring.rotation.y=.3; sat.add(ring); })();
+  var voyage=null, VPATH=new T.CatmullRomCurve3([V(0,90,1600),V(240,110,1320),V(150,60,1080),V(-150,-10,1060),V(-170,-60,880),V(60,40,820),V(170,10,680),V(20,20,600),V(-70,10,430),V(-20,5,300),V(0,0,140),V(40,10,20),V(-30,-5,-90),V(30,20,-200),V(-60,30,-120),V(-20,60,300),V(-120,120,900)],true,'centripetal',.5);
+  function voyageStart(){ if(mode!=='inside') return; flight=null; travel=null; voyage={t0:performance.now(),dur:150000,u0:0}; planets.visible=true; scene.fog.far=2600; }
+  function voyageStop(){ if(!voyage) return; voyage=null; planets.visible=false; scene.fog.far=520; }
+  function voyageStep(dt){ var k=((performance.now()-voyage.t0)/voyage.dur)%1; VPATH.getPointAt(k,camPos); VPATH.getPointAt((k+.006)%1,tmpA);
+    var best=null,bd=1e9; PL.forEach(function(q){ var d=q.m.position.distanceTo(camPos)-q.r; if(d<bd){ bd=d; best=q; } });
+    if(best&&bd<260){ var w=Math.max(0,1-bd/260)*.65; tmpA.lerp(best.m.position,w); }
+    camLook.lerp(tmpA,Math.min(1,dt*1.5));
+    PL.forEach(function(q){ q.m.rotation.y+=dt*(q.kind==='earth'?.05:.02); if(q.m.userData.clouds) q.m.userData.clouds.rotation.y+=dt*.012; }); }
   function enter(cb){
     if(mode!=='outside'){ cb&&cb(); return; }
     mode='entering'; enterT=performance.now(); enterCb=cb; speed=260; shake=1.2; bpul.burst(80);
@@ -249,7 +279,7 @@
   function go(id,cb){
     if(!D[id]){ cb&&cb(); return; }
     if(mode!=='inside'){ cur=id; cb&&cb(); return; }
-    var wasFree=!!flight; flight=null; orbY=orbYt=0; orbP=orbPt=0;
+    if(voyage) voyageStop(); var wasFree=!!flight; flight=null; orbY=orbYt=0; orbP=orbPt=0;
     if(id===cur && !travel && !wasFree){ cb&&cb(); return; }
     var from=cur; cur=id;
     var P1=V(0,0,0), L1=V(0,0,0); pose(id,P1,L1);
@@ -337,7 +367,8 @@
       }
     } else {
       var P1=V(0,0,0), L1=V(0,0,0);
-      if(flight && !travel){ freeStep(dt); }
+      if(voyage){ voyageStep(dt); }
+      else if(flight && !travel){ freeStep(dt); }
       else if(travel){
         var k2=Math.min(1,(performance.now()-travel.t0)/travel.dur), e2=ease(k2);
         travel.curve.getPoint(e2,camPos);
@@ -436,7 +467,7 @@
   function setColor(id,hex){ var d=D[id]; if(!d) return; var c=new T.Color(hex); d.ring.material.color.copy(c); d.shock.material.color.copy(c);
     var cs='rgba('+Math.round(c.r*255)+','+Math.round(c.g*255)+','+Math.round(c.b*255)+','; d.halo.material.map=dotTex(cs+'1)',cs+'0)'); d.halo.material.needsUpdate=true; }
   function orbit(dx,dy){ orbYt-=dx*.006; orbPt=Math.max(-1.1,Math.min(1.1,orbPt-dy*.004)); }
-  window.HMind={setSeen:setSeen,onPath:function(fn){ pathHook=fn; },unexploredFrom:unexploredFrom,orbit:orbit,setTheme:setTheme,addBillboard:addBillboard,setColor:setColor,enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
+  window.HMind={voyageStart:voyageStart,voyageStop:voyageStop,voyaging:function(){ return !!voyage; },setSeen:setSeen,onPath:function(fn){ pathHook=fn; },unexploredFrom:unexploredFrom,orbit:orbit,setTheme:setTheme,addBillboard:addBillboard,setColor:setColor,enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
     mode:function(){ return mode; }, current:function(){ return cur; }, travelling:function(){ return !!travel; },
     onFrame:function(fn){ labelHook=fn; },
     freeStart:freeStart, isFree:function(){ return !!flight; }, onNear:function(fn){ nearHook=fn; }, nearest:nearest,

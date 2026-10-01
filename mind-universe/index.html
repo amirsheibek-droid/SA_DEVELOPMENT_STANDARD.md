@@ -317,6 +317,60 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 .hmore summary{cursor:pointer;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:8px;list-style:none}
 .hmore summary::-webkit-details-marker{display:none}
 .hmore[open] summary{color:var(--gold)}
+
+/* ── the doorway into the Plan room: white floor in dark mode, black floor in light mode ── */
+#room{position:fixed;inset:0;z-index:38;opacity:0;pointer-events:none;transition:opacity .6s;overflow:hidden;perspective:900px;
+  --rbg:#f7f8fb;--rink:#0b1730;--rmute:#5a6680;--rline:rgba(11,23,48,.12)}
+body.light #room{--rbg:#05060c;--rink:#eef1ff;--rmute:#9aa3c7;--rline:rgba(238,241,255,.14)}
+#room.on{opacity:1;pointer-events:auto}
+#room{background:radial-gradient(120% 80% at 50% 30%,var(--rbg) 40%,color-mix(in srgb,var(--rbg) 88%,#7f8cff) 100%);color:var(--rink)}
+.r-floor{position:absolute;left:-50%;right:-50%;bottom:-10%;height:70%;transform-origin:50% 100%;transform:rotateX(78deg);
+  background-image:linear-gradient(var(--rline) 1px,transparent 1px),linear-gradient(90deg,var(--rline) 1px,transparent 1px);background-size:80px 80px;
+  -webkit-mask-image:linear-gradient(0deg,#000 20%,transparent 95%);mask-image:linear-gradient(0deg,#000 20%,transparent 95%);animation:floorMove 12s linear infinite}
+@keyframes floorMove{to{background-position:0 80px}}
+.r-horizon{position:absolute;left:0;right:0;top:44%;height:1px;background:linear-gradient(90deg,transparent,var(--rline),transparent)}
+.r-in{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:min(620px,90vw);max-height:76vh;overflow:auto;text-align:center;padding:10px 6px;scrollbar-width:none}
+.r-in h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;letter-spacing:-.035em;margin:8px 0 6px}
+.r-in .r-eye{font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rmute)}
+.r-in p{color:var(--rmute);line-height:1.6}
+.r-in .field{color:var(--rink);border-color:var(--rline)}
+.r-items{list-style:none;margin:20px auto 0;max-width:480px;text-align:left}
+.r-items li{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--rline);font-size:1.02rem}
+.r-items li.done span{opacity:.4;text-decoration:line-through}
+.r-items input{accent-color:#19b877;transform:scale(1.25)}
+.r-items small{margin-left:auto;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rmute)}
+.r-in h3{font-size:.72rem;font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--rmute);margin:26px 0 0;font-weight:500}
+.r-out{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rmute)}
+.r-out:hover{color:var(--rink)}
+#door{position:fixed;inset:0;z-index:39;pointer-events:none;opacity:0;perspective:1200px;display:flex;align-items:center;justify-content:center}
+#door.on{opacity:1;pointer-events:auto}
+.d-light{position:absolute;width:min(46vw,380px);height:min(78vh,640px);background:var(--rbg,#f7f8fb);box-shadow:0 0 120px 40px rgba(255,255,255,.55);border-radius:4px;transition:all 1s cubic-bezier(.6,0,.2,1)}
+body.light .d-light{background:#05060c;box-shadow:0 0 120px 40px rgba(0,0,0,.5)}
+.d-frame{position:relative;width:min(46vw,380px);height:min(78vh,640px);display:flex;box-shadow:0 0 0 10px #1a1f3a,0 0 60px -10px rgba(164,92,255,.8);border-radius:4px;transform-style:preserve-3d}
+body.light .d-frame{box-shadow:0 0 0 10px #e8ecf5,0 0 60px -10px rgba(31,107,255,.5)}
+.d-panel{flex:1;background:linear-gradient(160deg,#20264a,#121633);transition:transform 1.3s cubic-bezier(.65,0,.25,1);position:relative;backface-visibility:hidden}
+body.light .d-panel{background:linear-gradient(160deg,#ffffff,#dfe6f3)}
+.d-panel.l{transform-origin:0 50%;border-right:1px solid rgba(255,255,255,.08)}.d-panel.r{transform-origin:100% 50%}
+.d-panel i{position:absolute;top:50%;width:6px;height:46px;margin-top:-23px;border-radius:4px;background:linear-gradient(var(--gold),#b8841f);box-shadow:0 0 10px var(--gold)}
+.d-panel.l i{right:14px}.d-panel.r i{left:14px}
+#door.open .d-panel.l{transform:rotateY(-105deg)}#door.open .d-panel.r{transform:rotateY(105deg)}
+#door.flood .d-light{width:100vw;height:100vh;border-radius:0}
+#door.flood .d-frame{opacity:0;transition:opacity .4s}
+.doorway{display:inline-flex;align-items:center;gap:10px;margin:20px auto 0;padding:12px 20px;border-radius:12px;font-weight:700;box-shadow:inset 0 0 0 1.5px var(--line);position:relative}
+.doorway::before{content:"";width:14px;height:20px;border-radius:2px;box-shadow:inset 0 0 0 2px var(--gold);background:linear-gradient(90deg,transparent 60%,rgba(255,196,77,.5) 60%)}
+
+#voyPlayer{position:fixed;z-index:34;left:16px;bottom:96px;width:min(360px,80vw);border-radius:16px;overflow:hidden;background:var(--glow);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 0 1px var(--line),0 20px 50px -20px rgba(255,196,77,.6);opacity:0;pointer-events:none;transform:translateY(16px);transition:.5s}
+#voyPlayer.on{opacity:1;pointer-events:auto;transform:none}
+#voyPlayer.big{width:min(760px,92vw)}
+.vp-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase}
+.vp-bar b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gold)}
+.vp-bar button{margin-left:10px;color:var(--mute);font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase}
+.vp-body{position:relative;aspect-ratio:16/9}.vp-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+body.voyage #labels,body.voyage #stage,body.voyage #haze{opacity:0;pointer-events:none}
+body.voyage #dock{opacity:.25}
+#presence{display:inline-flex;align-items:center;gap:8px;color:var(--green)}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:beat 1.6s infinite}
+@keyframes beat{50%{opacity:.4}}
 @media(max-width:899px){
   #stage{left:0;right:0;top:auto;bottom:86px;transform:none;max-height:58vh;padding:44px 20px 20px;
     background:linear-gradient(180deg,transparent 0,var(--glow) 60px,var(--glow) 100%);-webkit-mask-image:none;mask-image:none}
@@ -339,7 +393,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 </div>
 
 <div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
-<div class="hud tools"><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div class="hud tools"><span class="chip" id="presence" hidden><i class="pdot"></i><span id="presenceTxt"></span></span><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
 <div id="soundMenu" role="menu" aria-label="Sound">
   <div class="h">Calm</div>
   <button type="button" data-snd="off"><i></i>Silence</button>
@@ -387,6 +441,8 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 <div id="toast"></div>
 <nav id="dock" aria-label="Your neurons"><div class="dock-row" id="dockRow"></div></nav>
 <main id="stage" aria-live="polite"></main>
+<div id="room" aria-hidden="true"><div class="r-floor"></div><div class="r-horizon"></div><div class="r-in" id="roomIn"></div><button class="r-out" type="button" id="roomOut">&larr; Walk back through the door</button></div>
+<div id="door" aria-hidden="true"><div class="d-light"></div><div class="d-frame"><div class="d-panel l"><i></i></div><div class="d-panel r"><i></i></div></div></div>
 <div id="mwin" role="dialog" aria-label="Mind window"><div class="mw-bar"><b id="mwTitle"></b><span><a id="mwOut" target="_blank" rel="noopener">open outside &#8599;</a><button type="button" id="mwX" aria-label="Close">&#10005;</button></span></div><div class="mw-body" id="mwBody"></div></div>
 
 <script src="assets/hadith.js"></script>
@@ -394,7 +450,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 /* ── the map of the mind ── */
 (function(){
   var D=[
-    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:330, scale:1.4, shift:.42},
+    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:300, scale:1.4, shift:.42},
     {id:'mood',    name:'Mood',         col:'#ff4fa8', pos:[-40,10,-30],   yaw:.5,   dist:30, scale:1.15},
     {id:'progress',name:'Progress',     col:'#2ee6ff', pos:[42,14,-34],    yaw:-.5,  dist:34, scale:1.15},
     {id:'diary',   name:'Diary',        col:'#ffc44d', pos:[-32,-24,-62],  yaw:.35,  dist:30},
@@ -407,7 +463,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     {id:'ai',      name:'Talk to AI',   col:'#4f7dff', pos:[58,42,-126],   yaw:-.4,  dist:30},
     {id:'portals', name:'Portals',      col:'#ff4f6d', pos:[-98,-32,-132], yaw:.5,   dist:32},
     {id:'studio',  name:'Creative studio',col:'#ffc44d', pos:[98,-36,-132], yaw:-.5,  dist:32, scale:1.1},
-    {id:'connect', name:'Connections',  col:'#cfd6ff', pos:[0,8,-170],     yaw:0,    dist:32},
+    {id:'connect', name:'Community',  col:'#cfd6ff', pos:[0,8,-170],     yaw:0,    dist:32},
     {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-120,12,-40],  yaw:.9,   dist:34, scale:1.2, hidden:true},
     {id:'light',   name:'Light',        col:'#19f0b0', pos:[120,10,-44],   yaw:-.9,  dist:34, scale:1.2, hidden:true}
   ];
@@ -453,6 +509,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     {from:'2026-11-01',id:'l14',t:'Your story is still being written',b:'Today is a page, not the whole book.'},
     {from:'2026-12-01',id:'l15',t:'Light travels far',b:'A kind word you say today can still be shining in someone years from now.'}
   ];
+  D.push({id:'stories',name:'Stories of the Prophets',col:'#ffc44d',pos:[64,66,-44],yaw:-.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','stories'],['goals','stories'],['progress','stories']);
   D.push({id:'listen',name:'Listen',col:'#19f0b0',pos:[-60,64,-40],yaw:.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','listen'],['mood','listen'],['goals','listen']);
   /* ── 50 more things ── */
   // Rooms of the mind: personal collections gathered around a Rooms hub
@@ -495,7 +552,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="assets/mind-space.js?v=4"></script>
+<script src="assets/mind-space.js?v=6"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -754,7 +811,8 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
         ['diary','Diary',S.notes.length+' entries','#ffc44d',Math.min(100,S.notes.length*10)],
         ['me','Quests',qd+' / '+qt+' today','#ffc44d',qd/qt*100],
         ['me','Mind coins','◉ '+S.coins,'#ffc44d',Math.min(100,S.coins/50*100)],
-        ['me','Mysteries',my.n+' / '+my.t+' found','#cfd6ff',my.t?my.n/my.t*100:0]
+        ['me','Mysteries',my.n+' / '+my.t+' found','#cfd6ff',my.t?my.n/my.t*100:0],
+        ['connect','In your mind',(window.MU_VISITORS&&MU_VISITORS.length)?MU_VISITORS.map(function(v){ return v.name; }).join(', '):'Just you right now','#19f0b0',(window.MU_VISITORS&&MU_VISITORS.length)?100:0]
       ];
       return eb('Home','#ffffff')+'<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2><p>Your whole mind, from the outside. Tap any light to travel in.</p>'+
         '<div class="hstats">'+rows.map(function(r,i){ return '<button class="hstat" '+(r[0]!=='me'?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
@@ -779,9 +837,9 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     diary:function(){ return eb('Diary','#ffc44d')+'<h2>Write it down.</h2><p>Your diary is yours alone &mdash; it never leaves this device.</p>'+
         '<input class="field" id="dTitle" placeholder="Title (optional)" maxlength="80"><textarea class="field" id="dText" placeholder="Today I..."></textarea><div class="row"><button class="btn" data-act="addNote">Save entry</button></div>'+
         (S.notes.length?'<ul class="thread">'+S.notes.map(function(n){ return '<li><button class="x" data-del-note="'+n.id+'" aria-label="Delete">&#10005;</button><b>'+esc(n.title||'Untitled')+'</b><br>'+esc(n.text).replace(/\n/g,'<br>')+'<span class="meta">'+nice(n.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">Your first entry will appear here.</p>'); },
-    todo:function(){ return eb('To-do','#19f0b0')+'<h2>Things to do.</h2><input class="field" id="tText" placeholder="Add something to do, then press Enter" maxlength="120">'+
+    todo:function(){ return eb('To-do','#19f0b0')+'<h2>Things to do.</h2>'+'<button class="doorway" data-act="door">Open the door to your Plan room</button>'+'<input class="field" id="tText" placeholder="Add something to do, then press Enter" maxlength="120">'+
         (S.todos.length?'<ul class="thread">'+S.todos.map(function(t){ return '<li class="'+(t.done?'done':'')+'"><button class="x" data-del-todo="'+t.id+'">&#10005;</button><label><input type="checkbox" data-todo="'+t.id+'" '+(t.done?'checked':'')+'>'+esc(t.text)+'</label></li>'; }).join('')+'</ul><button class="ghost" data-act="clearDone">Clear finished</button>':'<p class="empty">Nothing yet. What\'s one small thing you could do today?</p>'); },
-    goals:function(){ var h=eb('Goals','#a45cff')+'<h2>Where you\'re heading.</h2><p>Each goal floats in your mind and fills with light as you take its steps.</p>'+
+    goals:function(){ var h=eb('Goals','#a45cff')+'<h2>Where you\'re heading.</h2><p>Each goal floats in your mind and fills with light as you take its steps.</p>'+'<button class="doorway" data-act="door">Open the door to your Plan room</button>'+
         '<input class="field" id="gTitle" placeholder="A goal (e.g. Run 5k, learn Arabic)" maxlength="60"><input class="field" id="gWhy" placeholder="Why it matters to you" maxlength="140"><div class="row"><button class="btn" data-act="addGoal">Add goal</button></div><div class="gfloat">';
       var cols=['#a45cff','#2ee6ff','#ff4fa8','#ffc44d','#19f0b0','#ff8a3d'];
       S.goals.forEach(function(g,gi){ var tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?Math.round(dn/tot*100):0, nx=g.steps.filter(function(s){ return !s.done; })[0], c=cols[gi%cols.length];
@@ -793,7 +851,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
       return h; },
     plan:function(){ var f=S.focus[today()]||['','',''], steps=[];
       S.goals.forEach(function(g){ var nx=g.steps.filter(function(s){ return !s.done; })[0]; if(nx) steps.push({g:g.title,t:nx.text}); });
-      return eb('Plan','#ff8a3d')+'<h2>Your plan of action.</h2><p>Three things to focus on today &mdash; and the next step on each of your goals.</p>'+
+      return eb('Plan','#ff8a3d')+'<h2>Your plan of action.</h2><p>Three things to focus on today &mdash; and the next step on each of your goals.</p>'+'<button class="doorway" data-act="door">Open the door to your Plan room</button>'+
         [0,1,2].map(function(i){ return '<input class="field" data-focus="'+i+'" placeholder="Focus '+(i+1)+'" value="'+esc(f[i]||'')+'" maxlength="100">'; }).join('')+
         '<h3>Next steps on your goals</h3>'+(steps.length?'<ul class="thread">'+steps.map(function(s){ return '<li><b>'+esc(s.t)+'</b><span class="meta">'+esc(s.g)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">Add goals and steps, and they\'ll appear here.</p>')+
         '<button class="link" data-go="goals">Open your goals</button><button class="link" data-go="todo">Open your to-dos</button>'; },
@@ -826,6 +884,10 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
       return h; },
 
     rooms:function(){ return eb('Rooms','#ffd6a5')+'<h2>The rooms of your mind.</h2><p>Each room is a small neuron around this one. Fly close, or choose below.</p><ul class="thread" style="--c:#ffd6a5">'+H_ROOMS.map(function(r){ var n=(S.cols[r.id]||[]).length; return '<li style="--dot:'+r.c+'"><button data-go="'+r.id+'" style="text-align:left"><b>'+esc(r.n)+'</b></button>'+(n?'<span class="meta">'+n+' saved</span>':'')+'</li>'; }).join('')+'</ul>'; },
+
+    stories:function(){ return eb('Stories of the Prophets','#ffc44d')+'<h2>Stories of the Prophets.</h2><p>Full series from much-loved scholars. Press play and drift through the universe &mdash; past the Earth and the planets, and back through your mind &mdash; while you listen.</p>'+
+        '<ul class="thread" style="--c:#ffc44d">'+STORIES.map(function(x,i){ return '<li><button data-story="'+i+'" style="text-align:left"><b>&#9654; '+esc(x.t)+'</b></button><span class="meta">'+esc(x.by)+'</span></li>'; }).join('')+'</ul>'+
+        '<p class="small">More scholars coming soon.</p>'; },
     listen:function(){ var Y=function(q){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q); };
       return eb('Listen','#19f0b0')+'<h2>Listen.</h2><p>The Qur\'an from more than 240 reciters, plus nasheeds and lectures.</p>'+
         '<h3>Qur\'an</h3><input class="field" id="qrSearch" placeholder="Search reciters (e.g. Alafasi, Sudais, Minshawi)" autocomplete="off"><select class="field" id="qrRec"><option>Loading reciters…</option></select><select class="field" id="qrSurah"></select>'+
@@ -837,9 +899,9 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     ai:function(){ return eb('Talk to AI','#4f7dff')+'<h2>A companion for your thoughts.</h2><p class="lead">Talk things through, get ideas, plan your day, or reflect on a hadith &mdash; with an AI that knows your goals and moods (only if you allow it).</p>'+
         '<ul class="thread" style="--c:#4f7dff"><li>"Help me plan a calmer week."</li><li>"Give me three ideas to reach my goal."</li><li>"What could this hadith mean for my day?"</li></ul>'+
         '<p class="small">Coming soon as a paid upgrade. It will be built carefully: it supports reflection, it never diagnoses, and it points to real help when someone needs it.</p>'; },
-    connect:function(){ return eb('Connections','#cfd6ff')+'<h2>One special connection.</h2><p class="lead">Your mind can be joined with just one person &mdash; your spouse, or the one person closest to you. Nobody else can ever come in.</p>'+
-        '<ul class="thread" style="--c:#cfd6ff"><li><b>Only one, by invitation</b><span class="meta">you invite them, they accept; either of you can disconnect at any time</span></li><li><b>You choose what they see</b><span class="meta">share a memory album, a goal, your mood &mdash; or nothing at all</span></li><li><b>Your two minds side by side</b><span class="meta">their universe appears as a sister galaxy joined to yours by a single glowing path</span></li><li><b>Send each other light</b><span class="meta">leave a note, a wish or a star in each other&rsquo;s sky</span></li></ul>'+
-        '<p class="small">Coming with accounts. Until then your mind stays completely private.</p>'; },
+    connect:function(){ return eb('Community','#cfd6ff')+'<h2>The community of minds.</h2><p class="lead">A chat room for authorised members only &mdash; and the chance to visit each other’s minds, fly through them and explore.</p>'+
+        '<ul class="thread" style="--c:#cfd6ff"><li><b>Authorised members only</b><span class="meta">every member is verified and approved before they can join</span></li><li><b>The community room</b><span class="meta">talk freely, share ideas, wisdom and wins</span></li><li><b>Visit each other’s minds</b><span class="meta">fly through another member’s universe and explore the neurons they choose to share</span></li><li><b>See who\u2019s visiting</b><span class="meta">when a friend is inside your mind, a green dot with their name appears in your stats</span></li><li><b>Talk to them instantly</b><span class="meta">tap their green dot to open a private, secure chat while they explore</span></li><li><b>You stay in control</b><span class="meta">your diary, vault and anything private is never visible to anyone</span></li></ul>'+
+        '<p class="small">Opening soon. Your mind stays completely private until then.</p>'; },
     sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
         '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
     light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); }
@@ -885,7 +947,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     after(id,pg); }
   function emerge(id){ shown=id; stage.classList.add('live'); haze.classList.add('on'); stage.scrollTop=0; render(id); }
   function retract(done){ var pg=stage.querySelector('.pg'); shown=null; haze.classList.remove('on'); stage.classList.remove('live'); if(!pg){ done&&done(); return; } pg.classList.add('out'); setTimeout(function(){ stage.innerHTML=''; done&&done(); },380); }
-  function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id&&!M.isFree()) return; if(typeof endFly==='function'&&document.body.classList.contains('flying')) endFly(); busy=true; cur=id; vaultOpen=false; FX('warp');
+  function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id&&!M.isFree()) return; if(typeof endFly==='function'&&document.body.classList.contains('flying')) endFly(); busy=true; cur=id; vaultOpen=false; document.body.classList.remove('voyage'); FX('warp');
     retract(function(){ var dur=M.go(id,arrive)||0; if(dur>600) electronRun(id,dur); paintDock(); }); 
     function arrive(){ busy=false; document.getElementById('electron').classList.remove('on'); document.getElementById('readout').classList.remove('on'); M.fire(id); FX('statics',.6,.8); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); if(byId[id].hidden){ discovered(id); coinsBonus(2,'mystery found'); } }
       if(id==='progress') setTimeout(function(){ quest('progress'); },1200); emerge(id); paintDock(); var un=M.unexploredFrom(id).length; if(un) setTimeout(function(){ if(shown===id) toast(un+(un===1?' unexplored path leads':' unexplored paths lead')+' from here'); },2600); } }
@@ -956,6 +1018,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     if(b.dataset.yt){ playYT(b.dataset.yt); return; }
     var a=b.dataset.act; if(!a) return;
     if(a==='vision'){ if(S.coins<50){ toast('Keep going \u2014 '+(50-S.coins)+' more coins'); return; } S.coins-=50; save(); paintCoins(); visionUntil=Date.now()+60000; FX('warp'); toast('\u2726 Mind Vision \u00B7 every hidden light is showing for 60 seconds'); render('me'); return; }
+    if(a==='door'){ enterRoom(); return; }
     if(a==='fly'){ startFly(); return; }
     if(a==='gReset'){ startGame(shown); return; }
     if(a==='gSkip'){ nextWord(); return; }
@@ -1331,6 +1394,50 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     if(left<=0){ closeWin(); save(); setTimeout(function(){ toast('That’s your media time for today ✦ your mind is waiting'); },500); } },1000);
   var _open=openWin; openWin=function(u,ti,html){ if(mediaLeft()<=0){ toast('Media time is used up for today — come back tomorrow'); return; } _open(u,ti,html); };
 
+
+  /* ── doorways: step through a door into a clean room for your plans and tasks ── */
+  var room=document.getElementById('room'), door=document.getElementById('door'), roomIn=document.getElementById('roomIn');
+  function roomHTML(){ var f=S.focus[today()]||['','',''], steps=[]; S.goals.forEach(function(g){ var nx=g.steps.filter(function(s){ return !s.done; })[0]; if(nx) steps.push({g:g,s:nx}); });
+    return '<div class="r-eye">The Plan room</div><h2>One clear space for today.</h2><p>Nothing else in here. Just what matters.</p>'+
+      '<h3>Today’s focus</h3>'+[0,1,2].map(function(i){ return '<input class="field" data-rfocus="'+i+'" placeholder="Focus '+(i+1)+'" value="'+esc(f[i]||'')+'" maxlength="100">'; }).join('')+
+      '<h3>To-dos</h3><ul class="r-items">'+(S.todos.length?S.todos.map(function(x){ return '<li class="'+(x.done?'done':'')+'"><input type="checkbox" data-rtodo="'+x.id+'" '+(x.done?'checked':'')+'><span>'+esc(x.text)+'</span></li>'; }).join(''):'<li><span>No to-dos yet.</span></li>')+'</ul>'+
+      '<input class="field" id="rTodoNew" placeholder="Add a to-do, then press Enter" maxlength="120">'+
+      '<h3>Next steps on your goals</h3><ul class="r-items">'+(steps.length?steps.map(function(x){ return '<li><input type="checkbox" data-rstep="'+x.g.id+':'+x.s.id+'"><span>'+esc(x.s.text)+'</span><small>'+esc(x.g.title)+'</small></li>'; }).join(''):'<li><span>Add goals and steps to see them here.</span></li>')+'</ul>'; }
+  function enterRoom(){ if(door.classList.contains('on')) return; closeWin&&closeWin(); door.className='on'; FX('statics',.5,.8);
+    setTimeout(function(){ door.classList.add('open'); FX('warp'); },500);
+    setTimeout(function(){ door.classList.add('flood'); },1500);
+    setTimeout(function(){ roomIn.innerHTML=roomHTML(); room.classList.add('on'); },2100);
+    setTimeout(function(){ door.className=''; },2700); }
+  function leaveRoom(){ door.className='on open flood'; setTimeout(function(){ room.classList.remove('on'); door.classList.remove('flood'); },300);
+    setTimeout(function(){ door.classList.remove('open'); FX('zoop',.6); },900); setTimeout(function(){ door.className=''; if(shown) render(shown); },2100); }
+  document.getElementById('roomOut').onclick=leaveRoom;
+  roomIn.addEventListener('change',function(e){ var el=e.target;
+    if(el.dataset.rtodo){ var x=S.todos.filter(function(q){ return String(q.id)===el.dataset.rtodo; })[0]; if(x){ x.done=el.checked; if(x.done){ logDay('task'); quest('todo'); } save(); el.parentNode.classList.toggle('done',el.checked); } }
+    if(el.dataset.rstep){ var pr=el.dataset.rstep.split(':'), g=S.goals.filter(function(q){ return String(q.id)===pr[0]; })[0]; if(g){ var st=g.steps.filter(function(q){ return String(q.id)===pr[1]; })[0]; if(st){ st.done=true; logDay('step'); quest('goals'); save(); refreshGoalOrbs(); setTimeout(function(){ roomIn.innerHTML=roomHTML(); },500); } } }
+    if(el.dataset.rfocus!==undefined){ var f=S.focus[today()]||['','','']; f[+el.dataset.rfocus]=el.value.trim(); S.focus[today()]=f; save(); if(el.value.trim()) quest('plan'); } });
+  roomIn.addEventListener('keydown',function(e){ if(e.target.id==='rTodoNew'&&e.key==='Enter'&&e.target.value.trim()){ S.todos.unshift({id:Date.now(),text:e.target.value.trim(),done:false}); save(); roomIn.innerHTML=roomHTML(); var n=document.getElementById('rTodoNew'); n&&n.focus(); } });
+  addEventListener('keydown',function(e){ if(e.key==='Escape'&&room.classList.contains('on')) leaveRoom(); });
+
+
+  /* ── Stories of the Prophets: a small player while you voyage through the universe ── */
+  var STORIES=[
+    {t:'Stories of the Prophets (full series)',by:'Mufti Ismail Menk',list:'PL91A52895904B094C'},
+    {t:'Lessons from the Stories of the Prophets',by:'Mufti Ismail Menk',list:'PLC466F1D802E87A7E'},
+    {t:'The Unstoppable Prophet ﷺ',by:'Dr Omar Suleiman',v:'sf5JbB2SgEw'},
+    {t:'Lectures and series',by:'Dr Omar Suleiman',list:'PLMr9knrELyWcI2UuAbfZH1nNEfxTtbxpx'}
+  ];
+  var vp=document.createElement('div'); vp.id='voyPlayer'; vp.innerHTML='<div class="vp-bar"><b id="vpTitle"></b><span><button type="button" id="vpBig" title="Bigger">&#9634;</button><button type="button" id="vpEnd">End voyage</button></span></div><div class="vp-body" id="vpBody"></div>'; document.body.appendChild(vp);
+  function startStory(i){ var x=STORIES[i]; retract(); closeWin&&closeWin();
+    var src=x.list?'https://www.youtube-nocookie.com/embed/videoseries?list='+x.list+'&autoplay=1&rel=0':'https://www.youtube-nocookie.com/embed/'+x.v+'?autoplay=1&rel=0';
+    document.getElementById('vpTitle').textContent=x.t+' · '+x.by; document.getElementById('vpBody').innerHTML='<iframe src="'+src+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    vp.classList.add('on'); document.body.classList.add('voyage'); if(window.MUAmb&&MUAmb.current()!=='off') MUAmb.setVol(0); M.voyageStart(); FX('warp'); toast('Sit back ✦ drifting through the universe'); }
+  function endStory(){ vp.classList.remove('on','big'); document.getElementById('vpBody').innerHTML=''; document.body.classList.remove('voyage'); M.voyageStop(); if(window.MUAmb) MUAmb.setVol(Snd.vol()); travelTo('stories'); }
+  document.getElementById('vpEnd').onclick=endStory; document.getElementById('vpBig').onclick=function(){ vp.classList.toggle('big'); };
+  stage.addEventListener('click',function(e){ var b=e.target.closest('[data-story]'); if(b) startStory(+b.dataset.story); });
+
+  /* presence: friends inside your mind (filled by the community service once it is live) */
+  window.MU_VISITORS=window.MU_VISITORS||[];
+  window.setVisitors=function(list){ MU_VISITORS=list||[]; var el=document.getElementById('presence'); el.hidden=!MU_VISITORS.length; document.getElementById('presenceTxt').textContent=MU_VISITORS.map(function(v){ return v.name; }).join(', ')+(MU_VISITORS.length===1?' is in your mind':' are in your mind'); if(shown==='me') render('me'); };
   /* goals floating in space: glowing progress orbs orbiting the Goals neuron */
   var goalOrbs=[];
   function goalCanvas(g,c){ var cv=document.createElement('canvas'); cv.width=cv.height=256; var x=cv.getContext('2d'), tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?dn/tot:0;
@@ -1354,7 +1461,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
       if(!vis){ el.style.opacity='0'; el.style.pointerEvents='none'; return; }
       el.style.opacity=(tr?.35:Math.max(.45,Math.min(1,1.3-s.dist/320))).toFixed(2); el.style.pointerEvents=tr?'none':'auto';
       el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(0,-50%)'; }); });
-  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','rooms','listen','gallery','studio','portals','draw','ai','connect'];
+  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','rooms','stories','listen','gallery','studio','portals','draw','ai','connect'];
   function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML='<div class="dk myst" title="Hidden lights you have found"><i>?</i><span>'+mm.n+' / '+mm.t+'<br>found</span></div>'+'<button class="dk" data-fly="1" style="--c:#ffffff"><i style="background:linear-gradient(135deg,var(--blue),var(--pink))"></i><span>Fly</span></button>'+DOCK.map(function(id){ var d=byId[id]; return '<button class="dk'+(id===cur?' here':'')+(QUESTS[id]&&!qDone(id)?' q':'')+'" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+esc(d.name)+'</span></button>'; }).join(''); }
   document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   paintDock();
@@ -1473,7 +1580,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
     addEventListener('pointerdown',function(e){ if(M.isFree()||busy||!document.body.classList.contains('inside')) return; if(e.target.closest('button,a,input,textarea,select,.nl,#dock,#stage,#soundMenu,#flyHelp,canvas#pad,.gate')) return; od={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,t:Date.now(),id:e.pointerId}; document.body.classList.add('grabbing'); });
     addEventListener('pointermove',function(e){ if(!od||e.pointerId!==od.id) return; M.orbit(e.clientX-od.x,e.clientY-od.y); od.x=e.clientX; od.y=e.clientY; });
     ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(e){ if(od&&e.pointerId===od.id){ var tap=n==='pointerup'&&Math.hypot(e.clientX-od.sx,e.clientY-od.sy)<6&&Date.now()-od.t<350; od=null; document.body.classList.remove('grabbing');
-        if(tap&&cur!=='me'&&!busy) travelTo('me'); } }); });
+        if(tap&&cur!=='me'&&!busy&&!M.voyaging()) travelTo('me'); } }); });
   })();
 
   /* the gate */
