@@ -325,6 +325,7 @@ body.flying #neural{cursor:grab}
 body.flying #neural:active{cursor:grabbing}
 #flyui{position:fixed;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .5s}
 body.flying #flyui{opacity:1}
+body.flying.np-phones #stage,body.flying.np-phones #haze{opacity:0!important;pointer-events:none!important}
 .cross{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;box-shadow:inset 0 0 0 1.5px rgba(31,107,255,.45)}
 .cross::before,.cross::after{content:"";position:absolute;background:rgba(31,107,255,.55)}
 .cross::before{left:50%;top:-10px;bottom:-10px;width:1.5px;margin-left:-.75px;-webkit-mask:linear-gradient(#000 0 10px,transparent 10px calc(100% - 10px),#000 0);mask:linear-gradient(#000 0 10px,transparent 10px calc(100% - 10px),#000 0)}
@@ -990,7 +991,7 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
   </article>
 
   <!-- THE ARCHITECT (brief) -->
-  <script src="/assets/showroom.js?v=6"></script>
+  <script src="/assets/showroom.js?v=7"></script>
   <article class="pg" id="p-build" data-node="build" data-wide="1">
     <div class="eye">Find an engineer &middot; the Architect</div>
     <div id="arch"></div>
@@ -1094,7 +1095,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/mind-bg.js?v=9"></script>
+<script src="/assets/mind-bg.js?v=10"></script>
 <script>
 /* ── Calm neuron-signal sound effects: soft synapse pings on taps, a travelling signal on page changes ── */
 (function(){
@@ -2062,10 +2063,17 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   function startFly(keep){
     if(!document.body.classList.contains('inside')||busy) return;
     hideChoice(); Jess.stop();
-    if(cur && shown) skip[cur]=1;
-    guideId=keep?null:pickGuide();
-    retract(function(){ if(!M.freeStart(keep?null:guideId)) return; if(keep){ guideId=pickGuide(); M.freeThrust(1); } document.body.classList.add('flying'); FX('warp'); history.replaceState(null,'',location.pathname);
-      if(!keep && ss('saFlyHelp')!=='1') showFlyHelp(); });
+    var stayVault=shown==='portfolio'||(cur==='portfolio'&&document.body.classList.contains('np-phones'));
+    if(cur && shown && !stayVault) skip[cur]=1;
+    guideId=(stayVault||keep)?null:pickGuide();
+    function launch(){
+      if(!M.freeStart((stayVault||keep)?null:guideId)) return;
+      if(stayVault) M.freeThrust(0);
+      else if(keep){ guideId=pickGuide(); M.freeThrust(1); }
+      document.body.classList.add('flying'); FX('warp'); history.replaceState(null,'',location.pathname);
+      if(!stayVault && !keep && ss('saFlyHelp')!=='1') showFlyHelp();
+    }
+    if(stayVault) launch(); else retract(launch);
   }
   function showFlyHelp(){
     var L=isMob()?['<b>Hold down anywhere</b> to fly &mdash; your first neuron is straight ahead','<b>Drag</b> while holding to steer','Get near a light and tap <b>Enter</b> to open it','Or tap any light in the strip below to jump there']

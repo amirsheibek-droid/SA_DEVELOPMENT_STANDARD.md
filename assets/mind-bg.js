@@ -378,14 +378,17 @@
 
   /* ── screen positions, for labels and for words pouring out of the neuron ── */
   var tcam=new T.PerspectiveCamera(58,1,0.1,900), pv=V(0,0,0);
-  function screenOf(id){ var d=D[id]; if(!d) return null; pv.copy(d.v).project(cam);
-    return {x:(pv.x+1)/2*innerWidth, y:(1-pv.y)/2*innerHeight, z:pv.z, on:pv.z<1, dist:d.v.distanceTo(cam.position)}; }
+  function screenOf(id){ var d=D[id]; if(!d) return null; return projectAt(d.v.x,d.v.y,d.v.z); }
+  var pv2=V(0,0,0);
+  function projectAt(x,y,z){ pv2.set(x,y,z); var dist=pv2.distanceTo(cam.position); pv.copy(pv2).project(cam);
+    return {x:(pv.x+1)/2*innerWidth, y:(1-pv.y)/2*innerHeight, z:pv.z, on:pv.z<1, dist:dist}; }
+  function anchor(id){ var d=D[id]; if(!d) return null; return {x:d.v.x,y:d.v.y,z:d.v.z}; }
   function restScreen(id){ var d=D[id]; if(!d) return null; var P=V(0,0,0), L=V(0,0,0); pose(id,P,L);
     tcam.aspect=cam.aspect; tcam.updateProjectionMatrix(); tcam.position.copy(P); tcam.lookAt(L); tcam.updateMatrixWorld();
     pv.copy(d.v).project(tcam); return {x:(pv.x+1)/2*innerWidth, y:(1-pv.y)/2*innerHeight}; }
   var labelHook=null;
 
-  window.SAMind={enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
+  window.SAMind={enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,project:projectAt,anchor:anchor,restScreen:restScreen,ids:DEST_IDS,
     mode:function(){ return mode; }, current:function(){ return cur; }, travelling:function(){ return !!travel; },
     onFrame:function(fn){ labelHook=fn; },
     freeStart:freeStart, isFree:function(){ return !!flight; }, onNear:function(fn){ nearHook=fn; }, nearest:nearest,

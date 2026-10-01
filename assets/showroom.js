@@ -87,6 +87,8 @@
     if(reduce||lite) d.tiles.forEach(function(t){ t.style.opacity=1; });
     d.item=item; d.dev=dev; d.spin=spin; d.rig=rig; d.ry=d.home; d.rx=d.rx0; d.vy=0; d.ph=idx*1.3; d.idle=0; d.cur=0;
     d.i=idx; d.kf=idx;
+    var ang=idx/DEVS.length*Math.PI*2, ring=idx%2;
+    d.local={x:Math.cos(ang)*(22+ring*12), y:(ring?7:-6)+Math.sin(ang*2)*3, z:Math.sin(ang)*(22+ring*12)};
     dev.addEventListener('pointerdown',function(e){ if(e.button||flying) return; d.drag=true; d.moved=0; d.lx=e.clientX; d.ly=e.clientY; d.vy=0; try{ dev.setPointerCapture(e.pointerId); }catch(_){} });
     dev.addEventListener('pointermove',function(e){ if(!d.drag) return; var dx=e.clientX-d.lx, dy=e.clientY-d.ly; d.lx=e.clientX; d.ly=e.clientY;
       d.moved+=Math.abs(dx)+Math.abs(dy); d.ry+=dx*.6; d.vy=dx*.6; d.rx=Math.max(-70,Math.min(45,d.rx-dy*.35)); });
@@ -198,10 +200,18 @@
     if(row.classList.contains('on')!==show) row.classList.toggle('on',show);
     if(!show&&!flying) return;
     var o=orb(), g=geom(), ft=flying?Math.min(1,(now-flying.t0)/950):0, fe=ft*ft*(3-2*ft), n=list.length;
+    var M=window.SAMind, hub=M&&M.anchor&&M.anchor('portfolio'), spatial=!!(hub&&M.project);
     list.forEach(function(d){
       d.kf+=((d.i-focus)-d.kf)*.14;
       var k=d.kf, ak=Math.abs(k), x, y, sc, op;
-      if(g.mode==='grid'){
+      if(spatial){
+        var p=M.project(hub.x+d.local.x, hub.y+d.local.y, hub.z+d.local.z);
+        var near=Math.max(8, Math.min(160, p.dist));
+        x=p.x; y=p.y;
+        sc=(innerWidth<900?.4:.58)*Math.max(.28, Math.min(2.6, 46/near))*(d.i===focus?1.06:1);
+        op=p.on&&p.z>-1?Math.max(0, Math.min(1, 1.15-near/140)):0;
+        d.depth=near;
+      } else if(g.mode==='grid'){
         var col=d.i%g.cols, rw=(d.i/g.cols)|0;
         x=o.x+g.fx+(col-(g.cols-1)/2)*g.gapX;
         y=o.y+g.fy+(rw-0.42)*g.gapY;
@@ -215,7 +225,7 @@
       }
       if(flying){ if(d===flying.d){ x+=(innerWidth/2-x)*fe; y+=(innerHeight/2-y)*fe; sc*=1+fe*5; } else op*=1-fe; }
       d.item.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+sc.toFixed(3)+')';
-      d.item.style.opacity=op.toFixed(3); d.item.style.zIndex=String(200-Math.round((g.mode==='grid'?(d.i===focus?0:8):ak*12)));
+      d.item.style.opacity=op.toFixed(3); d.item.style.zIndex=String(spatial?Math.round(500-(d.depth||80)):(200-Math.round(ak*12)));
       d.item.style.visibility=op<.04?'hidden':'visible';
       if(!d.drag){
         if(reduce){ d.ry+=(d.home-d.ry)*.04; d.rx+=(d.rx0-d.rx)*.04; }
@@ -226,8 +236,10 @@
     var fy=g.mode==='grid'
       ? o.y+g.fy+((Math.ceil(n/g.cols)-1)-0.42)*g.gapY+210*g.S
       : o.y+g.fy+186*g.S+(innerWidth<900?56:96);
-    nav.style.transform='translate('+(o.x+g.fx).toFixed(1)+'px,'+Math.min(innerHeight-56,fy).toFixed(1)+'px) translateX(-50%)';
-    nav.style.opacity=flying?0:1;
+    nav.style.transform=spatial
+      ? 'translate('+(innerWidth/2)+'px,'+(innerHeight-86)+'px) translateX(-50%)'
+      : 'translate('+(o.x+g.fx).toFixed(1)+'px,'+Math.min(innerHeight-56,fy).toFixed(1)+'px) translateX(-50%)';
+    nav.style.opacity=(flying||document.body.classList.contains('flying'))?0:1;
   }
   requestAnimationFrame(frame);
 
