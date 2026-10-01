@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intelligent Website Design &amp; Niche Mobile App Development | SA Intelligent Designs</title>
-<meta name="description" content="SA Intelligent Designs builds intelligent websites and develops mobile applications for specialist niches, for clients anywhere in the world. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
+<title>Intelligent Website Design &amp; Niche Mobile App Development | Neuron Pulse</title>
+<meta name="description" content="Neuron Pulse builds intelligent websites and develops mobile applications for specialist niches, for clients anywhere in the world. Free mock-up before you commit, fixed written quotes, free hosting. Book a free consultation with one of our engineers.">
 <meta name="robots" content="noindex">
-<meta name="author" content="SA Intelligent Designs">
+<meta name="author" content="Neuron Pulse">
 <meta name="theme-color" content="#f3f6fb">
 <link rel="canonical" href="https://www.samarketingintelligence.com/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="SA Intelligent Designs">
+<meta property="og:site_name" content="Neuron Pulse">
 <meta property="og:title" content="Intelligent Website Design &amp; Niche Mobile App Development">
 <meta property="og:description" content="Intelligent websites and mobile applications for specialist niches. Free mock-up first, transparent pricing, free hosting.">
 <meta property="og:url" content="https://www.samarketingintelligence.com/">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Intelligent Website Design &amp; Niche Mobile App Development | SA Intelligent Designs">
+<meta name="twitter:title" content="Intelligent Website Design &amp; Niche Mobile App Development | Neuron Pulse">
 <meta name="twitter:description" content="Intelligent websites and mobile applications for specialist niches. Free mock-up before you commit.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
     {
       "@type": "ProfessionalService",
       "@id": "https://www.samarketingintelligence.com/#business",
-      "name": "SA Intelligent Designs",
+      "name": "Neuron Pulse",
       "alternateName": "SA Marketing Intelligence",
       "url": "https://www.samarketingintelligence.com/",
       "description": "Intelligent website design and mobile application development for specialist niches. Free mock-up before commitment, fixed written quotes and free hosting.",
@@ -47,7 +47,7 @@
       "@type": "WebSite",
       "@id": "https://www.samarketingintelligence.com/#website",
       "url": "https://www.samarketingintelligence.com/",
-      "name": "SA Intelligent Designs",
+      "name": "Neuron Pulse",
       "publisher": {"@id": "https://www.samarketingintelligence.com/#business"},
       "inLanguage": "en-GB"
     },
@@ -95,6 +95,13 @@ body.inside .hud{opacity:1}
 .mark{width:38px;height:38px;position:relative;flex-shrink:0}
 .mark span{position:absolute;inset:0;border:2px solid var(--blue);transform:rotate(45deg);box-shadow:0 0 12px -1px var(--blue)}
 .mark span:nth-child(2){inset:11px;border-color:var(--green);box-shadow:0 0 10px -2px var(--green)}
+.mark span{animation:npBeat 1.8s cubic-bezier(.3,0,.3,1) infinite}
+.mark span:nth-child(2){animation-name:npBeatIn;animation-delay:.12s}
+.mark::after{content:'';position:absolute;inset:0;border:2px solid var(--blue);transform:rotate(45deg);opacity:0;animation:npRipple 1.8s ease-out infinite;pointer-events:none}
+@keyframes npBeat{0%,40%,100%{transform:rotate(45deg) scale(1);box-shadow:0 0 12px -1px var(--blue)}12%{transform:rotate(45deg) scale(1.12);box-shadow:0 0 22px 2px var(--blue)}24%{transform:rotate(45deg) scale(.98)}30%{transform:rotate(45deg) scale(1.06)}}
+@keyframes npBeatIn{0%,40%,100%{transform:rotate(45deg) scale(1);box-shadow:0 0 10px -2px var(--green)}12%{transform:rotate(45deg) scale(1.2);box-shadow:0 0 18px 2px var(--green)}24%{transform:rotate(45deg) scale(.95)}30%{transform:rotate(45deg) scale(1.1)}}
+@keyframes npRipple{0%{transform:rotate(45deg) scale(1);opacity:.55}60%,100%{transform:rotate(45deg) scale(1.9);opacity:0}}
+@media(prefers-reduced-motion:reduce){.mark span,.mark::after{animation:none}}
 .word{font-weight:700;font-size:1.32rem;letter-spacing:.04em;white-space:nowrap}
 .word b{font-weight:800}
 .hud-tools{top:20px;right:22px;display:flex;gap:10px;align-items:center}
@@ -508,6 +515,7 @@ body.flying #flyChip{display:none}
 @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 #p-portfolio .folio-logo-chip img{max-height:74px;max-width:150px;mix-blend-mode:multiply;filter:drop-shadow(0 8px 14px rgba(31,107,255,.12))}
 #p-portfolio .folio-logo-chip.folio-logo-text{background:none}
+#p-portfolio .folio-logo-chip.mu-chip span{background:linear-gradient(110deg,#2ee6ff,#a45cff 55%,#ff4fa8)!important;-webkit-background-clip:text!important;background-clip:text!important}
 #p-portfolio .folio-logo-chip.folio-logo-text span{font-size:1.45rem;background:linear-gradient(110deg,var(--ink),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
 #p-portfolio .folio-logo-chip.folio-logo-text span b{color:var(--green);-webkit-text-fill-color:var(--green)}
 #p-portfolio .folio-status{border:0;padding:0;margin:0 0 4px;display:inline-flex;align-items:center;gap:7px;background:none}
@@ -667,17 +675,17 @@ details.legal{margin-left:auto;margin-right:auto}
 <body>
 <div id="neural" aria-hidden="true"></div>
 
-<div class="btx" id="btx" role="dialog" aria-label="Enter SA Intelligent Designs">
-  <div class="btx-eyebrow">SA Intelligent Designs &middot; by a mystery designer</div>
+<div class="btx" id="btx" role="dialog" aria-label="Enter Neuron Pulse">
+  <div class="btx-eyebrow">Neuron Pulse &middot; by a mystery designer</div>
   <h1>Enter the <b class="grad">Braintrix</b></h1>
   <p>We build AI apps and intelligent websites. Step inside the mind that builds them &mdash; every light in here is a neuron, and some of them are hiding something.</p>
   <button class="btx-btn" id="btxEnter">Enter<span>the mind</span></button>
   <div class="btx-foot">Sound on for the full experience</div>
 </div>
 
-<a class="hud hud-logo" href="#core" data-go="core" aria-label="SA Intelligent Designs — back to the core">
+<a class="hud hud-logo" href="#core" data-go="core" aria-label="Neuron Pulse — back to the core">
   <div class="mark"><span></span><span></span></div>
-  <span class="word"><b>SA</b> INTELLIGENT DESIGNS</span>
+  <span class="word"><b>NEURON</b> PULSE</span>
 </a>
 <div class="hud hud-tools">
     <button class="chip" id="flyChip" type="button" data-fly>&#10022; Fly</button>
@@ -737,7 +745,7 @@ details.legal{margin-left:auto;margin-right:auto}
 
   <!-- THE CORE -->
   <article class="pg core-pg" id="p-core" data-node="core">
-    <div class="eye">The core &middot; SA Intelligent Designs</div>
+    <div class="eye">The core &middot; Neuron Pulse</div>
     <h1 class="decode">Ideas go in. Intelligence comes out.</h1>
     <p>Websites and apps for specialist niches &mdash; with a free mock-up before you commit.</p>
     <button class="go big" type="button" data-fly>Fly off and explore</button>
@@ -813,8 +821,8 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
     <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a></p>
     <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising. Approved engineer network members have a public profile showing only their skills, depth, anonymised case study, availability and nearest town &mdash; their name, email, city and links are never published.</p></details>
     <details class="legal" id="cookies"><summary>Cookies</summary><p>Strictly necessary browser storage only (your sound setting, which neurons you've found, and your unsent brief), cleared when you close the tab. No analytics, tracking or advertising cookies.</p></details>
-    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill. <b>Engineer network.</b> Free for engineers to join and free for clients to request an engineer. After we confirm scope, the client pays a deposit through SA (usually 20% of the agreed price), which counts towards the project and unlocks the engineer's identity; it's refunded in full if the engineer can't take the project before the introduction. All project payments go through SA, which keeps a 15% platform fee from the engineer's share. See the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</p></details>
-    <p class="whisper">&copy; 2026 SA Intelligent Designs &middot; by a mystery designer</p>
+    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill. <b>Engineer network.</b> Free for engineers to join and free for clients to request an engineer. After we confirm scope, the client pays a deposit through Neuron Pulse (usually 20% of the agreed price), which counts towards the project and unlocks the engineer's identity; it's refunded in full if the engineer can't take the project before the introduction. All project payments go through Neuron Pulse, which keeps a 15% platform fee from the engineer's share. See the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</p></details>
+    <p class="whisper">&copy; 2026 Neuron Pulse &middot; by a mystery designer</p>
   </article>
 
   <!-- ECHOES (faq) -->
@@ -826,7 +834,7 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
       <button aria-expanded="false">Do I see anything before I pay?</button><div class="a">Yes. Every package begins with a complimentary working mock-up, so you can review the direction before committing to anything.</div>
       <button aria-expanded="false">Do you build mobile apps?</button><div class="a">Yes &mdash; for specialist niches. Voltz CRM, our voice-first app for self-employed tradespeople, is live on the App Store, and Contract Analyser is in development.</div>
       
-      <button aria-expanded="false">I'm an engineer &mdash; how does joining work?</button><div class="a">The network is for developers, engineers and builders in and around Bedford, Luton and Milton Keynes. Joining is free, and so is connecting with other members. Build a depth profile of your languages, frameworks and tools, then we check your work and hold a short technical call. Once you're verified you get your own neuron in the mind &mdash; clients see your skills, never your name or contact details. When a client's deposit is paid, you're introduced. All project payments go through SA, and SA keeps a 15% platform fee from your share. <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</div>
+      <button aria-expanded="false">I'm an engineer &mdash; how does joining work?</button><div class="a">The network is for developers, engineers and builders in and around Bedford, Luton and Milton Keynes. Joining is free, and so is connecting with other members. Build a depth profile of your languages, frameworks and tools, then we check your work and hold a short technical call. Once you're verified you get your own neuron in the mind &mdash; clients see your skills, never your name or contact details. When a client's deposit is paid, you're introduced. All project payments go through Neuron Pulse, and Neuron Pulse keeps a 15% platform fee from your share. <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</div>
       <button aria-expanded="false">How do I hire a local engineer from the network?</button><div class="a">Open the &ldquo;Join as an engineer&rdquo; neuron, search by any skill and open an engineer's profile, then tap Request &mdash; it's free. We confirm scope and availability, then send you a quote and a secure deposit link (usually 20% of the agreed price, counted towards the project). Once the deposit is paid, the engineer's identity unlocks and we introduce you. If the engineer can't take the project before the introduction, the deposit is refunded in full.</div>
       <button aria-expanded="false">Am I tied into a contract?</button><div class="a">No. The care plan is optional, billed in advance and can be cancelled any time. You own your domain in your own name.</div>
     </div>
@@ -835,7 +843,7 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
   <!-- THE VAULT (portfolio) -->
   <article class="pg" id="p-portfolio" data-node="portfolio" data-wide="1">
     <div class="eye">The Vault &middot; Portfolio</div>
-    <h2 class="decode">Products and brands built by SA Intelligent Designs.</h2>
+    <h2 class="decode">Products and brands built by Neuron Pulse.</h2>
     <p>The brands we've designed and launched, and the applications our engineering team is building right now.</p>
 <div class="folio-grid">
         <div class="card folio-card folio-top">
@@ -848,10 +856,16 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
           <p>Field CRM for trades — jobs, quotes, invoices, bookings and AI helpers. <a href="/voltz" style="color:var(--accent2);font-weight:700">Product page →</a></p>
         </div>
         <div class="card folio-card">
+          <div class="folio-logo-chip folio-logo-text mu-chip"><span>Mind<b>Universe</b></span></div>
+          <span class="folio-status" style="color:#8b5cf6">In progress &middot; open preview</span>
+          <h3>Mind Universe</h3>
+          <p>Your mind as a universe you can fly through — moods, diary, goals, memories and 100 hidden secrets, living as glowing neurons. Private, saved only on your device. <a href="/mind-universe/" style="color:var(--accent2);font-weight:700">Enter the Mind Universe →</a></p>
+        </div>
+        <div class="card folio-card">
           <div class="folio-logo-chip folio-logo-text"><span>Spare<b>Drive</b></span></div>
           <span class="folio-status" style="color:#b7791f">Pending</span>
           <h3>SpareDrive</h3>
-          <p>Currently in development at SA Intelligent Designs &mdash; launching soon.</p>
+          <p>Currently in development at Neuron Pulse &mdash; launching soon.</p>
         </div>
         <div class="card folio-card">
           <div class="folio-logo-chip"><img src="data:image/webp;base64,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" alt="Qlarvia software intelligence platform logo" loading="lazy" decoding="async" width="400" height="108"></div>
@@ -893,7 +907,7 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
     <div id="arch"></div>
   </article>
 
-  <!-- THE GUILD (engineer network: free to join, identity locked, SA takes a % when a project is placed) -->
+  <!-- THE GUILD (engineer network: free to join, identity locked, Neuron Pulse takes a % when a project is placed) -->
   <article class="pg" id="p-guild" data-node="guild">
     <div class="eye">Local engineer network &middot; Bedford &middot; Luton &middot; Milton Keynes</div>
     <h2 class="decode">Bringing local builders together.</h2>
@@ -901,8 +915,8 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
     <ul class="lines g">
       <li><b>1 &middot; Join free and get verified.</b> <small>Build your depth profile below. We check your work and hold a short technical call before your neuron goes live.</small></li>
       <li><b>2 &middot; A client requests you.</b> <small>They see your skills, depth and case study &mdash; never your name or contact details. We check scope with you first, and you can always say no.</small></li>
-      <li><b>3 &middot; The deposit unlocks you.</b> <small>When the client pays their project deposit through SA, your identity unlocks to that client only and we introduce you.</small></li>
-      <li><b>4 &middot; Paid through SA.</b> <small>Clients pay SA. You receive your agreed price minus a 15% platform fee, within 7 days of each payment clearing.</small></li>
+      <li><b>3 &middot; The deposit unlocks you.</b> <small>When the client pays their project deposit through Neuron Pulse, your identity unlocks to that client only and we introduce you.</small></li>
+      <li><b>4 &middot; Paid through Neuron Pulse.</b> <small>Clients pay Neuron Pulse. You receive your agreed price minus a 15% platform fee, within 7 days of each payment clearing.</small></li>
       <li><b>Connect with each other &mdash; free.</b> <small>Find local engineers by skill, team up on projects, find a mentor or collaborator. Ask to connect on any profile and we'll introduce you if they agree.</small></li>
       <li><b>Local meetups.</b> <small>We're planning the first meetups in Bedford, Luton and Milton Keynes. Tick &ldquo;Local meetups&rdquo; in your profile to hear first.</small></li>
     </ul>
@@ -1403,10 +1417,11 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
 
   /* The Pulse — newest first. Add a line here to post an update. */
   var NEWS=[
+    {d:'1 Oct 2026',t:'Preview: the Mind Universe',b:'Our next app is in progress \u2014 your own mind as a universe you can fly through, with moods, goals, memories and 100 hidden secrets. Private, saved only on your device. <a href="/mind-universe/" style="color:var(--accent2);font-weight:700">Step inside \u2192</a>'},
     {d:'1 Oct 2026',t:'The Braintrix is open',b:'Our new home is a mind you can fly through. Eleven neurons, one of them very well hidden. Happy hunting.'},
     {d:'1 Oct 2026',t:'Now open: the Bedford, Luton & Milton Keynes engineer network',b:'Local developers, engineers and builders \u2014 from HTML and WordPress to full-stack, mobile, data, ML and AI \u2014 can join free, build a depth profile, connect with each other and get local work. First local meetups are being planned.'},
     {d:'1 Oct 2026',t:'Meet the Architect',b:'Describe your idea in a few words and watch the blueprint draw itself as you type.'},
-    {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built by SA Intelligent Designs.'}
+    {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built by Neuron Pulse.'}
   ];
   (function(){ var el=document.getElementById('news'); if(!el) return; el.innerHTML=NEWS.map(function(n){ return '<div class="nw"><div class="nw-d">'+n.d+'</div><h3>'+n.t+'</h3><p>'+n.b+'</p></div>'; }).join(''); })();
 
@@ -1438,7 +1453,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.05,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+1.2);
     o.connect(g); if(p){ p.pan.value=pan*2-1; g.connect(p); p.connect(actx.destination); } else g.connect(actx.destination); o.start(t); o.stop(t+1.3); }catch(e){} }
 
-  /* ══ WIZARDS: one question at a time, then it's emailed to SA ══ */
+  /* ══ WIZARDS: one question at a time, then it's emailed to Neuron Pulse ══ */
   function esc(t){ return String(t||'').replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function lst(a){ return (a||[]).filter(Boolean); }
   function join(a){ a=lst(a); return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1]; }
@@ -1509,7 +1524,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     function send(btn){
       var bot=F('bot'); if(bot && bot.checked) return;
       btn.disabled=true; btn.textContent='Transmitting…';
-      var body=Object.assign({access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'SA Intelligent Designs — the Braintrix',
+      var body=Object.assign({access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'Neuron Pulse — the Braintrix',
         name:A.name,email:A.email,replyto:A.email,phone:A.phone||'',botcheck:false},cfg.fields(A),{subject:cfg.subject(A),message:cfg.plain(A)});
       fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)})
         .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed');
@@ -1792,7 +1807,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     function send(btn){
       if(document.getElementById('aBot').checked) return;
       btn.disabled=true; btn.textContent='Transmitting…';
-      var body={access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'SA Intelligent Designs — the Architect',subject:'New sketch plan — '+(S.name||'')+(S.biz?' ('+S.biz+')':'')+' — '+(S.types.join(', ')||'project'),
+      var body={access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'Neuron Pulse — the Architect',subject:'New sketch plan — '+(S.name||'')+(S.biz?' ('+S.biz+')':'')+' — '+(S.types.join(', ')||'project'),
         name:S.name||'',email:S.email,replyto:S.email,business:S.biz||'',package:S.types.join(', '),budget:S.ans.budget||'',timeline:S.ans.timeline||'',message:planText(),botcheck:false};
       fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)})
         .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed'); sent=true; ss('saArch','{}'); M.fire('build'); FX('warp'); speak('Signal received. Thank you. Our engineers will be in touch within one working day.',function(){},'arch-sent'); render(); })
@@ -1820,7 +1835,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   })();
 
   /* The Guild — developers, engineers and builders in software build a deep, verified skills profile.
-     Public profile = skills only; identity stays locked until a client's deposit is paid through SA. */
+     Public profile = skills only; identity stays locked until a client's deposit is paid through Neuron Pulse. */
   var SK={
     disciplines:['Websites (HTML & CSS)','WordPress / CMS sites','E-commerce stores','Front-end development','Back-end development','Full-stack development','Mobile apps','Desktop apps','Game development','Embedded / IoT','DevOps & cloud','Data engineering','Data science & analytics','Machine learning engineering','AI / LLM engineering','Cyber security','QA & test automation','UI / UX for software','Solutions architecture'],
     ai:['Data engineering','Data science & analytics','Machine learning engineering','AI / LLM engineering'],
@@ -1867,14 +1882,14 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       {k:'scale',kind:'one',skip:function(A){ return !isAI(A); },ask:function(){ return 'Biggest scale you\'ve worked at?'; },opts:function(){ return ['Prototype / internal','Thousands of users','Hundreds of thousands','Millions of users or TB-scale data']; },ack:function(){ return 'Scale: '+A.scale+'.'; }},
       {k:'caseStudy',kind:'long',ask:function(){ return 'Describe one thing you built: the problem, your approach and the result.'; },sub:'Shown on your public profile, so leave out client names. Numbers help.',ph:function(){ return 'e.g. Rebuilt a booking site in Next.js and Postgres; page loads went from 4s to 0.8s and bookings rose 30%'; },ack:function(){ return 'Case study saved.'; }},
       {k:'education',kind:'short',optional:true,ask:function(){ return 'Any degrees, research or certifications?'; },ph:function(){ return 'e.g. BSc Computer Science, AWS Solutions Architect, MSc Machine Learning (optional)'; },ack:function(){ return A.education?'Credentials noted.':'No problem — the work speaks.'; }},
-      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Private &mdash; used for matching and quotes. SA\'s 15% platform fee comes out of the agreed price, so price accordingly.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
+      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Private &mdash; used for matching and quotes. Neuron Pulse\'s 15% platform fee comes out of the agreed price, so price accordingly.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
       {k:'availability',kind:'one',ask:function(){ return 'How much time could you give?'; },opts:function(){ return ['Full-time','Part-time','Evenings & weekends','Project by project']; },ack:function(){ return 'Availability: '+A.availability.toLowerCase()+'.'; }},
       {k:'region',kind:'one',ask:function(){ return 'Which town are you nearest?'; },sub:'Shown on your profile so local people can find you &mdash; never your address.',opts:function(){ return ['Bedford','Kempston','Luton','Dunstable','Houghton Regis','Leighton Buzzard','Milton Keynes','Newport Pagnell','Cranfield','Ampthill / Flitwick','Biggleswade / Sandy','St Neots','Hitchin / Letchworth','Another town nearby']; },ack:function(){ return 'Nearest town: '+A.region+'.'; }},
       {k:'workStyle',kind:'one',ask:function(){ return 'How do you like to work?'; },opts:function(){ return ['Remote','Hybrid','On-site locally','Any of these']; },ack:function(){ return 'Works: '+A.workStyle.toLowerCase()+'.'; }},
       {k:'openTo',kind:'many',other:true,ask:function(){ return 'How would you like to connect with other local engineers?'; },sub:'Shown on your profile.',opts:function(){ return ['Teaming up on client projects','Collaborators for side projects','Mentoring others','Being mentored','Local meetups & events','Co-working','Just paid work for now']; },ack:function(){ return 'Open to: '+join(withOther(A,'openTo')).toLowerCase()+'.'; }},
       {k:'links',kind:'short',ask:function(){ return 'Where can we check your work?'; },sub:'Private &mdash; used to verify you. GitHub, GitLab, Kaggle, Hugging Face, App Store, papers or a portfolio.',ph:function(){ return 'e.g. github.com/you, yoursite.dev'; },ack:function(){ return 'Links saved for verification.'; }},
       {k:'pitch',kind:'long',ask:function(){ return 'In a line, what makes your work stand out?'; },sub:'Shown on your public profile.',ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part clients read first.'; }},
-      {k:'terms',kind:'one',ask:function(){ return 'Do you agree to the Engineer Network Terms?'; },sub:'<a href="/engineer-terms.html" target="_blank" rel="noopener">Read the terms</a> &mdash; plain English. Free to join. A 15% platform fee only on paid projects we place you on. Clients we introduce are billed through SA for 12 months. Connecting with other members is free.',opts:function(){ return ['I agree to the Engineer Network Terms']; },ack:function(){ return 'Terms agreed.'; }},
+      {k:'terms',kind:'one',ask:function(){ return 'Do you agree to the Engineer Network Terms?'; },sub:'<a href="/engineer-terms.html" target="_blank" rel="noopener">Read the terms</a> &mdash; plain English. Free to join. A 15% platform fee only on paid projects we place you on. Clients we introduce are billed through Neuron Pulse for 12 months. Connecting with other members is free.',opts:function(){ return ['I agree to the Engineer Network Terms']; },ack:function(){ return 'Terms agreed.'; }},
       {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'Private. We\'ll reply within a few working days to book your technical call.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
       {k:'review',kind:'review',ask:function(){ return 'Your engineer profile.'; }}
     ]; },
@@ -1896,7 +1911,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     done:function(A){ return '<h2 class="decode">Profile received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll check your work and book a short technical call. Once you\'re verified, your neuron goes live in the mind, where local engineers and businesses can find you &mdash; with your identity locked.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
   });
 
-  /* Request an engineer: free; SA confirms scope, then the client's deposit unlocks the engineer */
+  /* Request an engineer: free; Neuron Pulse confirms scope, then the client's deposit unlocks the engineer */
   function memberOf(code){ var L=window.SA_MEMBERS||[]; for(var k=0;k<L.length;k++) if(L[k].code===code) return L[k]; return null; }
   var Hire=Wizard({root:'hireWiz',key:'saHire',node:'guild',sendLabel:'Send my request',
     Q:function(A){ return [

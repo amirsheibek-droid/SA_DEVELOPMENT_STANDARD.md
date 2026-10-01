@@ -37,6 +37,7 @@ input,textarea,select{font:inherit;color:inherit}
 .enter::after{content:"";position:absolute;inset:-9px;border-radius:999px;border:1px solid rgba(46,230,255,.5);animation:ping 2.4s ease-out infinite}
 @keyframes ping{from{transform:scale(.92);opacity:.9}to{transform:scale(1.25);opacity:0}}
 .gate small{position:absolute;bottom:22px;left:0;right:0;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute2)}
+.sa-link{color:var(--cyan);text-decoration:none;border-bottom:1px solid currentColor}.sa-link:hover{color:#fff}
 
 /* HUD */
 .hud{position:fixed;z-index:30;opacity:0;transition:opacity .8s}
@@ -455,7 +456,7 @@ body.voyage #dock{opacity:.25}
   <p>Your moods, ideas, goals and memories &mdash; living as glowing neurons in your own universe. Private, and only on this device.</p>
   <input id="gName" placeholder="What should your mind call you?" autocomplete="given-name" maxlength="30">
   <button class="enter" id="gEnter">Enter</button>
-  <small>Your private universe &mdash; saved only on this device</small>
+  <small>Your private universe &mdash; saved only on this device &middot; <a href="/" class="sa-link">an app in progress by Neuron Pulse</a></small>
 </div>
 
 <div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
@@ -912,7 +913,7 @@ body.voyage #dock{opacity:.25}
         '<details class="hmore"><summary>Profile &amp; settings</summary>'+(p.photo?'<img src="'+p.photo+'" alt="" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block">':'')+
           '<input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
           '<div class="row"><button class="ghost" data-act="photo">&#9673; Photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
-          '<p class="small"><button class="link" data-act="intro" style="margin:0">Show me how it works</button></p><p class="small">Tap empty space to float back out here. Drag to look around. Golden lines are paths you’ve travelled; faint dashed lines are unexplored.</p>'+
+          '<p class="small"><button class="link" data-act="intro" style="margin:0">Show me how it works</button> &middot; <a class="sa-link" href="/#portfolio">Built by Neuron Pulse &#8599;</a></p><p class="small">Tap empty space to float back out here. Drag to look around. Golden lines are paths you’ve travelled; faint dashed lines are unexplored.</p>'+
           '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
           '<p class="care">If you ever feel unsafe, please reach out &mdash; in the UK, <b>Samaritans are free on 116 123</b>, any time.</p></details>'; },
     mood:function(){ var h=eb('Mood','#ff4fa8')+'<h2>How are you feeling right now?</h2><p>Tap the light that matches you. Add a few words if you like.</p><div class="orbs">'+
@@ -1646,7 +1647,7 @@ body.voyage #dock{opacity:.25}
       var x=(col+.5)/cols*(W-s)+(Math.random()-.5)*20, y=(row+.5)/Math.ceil(n/cols)*(H-s)+(Math.random()-.5)*20, r=function(){ return Math.round((Math.random()-.5)*60)+'px'; };
       f.style.setProperty('--s',s+'px'); f.style.setProperty('--x',Math.max(0,Math.min(W-s,x))+'px'); f.style.setProperty('--y',Math.max(0,Math.min(H-s,y))+'px');
       ['--dx1','--dy1','--dx2','--dy2','--dx3','--dy3'].forEach(function(k){ f.style.setProperty(k,r()); }); f.style.setProperty('--t',(10+Math.random()*10)+'s'); f.style.setProperty('--dl',(-Math.random()*10)+'s'); }); }
-  new MutationObserver(function(){ ['gal','ramGal'].forEach(function(id){ var el=document.getElementById(id); if(el&&el.querySelector('figure')&&!el.dataset.sc){ el.dataset.sc='1'; scatterGal(el); } }); }).observe(stage,{childList:true,subtree:true});
+  new MutationObserver(function(){ ['gal','ramGal'].forEach(function(id){ var el=document.getElementById(id); if(!el) return; var n=el.querySelectorAll('figure').length; if(n&&el.dataset.sc!==String(n)){ el.dataset.sc=String(n); scatterGal(el); } }); }).observe(stage,{childList:true,subtree:true});
   var lb=document.getElementById('lb');
   stage.addEventListener('click',function(e){ if(e.target.closest('[data-del-media]')) return; var f=e.target.closest('.gal figure'); if(!f) return; var m=f.querySelector('img,video'); if(!m) return;
     document.getElementById('lbIn').innerHTML=m.tagName==='VIDEO'?'<video src="'+m.src+'" controls autoplay playsinline></video>':'<img src="'+m.src+'" alt="">'; lb.classList.add('on'); FX('statics',.4,.6); });

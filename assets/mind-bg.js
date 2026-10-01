@@ -1,4 +1,4 @@
-/* SA Intelligent Designs — the Braintrix.
+/* Neuron Pulse — the Braintrix.
    Outside: a brain drifting through white space with glass cubes crashing.
    Inside: a vast neural field. Every destination is a neuron; you fly along axons to reach it.
    Reads window.SA_DESTS + window.SA_LINKS. Exposes window.SAMind. Needs three.js r128. */
