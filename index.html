@@ -617,6 +617,27 @@ details.legal{margin-left:auto;margin-right:auto}
   #p-portfolio .folio-card p,#p-portfolio .folio-top p{font-size:.88rem;margin-left:auto;margin-right:auto}
 }
 
+
+/* ── the nerve that carries the words ── */
+.pg{position:relative}
+.pg.weaving > *:not(.nerve){animation:none}
+.pg.weaving.out > *:not(.nerve){animation:retract .4s cubic-bezier(.6,0,.8,.4) both}
+.wv-wait{opacity:0}
+.wv-in{animation:wvIn .75s cubic-bezier(.2,.9,.25,1) both}
+@keyframes wvIn{0%{opacity:0;transform:scale(.94) translateY(8px);filter:blur(7px);letter-spacing:.06em}55%{filter:blur(0)}100%{opacity:1;transform:none;filter:none;letter-spacing:normal}}
+.nerve{position:absolute;left:0;top:0;pointer-events:none;overflow:visible;z-index:0}
+.pg.weaving > *:not(.nerve){position:relative;z-index:1}
+.nv-path{fill:none;stroke:rgba(31,107,255,.12);stroke-width:1.5}
+.nv-trail{fill:none;stroke:url(#wg);stroke-width:2;stroke-linecap:round;filter:drop-shadow(0 0 4px rgba(18,217,138,.55))}
+.nv-dot{fill:#fff;stroke:rgba(31,107,255,.3);stroke-width:1.5;transition:all .4s}
+.nv-dot.lit{stroke:var(--green);fill:#fff;filter:drop-shadow(0 0 5px rgba(18,217,138,.9))}
+.nv-pulse{fill:#fff;stroke:var(--green);stroke-width:2.5;filter:drop-shadow(0 0 8px rgba(18,217,138,1)) drop-shadow(0 0 16px rgba(31,107,255,.7));transition:opacity .6s}
+.nv-pulse.done{opacity:0}
+.pg h1,.pg h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 40%,var(--blue) 50%,var(--ink) 60%,var(--ink) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s ease-in-out infinite}
+.pg h1 .grad,.pg h2 .grad{-webkit-text-fill-color:transparent}
+@keyframes shine{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.pg h1,.pg h2{text-shadow:none;filter:drop-shadow(0 0 10px rgba(246,249,253,.9))}
+
 /* no JavaScript or no WebGL: show everything as a plain page */
 .nojs .pg{display:block;position:static}
 @media (prefers-reduced-motion: reduce){.pg > *,.pg.out > *{animation-duration:.01s}}
@@ -894,8 +915,59 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="/assets/mind-bg.js?v=7"></script>
 <script>
-/* sound effects removed — only the calm chords remain (see Soundscapes) */
-window.SAFX={zoop:function(){},statics:function(){},warp:function(){},isOff:function(){ return true; }};
+/* ── Calm neuron-signal sound effects: soft synapse pings on taps, a travelling signal on page changes ── */
+(function(){
+  var ctx=null, on=true;
+  try{ on=sessionStorage.getItem('saAmb')!=='off'; }catch(e){}
+  var btn=null;
+  function paint(){ if(!btn) return; btn.classList.toggle('off',!on); btn.setAttribute('aria-pressed',on?'true':'false'); btn.innerHTML=on?'&#9835; Sound':'&#9835; Muted'; }
+  paint();
+  function ac(){ if(!ctx){ var C=window.AudioContext||window.webkitAudioContext; if(!C) return null; ctx=new C(); } if(ctx.state==='suspended') ctx.resume(); return ctx; }
+  function noise(c,len){ var b=c.createBuffer(1,Math.max(1,Math.floor(c.sampleRate*len)),c.sampleRate), d=b.getChannelData(0); for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; var s=c.createBufferSource(); s.buffer=b; return s; }
+  function env(g,t,a,peak,rel){ g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(peak,t+a); g.gain.exponentialRampToValueAtTime(0.0001,t+a+rel); }
+  // calm neuron signals: soft synapse pings with a gentle echo
+  var bus=null;
+  function out(c){
+    if(bus) return bus;
+    bus=c.createGain(); bus.gain.value=1;
+    var d=c.createDelay(1); d.delayTime.value=.19; var fb=c.createGain(); fb.gain.value=.28; var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2600;
+    bus.connect(c.destination); bus.connect(d); d.connect(lp); lp.connect(fb); fb.connect(d); lp.connect(c.destination);
+    return bus;
+  }
+  function ping(c,t,freq,vol,len,glide){
+    var o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(freq,t); if(glide) o.frequency.exponentialRampToValueAtTime(freq*glide,t+len*.6);
+    var g=c.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol,t+.008); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
+    o.connect(g); g.connect(out(c)); o.start(t); o.stop(t+len+.05);
+  }
+  // tap: a single neuron firing (two soft pings)
+  function zoop(strength){
+    var c=ac(); if(!c||!on) return; var t=c.currentTime, k=strength||1;
+    ping(c,t,880,.035*k,.22,1.08); ping(c,t+.07,1320,.022*k,.26,1.04);
+  }
+  // thought opening: a quiet shimmer of high signals
+  function statics(len,strength){
+    var c=ac(); if(!c||!on) return; var t=c.currentTime, k=strength||1;
+    [1568,2093,2637].forEach(function(f,i){ ping(c,t+i*.06,f,.014*k,.5,1.0); });
+  }
+  // page change: a signal travelling along the connector (rising cascade + soft low swell)
+  function warp(){
+    var c=ac(); if(!c||!on) return; var t=c.currentTime;
+    [523,659,784,988,1175].forEach(function(f,i){ ping(c,t+i*.055,f,.024,.3,1.02); });
+    var o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(196,t); o.frequency.exponentialRampToValueAtTime(294,t+.7);
+    var g=c.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(.02,t+.25); g.gain.exponentialRampToValueAtTime(0.0001,t+.9);
+    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.95);
+  }
+  window.SAFX={zoop:zoop,statics:statics,warp:warp,isOff:function(){ return !on; },setOn:function(v){ on=!!v; }};
+  if(btn) btn.addEventListener('click',function(e){ e.stopPropagation(); on=!on; paint(); try{ sessionStorage.setItem('saSfx',on?'on':'off'); }catch(_){}; if(on) zoop(); });
+  // taps anywhere interactive get a soft zoop (page changes and thoughts play their own sound)
+  document.addEventListener('click',function(e){
+    if(!e.target.closest) return;
+    if(e.target.closest('#sfxBtn, #btxEnter, [data-soundtoggle]')) return;
+    if(e.target.closest('.wz-btn, header nav a, .wz-dots button, .folded, .more-btn, .th-next, .th-prev')) return;
+    if(e.target.closest('a, button, input[type=submit], summary, .card, .promise, .step')) zoop(.8);
+  },true);
+})();
+
 </script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
@@ -1048,7 +1120,7 @@ window.SAFX={zoop:function(){},statics:function(){},warp:function(){},isOff:func
   var sbtn=document.getElementById('sfxBtn');
   function paint(){ var on=cur&&cur!=='off'; if(sbtn){ sbtn.classList.toggle('off',!on); sbtn.setAttribute('aria-pressed',on); sbtn.innerHTML='&#9835; Sound '+(on?'on':'off'); }
     document.querySelectorAll('[data-soundtoggle] span').forEach(function(s){ s.textContent=on?'Sound on':'Sound off'; }); }
-  function toggle(){ play(cur&&cur!=='off'?'off':'chords'); }
+  function toggle(){ var nowOn=!(cur&&cur!=='off'); play(nowOn?'chords':'off'); try{ window.SAFX&&SAFX.setOn&&SAFX.setOn(nowOn); }catch(e){} }
   if(sbtn) sbtn.addEventListener('click',function(e){ e.preventDefault(); toggle(); });
   document.addEventListener('click',function(e){ if(e.target.closest('[data-soundtoggle]')){ e.preventDefault(); toggle(); } });
   var saved=null; try{ saved=sessionStorage.getItem('saAmb'); }catch(e){}
@@ -1149,6 +1221,7 @@ window.SAFX={zoop:function(){},statics:function(){},warp:function(){},isOff:func
     [].forEach.call(pg.children,function(el,i){ var r=el.getBoundingClientRect(); var dx=s.x-(r.left+Math.min(r.width,400)/2), dy=s.y-(r.top+r.height/2);
       el.style.setProperty('--dx',(dx*.85).toFixed(0)+'px'); el.style.setProperty('--dy',(dy*.85).toFixed(0)+'px'); el.style.setProperty('--d',(i*85)+'ms'); });
     drift.classList.add('on'); placeDrift(); setTimeout(placeDrift,620);
+    if(WEAVE[id]) weave(pg); else pg.classList.remove('weaving');
     var sp=SPECIAL[id]; if(sp) setTimeout(function(){ sp(pg); },250);
     pg.querySelectorAll('.decode').forEach(decode);
   }
@@ -1156,7 +1229,7 @@ window.SAFX={zoop:function(){},statics:function(){},warp:function(){},isOff:func
     var pg=shown?document.getElementById('p-'+shown):null; shown=null; drift.classList.remove('on'); haze.classList.remove('on');
     if(!pg){ done&&done(); return; }
     pg.classList.add('out'); stage.classList.remove('live');
-    setTimeout(function(){ pg.classList.remove('on','out'); done&&done(); },420);
+    setTimeout(function(){ pg.classList.remove('on','out','weaving'); var nv=pg.querySelector('.nerve'); if(nv) nv.remove(); done&&done(); },420);
   }
   function placeDrift(){ var r=stage.getBoundingClientRect(); drift.style.left=(innerWidth<900?innerWidth-110:Math.min(innerWidth-110,r.right-90))+'px'; drift.style.top=(innerWidth<900?r.top-36:Math.max(70,r.top-30))+'px'; }
   
@@ -1207,6 +1280,41 @@ window.SAFX={zoop:function(){},statics:function(){},warp:function(){},isOff:func
   document.addEventListener('click',function(e){ var a=e.target.closest('[data-go]'); if(!a) return; e.preventDefault();
     if(!document.body.classList.contains('inside')) return; delete skip[a.dataset.go]; travelTo(a.dataset.go,{type:a.dataset.type}); });
   addEventListener('resize',function(){ if(shown) placeDrift(); });
+
+
+  /* the nerve: a thread weaves between the lines; a signal runs down it and each line fires into being as it arrives */
+  var WEAVE={core:1,services:1,process:1,referral:1,about:1,faq:1,portfolio:1,news:1,secret:1};
+  function weave(pg){
+    var old=pg.querySelector('.nerve'); if(old) old.remove();
+    var kids=[].slice.call(pg.children);
+    pg.classList.add('weaving'); kids.forEach(function(k){ k.classList.remove('wv-in'); k.classList.add('wv-wait'); });
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      var pr=pg.getBoundingClientRect(), W=pr.width, H=pg.scrollHeight, pts=[], NS='http://www.w3.org/2000/svg';
+      kids.forEach(function(k,i){ var r=k.getBoundingClientRect(), side=i%2?1:-1, w=Math.min(r.width,W);
+        var cx=r.left-pr.left+r.width/2, half=Math.min(w/2, (k.scrollWidth||w)/2);
+        var x=side<0?cx-half-18:cx+half+18; x=Math.max(8,Math.min(W-8,x));
+        pts.push([x,r.top-pr.top+Math.min(14,r.height/2)]); });
+      if(!pts.length) return;
+      pts.unshift([W/2,-12]);
+      var d='M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
+      for(var i=0;i<pts.length-1;i++){ var p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
+        d+=' C'+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+','+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+' '+(p2[0]-(p3[0]-p1[0])/6).toFixed(1)+','+(p2[1]-(p3[1]-p1[1])/6).toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1); }
+      var svg=document.createElementNS(NS,'svg'); svg.setAttribute('class','nerve'); svg.setAttribute('width',W); svg.setAttribute('height',H); svg.setAttribute('viewBox','0 0 '+W+' '+H);
+      var path=document.createElementNS(NS,'path'); path.setAttribute('d',d); path.setAttribute('class','nv-path'); svg.appendChild(path);
+      var trail=document.createElementNS(NS,'path'); trail.setAttribute('d',d); trail.setAttribute('class','nv-trail'); svg.appendChild(trail);
+      var dots=pts.slice(1).map(function(p){ var c=document.createElementNS(NS,'circle'); c.setAttribute('cx',p[0]); c.setAttribute('cy',p[1]); c.setAttribute('r','3.5'); c.setAttribute('class','nv-dot'); svg.appendChild(c); return c; });
+      var pulse=document.createElementNS(NS,'circle'); pulse.setAttribute('r','5'); pulse.setAttribute('class','nv-pulse'); svg.appendChild(pulse);
+      pg.insertBefore(svg,pg.firstChild);
+      var L=path.getTotalLength(); trail.style.strokeDasharray=L; trail.style.strokeDashoffset=L;
+      // where along the thread each line sits
+      var at=pts.slice(1).map(function(p){ var best=0,bd=1e9; for(var s=0;s<=L;s+=4){ var q=path.getPointAtLength(s), dd=(q.x-p[0])*(q.x-p[0])+(q.y-p[1])*(q.y-p[1]); if(dd<bd){ bd=dd; best=s; } } return best; });
+      var dur=Math.max(1300,Math.min(3800,800+kids.length*240)), t0=performance.now(), shownN=0, me=pg;
+      (function tick(){ if(!me.classList.contains('on')) return; var k=Math.min(1,(performance.now()-t0)/dur), e=1-Math.pow(1-k,1.6), s=e*L, q=path.getPointAtLength(s);
+        pulse.setAttribute('cx',q.x); pulse.setAttribute('cy',q.y); trail.style.strokeDashoffset=(L-s);
+        while(shownN<kids.length && s>=at[shownN]-2){ kids[shownN].classList.remove('wv-wait'); kids[shownN].classList.add('wv-in'); dots[shownN].classList.add('lit'); if(shownN%2===0) FX('zoop',.35); shownN++; }
+        if(k<1) requestAnimationFrame(tick); else { pulse.classList.add('done'); kids.forEach(function(x,j){ x.classList.remove('wv-wait'); x.classList.add('wv-in'); dots[j]&&dots[j].classList.add('lit'); }); } })();
+    }); });
+  }
 
   /* text that decodes out of neural noise */
   function decode(el){ if(!el.dataset.t) el.dataset.t=el.textContent; var full=el.dataset.t, G='01∆◇·/\\<>#%', t0=performance.now(), d=900;
