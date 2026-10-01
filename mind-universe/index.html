@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mind Universe — your mind, as a universe</title>
+<meta http-equiv="Cache-Control" content="no-cache">
 <meta name="description" content="Mind Universe: your moods, diary, goals, habits, memories, hadith and positive thoughts as glowing neurons you can fly through.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#03040a">
@@ -185,6 +186,8 @@ body.inside #dock{opacity:1;pointer-events:auto}
 .dk.unk span,.dk:not(.found):not(.fly) span{color:var(--mute2)}
 .dk.fly i{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 0 16px -4px var(--purple);font-size:1rem}
 .dk.fly.found i::after{display:none;content:none}
+.dk.worlds i{background:linear-gradient(135deg,#19f0b0,#7fe0c3);color:#04241a!important;box-shadow:0 0 16px -4px #7fe0c3;font-size:.78rem!important;font-weight:800}
+.dk.worlds.found i::after{display:none;content:none}
 .dk.mini{width:50px}
 .dk.mini i{width:28px;height:28px;font-size:.8rem}
 #readout{position:fixed;z-index:34;left:50%;bottom:96px;transform:translateX(-50%);font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);opacity:0;transition:opacity .3s;white-space:nowrap;text-shadow:0 0 8px var(--bg)}
@@ -632,7 +635,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 </div>
 
 <div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
-<div class="hud tools"><span class="chip" id="presence" hidden><i class="pdot"></i><span id="presenceTxt"></span></span><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div class="hud tools"><span class="chip" id="presence" hidden><i class="pdot"></i><span id="presenceTxt"></span></span><button class="chip" id="worldsChip" type="button" title="Other worlds">Worlds</button><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
 <div id="soundMenu" role="menu" aria-label="Sound">
   <div class="h">Calm</div>
   <button type="button" data-snd="off"><i></i>Silence</button>
@@ -852,7 +855,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 <script src="assets/mind-garden.js?v=1"></script>
 <script src="assets/mind-draw.js?v=1"></script>
 <script src="assets/mind-cube.js?v=1"></script>
-<script src="assets/mind-worlds.js?v=3"></script>
+<script src="assets/mind-worlds.js?v=4"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -1238,7 +1241,8 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
       ];
       return eb('Home','#ffffff')+'<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2><p>Your whole mind, from the outside. Double-tap a far light to travel. Tap when you are next to one to open it.</p>'+
         coreRow()+statRings(rows,qd,qt)+'<div class="hstats">'+rows.map(function(r,i){ var unk=false; return '<button class="hstat" '+(r[0]!=='me'&&!unk?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
-        '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-act="worlds">'+(S.visited.worlds?'Open the Worlds':'? Other universes')+'</button><button class="link" data-go="mood">How are you feeling?</button></div>'+
+        '<div class="row"><button class="btn" data-act="worlds" style="--c:#7fe0c3">Enter Worlds</button></div>'+
+        '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button></div>'+
         '<details class="hmore"><summary>Today’s quests &middot; '+qd+'/'+qt+'</summary><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return true?'<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button></li>':'<li style="--dot:#cfd6ff"><span>? Find this neuron to unlock its quest</span></li>'; }).join('')+'</ul>'+
           '<p class="small"><b>Mind Vision</b> (50 coins): every hidden light reveals itself for a minute.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision · 50':(50-S.coins)+' coins to go')+'</button></div></details>'+
         '<details class="hmore"><summary>Privacy \u00B7 who can see what</summary>'+privacyHTML()+'</details>'+
@@ -1515,7 +1519,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   }
   stage.addEventListener('click',function(e){
     var b=e.target.closest('button,input[type=checkbox]'); if(!b) return;
-    if(b.dataset.go){ travelTo(b.dataset.go); return; }
+    if(b.dataset.go){ if(b.dataset.go==='worlds'){ openWorlds('gate'); return; } travelTo(b.dataset.go); return; }
     if(b.dataset.mood){ selMood=b.dataset.mood; stage.querySelectorAll('.orb').forEach(function(o){ o.classList.toggle('sel',o===b); }); M.setColor('mood',moodOf(selMood).c); return; }
     if(b.dataset.todo){ var t=S.todos.filter(function(x){ return String(x.id)===b.dataset.todo; })[0]; if(t){ t.done=b.checked; if(t.done){ logDay('task'); quest('todo'); } save(); setTimeout(function(){ render('todo'); },250); } return; }
     if(b.dataset.delTodo){ S.todos=S.todos.filter(function(x){ return String(x.id)!==b.dataset.delTodo; }); save(); render('todo'); return; }
@@ -2233,11 +2237,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 
 
   /* the main core neurons, one tap away on Home */
-  var CORE_MAIN=['mood','diary','todo','goals','plan','trackers','gallery','year','progress','arcade'];
-  function coreRow(){ return '<div class="hcore">'+CORE_MAIN.map(function(id){ var d=byId[id]; if(!d) return ''; var known=id==='me'||S.visited[id]; return '<button class="hc-btn'+(known?'':' unk')+'" data-go="'+id+'" style="--c:'+(known?d.col:'#9eb6ff')+'"><i>'+(known?'':'?')+'</i><span>'+(known?esc(d.name):'?')+(known&&hasVault()&&(id==='diary'||id==='gallery')?' &#128274;':'')+'</span></button>'; }).join('')+'</div>'; }
+  var CORE_MAIN=['worlds','mood','diary','todo','goals','plan','trackers','gallery','year','progress','arcade'];
+  function coreRow(){ return '<div class="hcore">'+CORE_MAIN.map(function(id){ var d=byId[id]; if(!d) return ''; var known=id==='me'||id==='worlds'||S.visited[id]; return '<button class="hc-btn'+(known?'':' unk')+'" data-go="'+id+'" style="--c:'+(known?d.col:'#9eb6ff')+'"><i>'+(known?'':'?')+'</i><span>'+(known?esc(d.name):'?')+(known&&hasVault()&&(id==='diary'||id==='gallery')?' &#128274;':'')+'</span></button>'; }).join('')+'</div>'; }
   function paintRail(){
     var coreEl=document.getElementById('crCore'), qsEl=document.getElementById('crQs'); if(!coreEl||!qsEl) return;
-    var short={me:'⌂',mood:'Mo',diary:'Di',todo:'Td',goals:'Go',plan:'Pl',trackers:'Tr',gallery:'Me',year:'25',progress:'Pr',arcade:'Ar'};
+    var short={me:'⌂',worlds:'W',mood:'Mo',diary:'Di',todo:'Td',goals:'Go',plan:'Pl',trackers:'Tr',gallery:'Me',year:'25',progress:'Pr',arcade:'Ar'};
     var core=['me'].concat(CORE_MAIN);
     coreEl.innerHTML=core.map(function(id){ var d=byId[id]; if(!d) return '';
       var kn=knownOf(d);
@@ -2335,9 +2339,10 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   function paintDock(){
     var row=document.getElementById('dockRow'); if(!row) return;
     var h='<button class="dk fly found" data-fly="1" style="--c:#a45cff"><i>✦</i><span>Fly</span></button>';
+    h+='<button class="dk found worlds" data-go="worlds" title="Worlds" style="--c:#7fe0c3"><i>W</i><span>Worlds</span></button>';
     var foundN=0, total=0;
     function addBtn(d){
-      if(!d||d.dormant) return;
+      if(!d||d.dormant||d.id==='worlds') return;
       total++;
       var kn=knownOf(d);
       if(kn) foundN++;
@@ -2352,7 +2357,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     paintRail(); lastNearKey='';
   }
   document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('gate'); return; } travelTo(b.dataset.go); });
-  document.getElementById('coreRail').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return; travelTo(b.dataset.go); });
+  document.getElementById('coreRail').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('gate'); return; } travelTo(b.dataset.go); });
   paintDock();
 
 
@@ -2398,6 +2403,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 
   Snd.paint(); paintCoins();
   document.getElementById('coinChip').onclick=function(){ travelTo('me'); };
+  document.getElementById('worldsChip').onclick=function(){ openWorlds('gate'); };
 
 
   /* ── sound effects (calm neuron pings) ── */
