@@ -576,6 +576,23 @@
     .why-lead { margin: -4px 0 18px; font-size: clamp(15px, 1.3vw, 17px); }
     .card.mission { background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(124,58,237,.10)); border-color: rgba(124,58,237,.25); }
     @media (max-width: 900px) { .why-grid .cards { order: 2; } }
+
+    /* tidy brand on phones: icon + wordmark on one line, centred between the menu and sound buttons */
+    @media (max-width: 600px) {
+      .topbar { height: 72px !important; padding: 0 12px !important; gap: 8px; align-items: center; }
+      .brand { margin: 0 auto !important; gap: 9px !important; padding: 0 !important; min-width: 0; flex: 0 1 auto; }
+      .brand img { width: 44px !important; height: 44px !important; border-radius: 12px !important; }
+      .brand > span { font-size: 24px !important; white-space: nowrap; line-height: 1; }
+      .topbar .pill { white-space: nowrap; flex-shrink: 0; }
+      #sound-btn { font-size: 12px; padding: 0 12px; height: 36px; }
+      .music-btn span { display: none; }
+      .gate-app { font-size: 13px; white-space: nowrap; }
+    }
+    @media (max-width: 380px) { .brand img { width: 38px !important; height: 38px !important; } .brand > span { font-size: 21px !important; } }
+    .gate-app { justify-content: center; }
+    .gate-foot a, .company a.sa-link { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+    .sa-back { display: flex; align-items: center; gap: 8px; margin: 10px 10px 0; padding: 10px 12px; border-radius: 12px; font-size: 13px; font-weight: 700; color: var(--blue); text-decoration: none; background: rgba(37,99,235,.07); }
+    .sa-back:hover { background: rgba(37,99,235,.13); }
   </style>
 </head>
 <body>
@@ -623,6 +640,7 @@
     <a class="sl" href="#money" data-go="money"><span class="d"></span>Quotes, invoices &amp; more</a>
     <a class="sl" href="#soon" data-go="soon"><span class="d"></span>Coming soon</a>
     <a class="sl" href="#get" data-go="get"><span class="d"></span>Get Voltz</a>
+    <a class="sa-back" href="/">&larr; Back to SA Intelligent Designs</a>
     <div class="side-legal"><a href="/voltz/terms">Terms of Use</a><a href="/voltz/privacy">Privacy Policy</a></div>
   </nav>
 
@@ -868,7 +886,7 @@
         </div>
 
         <div class="company">
-          <strong>Voltz CRM by SA Intelligent Designs</strong>
+          <strong>Voltz CRM by <a class="sa-link" href="/">SA Intelligent Designs</a></strong>
           <span class="co-office" data-co="office" hidden></span>
           <span class="co-number" data-co="number" hidden></span>
           <div class="socials">
@@ -908,7 +926,7 @@
         <div class="asm-hud" id="asm-hud">Assembling <b>Voltz CRM</b> &middot; 0%</div>
       </div>
     </div>
-    <small class="gate-foot">Voltz CRM by SA Intelligent Designs</small>
+    <small class="gate-foot">Voltz CRM by <a href="/">SA Intelligent Designs</a></small>
   </div>
 
   <!-- Cookie consent -->
