@@ -233,12 +233,12 @@
   }
   /* ── free flight: the visitor takes the controls ── */
   var flight=null, nearHook=null, fwd=V(0,0,-1), CENTER=V(40,0,-80), BOUND=290;
-  function reach(d){ return (d.scale||1)*13+6; }
-  function freeStart(){
+  function reach(d){ return (d.scale||1)*5+3; }
+  function freeStart(target){
     if(mode!=='inside') return false;
     if(travel){ travel=null; }
-    var dir=camLook.clone().sub(camPos).normalize();
-    flight={yaw:Math.atan2(-dir.x,-dir.z),pitch:Math.asin(Math.max(-1,Math.min(1,dir.y))),vel:0,thrust:0,turn:0,tilt:0,max:small?55:70,ignore:cur,ignoreR:D[cur]?reach(D[cur])+14:0};
+    var dir=(target&&D[target])?D[target].v.clone().sub(camPos).normalize():camLook.clone().sub(camPos).normalize();
+    flight={t0:performance.now(),yaw:Math.atan2(-dir.x,-dir.z),pitch:Math.asin(Math.max(-1,Math.min(1,dir.y))),vel:0,thrust:0,turn:0,tilt:0,max:small?55:70,ignore:cur,ignoreR:D[cur]?reach(D[cur])+14:0};
     return true;
   }
   function freeStep(dt){
@@ -248,9 +248,9 @@
     fwd.set(-Math.sin(f.yaw)*Math.cos(f.pitch), Math.sin(f.pitch), -Math.cos(f.yaw)*Math.cos(f.pitch));
     camPos.addScaledVector(fwd,f.vel*dt);
     tmpA.copy(camPos).sub(CENTER); var r=tmpA.length(); if(r>BOUND) camPos.addScaledVector(tmpA.normalize(),-(r-BOUND)*Math.min(1,dt*2));
-    camLook.copy(camPos).addScaledVector(fwd,40);
+    tmpB.copy(camPos).addScaledVector(fwd,40); camLook.lerp(tmpB,Math.min(1,dt*3.5));
     if(f.ignore && D[f.ignore].v.distanceTo(camPos)>f.ignoreR) f.ignore=null;
-    for(var i=0;i<DESTS.length;i++){ var d=DESTS[i]; if(d.id===f.ignore) continue;
+    if(performance.now()-f.t0>3000) for(var i=0;i<DESTS.length;i++){ var d=DESTS[i]; if(d.id===f.ignore) continue;
       if(d.v.distanceTo(camPos)<reach(d)){ f.ignore=d.id; f.ignoreR=reach(d)+14; if(nearHook) nearHook(d.id); break; } }
   }
   function nearest(){ var best=null, bd=1e9; DESTS.forEach(function(d){ var dd=d.v.distanceTo(camPos); if(dd<bd){ bd=dd; best=d.id; } }); return {id:best,dist:bd}; }
