@@ -267,6 +267,42 @@ body.grabbing{cursor:grabbing}
 .scr{font:700 2rem var(--mono);letter-spacing:.2em;margin:20px auto 0}
 .gcol{display:grid;gap:6px;width:min(300px,80vw);margin:18px auto 0}
 .gcol button{aspect-ratio:1;border-radius:8px}
+
+select.field{appearance:none;-webkit-appearance:none;cursor:pointer;text-align:center}
+select.field option{color:#0b1730;background:#fff}
+.react{display:block;width:min(320px,80vw);height:150px;margin:20px auto 0;border-radius:24px;font-weight:800;font-size:1.1rem;box-shadow:inset 0 0 0 1.5px var(--line)}
+.react.wait{background:rgba(255,79,109,.25)}.react.go{background:rgba(25,240,176,.45);box-shadow:0 0 40px -6px var(--green)}
+.simon{display:grid;grid-template-columns:repeat(2,96px);gap:12px;justify-content:center;margin:18px auto 0}
+.simon button{height:96px;border-radius:22px;box-shadow:inset 0 0 0 2px var(--sc);opacity:.55;transition:.15s}
+.simon button.on{opacity:1;background:var(--sc);box-shadow:0 0 36px var(--sc)}
+.ttt{display:grid;grid-template-columns:repeat(3,72px);gap:8px;justify-content:center;margin:18px auto 0}
+.ttt button{height:72px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);font-size:1.8rem}
+.sdk{display:grid;grid-template-columns:repeat(4,56px);gap:6px;justify-content:center;margin:18px auto 0}
+.sdk b,.sdk input{height:56px;border-radius:12px;display:grid;place-items:center;font:700 1.3rem var(--mono);text-align:center;box-shadow:inset 0 0 0 1px var(--line);background:transparent;border:0;outline:none}
+.sdk b{color:var(--gold)}
+.sdk > :nth-child(4n+2){margin-right:8px}.sdk > :nth-child(n+5):nth-child(-n+8){margin-bottom:8px}
+canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-action:none;box-shadow:inset 0 0 0 1px var(--line)}
+
+.quest{display:inline-flex;align-items:center;gap:8px;margin:0 auto 12px;padding:6px 14px;border-radius:999px;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);box-shadow:inset 0 0 0 1px rgba(255,196,77,.45);background:rgba(255,196,77,.06)}
+.quest i{font-style:normal}
+.quest.done{color:var(--green);box-shadow:inset 0 0 0 1px rgba(25,240,176,.45);background:rgba(25,240,176,.06)}
+.dk{position:relative}
+.dk.q::before{content:"";position:absolute;top:0;right:14px;width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+#coinChip{color:var(--gold)}
+
+/* the mind window: web pages and videos float inside the universe */
+#mwin{position:fixed;z-index:33;left:50%;top:50%;width:min(980px,92vw);height:min(640px,76vh);transform:translate(-50%,-46%) scale(.94);opacity:0;pointer-events:none;transition:.45s cubic-bezier(.2,.8,.2,1);
+  border-radius:22px;overflow:hidden;background:var(--glow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 0 0 1px var(--line),0 40px 90px -30px rgba(164,92,255,.7),0 0 60px -20px rgba(46,230,255,.5);display:flex;flex-direction:column}
+#mwTitle::after{content:attr(data-left);margin-left:12px;color:var(--gold);font-weight:400}
+#mwin.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.mw-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+.mw-bar a{color:var(--mute);margin-right:14px;text-decoration:none}.mw-bar button{font-size:.9rem;color:var(--mute)}
+.mw-body{flex:1;position:relative}
+.mw-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.mw-note{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;color:var(--mute);line-height:1.6}
+.mw-note b{color:var(--ink);font-size:1.2rem;margin-bottom:8px}
+.mw-search{padding:14px;overflow:auto;position:absolute;inset:0}
+@media(max-width:899px){#mwin{width:100vw;height:calc(100vh - 150px);top:52%;border-radius:18px 18px 0 0}}
 @media(max-width:899px){
   #stage{left:0;right:0;top:auto;bottom:86px;transform:none;max-height:58vh;padding:44px 20px 20px;
     background:linear-gradient(180deg,transparent 0,var(--glow) 60px,var(--glow) 100%);-webkit-mask-image:none;mask-image:none}
@@ -281,7 +317,7 @@ body.grabbing{cursor:grabbing}
 
 <div class="gate" id="gate">
   <div class="eye">Mind Universe</div>
-  <h1>Your home for <span class="grad">thought</span></h1>
+  <h1>Enter your <span class="grad">mind</span></h1>
   <p>Your moods, ideas, goals and memories &mdash; living as glowing neurons in your own universe. Private, and only on this device.</p>
   <input id="gName" placeholder="What should your mind call you?" autocomplete="given-name" maxlength="30">
   <button class="enter" id="gEnter">Enter</button>
@@ -289,7 +325,7 @@ body.grabbing{cursor:grabbing}
 </div>
 
 <div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
-<div class="hud tools"><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div class="hud tools"><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
 <div id="soundMenu" role="menu" aria-label="Sound">
   <div class="h">Calm</div>
   <button type="button" data-snd="off"><i></i>Silence</button>
@@ -304,14 +340,13 @@ body.grabbing{cursor:grabbing}
   <button type="button" data-snd="synthwave"><i></i>Synthwave drive</button>
   <button type="button" data-snd="cyber"><i></i>Cyber pulse</button>
   <button type="button" data-snd="datastream"><i></i>Data stream</button>
-  <div class="h">Yours</div>
-  <button type="button" data-snd="mine"><i></i><span id="mineName">Add your own music&hellip;</span></button>
+
   <div class="vol">VOL <input type="range" id="sndVol" min="0" max="100" value="60"></div>
   <div class="h">Effects</div>
   <button type="button" data-fx="1"><i></i><span id="fxName">Neuron sounds on</span></button>
   <div class="h">While flying</div>
   <button type="button" data-flysnd="1"><i></i><span id="flySndName">Flight sound on</span></button>
-  <input type="file" accept="audio/*" class="file" id="sndFile">
+
 </div>
 <div id="flyui" aria-hidden="true">
   <div class="cross"></div><div class="flynear" id="flyNear"></div><div class="flyhint" id="flyHint"></div>
@@ -338,13 +373,14 @@ body.grabbing{cursor:grabbing}
 <div id="toast"></div>
 <nav id="dock" aria-label="Your neurons"><div class="dock-row" id="dockRow"></div></nav>
 <main id="stage" aria-live="polite"></main>
+<div id="mwin" role="dialog" aria-label="Mind window"><div class="mw-bar"><b id="mwTitle"></b><span><a id="mwOut" target="_blank" rel="noopener">open outside &#8599;</a><button type="button" id="mwX" aria-label="Close">&#10005;</button></span></div><div class="mw-body" id="mwBody"></div></div>
 
 <script src="assets/hadith.js"></script>
 <script>
 /* ── the map of the mind ── */
 (function(){
   var D=[
-    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:34, scale:1.4},
+    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:175, scale:1.4, shift:.5},
     {id:'mood',    name:'Mood',         col:'#ff4fa8', pos:[-40,10,-30],   yaw:.5,   dist:30, scale:1.15},
     {id:'progress',name:'Progress',     col:'#2ee6ff', pos:[42,14,-34],    yaw:-.5,  dist:34, scale:1.15},
     {id:'diary',   name:'Diary',        col:'#ffc44d', pos:[-32,-24,-62],  yaw:.35,  dist:30},
@@ -403,6 +439,43 @@ body.grabbing{cursor:grabbing}
     {from:'2026-11-01',id:'l14',t:'Your story is still being written',b:'Today is a page, not the whole book.'},
     {from:'2026-12-01',id:'l15',t:'Light travels far',b:'A kind word you say today can still be shining in someone years from now.'}
   ];
+  D.push({id:'listen',name:'Listen',col:'#19f0b0',pos:[-60,64,-40],yaw:.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','listen'],['mood','listen'],['goals','listen']);
+  /* ── 50 more things ── */
+  // Rooms of the mind: personal collections gathered around a Rooms hub
+  var roomsHub={id:'rooms',name:'Rooms',col:'#ffd6a5',pos:[0,-80,-28],yaw:0,dist:36,scale:1.15}; D.push(roomsHub); MAIN.push(roomsHub); L.push(['plan','rooms'],['me','rooms'],['trackers','rooms']);
+  window.H_ROOMS=[
+    {id:'r_dreams',n:'Dream journal',c:'#a45cff'},{id:'r_people',n:'People',c:'#ff4fa8'},{id:'r_values',n:'Values',c:'#ffc44d'},{id:'r_bucket',n:'Bucket list',c:'#19f0b0'},
+    {id:'r_wins',n:'Small wins',c:'#2ee6ff'},{id:'r_library',n:'Library',c:'#4f7dff'},{id:'r_quotes',n:'Quotes',c:'#ffd6a5'},{id:'r_timeline',n:'Life timeline',c:'#ff8a3d'},
+    {id:'r_future',n:'Letters to future me',c:'#cfd6ff'},{id:'r_places',n:'Places I love',c:'#3dffd0'},{id:'r_comfort',n:'Comfort kit',c:'#ff6bd6'},{id:'r_wish',n:'Wishlist',c:'#ffc44d'},
+    {id:'r_affirm',n:'My affirmations',c:'#19f0b0'},{id:'r_count',n:'Countdowns',c:'#ff4f6d'},{id:'r_sleep',n:'Sleep log',c:'#a45cff'},{id:'r_grat',n:'Gratitude jar',c:'#3dffd0'},
+    {id:'r_vault',n:'Secret vault',c:'#9aa3c7'},{id:'r_voice',n:'Voice notes',c:'#2ee6ff'},{id:'r_question',n:'Question of the day',c:'#ff8a3d'},{id:'r_awards',n:'Achievements',c:'#ffc44d'},
+    {id:'r_atlas',n:'Mind atlas',c:'#cfd6ff'}
+  ];
+  H_ROOMS.forEach(function(r,i){ var a=i/H_ROOMS.length*Math.PI*2, rad=32+(i%2)*9; D.push({id:r.id,name:r.n,col:r.c,pos:[Math.cos(a)*rad,-80+Math.sin(a)*rad*.5,-28+Math.sin(a)*rad*.9],yaw:0,dist:22,scale:.7,mini:true,kind:'room'}); L.push(['rooms',r.id]); });
+  // Hidden mysteries: daily surprises, more games and exercises, special-time neurons
+  window.H_FUN=[
+    {id:'d_fortune',n:'Fortune',c:'#ffc44d',k:'daily'},{id:'d_fact',n:'Did you know?',c:'#2ee6ff',k:'daily'},{id:'d_word',n:'Word of the day',c:'#a45cff',k:'daily'},
+    {id:'d_kind',n:'Kindness mission',c:'#ff4fa8',k:'daily'},{id:'d_prompt',n:'Journal prompt',c:'#ffd6a5',k:'daily'},{id:'d_doodle',n:'Doodle dare',c:'#ff6bd6',k:'daily'},
+    {id:'f_reaction',n:'Reaction flash',c:'#19f0b0',k:'fun'},{id:'f_simon',n:'Colour echo',c:'#ff4fa8',k:'fun'},{id:'f_ttt',n:'Noughts & crosses',c:'#4f7dff',k:'fun'},
+    {id:'f_type',n:'Typing zen',c:'#2ee6ff',k:'fun'},{id:'f_sudoku',n:'Mini sudoku',c:'#ffc44d',k:'fun'},{id:'f_riddle',n:'Riddles',c:'#a45cff',k:'fun'},
+    {id:'f_trivia',n:'Brain trivia',c:'#ff8a3d',k:'fun'},{id:'f_zen',n:'Zen garden',c:'#d9c8a0',k:'fun'},{id:'f_kaleido',n:'Kaleidoscope',c:'#ff6bd6',k:'fun'},
+    {id:'f_ground',n:'5-4-3-2-1 grounding',c:'#3dffd0',k:'fun'},{id:'f_body',n:'Body scan',c:'#19f0b0',k:'fun'},{id:'f_478',n:'4-7-8 breathing',c:'#2ee6ff',k:'fun'},
+    {id:'s_echo',n:'Memory echo',c:'#cfd6ff',k:'fun'},{id:'s_star',n:'Wishing star',c:'#ffe9a8',k:'fun'}
+  ];
+  var hr=new Date().getHours(), wd=new Date().getDay();
+  if(hr>=22||hr<5) H_FUN.push({id:'s_night',n:'Night owl',c:'#4f7dff',k:'fun'});
+  if(wd===5) H_FUN.push({id:'s_friday',n:'Friday glow',c:'#ffc44d',k:'fun'});
+  H_FUN.forEach(function(f){ addMystery({id:f.id,name:f.n,col:f.c,kind:f.k}); });
+  // more positive light, scattered
+  [{t:'Water your mind',b:'What you read, watch and listen to becomes the soil your thoughts grow in.'},
+   {t:'Done is a gift',b:'Finishing something small gives your brain a reward that makes the next thing easier.'},
+   {t:'Laughter resets',b:'A real laugh relaxes your body and shifts your mood in seconds.'},
+   {t:'Curiosity beats fear',b:'When something scares you, get curious about it. Curiosity and fear find it hard to share a room.'},
+   {t:'Mornings matter',b:'The first ten minutes of your day often set the tone for the rest of it.'},
+   {t:'You are allowed to rest',b:'Pausing is not quitting. Even the sea has a tide that goes out.'},
+   {t:'Name it to tame it',b:'Putting a feeling into words can turn its volume down.'},
+   {t:'Celebrate others',b:'Cheering someone else’s win makes room for your own.'}].forEach(function(x,i){ x.id='l'+(30+i); H_LIGHT.push(x); addMystery({id:x.id,name:x.t,col:['#19f0b0','#2ee6ff','#ffc44d','#ff4fa8'][i%4],kind:'light'}); });
+
   H_DROPS.forEach(function(x){ if(new Date()<new Date(x.from)) return; H_LIGHT.push(x); addMystery({id:x.id,name:x.t,col:'#ffc44d',kind:'light'}); });
   window.H_DESTS=D; window.H_LINKS=L;
 })();
@@ -660,7 +733,9 @@ body.grabbing{cursor:grabbing}
         '<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2>'+
         '<p class="lead">'+esc(p.line||'Every light around you is part of you. Fly to one to begin.')+'</p>'+
         '<div class="stats"><div><b>'+(lastMood&&lastMood.day===today()?esc(lastMood.m):'—')+'</b><span>Mood today</span></div><div><b>'+left+'</b><span>To-dos left</span></div><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+mysteries().n+'/'+mysteries().t+'</b><span>Mysteries found</span></div></div>'+
-        '<p class="small">Solid golden lines are paths you\'ve travelled. Faint dashed lines are paths you haven\'t explored yet.</p><div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button><button class="link" data-go="plan">Today\'s plan</button></div>'+
+        '<p class="small">Tap empty space anywhere to float back out here. Drag to look around. Solid golden lines are paths you\'ve travelled. Faint dashed lines are paths you haven\'t explored yet.</p><div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button><button class="link" data-go="plan">Today\'s plan</button></div>'+
+        '<h3>Today\'s quests</h3><p class="small">Complete a quest at each neuron to earn Mind coins. Finding a mystery is worth 2; finishing every quest in a day earns a bonus of 5.</p><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return '<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button><span class="meta">'+(byId[k]?byId[k].name:'')+(dn?' \u00B7 done':'')+'</span></li>'; }).join('')+'</ul>'+
+        '<h3>&#9673; '+S.coins+' Mind coins</h3><p class="small"><b>Mind Vision</b> costs 50 coins: for one minute every hidden light in your universe reveals itself, wherever you are, and a golden ring guides you to the nearest one.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision \u00B7 50':'Mind Vision \u00B7 '+(50-S.coins)+' coins to go')+'</button></div>'+
         '<h3>Your profile</h3><input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
         '<div class="row"><button class="ghost" data-act="photo">&#9673; Add a photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
         '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
@@ -711,23 +786,33 @@ body.grabbing{cursor:grabbing}
         '<div class="row"><button class="ghost" data-act="padSize">&#9679; Brush size</button><button class="ghost" data-act="padNew">New drawing</button><span class="tag" id="padSaved"></span></div>'+
         '<div class="row"><button class="ghost" data-act="aiImage">&#10022; Turn my drawing into AI art (paid)</button></div>'; },
 
-    portals:function(){ var L=[{n:'YouTube',u:'https://www.youtube.com',c:'#ff4f6d'},{n:'Google',u:'https://www.google.com',c:'#4f7dff'},{n:'Facebook',u:'https://www.facebook.com',c:'#2ee6ff'},{n:'Instagram',u:'https://www.instagram.com',c:'#ff4fa8'}].concat(S.links.map(function(l){ return {n:l.n,u:l.u,c:'#ffc44d',id:l.id}; }));
-      return eb('Portals','#ff4f6d')+'<h2>Doorways to your world.</h2><p>Step out to the web and come straight back to your mind. Facebook, Instagram and most sites open in a new tab; YouTube videos can play right here.</p>'+
+    portals:function(){ var L=[{n:'YouTube',u:'https://www.youtube.com',c:'#ff4f6d'},{n:'Wikipedia',u:'https://en.m.wikipedia.org',c:'#4f7dff'},{n:'Facebook',u:'https://www.facebook.com',c:'#2ee6ff'},{n:'Instagram',u:'https://www.instagram.com',c:'#ff4fa8'}].concat(S.links.map(function(l){ return {n:l.n,u:l.u,c:'#ffc44d',id:l.id}; }));
+      return eb('Portals','#ff4f6d')+'<h2>Doorways to your world.</h2><p>The web, inside your mind. Pages and videos open in a floating window — you never leave your universe.</p>'+
         '<div class="orbs">'+L.map(function(l){ return '<a class="orb" href="'+esc(l.u)+'" target="_blank" rel="noopener" style="--oc:'+l.c+'"><i></i><span>'+esc(l.n)+'</span></a>'+(l.id?'<button class="x" data-del-link="'+l.id+'" title="Remove" style="margin-left:-18px;color:var(--mute2)">&#10005;</button>':''); }).join('')+'</div>'+
         '<input class="field" id="lName" placeholder="Name a new doorway (e.g. My bank, LinkedIn)" maxlength="30"><input class="field" id="lUrl" placeholder="https://..." maxlength="300"><div class="row"><button class="btn" data-act="addLink" style="--c:#ff4f6d">Add doorway</button></div>'+
-        '<h3>Watch here</h3><input class="field" id="yt" placeholder="Paste a YouTube link, then press Enter" maxlength="300"><div id="ytBox"></div>'+
+        '<h3>Your daily media time</h3><p class="small">Time on the web and videos is gently limited each day, so your mind stays yours.</p><div class="row">'+[15,30,60].map(function(m){ return '<button class="ghost" data-mlim="'+m+'" style="'+(S.mediaLimit===m?'color:var(--gold)':'')+'">'+m+' min</button>'; }).join('')+'</div><p class="tag">'+fmt(mediaLeft())+' left today</p><h3>Watch here</h3><input class="field" id="yt" placeholder="Paste a YouTube link, then press Enter" maxlength="300"><div id="ytBox"></div>'+
         (S.videos.length?'<ul class="thread" style="--c:#ff4f6d">'+S.videos.slice(0,6).map(function(v){ return '<li><button data-yt="'+esc(v)+'" style="text-align:left">&#9654; youtu.be/'+esc(v)+'</button></li>'; }).join('')+'</ul>':''); },
     studio:function(){ var h=eb('Creative studio','#ffc44d')+'<h2>What do you want to create?</h2><p>A space for your work, your projects and your wildest ideas. Every idea you save floats around this neuron.</p>'+
         '<textarea class="field" id="sVision" placeholder="Your vision: what do you want to achieve in your work or life?" maxlength="400">'+esc(S.vision)+'</textarea><div class="row"><button class="ghost" data-act="saveVision">Save vision</button></div>'+
         '<h3>Catch an idea</h3><input class="field" id="sIdea" placeholder="An idea, then press Enter" maxlength="90"><div class="row"><button class="btn" data-act="spark" style="--c:#ffc44d">&#10022; Spark me</button></div><p class="lead" id="sparkTxt" style="min-height:1.6em"></p>';
       h+=S.ideas.length?'<div class="gfloat">'+S.ideas.map(function(x,i){ var c=['#ffc44d','#ff4fa8','#2ee6ff','#a45cff','#19f0b0'][i%5]; return '<div class="gorb" style="--c:'+c+'"><div class="ring" style="--p:100;width:70px;height:70px"><b>&#10022;</b></div><h3>'+esc(x.t)+'</h3><button class="rm" data-del-idea="'+x.id+'">let go</button></div>'; }).join('')+'</div>':'<p class="empty">No ideas yet. Press "Spark me" if you need a nudge.</p>';
       return h; },
+
+    rooms:function(){ return eb('Rooms','#ffd6a5')+'<h2>The rooms of your mind.</h2><p>Each room is a small neuron around this one. Fly close, or choose below.</p><ul class="thread" style="--c:#ffd6a5">'+H_ROOMS.map(function(r){ var n=(S.cols[r.id]||[]).length; return '<li style="--dot:'+r.c+'"><button data-go="'+r.id+'" style="text-align:left"><b>'+esc(r.n)+'</b></button>'+(n?'<span class="meta">'+n+' saved</span>':'')+'</li>'; }).join('')+'</ul>'; },
+    listen:function(){ var Y=function(q){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q); };
+      return eb('Listen','#19f0b0')+'<h2>Listen.</h2><p>The Qur\'an from more than 240 reciters, plus nasheeds and lectures.</p>'+
+        '<h3>Qur\'an</h3><input class="field" id="qrSearch" placeholder="Search reciters (e.g. Alafasi, Sudais, Minshawi)" autocomplete="off"><select class="field" id="qrRec"><option>Loading reciters…</option></select><select class="field" id="qrSurah"></select>'+
+        '<div class="row"><button class="btn" data-act="qrPlay" style="--c:#19f0b0">&#9654; Play</button><button class="ghost" data-act="qrPause">Pause</button><button class="ghost" data-act="qrNext">Next surah</button></div><p class="tag" id="qrNow"></p>'+
+        '<h3>Moutasem Al-Hameed</h3><p class="small">His full Qur\'an recitations are on YouTube.</p><a class="link" target="_blank" rel="noopener" href="'+Y('Moutasem Al-Hameed full Quran')+'" style="--c:#19f0b0">Open his recitations</a>'+
+        '<h3>Nasheeds</h3><div class="row">'+[['Nasheeds (no music)','nasheed no music'],['Calm nasheeds','calm nasheed'],['Children\'s nasheeds','kids nasheed']].map(function(x){ return '<a class="ghost" target="_blank" rel="noopener" href="'+Y(x[1])+'">'+x[0]+' &#8599;</a>'; }).join('')+'</div>'+
+        '<h3>Lectures</h3><div class="row">'+[['Full Islamic lectures','islamic lecture full'],['Tafsir','tafsir lecture full'],['Seerah','seerah full series'],['Short reminders','islamic reminder']].map(function(x){ return '<a class="ghost" target="_blank" rel="noopener" href="'+Y(x[1])+'">'+x[0]+' &#8599;</a>'; }).join('')+'</div>'+
+        '<p class="small">Found a video you love? Paste its link into <button class="link" data-go="portals" style="margin:0">Portals</button> to watch it inside your mind.</p>'; },
     ai:function(){ return eb('Talk to AI','#4f7dff')+'<h2>A companion for your thoughts.</h2><p class="lead">Talk things through, get ideas, plan your day, or reflect on a hadith &mdash; with an AI that knows your goals and moods (only if you allow it).</p>'+
         '<ul class="thread" style="--c:#4f7dff"><li>"Help me plan a calmer week."</li><li>"Give me three ideas to reach my goal."</li><li>"What could this hadith mean for my day?"</li></ul>'+
         '<p class="small">Coming soon as a paid upgrade. It will be built carefully: it supports reflection, it never diagnoses, and it points to real help when someone needs it.</p>'; },
-    connect:function(){ return eb('Connections','#cfd6ff')+'<h2>Minds that connect.</h2><p class="lead">Invite the people you trust into your mind. They can fly around, see the neurons you choose to share &mdash; your memories, goals or ideas &mdash; and leave a little light behind.</p>'+
-        '<ul class="thread" style="--c:#cfd6ff"><li><b>Special connections</b><span class="meta">only people you approve can visit</span></li><li><b>You choose what they see</b><span class="meta">share a single album, a goal, or nothing at all</span></li><li><b>See their minds too</b><span class="meta">their universe appears as a new galaxy beside yours</span></li></ul>'+
-        '<p class="small">Coming with accounts. Your mind stays completely private until then.</p>'; },
+    connect:function(){ return eb('Connections','#cfd6ff')+'<h2>One special connection.</h2><p class="lead">Your mind can be joined with just one person &mdash; your spouse, or the one person closest to you. Nobody else can ever come in.</p>'+
+        '<ul class="thread" style="--c:#cfd6ff"><li><b>Only one, by invitation</b><span class="meta">you invite them, they accept; either of you can disconnect at any time</span></li><li><b>You choose what they see</b><span class="meta">share a memory album, a goal, your mood &mdash; or nothing at all</span></li><li><b>Your two minds side by side</b><span class="meta">their universe appears as a sister galaxy joined to yours by a single glowing path</span></li><li><b>Send each other light</b><span class="meta">leave a note, a wish or a star in each other&rsquo;s sky</span></li></ul>'+
+        '<p class="small">Coming with accounts. Until then your mind stays completely private.</p>'; },
     sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
         '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
     light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); }
@@ -736,17 +821,36 @@ body.grabbing{cursor:grabbing}
   function eb(t,c){ return '<div class="eyebrow" style="--c:'+c+'">'+t+'</div>'; }
   function hadithPage(h){ var th=(window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{name:'',col:'#ffc44d'};
     return eb(th.name,th.col)+'<h2>'+esc(h.title)+'</h2><div class="ar">'+h.ar+'</div><p class="en">&ldquo;'+esc(h.en)+'&rdquo;</p><div class="src">'+esc(h.src)+'</div>'+
-      '<div class="row"><button class="btn" data-act="narrate" style="--c:'+th.col+'">&#9654; Hear the Sage</button><button class="ghost" data-act="keep">'+(S.keep[h.id]?'&#9733; Kept':'&#9734; Keep')+'</button></div>'+
+      '<div class="row"><button class="ghost" data-act="keep">'+(S.keep[h.id]?'&#9733; Kept':'&#9734; Keep')+'</button></div>'+
       '<button class="link" data-act="nextHadith" style="--c:'+th.col+'">Next found saying</button><button class="link" data-go="sage" style="--c:'+th.col+'">All sayings</button>'+
       '<p class="verify">Text and reference being checked against the source collections before the Sage\'s recorded voice is added.</p>'; }
   function lightPage(x){ return eb('Light','#19f0b0')+'<h2>'+esc(x.t)+'</h2><p class="lead">'+esc(x.b)+'</p><button class="link" data-act="nextLight">Next light</button><button class="link" data-go="light">All lights</button>'; }
 
+
+  /* ── daily quests around each core neuron, paid in Mind coins ── */
+  var QUESTS={mood:'Log how you feel',diary:'Write a diary entry',todo:'Finish one task',goals:'Complete a goal step',plan:'Set today’s focus',trackers:'Hit one tracker target',
+    gallery:'Add a memory',studio:'Catch an idea',rooms:'Add something to a room',listen:'Listen to a surah',progress:'Check your progress',draw:'Draw something'};
+  S.coins=S.coins||0; S.quests=S.quests||{};
+  function qDone(id){ return !!((S.quests[today()]||{})[id]); }
+  function quest(id){ if(!QUESTS[id]||qDone(id)) return; var k=today(); S.quests[k]=S.quests[k]||{}; S.quests[k][id]=1; S.coins++; save();
+    var n=Object.keys(S.quests[k]).length, all=Object.keys(QUESTS).length; toast('◉ +1 Mind coin · '+QUESTS[id]+' ✓');
+    if(n===all){ S.coins+=5; save(); setTimeout(function(){ toast('✦ Every quest done today · +5 bonus coins'); },2600); }
+    paintDock(); paintCoins(); }
+  function coinsBonus(n,why){ S.coins+=n; save(); paintCoins(); setTimeout(function(){ toast('◉ +'+n+' Mind coins · '+why); },1400); }
+  function questLine(id){ if(!QUESTS[id]) return ''; var d=qDone(id); return '<div class="quest'+(d?' done':'')+'"><i>'+(d?'✓':'◉')+'</i>Today’s quest · '+QUESTS[id]+(d?' · done':' · +1 coin')+'</div>'; }
+  function paintCoins(){ var el=document.getElementById('coinChip'); if(el) el.innerHTML='&#9673; '+S.coins; }
+  var visionUntil=0; function visionOn(){ return Date.now()<visionUntil; }
+
   /* ── showing a neuron's words ── */
   var shown=null, busy=false, cur='me';
-  function pageHTML(id){ var d=byId[id]; if(!d) return '';
+  function pageHTML(id){ var d=byId[id]; if(!d) return ''; return questLine(id)+pageBody(id); }
+  function pageBody(id){ var d=byId[id];
     if(d.kind==='hadith') return hadithPage((window.H_HADITH||[]).filter(function(h){ return h.id===id; })[0]);
     if(d.kind==='light') return lightPage(H_LIGHT.filter(function(x){ return x.id===id; })[0]);
     if(d.kind==='play') return playPage(H_PLAY.filter(function(x){ return x.id===id; })[0]);
+    if(d.kind==='room') return roomPage(id);
+    if(d.kind==='daily') return dailyPage(id);
+    if(d.kind==='fun') return funPage(id);
     return PAGES[id]?PAGES[id]():''; }
   function render(id){ var pg=document.createElement('article'); pg.className='pg on'; pg.innerHTML=pageHTML(id); stage.innerHTML=''; stage.appendChild(pg);
     var s=M.restScreen(id)||{x:innerWidth*.3,y:innerHeight*.4};
@@ -754,15 +858,28 @@ body.grabbing{cursor:grabbing}
     after(id,pg); }
   function emerge(id){ shown=id; stage.classList.add('live'); haze.classList.add('on'); stage.scrollTop=0; render(id); }
   function retract(done){ var pg=stage.querySelector('.pg'); shown=null; haze.classList.remove('on'); stage.classList.remove('live'); if(!pg){ done&&done(); return; } pg.classList.add('out'); setTimeout(function(){ stage.innerHTML=''; done&&done(); },380); }
-  function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id&&!M.isFree()) return; if(typeof endFly==='function'&&document.body.classList.contains('flying')) endFly(); busy=true; cur=id; FX('warp');
+  function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id&&!M.isFree()) return; if(typeof endFly==='function'&&document.body.classList.contains('flying')) endFly(); busy=true; cur=id; vaultOpen=false; FX('warp');
     retract(function(){ var dur=M.go(id,arrive)||0; if(dur>600) electronRun(id,dur); paintDock(); }); 
-    function arrive(){ busy=false; document.getElementById('electron').classList.remove('on'); document.getElementById('readout').classList.remove('on'); M.fire(id); FX('statics',.6,.8); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); if(byId[id].hidden) discovered(id); } emerge(id); paintDock(); var un=M.unexploredFrom(id).length; if(un) setTimeout(function(){ if(shown===id) toast(un+(un===1?' unexplored path leads':' unexplored paths lead')+' from here'); },2600); } }
+    function arrive(){ busy=false; document.getElementById('electron').classList.remove('on'); document.getElementById('readout').classList.remove('on'); M.fire(id); FX('statics',.6,.8); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); if(byId[id].hidden){ discovered(id); coinsBonus(2,'mystery found'); } }
+      if(id==='progress') setTimeout(function(){ quest('progress'); },1200); emerge(id); paintDock(); var un=M.unexploredFrom(id).length; if(un) setTimeout(function(){ if(shown===id) toast(un+(un===1?' unexplored path leads':' unexplored paths lead')+' from here'); },2600); } }
+
+  /* a calm travelling sound: a soft swell of air and chords for the length of the journey, then a gentle chime on arrival */
+  var TSnd=(function(){ var ctx=null;
+    function ac(){ var C=window.AudioContext||window.webkitAudioContext; if(!C) return null; if(!ctx) ctx=new C(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
+    function go(dur){ if(window.SAFX&&SAFX.isOff()) return; var c=ac(); if(!c) return; var t=c.currentTime, d=Math.max(1.5,dur/1000);
+      var g=c.createGain(); g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.07,t+d*.35); g.gain.setValueAtTime(.07,t+d*.7); g.gain.exponentialRampToValueAtTime(.0001,t+d+.6);
+      var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.setValueAtTime(500,t); lp.frequency.linearRampToValueAtTime(2200,t+d*.5); lp.frequency.linearRampToValueAtTime(700,t+d); lp.connect(g); g.connect(c.destination);
+      [196,246.9,293.7,392].forEach(function(f,i){ var o=c.createOscillator(), v=c.createGain(); o.type=i%2?'triangle':'sine'; o.frequency.setValueAtTime(f,t); o.frequency.linearRampToValueAtTime(f*1.06,t+d); v.gain.value=.22/(i+1); o.connect(v); v.connect(lp); o.start(t); o.stop(t+d+.7); });
+      var n=c.createBufferSource(), b=c.createBuffer(1,Math.ceil(c.sampleRate*(d+.7)),c.sampleRate), dd=b.getChannelData(0), last=0; for(var i=0;i<dd.length;i++){ last=(last+.02*(Math.random()*2-1))/1.02; dd[i]=last*3.2; }
+      n.buffer=b; var bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.setValueAtTime(500,t); bp.frequency.linearRampToValueAtTime(1600,t+d*.6); bp.frequency.linearRampToValueAtTime(600,t+d); bp.Q.value=.7; var ng=c.createGain(); ng.gain.value=.55; n.connect(bp); bp.connect(ng); ng.connect(g); n.start(t);
+      [1046.5,1318.5,1568].forEach(function(f,i){ var o=c.createOscillator(), v=c.createGain(), s=t+d-.1+i*.09; o.type='sine'; o.frequency.value=f; v.gain.setValueAtTime(.0001,s); v.gain.exponentialRampToValueAtTime(.03,s+.02); v.gain.exponentialRampToValueAtTime(.0001,s+1.4); o.connect(v); v.connect(c.destination); o.start(s); o.stop(s+1.5); }); }
+    return {go:go}; })();
   function electronRun(id,dur){
     var el=document.getElementById('electron'), num=document.getElementById('eNum'), log=document.getElementById('eLog'), rl=document.getElementById('rainL'), rr=document.getElementById('rainR'), d=byId[id];
     document.getElementById('eLabel').textContent='Synaptic link \u00B7 travelling to '+(d.hidden&&!S.visited[id]?'an unknown light':d.name);
     var ax=String(2+Math.floor(Math.random()*40)).padStart(2,'0');
     var LOG=['firing along axon '+ax,'crossing '+(2+Math.floor(Math.random()*6))+' synapses','charging the signal','locking onto '+d.name,'arrived \u2014 opening'];
-    el.classList.add('on'); var t0=performance.now(), last=-1;
+    el.classList.add('on'); TSnd.go(dur); var t0=performance.now(), last=-1;
     function rain(){ var s=''; for(var i=0;i<46;i++){ for(var j=0;j<10;j++) s+=Math.random()<.5?'0':'1'; s+='\n'; } return s; }
     (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur), e=1-Math.pow(1-k,2.2); num.textContent=String(Math.round(e*100)).padStart(3,'0');
       var li=Math.min(LOG.length-1,Math.floor(k*LOG.length)); if(li!==last){ last=li; log.innerHTML=LOG.slice(Math.max(0,li-2),li+1).map(function(x,i,a){ return '<div style="opacity:'+(i===a.length-1?1:.45)+'">&gt; '+x+'</div>'; }).join(''); }
@@ -780,34 +897,38 @@ body.grabbing{cursor:grabbing}
   function after(id,pg){
 
     if(id==='portals'){ var y=document.getElementById('yt'); y&&y.addEventListener('keydown',function(e){ if(e.key==='Enter'){ var m=(y.value||'').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/); if(!m){ toast('That doesn\'t look like a YouTube link'); return; } if(S.videos.indexOf(m[1])<0){ S.videos.unshift(m[1]); save(); } playYT(m[1]); } }); }
-    if(id==='studio'){ var si=document.getElementById('sIdea'); si&&si.addEventListener('keydown',function(e){ if(e.key==='Enter'&&si.value.trim()){ S.ideas.unshift({id:Date.now(),t:si.value.trim()}); save(); M.fire('studio'); render('studio'); refreshIdeaOrbs(); } }); }
+    if(id==='studio'){ var si=document.getElementById('sIdea'); si&&si.addEventListener('keydown',function(e){ if(e.key==='Enter'&&si.value.trim()){ S.ideas.unshift({id:Date.now(),t:si.value.trim()}); save(); M.fire('studio'); render('studio'); refreshIdeaOrbs(); quest('studio'); } }); }
     if(byId[id]&&byId[id].kind==='play') startGame(id);
+    if(EX[id]) EX[id]();
+    if(id==='listen') initListen();
     if(id==='progress') drawChart(document.getElementById('chart'));
     if(id==='gallery') paintGallery();
     if(id==='draw') initPad();
     if(id==='todo'){ var f=document.getElementById('tText'); f&&f.addEventListener('keydown',function(e){ if(e.key==='Enter'&&f.value.trim()){ S.todos.unshift({id:Date.now(),text:f.value.trim(),done:false}); save(); render('todo'); setTimeout(function(){ var g=document.getElementById('tText'); g&&g.focus(); },50); } }); }
     pg.querySelectorAll('[data-addstep]').forEach(function(inp){ inp.addEventListener('keydown',function(e){ if(e.key==='Enter'&&inp.value.trim()){ var g=S.goals.filter(function(x){ return String(x.id)===inp.dataset.addstep; })[0]; if(g){ g.steps.push({id:Date.now(),text:inp.value.trim(),done:false}); save(); render('goals'); refreshGoalOrbs(); } } }); });
-    pg.querySelectorAll('[data-focus]').forEach(function(inp){ inp.addEventListener('change',function(){ var f=S.focus[today()]||['','','']; f[+inp.dataset.focus]=inp.value.trim(); S.focus[today()]=f; save(); toast('Plan saved'); }); });
+    pg.querySelectorAll('[data-focus]').forEach(function(inp){ inp.addEventListener('change',function(){ var f=S.focus[today()]||['','','']; f[+inp.dataset.focus]=inp.value.trim(); S.focus[today()]=f; save(); if(inp.value.trim()) quest('plan'); else toast('Plan saved'); }); });
   }
   stage.addEventListener('click',function(e){
     var b=e.target.closest('button,input[type=checkbox]'); if(!b) return;
     if(b.dataset.go){ travelTo(b.dataset.go); return; }
     if(b.dataset.mood){ selMood=b.dataset.mood; stage.querySelectorAll('.orb').forEach(function(o){ o.classList.toggle('sel',o===b); }); M.setColor('mood',moodOf(selMood).c); return; }
-    if(b.dataset.todo){ var t=S.todos.filter(function(x){ return String(x.id)===b.dataset.todo; })[0]; if(t){ t.done=b.checked; if(t.done) logDay('task'); save(); setTimeout(function(){ render('todo'); },250); } return; }
+    if(b.dataset.todo){ var t=S.todos.filter(function(x){ return String(x.id)===b.dataset.todo; })[0]; if(t){ t.done=b.checked; if(t.done){ logDay('task'); quest('todo'); } save(); setTimeout(function(){ render('todo'); },250); } return; }
     if(b.dataset.delTodo){ S.todos=S.todos.filter(function(x){ return String(x.id)!==b.dataset.delTodo; }); save(); render('todo'); return; }
     if(b.dataset.delNote){ if(!confirm('Delete this diary entry?')) return; S.notes=S.notes.filter(function(x){ return String(x.id)!==b.dataset.delNote; }); save(); render('diary'); return; }
     if(b.dataset.step){ var pr=b.dataset.step.split(':'), g=S.goals.filter(function(x){ return String(x.id)===pr[0]; })[0]; if(g){ var st=g.steps.filter(function(x){ return String(x.id)===pr[1]; })[0]; if(st){ st.done=b.checked; if(st.done){ logDay('step'); M.fire('goals'); } save(); setTimeout(function(){ render('goals'); },250); } } return; }
-    if(b.dataset.stepbtn){ var q=b.dataset.stepbtn.split(':'), gg=S.goals.filter(function(x){ return String(x.id)===q[0]; })[0]; if(gg){ var ss2=gg.steps.filter(function(x){ return String(x.id)===q[1]; })[0]; if(ss2){ ss2.done=!ss2.done; if(ss2.done){ logDay('step'); M.fire('goals'); } save(); render('goals'); refreshGoalOrbs(); } } return; }
+    if(b.dataset.stepbtn){ var q=b.dataset.stepbtn.split(':'), gg=S.goals.filter(function(x){ return String(x.id)===q[0]; })[0]; if(gg){ var ss2=gg.steps.filter(function(x){ return String(x.id)===q[1]; })[0]; if(ss2){ ss2.done=!ss2.done; if(ss2.done){ logDay('step'); M.fire('goals'); quest('goals'); } save(); render('goals'); refreshGoalOrbs(); } } return; }
     if(b.dataset.delGoal){ if(!confirm('Remove this goal?')) return; S.goals=S.goals.filter(function(x){ return String(x.id)!==b.dataset.delGoal; }); save(); render('goals'); refreshGoalOrbs(); return; }
-    if(b.dataset.hab){ var k=today(); S.log[k]=S.log[k]||{}; var key='h_'+b.dataset.hab; S.log[k][key]=Math.max(0,(S.log[k][key]||0)+(+b.dataset.d)); save(); M.fire('trackers'); render('trackers'); return; }
+    if(b.dataset.hab){ var k=today(); S.log[k]=S.log[k]||{}; var key='h_'+b.dataset.hab; S.log[k][key]=Math.max(0,(S.log[k][key]||0)+(+b.dataset.d)); save(); M.fire('trackers'); var hb=S.habits.filter(function(x){ return x.id===b.dataset.hab; })[0]; if(hb&&S.log[k][key]>=hb.t) quest('trackers'); render('trackers'); return; }
     if(b.dataset.sw){ padState.c=b.dataset.sw; stage.querySelectorAll('[data-sw]').forEach(function(x){ x.classList.toggle('sel',x===b); }); return; }
     if(b.dataset.delMedia){ mDel(b.dataset.delMedia).then(function(){ paintGallery(); refreshBoards(); }); return; }
 
+    if(b.dataset.mlim){ S.mediaLimit=+b.dataset.mlim; save(); render('portals'); return; }
     if(b.dataset.album){ S.album=b.dataset.album; save(); render('gallery'); refreshBoards(); return; }
     if(b.dataset.delLink){ S.links=S.links.filter(function(x){ return String(x.id)!==b.dataset.delLink; }); save(); render('portals'); return; }
     if(b.dataset.delIdea){ S.ideas=S.ideas.filter(function(x){ return String(x.id)!==b.dataset.delIdea; }); save(); render('studio'); refreshIdeaOrbs(); return; }
     if(b.dataset.yt){ playYT(b.dataset.yt); return; }
     var a=b.dataset.act; if(!a) return;
+    if(a==='vision'){ if(S.coins<50){ toast('Keep going \u2014 '+(50-S.coins)+' more coins'); return; } S.coins-=50; save(); paintCoins(); visionUntil=Date.now()+60000; FX('warp'); toast('\u2726 Mind Vision \u00B7 every hidden light is showing for 60 seconds'); render('me'); return; }
     if(a==='fly'){ startFly(); return; }
     if(a==='gReset'){ startGame(shown); return; }
     if(a==='gSkip'){ nextWord(); return; }
@@ -823,10 +944,10 @@ body.grabbing{cursor:grabbing}
       S.notes.unshift({id:Date.now(),title:'Three good things',text:g3.map(function(x,i){ return (i+1)+'. '+x; }).join('\n'),ts:Date.now()}); logDay('note'); save(); toast('Saved to your diary'); M.fire('diary'); return; }
 
     if(a==='logMood'){ if(!selMood){ toast('Tap a mood light first'); return; } var note=(document.getElementById('mNote').value||'').trim();
-      S.moods.unshift({m:selMood,note:note,ts:Date.now(),day:today()}); logDay('mood'); save(); M.fire('mood'); toast('Mood saved'); updateChartBoard();
+      S.moods.unshift({m:selMood,note:note,ts:Date.now(),day:today()}); logDay('mood'); save(); quest('mood'); M.fire('mood'); toast('Mood saved'); updateChartBoard();
       if(selMood==='Low'||selMood==='Anxious'){ render('mood'); var c=document.createElement('p'); c.className='care'; c.innerHTML='Thank you for being honest with yourself. Be gentle today &mdash; a slow breath, a short walk, or talking to someone you trust can help. If things feel too heavy, <b>Samaritans are free on 116 123</b> (UK), any time.'; stage.querySelector('.pg').insertBefore(c,stage.querySelector('.pg').children[3]); }
       else render('mood'); selMood=null; return; }
-    if(a==='addNote'){ var tx=(document.getElementById('dText').value||'').trim(); if(!tx){ toast('Write something first'); return; } S.notes.unshift({id:Date.now(),title:(document.getElementById('dTitle').value||'').trim(),text:tx,ts:Date.now()}); logDay('note'); save(); M.fire('diary'); toast('Saved to your diary'); render('diary'); return; }
+    if(a==='addNote'){ var tx=(document.getElementById('dText').value||'').trim(); if(!tx){ toast('Write something first'); return; } S.notes.unshift({id:Date.now(),title:(document.getElementById('dTitle').value||'').trim(),text:tx,ts:Date.now()}); logDay('note'); save(); M.fire('diary'); render('diary'); quest('diary'); return; }
     if(a==='clearDone'){ S.todos=S.todos.filter(function(t){ return !t.done; }); save(); render('todo'); return; }
     if(a==='addGoal'){ var gt=(document.getElementById('gTitle').value||'').trim(); if(!gt){ toast('Name your goal first'); return; } S.goals.unshift({id:Date.now(),title:gt,why:(document.getElementById('gWhy').value||'').trim(),steps:[]}); save(); M.fire('goals'); render('goals'); refreshGoalOrbs(); return; }
     if(a==='addHabit'){ var hn=(document.getElementById('hName').value||'').trim(), ht=+document.getElementById('hTarget').value||1; if(!hn){ toast('Name your tracker'); return; } S.habits.push({id:'c'+Date.now(),n:hn,t:ht,c:['#ff4fa8','#ffc44d','#2ee6ff','#a45cff','#19f0b0'][S.habits.length%5]}); save(); render('trackers'); return; }
@@ -836,7 +957,7 @@ body.grabbing{cursor:grabbing}
     if(a==='wipe'){ if(!confirm('Delete everything in your mind on this device? This cannot be undone.')) return; localStorage.removeItem(KEY); indexedDB.deleteDatabase('mindu-media'); location.reload(); return; }
     if(a==='addMedia'){ var mf=document.getElementById('mFile'); mf.onchange=function(){ var files=[].slice.call(mf.files); Promise.all(files.map(function(file){ var isV=/^video/.test(file.type);
         if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now(),album:S.album}); });
-        return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now(),album:S.album}); })).then(function(){ toast('Added to your memories'); M.fire('gallery'); paintGallery(); refreshBoards(); }); }; mf.click(); return; }
+        return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now(),album:S.album}); })).then(function(){ M.fire('gallery'); paintGallery(); refreshBoards(); quest('gallery'); }); }; mf.click(); return; }
     if(a==='padClear'){ var c=document.getElementById('pad'); c.getContext('2d').clearRect(0,0,c.width,c.height); return; }
     if(a==='padSize'){ padState.w=padState.w>=18?3:padState.w+5; toast('Brush size '+padState.w); return; }
     if(a==='padSave'){ var pc=document.getElementById('pad'); mPut({id:'m'+Date.now(),type:'image',url:pc.toDataURL('image/png'),ts:Date.now(),drawing:true,album:'Drawings'}).then(function(){ toast('Saved to your memories'); refreshBoards(); }); return; }
@@ -892,6 +1013,210 @@ body.grabbing{cursor:grabbing}
         r.style.setProperty('--p',(100-left/(mins*600)).toFixed(1)); document.getElementById('gfTxt').textContent=String(Math.floor(left/60000)).padStart(2,'0')+':'+String(Math.floor(left/1000)%60).padStart(2,'0'); if(!left){ clearInterval(G.timer); toast('Focus session complete'); FX('warp'); logDay('focus'); } },250); return; }
   });
 
+  /* ══ 50 MORE THINGS: rooms, daily surprises, games and exercises ══ */
+  S.cols=S.cols||{}; S.answers=S.answers||{}; S.wishes=S.wishes||[]; S.best=S.best||{};
+  var ROOMCFG={
+    r_dreams:{i:'Dreams fade fast. Catch them here the moment you wake.',f:[['t','What did you dream?','ta']]},
+    r_people:{i:'The people who shape you. Remember what matters about them.',f:[['name','Name'],['note','What they mean to you'],['bday','Birthday (e.g. 14 March)']]},
+    r_values:{i:'The values you want to live by. Your compass when choices get hard.',f:[['t','A value (e.g. honesty, courage)']]},
+    r_bucket:{i:'Everything you want to do in this life.',f:[['t','Something to do one day']],check:true},
+    r_wins:{i:'Small wins count. Write them down so you never forget them.',f:[['t','A win, however small']]},
+    r_library:{i:'Books, courses and podcasts that feed your mind.',f:[['t','Title'],['note','Why or what you learned']],check:true},
+    r_quotes:{i:'Words that stopped you in your tracks.',f:[['t','The quote','ta'],['by','Who said it']]},
+    r_timeline:{i:'The chapters of your life, in order.',f:[['yr','Year'],['t','What happened']],sort:'yr'},
+    r_future:{i:'Write to your future self. The letter stays sealed until the date you choose.',f:[['t','Your letter','ta'],['open','Open on','date']],seal:true},
+    r_places:{i:'Places that make you feel alive, calm or at home.',f:[['t','Place'],['note','Why it matters']]},
+    r_comfort:{i:'Your kit for hard days: songs, people, walks, words. Open it when you need it.',f:[['t','Something that helps me']]},
+    r_wish:{i:'Things you would love one day.',f:[['t','Something I would love']],check:true},
+    r_affirm:{i:'Write the words you need to hear. Read them often.',f:[['t','I am...']]},
+    r_count:{i:'Count down to the moments you are looking forward to.',f:[['t','Event'],['d','Date','date']],count:true},
+    r_sleep:{i:'How you slept. Patterns appear over time.',f:[['h','Hours slept','number'],['q','Quality 1–5','number']]},
+    r_grat:{i:'Drop something you are grateful for into the jar.',f:[['t','I am grateful for...']]}
+  };
+  var DAILY={
+    d_fortune:['Something you started long ago is about to pay off.','A kind word you give today will come back to you.','Your next idea is closer than you think.','Today rewards the brave first step.','Someone is grateful you exist, even if they have not said it.','A small change today grows into a big difference.','You will learn something today that you will use for years.','The answer you are looking for arrives when you rest.','Good news travels to people who keep going.','Today is a good day to finish something.','You are more ready than you feel.','Laughter is waiting for you today.','A door you thought was closed is only resting.','Your patience is building something strong.','Light finds those who look up.'],
+    d_fact:['Honey never really spoils: pots thousands of years old have been found still edible.','Octopuses have three hearts.','A day on Venus is longer than its year.','Bananas are berries, but strawberries are not.','Your brain uses roughly a fifth of your body’s energy.','Sea otters hold hands while they sleep so they don’t drift apart.','There are more stars in the universe than grains of sand on all Earth’s beaches.','Trees can share nutrients with each other through underground fungal networks.','A group of flamingos is called a flamboyance.','Light from the Sun takes about eight minutes to reach Earth.','Hummingbirds can fly backwards.','Your bones are about five times stronger than steel of the same weight.','Cows have best friends and get stressed when separated.','The Eiffel Tower can be about 15 cm taller in summer as the metal expands.','Wombats produce cube-shaped droppings.'],
+    d_word:[['Serendipity','finding something good without looking for it'],['Resilience','the ability to recover and grow after difficulty'],['Sonder','realising every passer-by has a life as full as yours'],['Ebullient','cheerful and full of energy'],['Petrichor','the pleasant smell of rain on dry ground'],['Eudaimonia','a deep, lasting sense of flourishing'],['Equanimity','calm and steady, even under pressure'],['Ineffable','too great to be expressed in words'],['Luminous','full of light; shining'],['Halcyon','calm, peaceful, happy'],['Mellifluous','sweet and smooth to hear'],['Kindred','similar in nature; feeling connected']],
+    d_kind:['Send a message to someone you haven’t spoken to in a while.','Give a genuine compliment to a stranger.','Leave a kind review for a small business you like.','Make someone a hot drink without being asked.','Hold the door and smile.','Tell someone exactly why you appreciate them.','Pick up one piece of litter you didn’t drop.','Let someone go ahead of you in a queue.','Write a thank-you note to a teacher or mentor.','Share something useful you know with someone.','Check in on a friend who has been quiet.','Donate something you no longer use.','Listen to someone fully, without checking your phone.','Leave an encouraging note where someone will find it.','Forgive a small thing today.'],
+    d_prompt:['What would you do this year if you knew you couldn’t fail?','Describe a moment this week when you felt truly yourself.','What is something you’ve changed your mind about?','Write a letter to the you of five years ago.','What does a perfect ordinary day look like for you?','Which fear is holding you back right now, and what is it protecting?','What are you proud of that nobody knows about?','Who made you who you are, and how?','What would you like more of in your life? Less of?','Describe a place where you feel completely at peace.','What did today teach you?','What are three things you want to remember about this season of life?','If your life were a book, what would this chapter be called?','What does success mean to you, in your own words?','What small habit would change everything?'],
+    d_doodle:['Draw your mood as weather.','Draw a creature that lives in your mind.','Draw your dream house in ten lines.','Draw the view from a window you love.','Draw yourself as a superhero.','Draw a map of an imaginary island.','Draw your favourite food with a face.','Draw what calm looks like.','Draw a key and what it unlocks.','Draw a planet only you live on.','Draw a tree that grows something unusual.','Draw a door to somewhere secret.']
+  };
+  var DAILYINFO={d_fortune:['Your fortune','A new one appears every day.'],d_fact:['Did you know?','A fresh fact every day.'],d_word:['Word of the day','Use it once today.'],d_kind:['Kindness mission','Today’s quiet mission. Mark it done when you have.'],d_prompt:['Journal prompt','Write your answer into your diary.'],d_doodle:['Doodle dare','Take it to Magic drawing.']};
+  var QUESTIONS=['What made you smile today?','What are you looking forward to?','What drained your energy today, and what restored it?','Who would you like to thank, and why?','What is one thing you can let go of?','What did you do today that your future self will thank you for?','What are you curious about right now?','When did you feel most alive this week?','What is a small risk worth taking?','What would make tomorrow 1% better?','What is something beautiful you noticed recently?','What are you learning about yourself?','Where in your life do you need more patience?','What does your body need right now?'];
+  var RIDDLES=[['What has keys but can’t open locks?','A piano'],['What gets wetter the more it dries?','A towel'],['What can you catch but not throw?','A cold'],['What has a heart that doesn’t beat?','An artichoke'],['The more you take, the more you leave behind. What are they?','Footsteps'],['What goes up but never comes down?','Your age'],['What has hands but can’t clap?','A clock'],['What belongs to you, but others use it more than you?','Your name']];
+  var TRIVIA=[['Which planet is known as the Red Planet?',['Venus','Mars','Jupiter'],1],['How many continents are there?',['Six','Seven','Eight'],1],['What is the largest ocean on Earth?',['Atlantic','Indian','Pacific'],2],['Which gas do plants take in from the air?',['Oxygen','Carbon dioxide','Nitrogen'],1],['How many bones are in the adult human body?',['206','150','300'],0],['What is the fastest land animal?',['Cheetah','Lion','Horse'],0],['Which is the smallest prime number?',['1','2','3'],1],['What is H₂O better known as?',['Salt','Water','Hydrogen'],1],['Which organ pumps blood around the body?',['Lungs','Liver','Heart'],2],['How many minutes are in a day?',['1,440','1,240','2,400'],0]];
+  var SUDOKU=['1..4.4..2....3.2'.split(''),'.2...4.33...'.split('')];
+  function sudokuPuzzle(){ return {g:'1.3..4...1.4..2.'.split(''),s:'1234341221434321'.split('')}; }
+
+  function roomPage(id){ var r=H_ROOMS.filter(function(x){ return x.id===id; })[0], c=ROOMCFG[id];
+    if(id==='r_vault') return vaultPage(); if(id==='r_voice') return voicePage(); if(id==='r_question') return questionPage(); if(id==='r_awards') return awardsPage(); if(id==='r_atlas') return atlasPage();
+    var list=S.cols[id]||[], h=eb('Rooms · '+r.n,r.c)+'<h2>'+esc(r.n)+'</h2><p>'+c.i+'</p>';
+    h+=c.f.map(function(f){ return f[2]==='ta'?'<textarea class="field" data-rf="'+f[0]+'" placeholder="'+esc(f[1])+'"></textarea>':'<input class="field" data-rf="'+f[0]+'" placeholder="'+esc(f[1])+'" '+(f[2]==='date'?'type="date"':f[2]==='number'?'type="number" min="0" max="24" step="0.5"':'')+' maxlength="200">'; }).join('');
+    h+='<div class="row"><button class="btn" data-act="roomAdd" style="--c:'+r.c+'">Add</button></div>';
+    if(c.sort) list=list.slice().sort(function(a,b){ return (+a[c.sort]||0)-(+b[c.sort]||0); });
+    if(!list.length) return h+'<p class="empty">Nothing here yet.</p>';
+    h+='<ul class="thread" style="--c:'+r.c+'">'+list.map(function(x){ var sealed=c.seal&&x.open&&new Date(x.open)>new Date(), body;
+      if(sealed) body='<b>&#9993; Sealed letter</b><span class="meta">opens '+esc(x.open)+'</span>';
+      else if(c.count){ var days=Math.ceil((new Date(x.d)-new Date())/864e5); body='<b>'+esc(x.t)+'</b><span class="meta">'+(isNaN(days)?'':days>0?days+' days to go':days===0?'today!':'passed')+'</span>'; }
+      else if(id==='r_sleep') body='<b>'+esc(x.h)+' hours</b> · quality '+esc(x.q)+'/5<span class="meta">'+nice(x.ts)+'</span>';
+      else body=c.f.map(function(f,i){ var v=x[f[0]]; if(!v) return ''; return i===0?'<b>'+esc(v).replace(/\n/g,'<br>')+'</b>':'<span class="meta">'+esc(v)+'</span>'; }).join('');
+      return '<li class="'+(x.done?'done':'')+'"><button class="x" data-rdel="'+x.id+'">&#10005;</button>'+(c.check?'<label><input type="checkbox" data-rchk="'+x.id+'" '+(x.done?'checked':'')+'> ':'<label>')+body+'</label></li>'; }).join('')+'</ul>';
+    return h; }
+  function vaultPage(){ var r={c:'#9aa3c7'}, h=eb('Rooms · Secret vault',r.c)+'<h2>Secret vault</h2>';
+    if(!S.vaultPin) return h+'<p>Set a 4-digit PIN to lock this room. It keeps casual eyes out on this device; it is not bank-level security.</p><input class="field" id="vPin" type="password" inputmode="numeric" maxlength="4" placeholder="Choose a 4-digit PIN"><div class="row"><button class="btn" data-act="vSet" style="--c:#9aa3c7">Lock my vault</button></div>';
+    if(!vaultOpen) return h+'<p>Enter your PIN.</p><input class="field" id="vPin" type="password" inputmode="numeric" maxlength="4" placeholder="PIN"><div class="row"><button class="btn" data-act="vOpen" style="--c:#9aa3c7">Open</button></div>';
+    var list=S.cols.r_vault||[]; return h+'<p>Only you. Locks again when you leave.</p><textarea class="field" data-rf="t" placeholder="A secret thought..."></textarea><div class="row"><button class="btn" data-act="roomAdd" style="--c:#9aa3c7">Keep it</button></div>'+
+      (list.length?'<ul class="thread" style="--c:#9aa3c7">'+list.map(function(x){ return '<li><button class="x" data-rdel="'+x.id+'">&#10005;</button>'+esc(x.t).replace(/\n/g,'<br>')+'<span class="meta">'+nice(x.ts)+'</span></li>'; }).join('')+'</ul>':''); }
+  var vaultOpen=false;
+  function voicePage(){ return eb('Rooms · Voice notes','#2ee6ff')+'<h2>Voice notes</h2><p>Say it instead of typing it. Your recordings stay on this device.</p><div class="row"><button class="btn" data-act="vRec" id="vRecBtn" style="--c:#2ee6ff">&#9679; Record</button></div><div id="vList"><p class="empty">Loading…</p></div>'; }
+  function questionPage(){ var k=today(), q=QUESTIONS[Math.floor(Date.now()/864e5)%QUESTIONS.length], past=Object.keys(S.answers).sort().reverse().slice(0,8);
+    return eb('Rooms · Question of the day','#ff8a3d')+'<h2>'+esc(q)+'</h2><textarea class="field" id="qAns" placeholder="Your answer...">'+esc((S.answers[k]||{}).a||'')+'</textarea><div class="row"><button class="btn" data-act="qSave" style="--c:#ff8a3d">Save answer</button></div>'+
+      (past.length?'<ul class="thread" style="--c:#ff8a3d">'+past.map(function(d){ var x=S.answers[d]; return '<li><b>'+esc(x.q)+'</b><br>'+esc(x.a)+'<span class="meta">'+d+'</span></li>'; }).join('')+'</ul>':''); }
+  function stats(){ var vis=function(k){ return DESTS.filter(function(d){ return d.kind===k&&S.visited[d.id]; }).length; };
+    return {moods:S.moods.length,notes:S.notes.length,goals:S.goals.length,steps:S.goals.reduce(function(n,g){ return n+g.steps.filter(function(s){ return s.done; }).length; },0),
+      paths:(S.paths||[]).length,myst:mysteries().n,games:vis('play')+vis('fun'),streak:streak(),ideas:S.ideas.length,rooms:Object.keys(S.cols).filter(function(k){ return (S.cols[k]||[]).length; }).length}; }
+  var AWARDS=[['First feeling','Log your first mood',function(s){ return s.moods>=1; }],['Storyteller','Write 5 diary entries',function(s){ return s.notes>=5; }],['On a roll','Keep a 3-day streak',function(s){ return s.streak>=3; }],
+    ['Unstoppable','Keep a 7-day streak',function(s){ return s.streak>=7; }],['Dreamer','Set your first goal',function(s){ return s.goals>=1; }],['Step by step','Complete 10 goal steps',function(s){ return s.steps>=10; }],
+    ['Pathfinder','Explore 10 paths',function(s){ return s.paths>=10; }],['Cartographer','Explore 30 paths',function(s){ return s.paths>=30; }],['Seeker','Find 5 mysteries',function(s){ return s.myst>=5; }],
+    ['Explorer','Find 25 mysteries',function(s){ return s.myst>=25; }],['Player','Find 5 games or activities',function(s){ return s.games>=5; }],['Spark','Catch 5 ideas',function(s){ return s.ideas>=5; }],['Home maker','Fill 5 rooms',function(s){ return s.rooms>=5; }]];
+  function awardsPage(){ var s=stats(); return eb('Rooms · Achievements','#ffc44d')+'<h2>Achievements</h2><p>Trophies your mind has earned. Some are still locked.</p><div class="gfloat">'+
+      AWARDS.map(function(a){ var got=a[2](s); return '<div class="gorb" style="--c:'+(got?'#ffc44d':'#6b7399')+';opacity:'+(got?1:.45)+'"><div class="ring" style="--p:'+(got?100:0)+';width:70px;height:70px"><b>'+(got?'&#9733;':'?')+'</b></div><h3>'+a[0]+'</h3><div class="next">'+a[1]+'</div></div>'; }).join('')+'</div>'; }
+  function atlasPage(){ var s=stats(), tot=DESTS.length, seen=Object.keys(S.visited).filter(function(k){ return byId[k]; }).length;
+    return eb('Rooms · Mind atlas','#cfd6ff')+'<h2>Your mind, mapped.</h2><div class="stats"><div><b>'+Math.round(seen/tot*100)+'%</b><span>Neurons visited</span></div><div><b>'+s.paths+'</b><span>Paths explored</span></div><div><b>'+s.myst+'/'+mysteries().t+'</b><span>Mysteries</span></div><div><b>'+s.streak+'</b><span>Day streak</span></div></div><p class="small">Golden lines in the sky are the paths you’ve travelled. Faint dashed ones are still waiting for you.</p>'; }
+
+  function dailyPage(id){ var f=H_FUN.filter(function(x){ return x.id===id; })[0], arr=DAILY[id], i=Math.floor(Date.now()/864e5)%arr.length, v=arr[i], info=DAILYINFO[id];
+    var body=id==='d_word'?'<h2>'+esc(v[0])+'</h2><p class="lead">'+esc(v[1])+'</p>':'<h2>'+esc(v)+'</h2>';
+    var extra=id==='d_kind'?'<div class="row"><button class="btn" data-act="kindDone" style="--c:'+f.c+'">'+((S.best.kind||{})[today()]?'&#10003; Done today':'Mark done')+'</button></div>':id==='d_prompt'?'<button class="link" data-go="diary" style="--c:'+f.c+'">Answer in your diary</button>':id==='d_doodle'?'<button class="link" data-go="draw" style="--c:'+f.c+'">Open Magic drawing</button>':'';
+    return eb(info[0],f.c)+body+'<p class="small">'+info[1]+'</p>'+extra; }
+
+  function funPage(id){ var f=H_FUN.filter(function(x){ return x.id===id; })[0], h=eb('Activity',f.c)+'<h2>'+esc(f.n)+'</h2>';
+    if(id==='f_reaction') return h+'<p>Wait for green, then tap as fast as you can.</p><button class="react" id="rx" data-act="rx">Tap to start</button><p class="tag" id="rxInfo">'+(S.best.rx?'Best: '+S.best.rx+' ms':'')+'</p>';
+    if(id==='f_simon') return h+'<p>Watch the colours light up, then repeat the pattern.</p><div class="simon">'+['#2ee6ff','#ff4fa8','#ffc44d','#19f0b0'].map(function(c,i){ return '<button data-sim="'+i+'" style="--sc:'+c+'"></button>'; }).join('')+'</div><p class="tag" id="simInfo">Round 0</p><button class="btn" data-act="simStart" style="--c:'+f.c+'">Start</button>';
+    if(id==='f_ttt') return h+'<p>You are ✦. Get three in a row.</p><div class="ttt" id="ttt">'+[0,1,2,3,4,5,6,7,8].map(function(i){ return '<button data-ttt="'+i+'"></button>'; }).join('')+'</div><p class="tag" id="tttInfo">Your move</p><button class="ghost" data-act="tttNew">New game</button>';
+    if(id==='f_type') return h+'<p>Type the sentence below. Calm and accurate beats fast.</p><p class="lead" id="tyTxt"></p><input class="field" id="tyIn" placeholder="Start typing..." autocomplete="off" spellcheck="false"><p class="tag" id="tyInfo"></p>';
+    if(id==='f_sudoku') return h+'<p>Fill the grid so every row, column and box has 1 to 4.</p><div class="sdk" id="sdk"></div><div class="row"><button class="btn" data-act="sdkCheck" style="--c:'+f.c+'">Check</button></div>';
+    if(id==='f_riddle') return h+'<ul class="thread" style="--c:'+f.c+'">'+RIDDLES.map(function(r,i){ return '<li><b>'+esc(r[0])+'</b><br><button class="ghost" data-rid="'+i+'">Reveal</button><span class="meta" id="rid'+i+'"></span></li>'; }).join('')+'</ul>';
+    if(id==='f_trivia') return h+'<p class="lead" id="tvQ"></p><div class="row" id="tvA"></div><p class="tag" id="tvInfo"></p>';
+    if(id==='f_zen') return h+'<p>Rake the sand slowly. Tap the button to place a stone.</p><div class="drawwrap"><canvas id="zen" class="padlike"></canvas></div><div class="row"><button class="ghost" data-act="zenStone">Place a stone</button><button class="ghost" data-act="zenClear">Smooth the sand</button></div>';
+    if(id==='f_kaleido') return h+'<p>Draw anywhere and watch it bloom into symmetry.</p><div class="drawwrap"><canvas id="kal" class="padlike"></canvas></div><div class="row"><button class="ghost" data-act="kalClear">Clear</button><button class="ghost" data-act="kalSave">Save to memories</button></div>';
+    if(id==='f_ground') return h+'<p>Bring yourself back to the present. Tap through each step.</p><h3 id="grTxt">Ready when you are.</h3><div class="row"><button class="btn" data-act="grNext" style="--c:'+f.c+'">Begin</button></div>';
+    if(id==='f_body') return h+'<p>A slow, gentle scan from head to toe. Each step lasts 20 seconds.</p><h3 id="bsTxt">Get comfortable.</h3><div class="row"><button class="btn" data-act="bsStart" style="--c:'+f.c+'">Begin</button></div>';
+    if(id==='f_478') return h+'<p>Breathe in for 4, hold for 7, out for 8. Four rounds.</p><div class="breath"><i id="gb"></i><b id="gbTxt">Tap start</b></div><button class="btn" data-act="b478" style="--c:'+f.c+'">Start</button>';
+    if(id==='s_echo'){ var old=S.notes.filter(function(n){ return Date.now()-n.ts>864e5; }); if(!old.length) return h+'<p class="lead">Echoes of your past words live here. Write in your diary, and one day your own words will come back to you.</p><button class="link" data-go="diary">Open your diary</button>';
+      var n=old[Math.floor(Math.random()*old.length)]; return h+'<p class="small">From '+nice(n.ts)+'</p><h3>'+esc(n.title||'')+'</h3><p class="lead">'+esc(n.text).replace(/\n/g,'<br>')+'</p>'; }
+    if(id==='s_star') return h+'<p>Make a wish. It becomes a star in your sky.</p><input class="field" id="wishIn" placeholder="I wish..." maxlength="80"><div class="row"><button class="btn" data-act="wish" style="--c:#ffe9a8">Send it up</button></div><p class="small">'+S.wishes.length+' wishes shining in your universe.</p>';
+    if(id==='s_night') return h+'<p class="lead">You found the night owl. The world is quiet; your mind can be too. Put the screen down soon, breathe slowly, and let today go.</p>';
+    if(id==='s_friday') return h+'<p class="lead">It’s Friday. This light only appears today. Do one thing just for joy before the week ends.</p>';
+    return h; }
+
+  /* live parts */
+  var EX={};
+  EX.r_voice=function(){ paintVoices(); };
+  EX.f_type=function(){ var lines=['The quiet mind sees the whole sky.','Small steps every day build a mountain.','Breathe in calm and breathe out worry.','Every star was once a spark in the dark.'], s=lines[(Math.random()*lines.length)|0], t0=0, inp=document.getElementById('tyIn');
+    document.getElementById('tyTxt').textContent=s; inp.oninput=function(){ if(!t0) t0=Date.now(); var v=inp.value, ok=s.indexOf(v)===0; inp.style.borderColor=ok?'':'var(--pink)';
+      if(v===s){ var sec=(Date.now()-t0)/1000, wpm=Math.round(s.split(' ').length/sec*60); document.getElementById('tyInfo').textContent=wpm+' words per minute — lovely.'; FX('statics',.6,.8); inp.oninput=null; } }; };
+  EX.f_sudoku=function(){ var P=sudokuPuzzle(); G.sdk=P; document.getElementById('sdk').innerHTML=P.g.map(function(v,i){ return v==='.'?'<input maxlength="1" inputmode="numeric" data-sdk="'+i+'">':'<b>'+v+'</b>'; }).join(''); };
+  EX.f_trivia=function(){ G.tv={i:0,score:0,qs:TRIVIA.slice().sort(function(){ return Math.random()-.5; }).slice(0,6)}; nextTrivia(); };
+  EX.f_zen=function(){ initZen(); }; EX.f_kaleido=function(){ initKal(); };
+  EX.f_ttt=function(){ G.ttt=['','','','','','','','','']; };
+  function nextTrivia(){ var t=G.tv; if(t.i>=t.qs.length){ document.getElementById('tvQ').textContent='Done! '+t.score+' / '+t.qs.length; document.getElementById('tvA').innerHTML='<button class="ghost" data-act="tvAgain">Play again</button>'; return; }
+    var q=t.qs[t.i]; document.getElementById('tvQ').textContent=q[0]; document.getElementById('tvA').innerHTML=q[1].map(function(a,i){ return '<button class="ghost" data-tv="'+i+'">'+esc(a)+'</button>'; }).join(''); document.getElementById('tvInfo').textContent='Question '+(t.i+1)+' of '+t.qs.length; }
+  function paintVoices(){ var el=document.getElementById('vList'); if(!el) return; mAll().then(function(list){ list=list.filter(function(m){ return m.type==='voice'; }).sort(function(a,b){ return b.ts-a.ts; });
+      el.innerHTML=list.length?'<ul class="thread" style="--c:#2ee6ff">'+list.map(function(m){ return '<li><button class="x" data-del-media="'+m.id+'">&#10005;</button><audio controls src="'+URL.createObjectURL(m.blob)+'" style="width:100%;max-width:300px"></audio><span class="meta">'+nice(m.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">No voice notes yet.</p>'; }); }
+  function padCanvas(id){ var c=document.getElementById(id); if(!c) return null; var dpr=Math.min(2,devicePixelRatio||1); c.width=c.clientWidth*dpr; c.height=c.clientHeight*dpr; var g=c.getContext('2d'); g.scale(dpr,dpr); return {c:c,g:g,w:c.clientWidth,h:c.clientHeight}; }
+  function initZen(){ var P=padCanvas('zen'); if(!P) return; G.zen=P; zenSand(); var down=false,last=null;
+    function pt(e){ var r=P.c.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]; }
+    P.c.onpointerdown=function(e){ down=true; last=pt(e); P.c.setPointerCapture(e.pointerId); };
+    P.c.onpointermove=function(e){ if(!down) return; var p=pt(e), dx=p[0]-last[0], dy=p[1]-last[1], L=Math.hypot(dx,dy)||1, nx=-dy/L, ny=dx/L;
+      for(var k=-2;k<=2;k++){ P.g.strokeStyle=k%2?'rgba(120,100,70,.35)':'rgba(255,248,230,.55)'; P.g.lineWidth=2.2; P.g.beginPath(); P.g.moveTo(last[0]+nx*k*5,last[1]+ny*k*5); P.g.lineTo(p[0]+nx*k*5,p[1]+ny*k*5); P.g.stroke(); } last=p; };
+    P.c.onpointerup=function(){ down=false; }; }
+  function zenSand(){ var P=G.zen; P.g.fillStyle='#d9c8a0'; P.g.fillRect(0,0,P.w,P.h); for(var i=0;i<1400;i++){ P.g.fillStyle='rgba(120,100,70,'+(Math.random()*.15)+')'; P.g.fillRect(Math.random()*P.w,Math.random()*P.h,1.5,1.5); } }
+  function initKal(){ var P=padCanvas('kal'); if(!P) return; G.kal=P; var down=false,last=null, hue=0;
+    function pt(e){ var r=P.c.getBoundingClientRect(); return [e.clientX-r.left-P.w/2,e.clientY-r.top-P.h/2]; }
+    P.c.onpointerdown=function(e){ down=true; last=pt(e); P.c.setPointerCapture(e.pointerId); };
+    P.c.onpointermove=function(e){ if(!down) return; var p=pt(e); hue=(hue+2)%360; P.g.strokeStyle='hsl('+hue+',90%,65%)'; P.g.lineWidth=3; P.g.lineCap='round'; P.g.shadowColor=P.g.strokeStyle; P.g.shadowBlur=8;
+      for(var k=0;k<8;k++){ P.g.save(); P.g.translate(P.w/2,P.h/2); P.g.rotate(k*Math.PI/4); if(k%2) P.g.scale(1,-1); P.g.beginPath(); P.g.moveTo(last[0],last[1]); P.g.lineTo(p[0],p[1]); P.g.stroke(); P.g.restore(); } last=p; };
+    P.c.onpointerup=function(){ down=false; }; }
+  function tttWin(b){ var W=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; for(var i=0;i<8;i++){ var w=W[i]; if(b[w[0]]&&b[w[0]]===b[w[1]]&&b[w[1]]===b[w[2]]) return b[w[0]]; } return b.indexOf('')<0?'draw':null; }
+  function tttAI(b){ var W=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    function find(m){ for(var i=0;i<8;i++){ var w=W[i], v=w.map(function(k){ return b[k]; }); if(v.filter(function(x){ return x===m; }).length===2&&v.indexOf('')>=0) return w[v.indexOf('')]; } return -1; }
+    var mv=find('o'); if(mv<0) mv=find('x'); if(mv<0&&!b[4]) mv=4; if(mv<0){ var free=b.map(function(v,i){ return v?-1:i; }).filter(function(i){ return i>=0; }); mv=free[(Math.random()*free.length)|0]; } return mv; }
+
+  stage.addEventListener('click',function(e){ var b=e.target.closest('button,input[type=checkbox]'); if(!b) return;
+    if(b.dataset.rdel){ var L=S.cols[shown]||[]; S.cols[shown]=L.filter(function(x){ return String(x.id)!==b.dataset.rdel; }); save(); render(shown); return; }
+    if(b.dataset.rchk){ (S.cols[shown]||[]).forEach(function(x){ if(String(x.id)===b.dataset.rchk) x.done=b.checked; }); save(); setTimeout(function(){ render(shown); },200); return; }
+    if(b.dataset.sim!==undefined){ if(!G.sim||!G.sim.input) return; var k=+b.dataset.sim; flashSim(k); if(G.sim.seq[G.sim.pos]!==k){ document.getElementById('simInfo').textContent='Oops — you reached round '+(G.sim.seq.length-1); G.sim.input=false; return; }
+      G.sim.pos++; if(G.sim.pos===G.sim.seq.length){ G.sim.input=false; setTimeout(simRound,700); } return; }
+    if(b.dataset.ttt!==undefined){ var bd=G.ttt; if(!bd) return; var i=+b.dataset.ttt; if(bd[i]||tttWin(bd)) return; bd[i]='x'; var w=tttWin(bd); if(!w){ var m=tttAI(bd); bd[m]='o'; w=tttWin(bd); }
+      document.querySelectorAll('[data-ttt]').forEach(function(x,j){ x.textContent=bd[j]==='x'?'✦':bd[j]==='o'?'○':''; x.style.color=bd[j]==='x'?'#2ee6ff':'#ff4fa8'; });
+      document.getElementById('tttInfo').textContent=w==='x'?'You win!':w==='o'?'The mind wins this time':w==='draw'?'A draw':'Your move'; if(w==='x') FX('warp'); return; }
+    if(b.dataset.rid!==undefined){ document.getElementById('rid'+b.dataset.rid).textContent=RIDDLES[+b.dataset.rid][1]; b.remove(); return; }
+    if(b.dataset.tv!==undefined){ var q=G.tv.qs[G.tv.i]; if(+b.dataset.tv===q[2]){ G.tv.score++; toast('Correct'); FX('zoop',.5); } else toast('It was '+q[1][q[2]]); G.tv.i++; nextTrivia(); return; }
+    var a=b.dataset.act; if(!a) return;
+    if(a==='roomAdd'){ var o={id:Date.now(),ts:Date.now()}, any=false; stage.querySelectorAll('[data-rf]').forEach(function(f){ o[f.dataset.rf]=f.value.trim(); if(f.value.trim()) any=true; }); if(!any){ toast('Write something first'); return; }
+      S.cols[shown]=S.cols[shown]||[]; S.cols[shown].unshift(o); logDay('room'); save(); M.fire(shown); render(shown); quest('rooms'); return; }
+    if(a==='vSet'){ var p=(document.getElementById('vPin').value||''); if(!/^\d{4}$/.test(p)){ toast('Use 4 digits'); return; } S.vaultPin=p; save(); vaultOpen=true; render('r_vault'); return; }
+    if(a==='vOpen'){ if(document.getElementById('vPin').value===S.vaultPin){ vaultOpen=true; FX('statics',.6,.8); render('r_vault'); } else toast('Wrong PIN'); return; }
+    if(a==='vRec'){ recToggle(b); return; }
+    if(a==='qSave'){ var qa=(document.getElementById('qAns').value||'').trim(); if(!qa) return; S.answers[today()]={q:QUESTIONS[Math.floor(Date.now()/864e5)%QUESTIONS.length],a:qa}; logDay('note'); save(); toast('Answer saved'); render('r_question'); return; }
+    if(a==='kindDone'){ S.best.kind=S.best.kind||{}; S.best.kind[today()]=1; logDay('kind'); save(); FX('warp'); render(shown); return; }
+    if(a==='rx'){ if(G.rx==='wait'){ clearTimeout(G.rxT); G.rx=null; b.textContent='Too soon! Tap to try again'; b.className='react'; return; }
+      if(G.rx==='go'){ var ms=Date.now()-G.rxAt; G.rx=null; b.textContent=ms+' ms — tap to go again'; b.className='react'; if(!S.best.rx||ms<S.best.rx){ S.best.rx=ms; save(); } document.getElementById('rxInfo').textContent='Best: '+S.best.rx+' ms'; FX('zoop'); return; }
+      G.rx='wait'; b.textContent='Wait for green...'; b.className='react wait'; G.rxT=setTimeout(function(){ G.rx='go'; G.rxAt=Date.now(); b.textContent='TAP!'; b.className='react go'; },1200+Math.random()*2500); return; }
+    if(a==='simStart'){ G.sim={seq:[],pos:0,input:false}; simRound(); return; }
+    if(a==='tttNew'){ G.ttt=['','','','','','','','','']; document.querySelectorAll('[data-ttt]').forEach(function(x){ x.textContent=''; }); document.getElementById('tttInfo').textContent='Your move'; return; }
+    if(a==='sdkCheck'){ var ok=true; stage.querySelectorAll('[data-sdk]').forEach(function(inp){ var right=inp.value===G.sdk.s[+inp.dataset.sdk]; inp.style.color=right?'var(--green)':'var(--pink)'; if(!right) ok=false; }); toast(ok?'Solved!':'Not quite yet'); if(ok) FX('warp'); return; }
+    if(a==='tvAgain'){ EX.f_trivia(); return; }
+    if(a==='zenStone'){ var P=G.zen; if(!P) return; var x=30+Math.random()*(P.w-60), y=30+Math.random()*(P.h-60), r=10+Math.random()*14; for(var k=4;k>=1;k--){ P.g.strokeStyle='rgba(120,100,70,.35)'; P.g.lineWidth=2; P.g.beginPath(); P.g.arc(x,y,r+k*7,0,Math.PI*2); P.g.stroke(); }
+      var gr=P.g.createRadialGradient(x-r/3,y-r/3,2,x,y,r); gr.addColorStop(0,'#9a9a9a'); gr.addColorStop(1,'#4a4a4a'); P.g.fillStyle=gr; P.g.beginPath(); P.g.arc(x,y,r,0,Math.PI*2); P.g.fill(); return; }
+    if(a==='zenClear'){ zenSand(); return; }
+    if(a==='kalClear'){ var K=G.kal; if(K) K.g.clearRect(0,0,K.w,K.h); return; }
+    if(a==='kalSave'){ var Kc=document.getElementById('kal'); mPut({id:'k'+Date.now(),type:'image',url:Kc.toDataURL('image/png'),ts:Date.now(),drawing:true,album:'Drawings'}).then(function(){ toast('Saved to Drawings'); refreshBoards(); }); return; }
+    if(a==='grNext'){ var ST=['Name 5 things you can see.','Name 4 things you can touch.','Name 3 things you can hear.','Name 2 things you can smell.','Name 1 thing you can taste.','You are here. You are safe in this moment. Well done.']; G.gr=(G.gr==null||G.gr>=ST.length-1)?0:G.gr+1; document.getElementById('grTxt').textContent=ST[G.gr]; b.textContent=G.gr>=ST.length-1?'Start again':'Next'; FX('zoop',.4); return; }
+    if(a==='bsStart'){ var BS=['Notice the top of your head. Let it soften.','Relax your forehead, your eyes, your jaw.','Let your shoulders drop away from your ears.','Feel your arms grow heavy, down to your fingertips.','Notice your breath moving in your chest and belly.','Let your back sink and settle.','Relax your hips and legs.','Feel your feet on the ground. Heavy, warm, still.','Take one slow, full breath. You are done.'], k2=0; clearInterval(G.timer);
+      function step(){ var el=document.getElementById('bsTxt'); if(!el){ clearInterval(G.timer); return; } el.textContent=BS[k2]; k2++; if(k2>=BS.length){ clearInterval(G.timer); logDay('breathe'); } } step(); G.timer=setInterval(step,20000); return; }
+    if(a==='b478'){ var ph=[['Breathe in',4],['Hold',7],['Breathe out',8]], r=0, p=0; clearInterval(G.timer); clearTimeout(G.t478);
+      function next(){ var gb=document.getElementById('gb'); if(!gb) return; if(r>=4){ document.getElementById('gbTxt').textContent='Well done'; gb.className=''; logDay('breathe'); return; } var cur2=ph[p]; document.getElementById('gbTxt').textContent=cur2[0]+' · '+cur2[1]; gb.className=p===2?'':'p0'; gb.style.transitionDuration=cur2[1]+'s';
+        p++; if(p>2){ p=0; r++; } G.t478=setTimeout(next,cur2[1]*1000); } next(); return; }
+    if(a==='wish'){ var wv=(document.getElementById('wishIn').value||'').trim(); if(!wv) return; S.wishes.push({t:wv,ts:Date.now()}); save(); addWishStar(S.wishes.length-1); toast('Your wish is shining in the sky'); FX('warp'); render('s_star'); return; }
+  });
+  stage.addEventListener('input',function(e){ var i=e.target; if(i.dataset&&i.dataset.sdk!==undefined) i.value=i.value.replace(/[^1-4]/g,''); });
+  function flashSim(k){ var el=stage.querySelector('[data-sim="'+k+'"]'); if(!el) return; el.classList.add('on'); FX('zoop',.3+k*.15); setTimeout(function(){ el.classList.remove('on'); },380); }
+  function simRound(){ var s=G.sim; if(!s) return; s.seq.push((Math.random()*4)|0); s.pos=0; document.getElementById('simInfo').textContent='Round '+s.seq.length; s.seq.forEach(function(k,i){ setTimeout(function(){ flashSim(k); },600+i*600); }); setTimeout(function(){ s.input=true; },600+s.seq.length*600); }
+  var rec=null, chunks=[];
+  function recToggle(btn){ if(rec&&rec.state==='recording'){ rec.stop(); return; }
+    if(!navigator.mediaDevices||!window.MediaRecorder){ toast('Recording is not supported on this browser'); return; }
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(st){ chunks=[]; rec=new MediaRecorder(st); rec.ondataavailable=function(ev){ chunks.push(ev.data); };
+      rec.onstop=function(){ st.getTracks().forEach(function(t){ t.stop(); }); var blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'}); mPut({id:'v'+Date.now(),type:'voice',blob:blob,ts:Date.now()}).then(function(){ toast('Voice note saved'); paintVoices(); }); btn.innerHTML='&#9679; Record'; };
+      rec.start(); btn.innerHTML='&#9632; Stop recording'; }).catch(function(){ toast('Microphone permission needed'); }); }
+  /* wishes become stars in the sky */
+  var wishStars=[];
+  function wishCanvas(){ var c=document.createElement('canvas'); c.width=c.height=64; var g=c.getContext('2d'), gr=g.createRadialGradient(32,32,0,32,32,32); gr.addColorStop(0,'rgba(255,240,200,1)'); gr.addColorStop(.25,'rgba(255,220,140,.8)'); gr.addColorStop(1,'rgba(255,200,100,0)'); g.fillStyle=gr; g.fillRect(0,0,64,64); return c; }
+  function addWishStar(i){ var a=i*2.39996, r=10+((i*7)%9); var b=M.addBillboard('s_star',wishCanvas(),2.6,2.6,[Math.cos(a)*r,6+Math.sin(i*1.7)*6,Math.sin(a)*r]); if(b) wishStars.push(b); }
+
+
+  /* Qur'an player: reciters from mp3quran.net */
+  var QR={reciters:null,suwar:null,audio:null,cur:null,surah:1};
+  function initListen(){ var rs=document.getElementById('qrRec'), ss2=document.getElementById('qrSurah'), sq=document.getElementById('qrSearch'); if(!rs) return;
+    function fillRec(){ var q=(sq.value||'').toLowerCase(), list=QR.reciters.filter(function(r){ return !q||r.name.toLowerCase().indexOf(q)>=0; });
+      rs.innerHTML=list.map(function(r){ return r.moshaf.map(function(m,i){ return '<option value="'+r.id+':'+i+'">'+esc(r.name)+(r.moshaf.length>1?' — '+esc(m.name.split(' - ')[1]||m.name):'')+'</option>'; }).join(''); }).join('')||'<option>No match</option>';
+      if(S.qr&&rs.querySelector('option[value="'+S.qr+'"]')) rs.value=S.qr; fillSurah(); }
+    function fillSurah(){ var m=pickMoshaf(); if(!m) return; var have=m.surah_list.split(',').map(Number);
+      ss2.innerHTML=have.map(function(n){ var nm=(QR.suwar&&QR.suwar[n])||('Surah '+n); return '<option value="'+n+'">'+n+'. '+esc(nm)+'</option>'; }).join(''); if(have.indexOf(QR.surah)>=0) ss2.value=QR.surah; }
+    sq.oninput=fillRec; rs.onchange=function(){ S.qr=rs.value; save(); fillSurah(); }; ss2.onchange=function(){ QR.surah=+ss2.value; };
+    var p1=QR.reciters?Promise.resolve():fetch('https://www.mp3quran.net/api/v3/reciters?language=eng').then(function(r){ return r.json(); }).then(function(j){ QR.reciters=j.reciters.sort(function(a,b){ return a.name.localeCompare(b.name); }); });
+    var p2=QR.suwar?Promise.resolve():fetch('https://www.mp3quran.net/api/v3/suwar?language=eng').then(function(r){ return r.json(); }).then(function(j){ QR.suwar={}; (j.suwar||[]).forEach(function(s){ QR.suwar[s.id]=s.name; }); }).catch(function(){});
+    Promise.all([p1,p2]).then(fillRec).catch(function(){ rs.innerHTML='<option>Could not load reciters — check your connection</option>'; });
+    if(QR.audio&&!QR.audio.paused) document.getElementById('qrNow').textContent='Playing · '+QR.label; }
+  function pickMoshaf(){ var rs=document.getElementById('qrRec'); if(!rs||!QR.reciters||!rs.value||rs.value.indexOf(':')<0) return null; var pr=rs.value.split(':'), r=QR.reciters.filter(function(x){ return String(x.id)===pr[0]; })[0]; if(!r) return null; var m=r.moshaf[+pr[1]]; m._r=r; return m; }
+  function qrPlay(){ var m=pickMoshaf(); if(!m){ toast('Choose a reciter'); return; } var ss2=document.getElementById('qrSurah'); QR.surah=+ss2.value||1;
+    var url=m.server+String(QR.surah).padStart(3,'0')+'.mp3'; if(!QR.audio){ QR.audio=new Audio(); QR.audio.addEventListener('ended',function(){ qrNext(true); }); }
+    QR.audio.src=url; QR.audio.play().then(function(){ quest('listen'); }).catch(function(){ toast('Could not play this one'); }); QR.label=m._r.name+' · '+((QR.suwar&&QR.suwar[QR.surah])||('Surah '+QR.surah));
+    if(window.MUAmb&&MUAmb.current()!=='off') MUAmb.setVol(.04); var nw=document.getElementById('qrNow'); if(nw) nw.textContent='Playing · '+QR.label; }
+  function qrNext(auto){ var ss2=document.getElementById('qrSurah'); if(!ss2){ if(auto&&window.MUAmb) MUAmb.setVol(Snd.vol()); return; } var i=ss2.selectedIndex; if(i<ss2.options.length-1){ ss2.selectedIndex=i+1; qrPlay(); } else if(window.MUAmb) MUAmb.setVol(Snd.vol()); }
+  stage.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var a=b.dataset.act;
+    if(a==='qrPlay') qrPlay(); else if(a==='qrPause'){ if(QR.audio){ if(QR.audio.paused){ QR.audio.play(); } else { QR.audio.pause(); if(window.MUAmb) MUAmb.setVol(Snd.vol()); } } } else if(a==='qrNext') qrNext(); });
+
   /* the Sage: device voice for now (Arabic, then English); recorded Gemini voice comes once texts are verified */
   function narrate(id){ var h=(window.H_HADITH||[]).filter(function(x){ return x.id===id; })[0]; if(!h||!window.speechSynthesis){ toast('Voice not available on this device'); return; }
     speechSynthesis.cancel(); var vs=speechSynthesis.getVoices(), ar=vs.filter(function(v){ return /^ar/i.test(v.lang); })[0], en=vs.filter(function(v){ return /en-GB/i.test(v.lang); })[0];
@@ -931,13 +1256,13 @@ body.grabbing{cursor:grabbing}
     var down=false,last=null; function pt(e){ var r=c.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]; }
     c.onpointerdown=function(e){ down=true; last=pt(e); c.setPointerCapture(e.pointerId); };
     c.onpointermove=function(e){ if(!down) return; var p=pt(e); g.strokeStyle=padState.c; g.lineWidth=padState.w; g.shadowColor=padState.c; g.shadowBlur=padState.w*2.2; g.beginPath(); g.moveTo(last[0],last[1]); g.lineTo(p[0],p[1]); g.stroke(); last=p; };
-    c.onpointerup=c.onpointercancel=function(){ if(!down) return; down=false; clearTimeout(padT); padT=setTimeout(function(){ mPut({id:padId,type:'image',url:c.toDataURL('image/png'),ts:Date.now(),drawing:true,album:'Drawings'}).then(function(){ var s=document.getElementById('padSaved'); if(s) s.textContent='saved \u2713'; refreshBoards(); }); },600); }; }
+    c.onpointerup=c.onpointercancel=function(){ if(!down) return; down=false; clearTimeout(padT); padT=setTimeout(function(){ mPut({id:padId,type:'image',url:c.toDataURL('image/png'),ts:Date.now(),drawing:true,album:'Drawings'}).then(function(){ var s=document.getElementById('padSaved'); if(s) s.textContent='saved \u2713'; refreshBoards(); quest('draw'); }); },600); }; }
 
   function streak(){ var n=0; for(var i=0;i<365;i++){ var d=new Date(); d.setDate(d.getDate()-i); var lg=S.log[today(d)]; if(lg&&Object.keys(lg).length) n++; else if(i>0) break; } return n; }
 
 
 
-  function playYT(v){ var box=document.getElementById('ytBox'); if(!box) return; box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v+'?autoplay=1&rel=0" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="width:100%;max-width:560px;aspect-ratio:16/9;border:0;border-radius:18px;margin:14px auto 0;display:block;box-shadow:0 0 0 1px var(--line),0 20px 50px -20px #ff4f6d"></iframe>'; }
+  function playYT(v){ ytWin(v); return; var box=document.getElementById('ytBox'); if(!box) return; box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v+'?autoplay=1&rel=0" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="width:100%;max-width:560px;aspect-ratio:16/9;border:0;border-radius:18px;margin:14px auto 0;display:block;box-shadow:0 0 0 1px var(--line),0 20px 50px -20px #ff4f6d"></iframe>'; }
   /* ideas floating around the Creative studio */
   var ideaOrbs=[];
   function ideaCanvas(txt,c){ var cv=document.createElement('canvas'); cv.width=320; cv.height=160; var x=cv.getContext('2d');
@@ -947,6 +1272,38 @@ body.grabbing{cursor:grabbing}
     lines.forEach(function(l,i){ x.fillText(l,160,80+(i-(lines.length-1)/2)*28); }); return cv; }
   function refreshIdeaOrbs(){ ideaOrbs.forEach(function(o){ o.b.remove(); }); ideaOrbs=[]; S.ideas.slice(0,8).forEach(function(x,i){ var b=M.addBillboard('studio',ideaCanvas(x.t,['#ffc44d','#ff4fa8','#2ee6ff','#a45cff','#19f0b0'][i%5]),8,4,[0,0,0]); if(b) ideaOrbs.push({b:b,i:i,n:Math.min(8,S.ideas.length)}); }); }
   function moveIdeaOrbs(t){ var sd=byId.studio; if(!sd||!ideaOrbs.length) return; ideaOrbs.forEach(function(o){ var a=-t*.1+o.i/o.n*Math.PI*2, r=14; o.b.sprite.position.set(sd.pos[0]+Math.cos(a)*r, sd.pos[1]+Math.sin(t*.5+o.i)*2+Math.sin(a)*6, sd.pos[2]+Math.sin(a)*r*.6); }); }
+
+  /* ── the mind window ── */
+  var mwin=document.getElementById('mwin'), mwBody=document.getElementById('mwBody');
+  // these sites refuse to be shown inside other apps (their rule); in the App Store version they open in an in-app window instead
+  var BLOCKS=/(^|\.)(facebook\.com|instagram\.com|google\.[a-z.]+|twitter\.com|x\.com|tiktok\.com|linkedin\.com|whatsapp\.com|netflix\.com|amazon\.[a-z.]+|youtube\.com)$/i;
+  function host(u){ try{ return new URL(u).hostname.replace(/^www\./,''); }catch(e){ return ''; } }
+  function openWin(url,title,html){ document.getElementById('mwTitle').textContent=title||host(url); var out=document.getElementById('mwOut'); out.href=url||'#'; out.style.display=url?'':'none';
+    if(html){ mwBody.innerHTML=html; }
+    else if(BLOCKS.test(host(url))){ mwBody.innerHTML='<div class="mw-note"><b>'+esc(title||host(url))+' won’t open inside other apps</b>That’s their own rule for websites. In the Mind Universe app (App Store version), it opens right here in your mind. For now, use “open outside” above.</div>'; }
+    else mwBody.innerHTML='<iframe src="'+esc(url)+'" referrerpolicy="no-referrer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    mwin.classList.add('on'); FX('statics',.5,.7); }
+  function closeWin(){ mwin.classList.remove('on'); setTimeout(function(){ if(!mwin.classList.contains('on')) mwBody.innerHTML=''; },450); }
+  document.getElementById('mwX').onclick=closeWin;
+  function ytWin(v,title){ openWin('https://www.youtube.com/watch?v='+v,title||'YouTube','<iframe src="https://www.youtube-nocookie.com/embed/'+v+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'); }
+  function ytListWin(q,title){ openWin('https://www.youtube.com/results?search_query='+encodeURIComponent(q),title,'<iframe src="https://www.youtube-nocookie.com/embed?listType=search&list='+encodeURIComponent(q)+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'); }
+  // any link inside the mind opens in the mind window instead of leaving
+  stage.addEventListener('click',function(e){ var a=e.target.closest('a[href^="http"]'); if(!a) return; e.preventDefault(); var u=a.getAttribute('href'), m=u.match(/youtube\.com\/results\?search_query=([^&]+)/);
+    if(m){ ytListWin(decodeURIComponent(m[1].replace(/\+/g,' ')),a.textContent.replace(/[↗]/g,'').trim()); return; }
+    var v=u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/); if(v){ ytWin(v[1]); return; }
+    openWin(u,a.textContent.trim()); },true);
+
+
+  /* ── a gentle daily limit for media in the mind window ── */
+  S.media=S.media||{}; S.mediaLimit=S.mediaLimit||30;
+  function mediaLeft(){ return Math.max(0,S.mediaLimit*60-(S.media[today()]||0)); }
+  function fmt(s){ return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  setInterval(function(){ if(!mwin.classList.contains('on')) return; var k=today(); S.media[k]=(S.media[k]||0)+1; if(S.media[k]%15===0) save();
+    var left=mediaLeft(); document.getElementById('mwTitle').setAttribute('data-left',fmt(left)+' left today');
+    if(left===300) toast('5 minutes of media time left today');
+    if(left<=0){ closeWin(); save(); setTimeout(function(){ toast('That’s your media time for today ✦ your mind is waiting'); },500); } },1000);
+  var _open=openWin; openWin=function(u,ti,html){ if(mediaLeft()<=0){ toast('Media time is used up for today — come back tomorrow'); return; } _open(u,ti,html); };
+
   /* goals floating in space: glowing progress orbs orbiting the Goals neuron */
   var goalOrbs=[];
   function goalCanvas(g,c){ var cv=document.createElement('canvas'); cv.width=cv.height=256; var x=cv.getContext('2d'), tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?dn/tot:0;
@@ -966,12 +1323,12 @@ body.grabbing{cursor:grabbing}
   DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':'')+(d.hidden?' hid':''); b.dataset.go=d.id; b.style.setProperty('--c',d.hidden&&!S.visited[d.id]?'#cfd6ff':d.col); b.innerHTML='<i></i><span>'+esc(labelText(d))+'</span>'; lw.appendChild(b); labels[d.id]=b; });
   lw.addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   M.onFrame(function(){ var tr=M.travelling(); moveGoalOrbs(performance.now()/1000); moveIdeaOrbs(performance.now()/1000); if(typeof moveGuide==='function') moveGuide();
-    DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr||M.isFree())&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(!d.mini||s.dist<90)&&(!d.hidden||S.visited[d.id]||s.dist<150);
+    DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr||M.isFree())&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(visionOn()||((!d.mini||s.dist<90)&&(!d.hidden||S.visited[d.id]||s.dist<150)));
       if(!vis){ el.style.opacity='0'; el.style.pointerEvents='none'; return; }
       el.style.opacity=(tr?.35:Math.max(.45,Math.min(1,1.3-s.dist/320))).toFixed(2); el.style.pointerEvents=tr?'none':'auto';
       el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(0,-50%)'; }); });
-  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','gallery','studio','portals','draw','ai','connect'];
-  function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML='<div class="dk myst" title="Hidden lights you have found"><i>?</i><span>'+mm.n+' / '+mm.t+'<br>found</span></div>'+'<button class="dk" data-fly="1" style="--c:#ffffff"><i style="background:linear-gradient(135deg,var(--blue),var(--pink))"></i><span>Fly</span></button>'+DOCK.map(function(id){ var d=byId[id]; return '<button class="dk'+(id===cur?' here':'')+'" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+esc(d.name)+'</span></button>'; }).join(''); }
+  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','rooms','listen','gallery','studio','portals','draw','ai','connect'];
+  function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML='<div class="dk myst" title="Hidden lights you have found"><i>?</i><span>'+mm.n+' / '+mm.t+'<br>found</span></div>'+'<button class="dk" data-fly="1" style="--c:#ffffff"><i style="background:linear-gradient(135deg,var(--blue),var(--pink))"></i><span>Fly</span></button>'+DOCK.map(function(id){ var d=byId[id]; return '<button class="dk'+(id===cur?' here':'')+(QUESTS[id]&&!qDone(id)?' q':'')+'" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+esc(d.name)+'</span></button>'; }).join(''); }
   document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   paintDock();
 
@@ -997,7 +1354,7 @@ body.grabbing{cursor:grabbing}
     function playMine(){ return mGet('__music').then(function(rec){ if(!rec){ document.getElementById('sndFile').click(); return false; }
         if(!audio){ audio=new Audio(); audio.loop=true; } audio.src=URL.createObjectURL(rec.blob); audio.volume=vol; audio.play().catch(function(){}); return true; }); }
     var NAMES={off:'Sound off',mine:'My music'}; (window.MUAmb?MUAmb.list:[]).forEach(function(x){ NAMES[x.id]=x.name; });
-    function set(m){ if(m==='mine'){ playMine().then(function(ok){ if(!ok) return; if(window.MUAmb) MUAmb.play('off'); mode='mine'; S.snd='mine'; save(); paint(); }); return; }
+    function set(m){ if(m==='mine') m='chords'; if(m==='mine'){ playMine().then(function(ok){ if(!ok) return; if(window.MUAmb) MUAmb.play('off'); mode='mine'; S.snd='mine'; save(); paint(); }); return; }
       if(audio){ audio.pause(); }
       if(window.MUAmb){ MUAmb.setVol(vol); MUAmb.play(m==='off'?'off':m); }
       mode=m; S.snd=m; save(); paint(); }
@@ -1012,11 +1369,12 @@ body.grabbing{cursor:grabbing}
   document.getElementById('soundBtn').onclick=function(e){ e.stopPropagation(); soundMenu.classList.toggle('on'); };
   soundMenu.addEventListener('click',function(e){ var b=e.target.closest('[data-snd]'); if(!b) return; e.stopPropagation(); Snd.set(b.dataset.snd); });
   document.addEventListener('click',function(e){ if(!e.target.closest('#soundMenu,#soundBtn')) soundMenu.classList.remove('on'); });
-  document.getElementById('sndFile').onchange=function(){ var f=this.files[0]; if(f) Snd.useFile(f); };
+
   document.getElementById('sndVol').value=Math.round(Snd.vol()*100);
   document.getElementById('sndVol').oninput=function(){ Snd.setVol(this.value/100); };
-  mGet('__music').then(function(r){ if(r) document.getElementById('mineName').textContent='My music: '+r.name.slice(0,22); });
-  Snd.paint();
+
+  Snd.paint(); paintCoins();
+  document.getElementById('coinChip').onclick=function(){ travelTo('me'); };
 
 
   /* ── sound effects (calm neuron pings) ── */
@@ -1075,7 +1433,7 @@ body.grabbing{cursor:grabbing}
   setInterval(function(){ if(!M.isFree()) return; FlySnd.speed(thr); var n=M.nearest(); if(!n.id) return; var d=byId[n.id], known=!d.hidden||S.visited[n.id];
     flyNear.textContent='nearest · '+(known?d.name:'an unknown light')+' · '+Math.round(n.dist)+'m';
     var close=n.dist<(d.scale||1)*16+12&&!skip[n.id]; if(close){ nearId=n.id; enterPill.hidden=false; enterPill.innerHTML='&#9673; Enter '+(known?esc(d.name):'the unknown light'); } else { nearId=null; enterPill.hidden=true; } },200);
-  function moveGuide(){ var on=M.isFree()&&guideId&&!S.visited[guideId]&&!flyHelp.classList.contains('on'); if(!on){ guideEl.classList.remove('on'); return; }
+  function moveGuide(){ if(visionOn()&&(!guideId||S.visited[guideId])) guideId=pickGuide(); var on=(M.isFree()||visionOn())&&guideId&&!S.visited[guideId]&&!flyHelp.classList.contains('on'); if(!on){ guideEl.classList.remove('on'); return; }
     var gs=M.screenOf(guideId), W=innerWidth, H=innerHeight, m=60, cx=W/2, cy=H/2, x=gs.x, y=gs.y, off=false;
     if(!gs.on){ x=cx+(cx-x)*1e3; y=cy+(cy-y)*1e3; }
     if(x<m||x>W-m||y<m+40||y>H-m-90||!gs.on){ off=true; var dx=x-cx, dy=y-cy, k=Math.min(Math.abs((cx-m)/(dx||1e-6)),Math.abs((cy-m-60)/(dy||1e-6))); x=cx+dx*k; y=cy+dy*k; guideEl.style.setProperty('--ang',(Math.atan2(dy,dx)*180/Math.PI+90).toFixed(1)+'deg'); }
@@ -1085,18 +1443,19 @@ body.grabbing{cursor:grabbing}
 
   /* look around: drag anywhere on the universe to orbit the neuron you're at */
   (function(){ var od=null;
-    addEventListener('pointerdown',function(e){ if(M.isFree()||busy||!document.body.classList.contains('inside')) return; if(e.target.closest('button,a,input,textarea,select,.nl,#dock,#stage,#soundMenu,#flyHelp,canvas#pad,.gate')) return; od={x:e.clientX,y:e.clientY,id:e.pointerId}; document.body.classList.add('grabbing'); });
+    addEventListener('pointerdown',function(e){ if(M.isFree()||busy||!document.body.classList.contains('inside')) return; if(e.target.closest('button,a,input,textarea,select,.nl,#dock,#stage,#soundMenu,#flyHelp,canvas#pad,.gate')) return; od={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,t:Date.now(),id:e.pointerId}; document.body.classList.add('grabbing'); });
     addEventListener('pointermove',function(e){ if(!od||e.pointerId!==od.id) return; M.orbit(e.clientX-od.x,e.clientY-od.y); od.x=e.clientX; od.y=e.clientY; });
-    ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(e){ if(od&&e.pointerId===od.id){ od=null; document.body.classList.remove('grabbing'); } }); });
+    ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(e){ if(od&&e.pointerId===od.id){ var tap=n==='pointerup'&&Math.hypot(e.clientX-od.sx,e.clientY-od.sy)<6&&Date.now()-od.t<350; od=null; document.body.classList.remove('grabbing');
+        if(tap&&cur!=='me'&&!busy) travelTo('me'); } }); });
   })();
 
   /* the gate */
   var gate=document.getElementById('gate'), gName=document.getElementById('gName');
   if(S.profile.name){ gName.value=S.profile.name; }
-  function enter(){ var n=gName.value.trim(); if(n){ S.profile.name=n; save(); } gate.classList.add('gone'); Snd.set(S.snd||'chords');
+  function enter(){ var n=gName.value.trim(); if(n){ S.profile.name=n; save(); } gate.classList.add('gone'); Snd.set('chords');
     M.enter(function(){ document.body.classList.add('inside'); cur='me'; M.setTheme(S.theme);
       M.setSeen(S.paths||[]); M.onPath(function(keys){ S.paths=(S.paths||[]).concat(keys); save(); toast('\u2726 New path explored'); });
-      chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard(); refreshBoards(); refreshGoalOrbs(); refreshIdeaOrbs();
+      chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard(); refreshBoards(); refreshGoalOrbs(); refreshIdeaOrbs(); S.wishes.forEach(function(w,i){ addWishStar(i); });
       var last=S.moods[0]; if(last) M.setColor('mood',moodOf(last.m).c);
       setTimeout(function(){ M.fire('me'); emerge('me'); },2300); }); }
   document.getElementById('gEnter').onclick=enter;
