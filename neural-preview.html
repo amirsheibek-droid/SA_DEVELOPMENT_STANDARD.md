@@ -290,6 +290,44 @@ textarea.field{resize:none;min-height:84px;line-height:1.5}
 #toast{position:fixed;z-index:36;left:50%;bottom:56px;transform:translate(-50%,10px);font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:inset 0 0 0 1px rgba(18,217,138,.6),0 0 30px -8px var(--green);opacity:0;transition:.5s;pointer-events:none;white-space:nowrap}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 
+/* ── the quiet core ── */
+.core-pg h1{font-size:clamp(2.3rem,4.6vw,4rem);max-width:640px}
+.core-pg p{font-size:1.1rem}
+button.go{cursor:pointer}
+
+/* ── the first choice, right after you enter ── */
+#choice{position:fixed;z-index:24;left:0;right:0;bottom:12vh;display:flex;justify-content:center;gap:clamp(28px,7vw,110px);flex-wrap:wrap;padding:0 24px;opacity:0;pointer-events:none;transition:opacity .8s}
+#choice.on{opacity:1;pointer-events:auto}
+#choice .ask0{position:absolute;left:0;right:0;bottom:calc(100% + 26px);text-align:center;font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);text-shadow:0 0 10px #fff}
+.ch{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:260px;gap:8px;text-shadow:0 0 16px #fff,0 0 4px #fff}
+.ch b{font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:12px}
+.ch b::before{content:"";width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--blue),0 0 22px 5px rgba(31,107,255,.55);animation:beat 1.6s infinite}
+.ch.g b::before{box-shadow:0 0 0 2px var(--green),0 0 22px 5px rgba(18,217,138,.6)}
+.ch span{color:var(--mute);font-size:.92rem;line-height:1.45}
+.ch:hover b{color:var(--blue)}
+#choice .ch{opacity:0;transform:translateY(18px) scale(.9);transition:.8s cubic-bezier(.2,.8,.2,1)}
+#choice.on .ch{opacity:1;transform:none}
+#choice.on .ch:nth-child(3){transition-delay:.15s}
+
+/* ── free flight controls ── */
+body.flying,body.flying #neural,body.flying #neural canvas{touch-action:none;-webkit-user-select:none;user-select:none}
+body.flying #neural{cursor:grab}
+body.flying #neural:active{cursor:grabbing}
+#flyui{position:fixed;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .5s}
+body.flying #flyui{opacity:1}
+.cross{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;box-shadow:inset 0 0 0 1.5px rgba(31,107,255,.45)}
+.cross::before,.cross::after{content:"";position:absolute;background:rgba(31,107,255,.55)}
+.cross::before{left:50%;top:-10px;bottom:-10px;width:1.5px;margin-left:-.75px;-webkit-mask:linear-gradient(#000 0 10px,transparent 10px calc(100% - 10px),#000 0);mask:linear-gradient(#000 0 10px,transparent 10px calc(100% - 10px),#000 0)}
+.cross::after{top:50%;left:-10px;right:-10px;height:1.5px;margin-top:-.75px;-webkit-mask:linear-gradient(90deg,#000 0 10px,transparent 10px calc(100% - 10px),#000 0);mask:linear-gradient(90deg,#000 0 10px,transparent 10px calc(100% - 10px),#000 0)}
+.thrust{position:absolute;left:50%;bottom:58px;transform:translateX(-50%);pointer-events:auto;width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;font-weight:700;color:var(--blue);background:radial-gradient(circle at 50% 40%,#fff,#e8f0ff);box-shadow:0 0 0 1.5px rgba(31,107,255,.45),0 0 34px -6px rgba(31,107,255,.6);user-select:none;-webkit-user-select:none;touch-action:none}
+.thrust.on{color:#fff;background:radial-gradient(circle at 50% 40%,#5be3ad,#12b877);box-shadow:0 0 0 2px var(--green),0 0 50px 4px rgba(18,217,138,.6)}
+.thrust::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(18,217,138,.5);animation:ping 2s ease-out infinite}
+.flyhint{position:absolute;left:50%;bottom:162px;transform:translateX(-50%);font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:center;white-space:nowrap;text-shadow:0 0 8px #fff}
+.flynear{position:absolute;left:50%;top:calc(50% + 40px);transform:translateX(-50%);font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);white-space:nowrap;text-shadow:0 0 8px #fff}
+@media(max-width:780px){.flyhint{white-space:normal;width:86vw;bottom:160px}}
+#flyChip{display:inline-flex}
+body.flying #flyChip{display:none}
+
 /* no JavaScript or no WebGL: show everything as a plain page */
 .nojs .pg{display:block;position:static}
 @media (prefers-reduced-motion: reduce){.pg > *,.pg.out > *{animation-duration:.01s}}
@@ -311,17 +349,29 @@ textarea.field{resize:none;min-height:84px;line-height:1.5}
   <span class="word"><b>SA</b> INTELLIGENT DESIGNS</span>
 </a>
 <div class="hud hud-tools">
+  <button class="chip" id="flyChip" type="button" data-fly>&#10022; Fly</button>
   <button class="chip sfx-btn" id="sfxBtn" type="button" aria-pressed="true" title="Sound effects on / off">&#9835; Sound</button>
 </div>
-<div class="hud hud-found" id="found" aria-live="polite">Neurons discovered <b id="foundN">1</b> / <span id="foundT">9</span><span class="bar"><i id="foundBar"></i></span></div>
-<div class="hud hud-hint" id="hint">Tap any light to travel to it</div>
+<div class="hud hud-found" id="found" aria-live="polite">Neurons discovered <b id="foundN">1</b> / <span id="foundT">10</span><span class="bar"><i id="foundBar"></i></span></div>
+<div class="hud hud-hint" id="hint">Tap any light to travel &middot; or take the controls and fly</div>
 
 <svg id="wire" aria-hidden="true"><defs><linearGradient id="wg" x1="0" x2="1"><stop offset="0" stop-color="#12d98a"/><stop offset="1" stop-color="#1f6bff"/></linearGradient></defs><path id="wireP" d=""/><circle id="wireC" r="0"/></svg>
 <div id="labels"></div>
 <div id="haze"></div>
 <div id="sparks"></div>
-<button class="drift" id="drift" type="button">&#10005; Drift</button>
+<button class="drift" id="drift" type="button" data-fly>&#10022; Fly off</button>
 <div id="toast"></div>
+<div id="choice" role="group" aria-label="How would you like to explore?">
+  <div class="ask0">You're inside. Where now?</div>
+  <button class="ch" type="button" data-fly><b>Fly freely</b><span>Take the controls. Steer anywhere &mdash; fly into a light to open it.</span></button>
+  <button class="ch g" type="button" data-go="core"><b>Take me to the core</b><span>One quiet thought about who we are. Then you're free.</span></button>
+</div>
+<div id="flyui" aria-hidden="true">
+  <div class="cross"></div>
+  <div class="flynear" id="flyNear"></div>
+  <div class="flyhint">Drag to steer &middot; hold to fly &middot; W A S D or arrows &middot; fly into a light to open it</div>
+  <button class="thrust" id="thrust" type="button" aria-label="Hold to fly forward">HOLD<br>TO FLY</button>
+</div>
 <div id="readout"></div>
 <div id="electron" aria-hidden="true">
   <div class="e-rain l" id="rainL"></div><div class="e-rain r" id="rainR"></div>
@@ -339,18 +389,12 @@ textarea.field{resize:none;min-height:84px;line-height:1.5}
 <main id="stage" aria-live="polite">
 
   <!-- THE CORE -->
-  <article class="pg" id="p-core" data-node="core">
+  <article class="pg core-pg" id="p-core" data-node="core">
     <div class="eye">The core &middot; SA Intelligent Designs</div>
-    <h1 class="decode">Intelligent websites. Mobile apps for specific niches.</h1>
-    <p>Our practice is built around two disciplines: <b>intelligent website design</b> with comprehensive SEO support, and <b>mobile application development</b> for specialist niches. We work with businesses across Milton Keynes, Bedford and London &mdash; in person or entirely remotely.</p>
-    <ul class="lines g">
-      <li><b>Free mock-up first.</b> <small>Review a working mock-up of your site before committing to anything.</small></li>
-      <li><b>Partners keep 100%.</b> <small>Refer a client who takes our care plan and you keep their entire first month's fee.</small></li>
-      <li><b>Costs at cost.</b> <small>Domain and business email passed on at cost. Hosting is free, with zero markup.</small></li>
-      <li><b>Transparent pricing.</b> <small>Every fee quoted upfront and confirmed in writing.</small></li>
-    </ul>
-    <a class="go big" href="#build" data-go="build">Tell the Architect what you want to build</a>
-    <p class="whisper">Every light out there is a neuron. Most of them are still unnamed &mdash; travel to one to find out what it's hiding. One of them is very hard to find.</p>
+    <h1 class="decode">Ideas go in. Intelligence comes out.</h1>
+    <p>Websites and apps for specialist niches &mdash; with a free mock-up before you commit.</p>
+    <button class="go big" type="button" data-fly>Fly off and explore</button>
+    <a class="go" href="#build" data-go="build">Tell the Architect your idea</a>
   </article>
 
   <!-- THE FORGE (services) -->
@@ -420,6 +464,7 @@ Intelligent, SEO-supported websites and mobile apps for specialist niches.
 Milton Keynes, Bedford and London &mdash; in person or fully remote.
 &gt; how?
 A free mock-up first. Fixed written quotes. Free hosting. No lock-in."></div>
+    <p><a class="go" href="#guild" data-go="guild">Developer, engineer or architect? Join the Guild</a></p>
     <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a> <a class="go" href="tel:+447712673747">+44 7712 673747</a> <a class="go" href="https://wa.me/447712673747" target="_blank" rel="noopener">WhatsApp</a></p>
     <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising.</p></details>
     <details class="legal" id="cookies"><summary>Cookies</summary><p>Strictly necessary browser storage only (your sound setting, which neurons you've found, and your unsent brief), cleared when you close the tab. No analytics, tracking or advertising cookies.</p></details>
@@ -495,6 +540,12 @@ A free mock-up first. Fixed written quotes. Free hosting. No lock-in."></div>
     <div id="arch"></div>
   </article>
 
+  <!-- THE GUILD (membership club for builders) -->
+  <article class="pg" id="p-guild" data-node="guild">
+    <div class="eye">The Guild &middot; SA Intelligent membership</div>
+    <div id="guildWiz"></div>
+  </article>
+
   <!-- THE HIDDEN NEURON -->
   <article class="pg" id="p-secret" data-node="secret">
     <div class="eye">Hidden neuron &middot; you found it</div>
@@ -516,14 +567,15 @@ window.SA_DESTS=[
   {id:'about',    name:'The Origin',    hint:'an old memory',         pos:[-50,-26,30],   yaw:.8,   dist:30, c:'b'},
   {id:'faq',      name:'Echoes',        hint:'voices echo here',      pos:[-26,42,-92],   yaw:.25,  dist:30, c:'g'},
   {id:'build',    name:'The Architect', hint:'',                      pos:[8,-42,-104],   yaw:-.1,  dist:33, c:'g', scale:1.2, found:true},
+  {id:'guild',    name:'The Guild',     hint:'a gathering of builders', pos:[-104,4,-150], yaw:.6, dist:31, c:'b', scale:1.15},
   {id:'portfolio',name:'The Vault',     hint:'a sealed vault, far away', pos:[150,52,-215], yaw:-.6, dist:40, c:'b', scale:1.5, shift:.6},
   {id:'secret',   name:'Hidden neuron', hint:'',                      pos:[-170,-74,-190],yaw:.9,   dist:26, c:'g', scale:.55, secret:true}
 ];
 window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core','process'],['core','build'],['services','process'],['services','faq'],
-  ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret']];
+  ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret'],['build','guild'],['faq','guild'],['services','guild']];
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/mind-bg.js?v=1"></script>
+<script src="/assets/mind-bg.js?v=2"></script>
 <script>
 /* ── Calm neuron-signal sound effects: soft synapse pings on taps, a travelling signal on page changes ── */
 (function(){
@@ -609,7 +661,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   M.onFrame(function(){
     var travelling=M.travelling();
     DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id);
-      var vis=s && s.on && (d.id!==cur||travelling) && s.x>-40 && s.x<innerWidth+40 && s.y>-40 && s.y<innerHeight+40;
+      var vis=s && s.on && (d.id!==cur||travelling||M.isFree()) && s.x>-40 && s.x<innerWidth+40 && s.y>-40 && s.y<innerHeight+40;
       if(d.secret && s && s.dist>140) vis=false;               // the hidden one only shows when you're close
       if(!vis){ el.style.opacity='0'; el.style.pointerEvents='none'; return; }
       var sc=Math.max(.72,Math.min(1.1,1.2-s.dist/420)), op=travelling?.35:Math.max(.5,Math.min(1,1.25-s.dist/360));
@@ -643,14 +695,14 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     setTimeout(function(){ pg.classList.remove('on','out'); done&&done(); },420);
   }
   function placeDrift(){ var r=stage.getBoundingClientRect(); drift.style.left=(innerWidth<900?innerWidth-110:Math.min(innerWidth-110,r.right-90))+'px'; drift.style.top=(innerWidth<900?r.top-36:Math.max(70,r.top-30))+'px'; }
-  drift.onclick=function(){ FX('zoop',.6); retract(); history.replaceState(null,'',location.pathname); };
+  
 
   /* travelling between neurons */
   var readout=document.getElementById('readout'), electron=document.getElementById('electron');
   function travelTo(id,opts){
     if(!byId[id]||busy) return; opts=opts||{};
     if(id===cur && shown===id) return;
-    busy=true; var from=cur; cur=id;
+    busy=true; var from=cur; cur=id; endFly(); hideChoice();
     history.replaceState(null,'',byId[id].secret?location.pathname:'#'+id);
     retract(function(){
       FX('warp');
@@ -663,7 +715,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       var fresh=discover(id);
       if(id==='portfolio') unlockVault();
       emerge(id);
-      if(opts.type) setTimeout(function(){ Arch.preset(opts.type); },50);
+      if(opts.type) setTimeout(function(){ Arch.preset('type',opts.type,2); },50);
     }
   }
   function readoutRun(id,dur){ var t0=performance.now(), name=found[id]?byId[id].name:'unknown neuron'; readout.classList.add('on');
@@ -703,6 +755,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
       var tmp=document.createElement('textarea'); tmp.innerHTML=txt; txt=tmp.value;
       (function tick(){ if(shown!=='about') { log.textContent=txt; return; } i+=2; log.innerHTML=txt.slice(0,i).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="c"></span>'; if(i<txt.length) setTimeout(tick,18); })(); },
     build:function(){ Arch.start(); },
+    guild:function(){ Guild.start(); },
     secret:function(){ playground(true); }
   };
   document.querySelectorAll('.echo button').forEach(function(b){ b.addEventListener('click',function(){ var a=b.nextElementSibling, on=b.getAttribute('aria-expanded')==='true';
@@ -720,116 +773,182 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.05,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+1.2);
     o.connect(g); if(p){ p.pan.value=pan*2-1; g.connect(p); p.connect(actx.destination); } else g.connect(actx.destination); o.start(t); o.stop(t+1.3); }catch(e){} }
 
-  /* ══ THE ARCHITECT: one question at a time, then it's emailed to SA ══ */
-  var Arch=(function(){
-    var root=document.getElementById('arch'), A={}; try{ A=JSON.parse(ss('saBrief')||'{}'); }catch(e){}
-    var i=A._i||0, typer=null, sent=false;
-    function save(){ A._i=i; ss('saBrief',JSON.stringify(A)); }
-    function isApp(){ return /app/i.test(A.type||''); }
-    function list(a){ return (a||[]).filter(Boolean); }
-    function join(a){ a=list(a); return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1]; }
-    var Q=[
-      {k:'intro',kind:'intro',ask:function(){ return "I'm the Architect. Tell me what you'd like built and I'll turn it into a brief for SA's engineers."; },sub:'About two minutes. One question at a time.'},
-      {k:'type',kind:'one',ask:function(){ return 'What are we building together?'; },opts:function(){ return ['A website','A mobile app','A website and an app','Not sure yet']; },ack:function(){ return 'Noted — '+A.type.toLowerCase()+'.'; }},
-      {k:'idea',kind:'long',ask:function(){ return 'In a sentence or two, what is the idea?'; },ph:function(){ return isApp()?'e.g. An app that lets dog walkers book, track and get paid for walks':'e.g. A site for my bakery that takes celebration-cake orders'; },ack:function(){ return 'Got the idea.'; }},
-      {k:'business',kind:'short',ask:function(){ return "What's the business or project called?"; },ph:function(){ return 'Business or project name (optional)'; },optional:true,ack:function(){ return A.business?'Hello, '+A.business+'.':'No name yet — that\'s fine.'; }},
-      {k:'audience',kind:'many',ask:function(){ return 'Who is it for?'; },opts:function(){ return ['My customers','The general public','Other businesses','My own team','A specific community']; },other:true,ack:function(){ return 'Built for '+join(A.audience).toLowerCase()+'.'; }},
-      {k:'goal',kind:'one',ask:function(){ return "What's the one thing it must do brilliantly?"; },opts:function(){ return isApp()?['Save people time','Take bookings','Take payments','Track and manage work','Connect people','Something else']:['Win enquiries','Take bookings','Sell online','Show off my work','Build trust','Something else']; },ack:function(){ return 'Above all: '+A.goal.toLowerCase()+'.'; }},
-      {k:'features',kind:'many',ask:function(){ return 'Which of these does it need?'; },sub:'Pick as many as you like.',opts:function(){ return isApp()?['User accounts','Payments','Push notifications','AI features','Maps & location','Chat or messaging','Calendar & booking','Admin dashboard','Works offline']:['Contact form','Online booking','Online shop','Blog or news','Gallery','Reviews','Member login','Multiple languages']; },other:true,optional:true,ack:function(){ return list(A.features).length?list(A.features).length+' features captured.':'We\'ll suggest features together.'; }},
-      {k:'feel',kind:'many',ask:function(){ return 'How should it feel?'; },opts:function(){ return ['Clean & minimal','Bold & vibrant','Premium & dark','Warm & friendly','Futuristic']; },ack:function(){ return 'Feel: '+join(A.feel).toLowerCase()+'.'; }},
-      {k:'inspo',kind:'short',ask:function(){ return 'Any websites or apps you love the look of?'; },ph:function(){ return 'Names or links (optional)'; },optional:true,ack:function(){ return A.inspo?'I\'ll study those.':'Fresh canvas, then.'; }},
-      {k:'have',kind:'many',ask:function(){ return 'What do you already have?'; },opts:function(){ return ['A logo','A domain name','A current website','Brand colours','Photos & words','Nothing yet']; },ack:function(){ return 'Starting point logged.'; }},
-      {k:'timeline',kind:'one',ask:function(){ return 'When would you like it live?'; },opts:function(){ return ['As soon as possible','Within 1–3 months','3–6 months','Just exploring']; },ack:function(){ return 'Timeline: '+A.timeline.toLowerCase()+'.'; }},
-      {k:'budget',kind:'one',ask:function(){ return 'Roughly what budget do you have in mind?'; },sub:'Every build is still quoted in writing first.',opts:function(){ return isApp()?['Under £3k','£3k–£10k','£10k–£25k','£25k+','Not sure — advise me']:['Under £1k','£1k–£3k','£3k–£7k','£7k+','Not sure — advise me']; },ack:function(){ return 'Budget noted.'; }},
-      {k:'you',kind:'contact',ask:function(){ return 'Last thing — who am I speaking with?'; },sub:'So an engineer can reply within one working day.',ack:function(){ return 'Nice to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
-      {k:'review',kind:'review',ask:function(){ return "Here's your vision."; }}
-    ];
-    function vision(){
-      var s='You\'d like <em>'+esc((A.type||'something').toLowerCase())+'</em>'+(A.business?' for <em>'+esc(A.business)+'</em>':'')+'. ';
-      if(A.idea) s+=esc(A.idea.replace(/\.?$/,'.'))+' ';
-      if(list(A.audience).length) s+='It\'s for <em>'+esc(join(A.audience).toLowerCase())+'</em>, ';
-      if(A.goal) s+='and above all it must <em>'+esc(A.goal.toLowerCase())+'</em>. ';
-      if(list(A.features).length) s+='Must-haves: '+esc(join(A.features).toLowerCase())+'. ';
-      if(list(A.feel).length) s+='It should feel <em>'+esc(join(A.feel).toLowerCase())+'</em>'+(A.inspo?', inspired by '+esc(A.inspo):'')+'. ';
-      if(list(A.have).length) s+='You already have '+esc(join(A.have).toLowerCase())+'. ';
-      if(A.timeline) s+='Timeline: '+esc(A.timeline.toLowerCase())+'. ';
-      if(A.budget) s+='Budget: '+esc(A.budget)+'.';
-      return s; }
-    function esc(t){ return String(t||'').replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-    function plain(){ var L=[];
-      L.push('PROJECT BRIEF — from the Braintrix'); L.push('');
-      [['Building',A.type],['Idea',A.idea],['Business / project',A.business],['For',join(A.audience)],['Must do brilliantly',A.goal],['Features',join(A.features)],['Feel',join(A.feel)],['Inspiration',A.inspo],['Already has',join(A.have)],['Timeline',A.timeline],['Budget',A.budget],['Name',A.name],['Email',A.email],['Phone',A.phone],['Prefers contact by',A.pref],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',Object.keys(found).length+' / '+total]]
-        .forEach(function(r){ if(r[1]) L.push(r[0]+': '+r[1]); });
-      return L.join('\n'); }
+  /* ══ WIZARDS: one question at a time, then it's emailed to SA ══ */
+  function esc(t){ return String(t||'').replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function lst(a){ return (a||[]).filter(Boolean); }
+  function join(a){ a=lst(a); return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1]; }
+  function Wizard(cfg){
+    var root=document.getElementById(cfg.root), A={}; try{ A=JSON.parse(ss(cfg.key)||'{}'); }catch(e){}
+    var i=A._i||0, typer=null, sent=false, Q=cfg.Q(A);
+    function save(){ A._i=i; ss(cfg.key,JSON.stringify(A)); }
     function render(){
       if(typer) clearInterval(typer);
-      var q=Q[i], step=Math.max(0,i), n=Q.length-1, h='';
-      if(sent){ root.innerHTML='<h2 class="decode">Signal received.</h2><p>Thank you'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. Your brief is with our engineers — expect a reply within one working day to arrange your free consultation.</p><a class="go" href="#core" data-go="core">Back to the core</a>'; root.querySelectorAll('.decode').forEach(decode); return; }
-      h+='<div class="arch-step">Signal '+Math.min(step,n)+' / '+n+'<span class="bar"><i style="width:'+(step/n*100)+'%"></i></span></div>';
+      var q=Q[i], n=Q.length-1, h='';
+      if(sent){ root.innerHTML=cfg.done(A); root.querySelectorAll('.decode').forEach(decode); return; }
+      h+='<div class="arch-step">Signal '+Math.min(i,n)+' / '+n+'<span class="bar"><i style="width:'+(i/n*100)+'%"></i></span></div>';
       h+='<div class="ack">'+(i>0&&Q[i-1].ack&&A[Q[i-1].k]!==undefined?'✓ '+esc(Q[i-1].ack()):'')+'</div>';
-      h+='<div class="ask" id="ask"></div>'+(q.sub?'<p class="sub">'+q.sub+'</p>':'');
-      h+='<div id="ans" style="opacity:0;transition:opacity .4s"></div>';
+      h+='<div class="ask" id="'+cfg.root+'Ask"></div>'+(q.sub?'<p class="sub">'+q.sub+'</p>':'');
+      h+='<div class="ans" style="opacity:0;transition:opacity .4s"></div>';
       root.innerHTML=h;
-      var ans=document.getElementById('ans'), a='';
-      if(q.kind==='intro'){ a='<div class="arch-nav"><button class="send" data-a="next">Begin</button></div><p class="whisper">Prefer to talk? <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a> &middot; <a href="tel:+447712673747">+44 7712 673747</a> &middot; <a href="https://wa.me/447712673747" target="_blank" rel="noopener">WhatsApp</a></p>'; }
-      else if(q.kind==='one'||q.kind==='many'){ var cur=q.kind==='one'?[A[q.k]]:list(A[q.k]);
+      var ans=root.querySelector('.ans'), a='';
+      if(q.kind==='intro'){ a='<div class="arch-nav"><button class="send" data-a="next">'+(q.btn||'Begin')+'</button></div>'+(q.extra||''); }
+      else if(q.kind==='one'||q.kind==='many'||q.kind==='rate'){ var cur=q.kind==='many'?lst(A[q.k]):[A[q.kind==='rate'?q.k+'Basis':q.k]];
         a='<div class="opts">'+q.opts().map(function(o){ return '<button class="opt" aria-pressed="'+(cur.indexOf(o)>=0)+'" data-o="'+esc(o)+'">'+esc(o)+'</button>'; }).join('')+'</div>';
-        if(q.other) a+='<input class="field" id="other" placeholder="Anything else? (optional)" value="'+esc(A[q.k+'Other']||'')+'">';
-        a+=nav(q.kind==='many'); }
-      else if(q.kind==='short'||q.kind==='long'){ a=(q.kind==='long'?'<textarea class="field" id="txt" rows="3" placeholder="'+esc(q.ph())+'">'+esc(A[q.k]||'')+'</textarea>':'<input class="field" id="txt" placeholder="'+esc(q.ph())+'" value="'+esc(A[q.k]||'')+'">')+nav(true); }
-      else if(q.kind==='contact'){ a='<label class="field-l" for="cName">Your name</label><input class="field" id="cName" autocomplete="name" value="'+esc(A.name||'')+'">'+
-          '<label class="field-l" for="cEmail">Email</label><input class="field" id="cEmail" type="email" autocomplete="email" value="'+esc(A.email||'')+'">'+
-          '<label class="field-l" for="cPhone">Phone (optional)</label><input class="field" id="cPhone" type="tel" autocomplete="tel" value="'+esc(A.phone||'')+'">'+
-          '<div class="opts">'+['Email','Phone call','WhatsApp'].map(function(o){ return '<button class="opt" aria-pressed="'+((A.pref||'Email')===o)+'" data-p="'+o+'">'+o+'</button>'; }).join('')+'</div><div class="err" id="err"></div>'+nav(true); }
-      else if(q.kind==='review'){ a='<p class="vision">'+vision()+'</p><p class="sub">We\'ll reply to <b>'+esc(A.email)+'</b>'+(A.phone?' or '+esc(A.phone):'')+'.</p>'+
-          '<input type="checkbox" id="bot" style="display:none" tabindex="-1" autocomplete="off">'+
-          '<div class="arch-nav"><button class="send" data-a="send">Send to SA engineers</button><button class="back" data-a="back">&larr; Edit</button></div><div class="err" id="err"></div><p class="whisper">Sent by email only &mdash; never stored, never added to a mailing list.</p>'; }
+        if(q.other) a+='<input class="field" data-f="other" placeholder="Anything else? (optional)" value="'+esc(A[q.k+'Other']||'')+'">';
+        if(q.kind==='rate') a+='<label class="field-l">Your rate</label><input class="field" data-f="txt" placeholder="'+esc(q.ph())+'" value="'+esc(A[q.k]||'')+'">';
+        a+=nav(q.kind!=='one'); }
+      else if(q.kind==='short'||q.kind==='long'){ a=(q.kind==='long'?'<textarea class="field" data-f="txt" rows="3" placeholder="'+esc(q.ph())+'">'+esc(A[q.k]||'')+'</textarea>':'<input class="field" data-f="txt" placeholder="'+esc(q.ph())+'" value="'+esc(A[q.k]||'')+'">')+nav(true); }
+      else if(q.kind==='contact'){ a='<label class="field-l">Your name</label><input class="field" data-f="name" autocomplete="name" value="'+esc(A.name||'')+'">'+
+          '<label class="field-l">Email</label><input class="field" data-f="email" type="email" autocomplete="email" value="'+esc(A.email||'')+'">'+
+          '<label class="field-l">Phone (optional)</label><input class="field" data-f="phone" type="tel" autocomplete="tel" value="'+esc(A.phone||'')+'">'+
+          '<div class="opts">'+['Email','Phone call','WhatsApp'].map(function(o){ return '<button class="opt" aria-pressed="'+((A.pref||'Email')===o)+'" data-p="'+o+'">'+o+'</button>'; }).join('')+'</div><div class="err"></div>'+nav(true); }
+      else if(q.kind==='review'){ a='<p class="vision">'+cfg.vision(A)+'</p><p class="sub">We\'ll reply to <b>'+esc(A.email)+'</b>'+(A.phone?' or '+esc(A.phone):'')+'.</p>'+
+          '<input type="checkbox" data-f="bot" style="display:none" tabindex="-1" autocomplete="off">'+
+          '<div class="arch-nav"><button class="send" data-a="send">'+cfg.sendLabel+'</button><button class="back" data-a="back">&larr; Edit</button></div><div class="err"></div><p class="whisper">Sent by email only &mdash; never stored, never added to a mailing list.</p>'; }
       ans.innerHTML=a;
-      // the Architect "speaks" the question
-      var text=q.ask(), ask=document.getElementById('ask'), c=0;
+      var text=q.ask(), ask=document.getElementById(cfg.root+'Ask'), c=0;
       typer=setInterval(function(){ c+=2; ask.innerHTML=esc(text.slice(0,c))+'<span class="c"></span>'; if(c>=text.length){ clearInterval(typer); typer=null; ask.textContent=text; ans.style.opacity=1; var f=ans.querySelector('textarea,input:not([type=checkbox])'); if(f && innerWidth>899) f.focus(); } },22);
       if(q.kind==='review') FX('statics',.5,.8);
     }
+    function F(n){ return root.querySelector('[data-f="'+n+'"]'); }
     function nav(withNext){ return '<div class="arch-nav">'+(withNext?'<button class="send" data-a="next">Continue</button>':'')+(i>0?'<button class="back" data-a="back">&larr; Back</button>':'')+'</div>'; }
     function collect(){ var q=Q[i];
-      if(q.kind==='short'||q.kind==='long'){ var v=(document.getElementById('txt').value||'').trim(); if(!v && !q.optional){ shake(); return false; } A[q.k]=v; }
-      if(q.kind==='many'){ var o=document.getElementById('other'); if(o) A[q.k+'Other']=o.value.trim(); var arr=list(A[q.k]).slice(); if(A[q.k+'Other']) arr.push(A[q.k+'Other']);
-        if(!arr.length && !q.optional){ shake(); return false; } A[q.k]=list(A[q.k]); }
-      if(q.kind==='one'){ var o2=document.getElementById('other'); if(!A[q.k]){ shake(); return false; } }
-      if(q.kind==='contact'){ A.name=document.getElementById('cName').value.trim(); A.email=document.getElementById('cEmail').value.trim(); A.phone=document.getElementById('cPhone').value.trim();
+      if(q.kind==='short'||q.kind==='long'){ var v=(F('txt').value||'').trim(); if(!v && !q.optional){ shake(); return false; } A[q.k]=v; }
+      if(q.kind==='many'){ var o=F('other'); if(o) A[q.k+'Other']=o.value.trim(); var arr=lst(A[q.k]).slice(); if(A[q.k+'Other']) arr.push(A[q.k+'Other']);
+        if(!arr.length && !q.optional){ shake(); return false; } A[q.k]=lst(A[q.k]); }
+      if(q.kind==='one' && !A[q.k]){ shake(); return false; }
+      if(q.kind==='rate'){ A[q.k]=(F('txt').value||'').trim(); if(!A[q.k+'Basis']||!A[q.k]){ shake(); return false; } }
+      if(q.kind==='contact'){ A.name=F('name').value.trim(); A.email=F('email').value.trim(); A.phone=F('phone').value.trim();
         if(!A.name){ err('What should we call you?'); return false; } if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A.email)){ err('That email doesn\'t look quite right.'); return false; } }
       return true; }
-    function err(t){ var e=document.getElementById('err'); if(e) e.textContent=t; shake(); }
-    function shake(){ var a=document.getElementById('ans'); if(a&&a.animate) a.animate([{transform:'translateX(0)'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}],{duration:300}); }
-    function next(){ if(!collect()) return; if(i<Q.length-1){ i++; save(); FX('zoop',.8); M.fire('build'); render(); } }
+    function err(t){ var e=root.querySelector('.err'); if(e) e.textContent=t; shake(); }
+    function shake(){ var a=root.querySelector('.ans'); if(a&&a.animate) a.animate([{transform:'translateX(0)'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}],{duration:300}); }
+    function next(){ if(!collect()) return; if(i<Q.length-1){ i++; save(); FX('zoop',.8); M.fire(cfg.node); render(); } }
     function back(){ if(i>0){ i--; save(); FX('zoop',.5); render(); } }
     root.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var q=Q[i];
       if(b.dataset.o!==undefined){ var o=b.dataset.o.replace(/&amp;/g,'&');
         if(q.kind==='one'){ A[q.k]=o; FX('zoop',.8); root.querySelectorAll('.opt').forEach(function(x){ x.setAttribute('aria-pressed',x===b); }); save(); setTimeout(next,320); }
-        else { var arr=list(A[q.k]), at=arr.indexOf(o); if(at>=0) arr.splice(at,1); else arr.push(o); A[q.k]=arr; b.setAttribute('aria-pressed',at<0); FX('zoop',.6); save(); }
+        else if(q.kind==='rate'){ A[q.k+'Basis']=o; FX('zoop',.6); root.querySelectorAll('.opt').forEach(function(x){ x.setAttribute('aria-pressed',x===b); }); save(); var f=F('txt'); if(f) f.focus(); }
+        else { var arr=lst(A[q.k]), at=arr.indexOf(o); if(at>=0) arr.splice(at,1); else arr.push(o); A[q.k]=arr; b.setAttribute('aria-pressed',at<0); FX('zoop',.6); save(); }
         return; }
       if(b.dataset.p){ A.pref=b.dataset.p; root.querySelectorAll('[data-p]').forEach(function(x){ x.setAttribute('aria-pressed',x===b); }); return; }
       if(b.dataset.a==='next') next(); else if(b.dataset.a==='back') back(); else if(b.dataset.a==='send') send(b); });
     root.addEventListener('keydown',function(e){ if(e.key==='Enter' && !e.shiftKey && e.target.matches('input.field,textarea.field')){ e.preventDefault(); next(); } });
     function send(btn){
-      if(document.getElementById('bot').checked) return;
+      var bot=F('bot'); if(bot && bot.checked) return;
       btn.disabled=true; btn.textContent='Transmitting…';
-      var body={access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',subject:'New '+(A.type||'project').toLowerCase()+' brief — '+(A.name||'')+' (SA Intelligent Designs)',from_name:'SA Intelligent Designs — the Braintrix',
-        name:A.name,email:A.email,replyto:A.email,phone:A.phone||'',business:A.business||'',package:A.type||'',budget:A.budget||'',timeline:A.timeline||'',message:plain(),botcheck:false};
+      var body=Object.assign({access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'SA Intelligent Designs — the Braintrix',
+        name:A.name,email:A.email,replyto:A.email,phone:A.phone||'',botcheck:false},cfg.fields(A),{subject:cfg.subject(A),message:cfg.plain(A)});
       fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)})
         .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed');
-          sent=true; ss('saBrief','{}'); M.fire('build'); FX('warp'); render(); })
-        .catch(function(){ btn.disabled=false; btn.textContent='Send to SA engineers'; var e=document.getElementById('err'); if(e) e.innerHTML='That didn\'t transmit. Try again, or email <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a>.'; });
+          sent=true; ss(cfg.key,'{}'); M.fire(cfg.node); FX('warp'); render(); })
+        .catch(function(){ btn.disabled=false; btn.textContent=cfg.sendLabel; var e=root.querySelector('.err'); if(e) e.innerHTML='That didn\'t transmit. Try again, or email <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a>.'; });
     }
-    return { start:function(){ render(); }, preset:function(t){ if(sent) return; A.type=t; if(i<2) i=2; save(); render(); } };
-  })();
+    return { start:function(){ render(); }, preset:function(k,v,skipTo){ if(sent) return; A[k]=v; if(i<skipTo) i=skipTo; save(); render(); } };
+  }
+  function lines(rows){ return rows.filter(function(r){ return r[1]; }).map(function(r){ return r[0]+': '+r[1]; }).join('\n'); }
+  var CONTACT_WHISPER='<p class="whisper">Prefer to talk? <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a> &middot; <a href="tel:+447712673747">+44 7712 673747</a> &middot; <a href="https://wa.me/447712673747" target="_blank" rel="noopener">WhatsApp</a></p>';
+
+  /* The Architect — clients describe what they want built */
+  var Arch=Wizard({root:'arch',key:'saBrief',node:'build',sendLabel:'Send to SA engineers',
+    Q:function(A){ function isApp(){ return /app/i.test(A.type||''); } return [
+      {k:'intro',kind:'intro',ask:function(){ return "I'm the Architect. Tell me what you'd like built and I'll turn it into a brief for SA's engineers."; },sub:'About two minutes. One question at a time.',extra:CONTACT_WHISPER},
+      {k:'type',kind:'one',ask:function(){ return 'What are we building together?'; },opts:function(){ return ['A website','A mobile app','A website and an app','Not sure yet']; },ack:function(){ return 'Noted — '+A.type.toLowerCase()+'.'; }},
+      {k:'idea',kind:'long',ask:function(){ return 'In a sentence or two, what is the idea?'; },ph:function(){ return isApp()?'e.g. An app that lets dog walkers book, track and get paid for walks':'e.g. A site for my bakery that takes celebration-cake orders'; },ack:function(){ return 'Got the idea.'; }},
+      {k:'business',kind:'short',optional:true,ask:function(){ return "What's the business or project called?"; },ph:function(){ return 'Business or project name (optional)'; },ack:function(){ return A.business?'Hello, '+A.business+'.':'No name yet — that\'s fine.'; }},
+      {k:'audience',kind:'many',other:true,ask:function(){ return 'Who is it for?'; },opts:function(){ return ['My customers','The general public','Other businesses','My own team','A specific community']; },ack:function(){ return 'Built for '+join(A.audience).toLowerCase()+'.'; }},
+      {k:'goal',kind:'one',ask:function(){ return "What's the one thing it must do brilliantly?"; },opts:function(){ return isApp()?['Save people time','Take bookings','Take payments','Track and manage work','Connect people','Something else']:['Win enquiries','Take bookings','Sell online','Show off my work','Build trust','Something else']; },ack:function(){ return 'Above all: '+A.goal.toLowerCase()+'.'; }},
+      {k:'features',kind:'many',other:true,optional:true,ask:function(){ return 'Which of these does it need?'; },sub:'Pick as many as you like.',opts:function(){ return isApp()?['User accounts','Payments','Push notifications','AI features','Maps & location','Chat or messaging','Calendar & booking','Admin dashboard','Works offline']:['Contact form','Online booking','Online shop','Blog or news','Gallery','Reviews','Member login','Multiple languages']; },ack:function(){ return lst(A.features).length?lst(A.features).length+' features captured.':'We\'ll suggest features together.'; }},
+      {k:'feel',kind:'many',ask:function(){ return 'How should it feel?'; },opts:function(){ return ['Clean & minimal','Bold & vibrant','Premium & dark','Warm & friendly','Futuristic']; },ack:function(){ return 'Feel: '+join(A.feel).toLowerCase()+'.'; }},
+      {k:'inspo',kind:'short',optional:true,ask:function(){ return 'Any websites or apps you love the look of?'; },ph:function(){ return 'Names or links (optional)'; },ack:function(){ return A.inspo?'I\'ll study those.':'Fresh canvas, then.'; }},
+      {k:'have',kind:'many',ask:function(){ return 'What do you already have?'; },opts:function(){ return ['A logo','A domain name','A current website','Brand colours','Photos & words','Nothing yet']; },ack:function(){ return 'Starting point logged.'; }},
+      {k:'timeline',kind:'one',ask:function(){ return 'When would you like it live?'; },opts:function(){ return ['As soon as possible','Within 1–3 months','3–6 months','Just exploring']; },ack:function(){ return 'Timeline: '+A.timeline.toLowerCase()+'.'; }},
+      {k:'budget',kind:'one',ask:function(){ return 'Roughly what budget do you have in mind?'; },sub:'Every build is still quoted in writing first.',opts:function(){ return isApp()?['Under £3k','£3k–£10k','£10k–£25k','£25k+','Not sure — advise me']:['Under £1k','£1k–£3k','£3k–£7k','£7k+','Not sure — advise me']; },ack:function(){ return 'Budget noted.'; }},
+      {k:'you',kind:'contact',ask:function(){ return 'Last thing — who am I speaking with?'; },sub:'So an engineer can reply within one working day.',ack:function(){ return 'Nice to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
+      {k:'review',kind:'review',ask:function(){ return "Here's your vision."; }}
+    ]; },
+    vision:function(A){ var s='You\'d like <em>'+esc((A.type||'something').toLowerCase())+'</em>'+(A.business?' for <em>'+esc(A.business)+'</em>':'')+'. ';
+      if(A.idea) s+=esc(A.idea.replace(/\.?$/,'.'))+' ';
+      if(lst(A.audience).length) s+='It\'s for <em>'+esc(join(A.audience).toLowerCase())+'</em>, ';
+      if(A.goal) s+='and above all it must <em>'+esc(A.goal.toLowerCase())+'</em>. ';
+      if(lst(A.features).length) s+='Must-haves: '+esc(join(A.features).toLowerCase())+'. ';
+      if(lst(A.feel).length) s+='It should feel <em>'+esc(join(A.feel).toLowerCase())+'</em>'+(A.inspo?', inspired by '+esc(A.inspo):'')+'. ';
+      if(lst(A.have).length) s+='You already have '+esc(join(A.have).toLowerCase())+'. ';
+      if(A.timeline) s+='Timeline: '+esc(A.timeline.toLowerCase())+'. ';
+      if(A.budget) s+='Budget: '+esc(A.budget)+'.'; return s; },
+    plain:function(A){ return 'PROJECT BRIEF — from the Braintrix\n\n'+lines([['Building',A.type],['Idea',A.idea],['Business / project',A.business],['For',join(A.audience)],['Must do brilliantly',A.goal],['Features',join(A.features)],['Feel',join(A.feel)],['Inspiration',A.inspo],['Already has',join(A.have)],['Timeline',A.timeline],['Budget',A.budget],['Name',A.name],['Email',A.email],['Phone',A.phone],['Prefers contact by',A.pref],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',Object.keys(found).length+' / '+total]]); },
+    subject:function(A){ return 'New '+(A.type||'project').toLowerCase()+' brief — '+(A.name||'')+' (SA Intelligent Designs)'; },
+    fields:function(A){ return {business:A.business||'',package:A.type||'',budget:A.budget||'',timeline:A.timeline||''}; },
+    done:function(A){ return '<h2 class="decode">Signal received.</h2><p>Thank you'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. Your brief is with our engineers — expect a reply within one working day to arrange your free consultation.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+  });
+
+  /* The Guild — developers, engineers and architects apply to join SA Intelligent */
+  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Request membership',
+    Q:function(A){ return [
+      {k:'intro',kind:'intro',btn:'Apply to join',ask:function(){ return 'The Guild is where builders join SA Intelligent.'; },sub:'A membership club for developers, engineers, designers and architects who want to build real products with us. Tell us who you are, what you offer and what you charge &mdash; about three minutes.'},
+      {k:'role',kind:'one',ask:function(){ return 'What do you build?'; },opts:function(){ return ['Web developer','Mobile engineer','Full-stack developer','Solutions architect','UI / UX designer','AI / ML engineer','Something else']; },ack:function(){ return A.role+'. Welcome.'; }},
+      {k:'experience',kind:'one',ask:function(){ return 'How long have you been doing it professionally?'; },opts:function(){ return ['Under 2 years','2–5 years','5–10 years','10+ years']; },ack:function(){ return A.experience+' of experience.'; }},
+      {k:'skills',kind:'many',other:true,ask:function(){ return 'Which tools are you strongest in?'; },sub:'Pick your best — not everything you\'ve touched.',opts:function(){ return ['React','React Native','Next.js','Node.js','Python','Swift','Kotlin','Flutter','Supabase / Postgres','AWS / GCP','AI & LLMs','Three.js / WebGL','SEO','Figma']; },ack:function(){ return lst(A.skills).length+' core skills logged.'; }},
+      {k:'services',kind:'many',other:true,ask:function(){ return 'What would you offer SA clients?'; },opts:function(){ return ['Full builds','Front-end','Back-end & APIs','Mobile apps','AI integrations','Architecture & code reviews','Design & prototyping','DevOps & hosting','Maintenance & support']; },ack:function(){ return 'Services captured.'; }},
+      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Pick how you usually price, then your rate. Members set their own rates.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
+      {k:'availability',kind:'one',ask:function(){ return 'How much time could you give?'; },opts:function(){ return ['Full-time','Part-time','Evenings & weekends','Project by project']; },ack:function(){ return 'Availability: '+A.availability.toLowerCase()+'.'; }},
+      {k:'based',kind:'short',ask:function(){ return 'Where are you based, and how do you like to work?'; },ph:function(){ return 'e.g. Milton Keynes — remote or on-site'; },ack:function(){ return 'Based: '+A.based+'.'; }},
+      {k:'links',kind:'short',optional:true,ask:function(){ return 'Where can we see your work?'; },ph:function(){ return 'GitHub, portfolio, LinkedIn or App Store links (optional)'; },ack:function(){ return A.links?'Links saved — we\'ll take a look.':'No links — we can talk it through.'; }},
+      {k:'pitch',kind:'long',ask:function(){ return 'In a line or two, what makes your work stand out?'; },ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part we read twice.'; }},
+      {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'An SA engineer will reply within a few working days.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
+      {k:'review',kind:'review',ask:function(){ return 'Your Guild profile.'; }}
+    ]; },
+    vision:function(A){ var s='<em>'+esc(A.name||'You')+'</em> — '+esc((A.role||'builder').toLowerCase())+' with <em>'+esc((A.experience||'').toLowerCase())+'</em> of experience'+(A.based?', based in '+esc(A.based):'')+'. ';
+      if(lst(A.skills).length) s+='Strongest in '+esc(join(A.skills))+'. ';
+      if(lst(A.services).length) s+='Offers '+esc(join(A.services).toLowerCase())+'. ';
+      if(A.rate) s+='Charges <em>'+esc(A.rate)+'</em> ('+esc((A.rateBasis||'').toLowerCase())+'), available <em>'+esc((A.availability||'').toLowerCase())+'</em>. ';
+      if(A.pitch) s+='“'+esc(A.pitch)+'”'; return s; },
+    plain:function(A){ return 'GUILD MEMBERSHIP REQUEST — from the Braintrix\n\n'+lines([['Role',A.role],['Experience',A.experience],['Skills',join(A.skills)],['Services offered',join(A.services)],['Pricing',A.rateBasis],['Rate',A.rate],['Availability',A.availability],['Based / works',A.based],['Links',A.links],['Stand-out',A.pitch],['Name',A.name],['Email',A.email],['Phone',A.phone],['Prefers contact by',A.pref]]); },
+    subject:function(A){ return 'Guild membership request — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
+    fields:function(A){ return {role:A.role||'',rate:(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':''),availability:A.availability||''}; },
+    done:function(A){ return '<h2 class="decode">You\'re in the queue.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. An SA engineer will review your profile and reply within a few working days.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+  });
+
+  /* ══ FREE FLIGHT ══ */
+  var choice=document.getElementById('choice'), thrust=document.getElementById('thrust'), flyNear=document.getElementById('flyNear');
+  function showChoice(){ choice.classList.add('on'); FX('statics',.4,.6); }
+  function hideChoice(){ choice.classList.remove('on'); }
+  function startFly(){
+    if(!document.body.classList.contains('inside')||busy) return;
+    hideChoice();
+    retract(function(){ if(!M.freeStart()) return; document.body.classList.add('flying'); FX('warp'); history.replaceState(null,'',location.pathname); });
+  }
+  function endFly(){ document.body.classList.remove('flying'); thrust.classList.remove('on'); M.freeThrust(0); M.freeTurn(0); M.freeTilt(0); flyNear.textContent=''; }
+  document.addEventListener('click',function(e){ var f=e.target.closest('[data-fly]'); if(!f) return; e.preventDefault(); FX('zoop',.7); startFly(); });
+  M.onNear(function(id){ if(busy) return; travelTo(id); });
+  // drag to steer
+  var drag=null;
+  addEventListener('pointerdown',function(e){ if(!M.isFree()||e.target.closest('button,a,input,textarea,.nl')) return; drag={x:e.clientX,y:e.clientY,id:e.pointerId}; });
+  addEventListener('pointermove',function(e){ if(!drag||e.pointerId!==drag.id) return; M.freeLook(e.clientX-drag.x,e.clientY-drag.y); drag.x=e.clientX; drag.y=e.clientY; });
+  ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(e){ if(drag&&e.pointerId===drag.id) drag=null; }); });
+  // hold to fly
+  function hold(on){ M.freeThrust(on?1:0); thrust.classList.toggle('on',on); if(on) FX('zoop',.5); }
+  thrust.addEventListener('pointerdown',function(e){ e.preventDefault(); try{ thrust.setPointerCapture(e.pointerId); }catch(_){} hold(true); });
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(n){ thrust.addEventListener(n,function(){ hold(false); }); });
+  thrust.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+  // keys
+  var K={};
+  function keys(){ var f=(K.w||K.arrowup||K[' '])?1:((K.s||K.arrowdown)?-.45:0); M.freeThrust(f); thrust.classList.toggle('on',f>0);
+    M.freeTurn((K.a||K.arrowleft)?1:((K.d||K.arrowright)?-1:0)); M.freeTilt(K.r?1:(K.f?-1:0)); }
+  addEventListener('keydown',function(e){ if(!M.isFree()||e.target.closest('input,textarea')) return; var k=e.key.toLowerCase();
+    if(['w','a','s','d','r','f',' ','arrowup','arrowdown','arrowleft','arrowright'].indexOf(k)<0) return; e.preventDefault(); K[k]=1; keys(); });
+  addEventListener('keyup',function(e){ var k=e.key.toLowerCase(); if(K[k]){ delete K[k]; if(M.isFree()) keys(); } });
+  addEventListener('wheel',function(e){ if(!M.isFree()) return; M.freeKick(-e.deltaY*.06); },{passive:true});
+  // what's ahead
+  setInterval(function(){ if(!M.isFree()) return; var n=M.nearest(); if(!n.id) return; var d=byId[n.id];
+    flyNear.textContent=(d.secret&&!found[n.id])?(n.dist<90?'\u00B7 faint signal nearby \u00B7':''):'nearest \u00B7 '+(found[n.id]?d.name:(d.hint||d.name))+' \u00B7 '+Math.round(n.dist)+'m'; },200);
 
   /* the gate */
   var btx=document.getElementById('btx');
   function enter(){ if(document.body.classList.contains('inside')) return; FX('warp'); btx.classList.add('gone');
     var target=(location.hash||'').slice(1); if(!byId[target]||byId[target].secret) target='core';
-    M.enter(function(){ document.body.classList.add('inside'); cur='core'; setTimeout(function(){ if(cur!=='core'||busy||shown) return; M.fire('core'); emerge('core');
-        if(target!=='core') setTimeout(function(){ travelTo(target); },1400); },2300); }); }
+    M.enter(function(){ document.body.classList.add('inside'); cur='core'; setTimeout(function(){ if(cur!=='core'||busy||shown) return; M.fire('core');
+        if(target!=='core') travelTo(target); else showChoice(); },2300); }); }
   document.getElementById('btxEnter').addEventListener('click',enter);
   addEventListener('keydown',function(e){ if(e.key==='Enter' && !document.body.classList.contains('inside') && document.activeElement===document.body) enter(); });
 })();
