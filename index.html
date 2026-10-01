@@ -99,7 +99,7 @@ body.inside .hud{opacity:1}
 .word b{font-weight:800}
 .hud-tools{top:20px;right:22px;display:flex;gap:10px;align-items:center}
 .chip{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(31,107,255,.25);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.sfx-btn.off{opacity:.5;text-decoration:line-through}
+.sfx-btn.off{opacity:.7}
 .hud-found{bottom:18px;left:22px;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .hud-found b{color:var(--blue)}
 .hud-found .bar{display:block;margin-top:7px;height:2px;width:160px;background:rgba(31,107,255,.15);border-radius:2px;overflow:hidden}
@@ -598,6 +598,25 @@ details.legal{margin-left:auto;margin-right:auto}
   #stage::before{opacity:.35;margin-top:-40px}
 }
 
+
+@media(max-width:899px){
+  #p-portfolio .folio-grid{padding-left:0;margin-top:18px;text-align:center}
+  #p-portfolio .folio-grid::before{display:none}
+  #p-portfolio .folio-card,#p-portfolio .folio-top{display:block;max-width:330px;margin:0 auto 30px!important;padding-bottom:26px;text-align:center;position:relative}
+  #p-portfolio .folio-card::before{display:none}
+  #p-portfolio .folio-card::after{display:block;content:"";position:absolute;left:50%;bottom:0;width:6px;height:6px;margin-left:-3px;top:auto;border-radius:50%;background:var(--green);box-shadow:0 0 10px 2px rgba(18,217,138,.6)}
+  #p-portfolio .folio-card:last-child::after{display:none}
+  #p-portfolio .folio-logo-chip{justify-content:center;min-height:0;margin:0 auto 10px;animation:none}
+  #p-portfolio .folio-logo-chip img{max-height:46px;max-width:170px}
+  #p-portfolio .vz-chip{flex-direction:row;justify-content:center}
+  #p-portfolio .vz-chip img{height:46px;max-height:46px}
+  #p-portfolio .vz-word{font-size:1.3rem}
+  #p-portfolio .folio-logo-chip.folio-logo-text span{font-size:1.25rem}
+  #p-portfolio .folio-status{justify-content:center;font-size:.58rem}
+  #p-portfolio .folio-card h3,#p-portfolio .folio-top h3{font-size:1.08rem}
+  #p-portfolio .folio-card p,#p-portfolio .folio-top p{font-size:.88rem;margin-left:auto;margin-right:auto}
+}
+
 /* no JavaScript or no WebGL: show everything as a plain page */
 .nojs .pg{display:block;position:static}
 @media (prefers-reduced-motion: reduce){.pg > *,.pg.out > *{animation-duration:.01s}}
@@ -619,9 +638,8 @@ details.legal{margin-left:auto;margin-right:auto}
   <span class="word"><b>SA</b> INTELLIGENT DESIGNS</span>
 </a>
 <div class="hud hud-tools">
-  <button class="chip" id="ambBtn" type="button" aria-label="Choose a soundscape">&#8779; <span>Soundscape</span></button>
-  <button class="chip" id="flyChip" type="button" data-fly>&#10022; Fly</button>
-  <button class="chip sfx-btn" id="sfxBtn" type="button" aria-pressed="true" title="Sound effects on / off">&#9835; Sound</button>
+    <button class="chip" id="flyChip" type="button" data-fly>&#10022; Fly</button>
+  <button class="chip sfx-btn" id="sfxBtn" type="button" aria-pressed="false" title="Music on / off">&#9835; Sound off</button>
 </div>
 <div class="hud hud-found" id="found" aria-live="polite">Neurons discovered <b id="foundN">1</b> / <span id="foundT">11</span><span class="bar"><i id="foundBar"></i></span></div>
 <div class="hud hud-hint" id="hint">Tap any light to travel &middot; or take the controls and fly</div>
@@ -632,7 +650,7 @@ details.legal{margin-left:auto;margin-right:auto}
 <div id="sparks"></div>
 <button class="drift" id="drift" type="button" data-fly>&#10022; Fly off</button>
 <div id="toast"></div>
-<div id="ambMenu" role="menu" aria-label="Soundscapes"></div>
+
 <div id="choice" role="group" aria-label="How would you like to explore?">
   <div class="ask0" id="ask0">You're inside. Which way?</div>
   <button class="ch" type="button" data-go="guild"><b>I'm an engineer</b><span>Our worldwide tech community is coming soon &mdash; register early.</span></button>
@@ -848,7 +866,7 @@ A worldwide community for engineers is coming soon."></div>
   <article class="pg" id="p-secret" data-node="secret">
     <div class="eye">Hidden neuron &middot; you found it</div>
     <h2 class="decode">Most people never get this far.</h2>
-    <p>This neuron doesn't do anything useful. It just plays. <b>Tap anywhere</b> &mdash; the mind will fire back at you, one note at a time.</p>
+    <p>This neuron doesn't do anything useful. It just plays. <b>Tap anywhere</b> &mdash; the mind will spark back at you.</p>
     <p class="secret-tip" id="secretTip">Tell us you found the hidden neuron when you send your brief. We like curious people.</p>
   </article>
 
@@ -874,60 +892,10 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret'],['build','guild'],['faq','guild'],['services','guild'],['core','news'],['referral','news'],['news','process']];
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/mind-bg.js?v=6"></script>
+<script src="/assets/mind-bg.js?v=7"></script>
 <script>
-/* ── Calm neuron-signal sound effects: soft synapse pings on taps, a travelling signal on page changes ── */
-(function(){
-  var ctx=null, on=true;
-  try{ on=sessionStorage.getItem('saSfx')!=='off'; }catch(e){}
-  var btn=document.getElementById('sfxBtn');
-  function paint(){ if(!btn) return; btn.classList.toggle('off',!on); btn.setAttribute('aria-pressed',on?'true':'false'); btn.innerHTML=on?'&#9835; Sound':'&#9835; Muted'; }
-  paint();
-  function ac(){ if(!ctx){ var C=window.AudioContext||window.webkitAudioContext; if(!C) return null; ctx=new C(); } if(ctx.state==='suspended') ctx.resume(); return ctx; }
-  function noise(c,len){ var b=c.createBuffer(1,Math.max(1,Math.floor(c.sampleRate*len)),c.sampleRate), d=b.getChannelData(0); for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; var s=c.createBufferSource(); s.buffer=b; return s; }
-  function env(g,t,a,peak,rel){ g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(peak,t+a); g.gain.exponentialRampToValueAtTime(0.0001,t+a+rel); }
-  // calm neuron signals: soft synapse pings with a gentle echo
-  var bus=null;
-  function out(c){
-    if(bus) return bus;
-    bus=c.createGain(); bus.gain.value=1;
-    var d=c.createDelay(1); d.delayTime.value=.19; var fb=c.createGain(); fb.gain.value=.28; var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2600;
-    bus.connect(c.destination); bus.connect(d); d.connect(lp); lp.connect(fb); fb.connect(d); lp.connect(c.destination);
-    return bus;
-  }
-  function ping(c,t,freq,vol,len,glide){
-    var o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(freq,t); if(glide) o.frequency.exponentialRampToValueAtTime(freq*glide,t+len*.6);
-    var g=c.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol,t+.008); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
-    o.connect(g); g.connect(out(c)); o.start(t); o.stop(t+len+.05);
-  }
-  // tap: a single neuron firing (two soft pings)
-  function zoop(strength){
-    var c=ac(); if(!c||!on) return; var t=c.currentTime, k=strength||1;
-    ping(c,t,880,.035*k,.22,1.08); ping(c,t+.07,1320,.022*k,.26,1.04);
-  }
-  // thought opening: a quiet shimmer of high signals
-  function statics(len,strength){
-    var c=ac(); if(!c||!on) return; var t=c.currentTime, k=strength||1;
-    [1568,2093,2637].forEach(function(f,i){ ping(c,t+i*.06,f,.014*k,.5,1.0); });
-  }
-  // page change: a signal travelling along the connector (rising cascade + soft low swell)
-  function warp(){
-    var c=ac(); if(!c||!on) return; var t=c.currentTime;
-    [523,659,784,988,1175].forEach(function(f,i){ ping(c,t+i*.055,f,.024,.3,1.02); });
-    var o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(196,t); o.frequency.exponentialRampToValueAtTime(294,t+.7);
-    var g=c.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(.02,t+.25); g.gain.exponentialRampToValueAtTime(0.0001,t+.9);
-    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.95);
-  }
-  window.SAFX={zoop:zoop,statics:statics,warp:warp,isOff:function(){ return !on; }};
-  if(btn) btn.addEventListener('click',function(e){ e.stopPropagation(); on=!on; paint(); try{ sessionStorage.setItem('saSfx',on?'on':'off'); }catch(_){}; if(on) zoop(); });
-  // taps anywhere interactive get a soft zoop (page changes and thoughts play their own sound)
-  document.addEventListener('click',function(e){
-    if(!e.target.closest) return;
-    if(e.target.closest('#sfxBtn, #btxEnter')) return;
-    if(e.target.closest('.wz-btn, header nav a, .wz-dots button, .folded, .more-btn, .th-next, .th-prev')) return;
-    if(e.target.closest('a, button, input[type=submit], summary, .card, .promise, .step')) zoop(.8);
-  },true);
-})();
+/* sound effects removed — only the calm chords remain (see Soundscapes) */
+window.SAFX={zoop:function(){},statics:function(){},warp:function(){},isOff:function(){ return true; }};
 </script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
@@ -1076,20 +1044,17 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   }
   document.addEventListener('visibilitychange',function(){ if(!ctx) return; if(document.hidden) ctx.suspend(); else if(cur&&cur!=='off') ctx.resume(); });
 
-  /* the picker */
-  var btn=document.getElementById('ambBtn'), menu=document.getElementById('ambMenu');
-  function nameOf(id){ for(var i=0;i<LIST.length;i++) if(LIST[i].id===id) return LIST[i].name; return 'Silence'; }
-  function paint(){ if(btn) btn.innerHTML='&#8779; <span>'+(cur&&cur!=='off'?nameOf(cur):'Soundscape')+'</span>';
-    if(menu) menu.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',b.dataset.amb===(cur||'off')); }); }
-  if(menu){ menu.innerHTML='<div class="amb-h">Choose your soundscape</div>'+LIST.map(function(s){ return '<button type="button" data-amb="'+s.id+'"><i></i>'+s.name+'</button>'; }).join('');
-    menu.addEventListener('click',function(e){ var b=e.target.closest('[data-amb]'); if(!b) return; play(b.dataset.amb); setTimeout(function(){ menu.classList.remove('on'); },250); }); }
-  if(btn) btn.addEventListener('click',function(e){ e.stopPropagation(); menu.classList.toggle('on'); });
-  document.addEventListener('click',function(e){ if(menu && !e.target.closest('#ambMenu,#ambBtn,[data-ambopen]')) menu.classList.remove('on'); });
-  document.addEventListener('click',function(e){ if(e.target.closest('[data-ambopen]')){ e.preventDefault(); menu.classList.toggle('on'); } });
+  /* one soundtrack: calm chords, on by default; the Sound button switches it on or off */
+  var sbtn=document.getElementById('sfxBtn');
+  function paint(){ var on=cur&&cur!=='off'; if(sbtn){ sbtn.classList.toggle('off',!on); sbtn.setAttribute('aria-pressed',on); sbtn.innerHTML='&#9835; Sound '+(on?'on':'off'); }
+    document.querySelectorAll('[data-soundtoggle] span').forEach(function(s){ s.textContent=on?'Sound on':'Sound off'; }); }
+  function toggle(){ play(cur&&cur!=='off'?'off':'chords'); }
+  if(sbtn) sbtn.addEventListener('click',function(e){ e.preventDefault(); toggle(); });
+  document.addEventListener('click',function(e){ if(e.target.closest('[data-soundtoggle]')){ e.preventDefault(); toggle(); } });
   var saved=null; try{ saved=sessionStorage.getItem('saAmb'); }catch(e){}
-  cur=saved||'off'; paint();
-  // a saved choice resumes on the first tap (browsers need a gesture before audio)
-  if(saved && saved!=='off'){ var once=function(){ removeEventListener('pointerdown',once,true); play(saved); }; addEventListener('pointerdown',once,true); }
+  var want=(saved==='off')?'off':'chords'; cur='off'; paint();
+  // browsers need a tap before audio: start the chords on the first tap (the Enter button)
+  if(want!=='off'){ var once=function(e){ if(e.target.closest && e.target.closest('#sfxBtn,[data-soundtoggle]')) return; removeEventListener('pointerdown',once,true); if(cur==='off') play('chords'); }; addEventListener('pointerdown',once,true); }
   window.SAAmbience={play:play,list:LIST,current:function(){ return cur; },duck:function(on){ if(!ctx||!cur||cur==='off') return; var t0=ctx.currentTime; master.gain.cancelScheduledValues(t0); master.gain.setValueAtTime(master.gain.value,t0); master.gain.linearRampToValueAtTime(on?vol*.15:vol,t0+.4); }};
 })();
 
@@ -1105,7 +1070,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
 
   /* Jess: recorded Gemini voice lines, one shared player (unlocked on the first tap for iPhone) */
   var Jess=(function(){
-    var el=new Audio(), on=ss('saArchVoice')!=='off', cb=null, unlocked=false;
+    var el=new Audio(), on=false, cb=null, unlocked=false;
     el.preload='auto';
     function end(){ var c=cb; cb=null; try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(false); }catch(e){} c&&c(); }
     el.addEventListener('ended',end);
@@ -1113,7 +1078,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       try{ S.cancel(); }catch(e){} var u=new SpeechSynthesisUtterance(text); u.lang='en-GB'; var fin=false; function f(){ if(fin) return; fin=true; done&&done(); } u.onend=f; u.onerror=f; setTimeout(f,Math.max(3500,text.length*85)); S.speak(u); }
     return {
       unlock:function(){ if(unlocked) return; unlocked=true; try{ el.muted=true; el.src='/assets/voice/arch/mind-inside.m4a?v=2'; var pr=el.play(); if(pr&&pr.then) pr.then(function(){ el.pause(); el.currentTime=0; el.muted=false; }).catch(function(){ el.muted=false; }); else el.muted=false; }catch(e){} },
-      play:function(id,text,done){ if(!on){ setTimeout(function(){ done&&done(); },250); return; }
+      play:function(id,text,done){ if(true){ setTimeout(function(){ done&&done(); },250); return; }
         this.stop(); cb=done||null; try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(true); }catch(e){}
         el.muted=false; el.src='/assets/voice/arch/'+id+'.m4a?v='+(id==='mind-inside'?2:1);
         var failed=false; function fail(){ if(failed) return; failed=true; var c=cb; cb=null; fallback(text,function(){ try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(false); }catch(e){} c&&c(); }); }
@@ -1281,7 +1246,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     var sp=document.createElement('div'); sp.className='spark'+(Math.random()<.5?' b':''); sp.style.left=e.clientX+'px'; sp.style.top=e.clientY+'px';
     document.getElementById('sparks').appendChild(sp); setTimeout(function(){ sp.remove(); },1200);
     note(notes[Math.floor((1-e.clientY/innerHeight)*notes.length)]||660, e.clientX/innerWidth); M.fire('secret'); });
-  var actx=null; function note(f,pan){ if(window.SAFX && SAFX.isOff && SAFX.isOff()) return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); var t=actx.currentTime;
+  var actx=null; function note(f,pan){ return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); var t=actx.currentTime;
     var o=actx.createOscillator(), g=actx.createGain(), p=actx.createStereoPanner?actx.createStereoPanner():null; o.type='sine'; o.frequency.value=f;
     g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.05,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+1.2);
     o.connect(g); if(p){ p.pan.value=pan*2-1; g.connect(p); p.connect(actx.destination); } else g.connect(actx.destination); o.start(t); o.stop(t+1.3); }catch(e){} }
@@ -1725,7 +1690,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   var dockRow=document.getElementById('dockRow');
   function paintDock(){
     if(!dockRow) return;
-    var h='<button class="dk fly" type="button" data-fly><i>&#10022;</i><span>Fly</span></button><button class="dk fly" type="button" data-ambopen><i>&#8779;</i><span>Sound</span></button>';
+    var h='<button class="dk fly" type="button" data-fly><i>&#10022;</i><span>Fly</span></button><button class="dk fly" type="button" data-soundtoggle><i>&#9835;</i><span>Sound</span></button>';
     DESTS.forEach(function(d){ if(d.secret && !found[d.id]) return;
       var f=!!found[d.id]; h+='<button class="dk'+(d.c==='g'?' g':'')+(f?' found':'')+(d.id===cur?' here':'')+'" type="button" data-go="'+d.id+'"><i>'+(f?'':'?')+'</i><span>'+(f?d.name.replace(/^The /,''):'unknown')+'</span></button>'; });
     dockRow.innerHTML=h;
