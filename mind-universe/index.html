@@ -134,6 +134,15 @@ textarea.field{text-align:left;min-height:90px;resize:vertical;line-height:1.55}
 
 /* charts */
 canvas.chart{width:100%;max-width:560px;height:220px;display:block;margin:16px auto 0}
+.weekstrip{display:flex;gap:8px;max-width:560px;margin:14px auto 0}
+.weekstrip b{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.weekstrip i{display:block;width:100%;height:16px;border-radius:8px;background:var(--line)}
+.mood-grid{display:grid;grid-template-columns:1.35fr .8fr;gap:12px;max-width:640px;margin:8px auto 0}
+.mood-grid canvas,#moodFlow{width:100%;background:rgba(8,12,28,.28);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line)}
+#moodWeek,#moodPie{height:200px}
+#moodFlow{height:128px;display:block;max-width:640px;margin:12px auto 0}
+#moodRead{max-width:560px;margin:12px auto;line-height:1.5}
+@media(max-width:700px){.mood-grid{grid-template-columns:1fr}}
 .stats{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:12px}
 .stats div{display:flex;flex-direction:column;align-items:center}
 .stats b{font-size:1.8rem;font-weight:800;letter-spacing:-.03em}
@@ -424,7 +433,8 @@ body.in-world #worldLayer{display:block}
 body.in-world #neural,body.in-world #labels,body.in-world #stage,body.in-world #haze,body.in-world #dock,body.in-world #coreRail,body.in-world .hud.brand,body.in-world .thrust,body.in-world #flyHelp,body.in-world #enterPill,body.in-world #guide,body.in-world .flyhint,body.in-world .cross{opacity:0!important;pointer-events:none!important;visibility:hidden}
 body.in-world #worldHud{display:flex}
 #worldHud{position:fixed;inset:0;z-index:32;display:none;flex-direction:column;justify-content:space-between;pointer-events:none;padding:max(12px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom))}
-#worldHud > *{pointer-events:auto}
+#worldHud > *{pointer-events:none}
+#whExit,#whPrev,#whNext,#whFly,#whCard,#whPath{pointer-events:auto}
 .wh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .wh-top b{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 12px #000}
 .wh-top span{display:block;font-size:.9rem;font-weight:800;margin-top:4px;text-shadow:0 0 10px #000}
@@ -437,13 +447,17 @@ body.in-world #worldHud{display:flex}
 #whCard p{color:var(--mute);font-size:.85rem;line-height:1.45;margin:0 0 8px}
 .wh-nav{display:flex;gap:8px}
 #whHint{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute2);text-align:center;text-shadow:0 0 8px #000}
-#whPath{display:flex;justify-content:center;gap:5px;margin:8px 0 4px}
-#whPath i{width:7px;height:7px;border-radius:50%;background:var(--line)}
-#whPath i.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+#whPath{display:flex;justify-content:center;gap:8px;margin:8px 0 4px}
+#whPath button{width:12px;height:12px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.28);box-shadow:none;letter-spacing:0}
+#whPath button.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+#whNext{background:rgba(46,230,255,.2);box-shadow:inset 0 0 0 1px var(--cyan),0 0 16px -6px var(--cyan);color:#fff}
+#whFly{position:fixed;left:50%;bottom:148px;transform:translateX(-50%);z-index:5;width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;font-weight:700;line-height:1.25;color:#fff;background:radial-gradient(circle at 50% 40%,rgba(164,92,255,.9),rgba(79,125,255,.7));box-shadow:0 0 0 1.5px rgba(46,230,255,.5),0 0 34px -6px var(--purple);touch-action:none;user-select:none}
+#whFly.on{background:radial-gradient(circle at 50% 40%,#5bf3c4,#12b877);box-shadow:0 0 0 2px var(--green),0 0 50px 4px rgba(25,240,176,.6)}
 .wh-bot{display:flex;flex-direction:column;align-items:center;gap:6px}
 @media(max-width:899px){
   #whCard{max-width:92vw;padding:10px 12px}
   .wh-mid{flex-direction:column;align-items:stretch}
+  #whFly{bottom:calc(138px + env(safe-area-inset-bottom));width:96px;height:96px}
 }
 
 #presence{display:inline-flex;align-items:center;gap:8px;color:var(--green)}
@@ -614,13 +628,14 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   <div class="wh-mid">
     <div id="whCard"></div>
     <div class="wh-nav">
-      <button type="button" id="whPrev">Path back</button>
-      <button type="button" id="whNext">Path on</button>
+      <button type="button" id="whPrev">Up a floor</button>
+      <button type="button" id="whNext">Down a floor</button>
     </div>
   </div>
   <div class="wh-bot">
     <div id="whPath"></div>
     <div id="whHint"></div>
+    <button type="button" id="whFly">HOLD<br>TO FLY</button>
   </div>
 </div>
 
@@ -745,7 +760,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     {id:'studio',  name:'Creative studio',col:'#ffc44d', pos:[98,-36,-132], yaw:-.5,  dist:32, scale:1.1},
     {id:'arcade',  name:'Arcade',       col:'#ff4f6d', pos:[0,-58,-148],   yaw:0,    dist:34, scale:1.15},
     {id:'connect', name:'Community',  col:'#cfd6ff', pos:[0,8,-170],     yaw:0,    dist:32},
-    {id:'worlds',  name:'Cube Keep',   col:'#7fe0c3', pos:[0,22,-195],    yaw:0,    dist:40, scale:1.45, hint:'a tower of cubes you can walk'},
+    {id:'worlds',  name:'Cube Keep',   col:'#7fe0c3', pos:[0,22,-195],    yaw:0,    dist:40, scale:1.45, hint:'fly it the same way you fly the mind'},
     {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-1180,90,-380],  yaw:.9,   dist:34, scale:1.2, hidden:true},
     {id:'light',   name:'Light',        col:'#19f0b0', pos:[1180,80,-420],   yaw:-.9,  dist:34, scale:1.2, hidden:true}
   ];
@@ -855,7 +870,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 <script src="assets/mind-garden.js?v=1"></script>
 <script src="assets/mind-draw.js?v=1"></script>
 <script src="assets/mind-cube.js?v=1"></script>
-<script src="assets/mind-worlds.js?v=6"></script>
+<script src="assets/mind-worlds.js?v=7"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -1191,6 +1206,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   /* ── moods ── */
   var MOODS=[{n:'Joyful',c:'#ffc44d',v:5},{n:'Grateful',c:'#19f0b0',v:5},{n:'Hopeful',c:'#ff4fa8',v:4},{n:'Calm',c:'#2ee6ff',v:4},{n:'Tired',c:'#a45cff',v:2},{n:'Anxious',c:'#ff8a3d',v:2},{n:'Low',c:'#4f7dff',v:1}];
   function moodOf(n){ for(var i=0;i<MOODS.length;i++) if(MOODS[i].n===n) return MOODS[i]; return MOODS[3]; }
+  var weekOff=0, WD=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function weekStart(off){ var d=new Date(); d.setHours(12,0,0,0); var day=(d.getDay()+6)%7; d.setDate(d.getDate()-day+(off||0)*7); return d; }
+  function weekTitle(off){ var s=weekStart(off), e=new Date(s); e.setDate(s.getDate()+6); var a=s.getDate()+' '+MN[s.getMonth()], b=e.getDate()+' '+MN[e.getMonth()]; return (off===0?'This week · ':'')+a+' – '+b; }
+  function weekDays(off){ var s=weekStart(off), days=[]; for(var i=0;i<7;i++){ var d=new Date(s); d.setDate(s.getDate()+i); var k=today(d), ms=S.moods.filter(function(m){ return m.day===k; });
+    days.push({k:k,label:WD[i],date:d.getDate(),moods:ms,mood:ms.length?ms.reduce(function(n,m){ return n+moodOf(m.m).v; },0)/ms.length:null,last:ms[0]||null}); } return days; }
 
 
   var YMONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -1200,7 +1220,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   function yearOf(m){ return +mediaWhen(m).slice(0,4); }
   function yearOff(doy,k){ var t=doy/365, a=t*Math.PI*2-Math.PI/2, r=30+(k%3)*3; return [Math.cos(a)*r,(k%2?5:-2)+Math.sin(t*Math.PI*2)*5,Math.sin(a)*r]; }
   function yearPage(){ var Y=S.yearView||2025;
-    return eb('The year','#ffd27a')+'<h2>'+Y+'.</h2><p>Your photos and videos hang as screens on the day they belong to. Date each memory, then fly through the year and tap a screen to play or open it fully.</p>'+
+    return eb('The year','#ffd27a')+'<h2>'+Y+'.</h2><p>Beside this neuron, your photos and videos hang as big squares in one line. The newest is closest. Each step back is an older date, using the day the picture was taken. Fly along them.</p>'+
       '<div class="row"><button class="btn" data-act="yearRide" style="--c:#ffd27a">Fly through '+Y+'</button><button class="ghost" data-act="addMedia">Add photos or videos</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile">'+
       '<div class="ybar">'+YMONTHS.map(function(n,i){ return '<span style="left:'+((i+.5)/12*100)+'%">'+n.slice(0,3)+'</span>'; }).join('')+'</div>'+
       '<div id="yearList"><p class="empty">Loading…</p></div><p class="small">Memories not in '+Y+' stay in albums until you date them onto this year. <button class="link" data-go="gallery" style="margin:0">Open Memories</button></p>'; }
@@ -1252,11 +1272,19 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
           '<p class="small"><button class="link" data-act="intro" style="margin:0">Show me how it works</button> &middot; <a class="sa-link" href="/#portfolio">Built by Neuron Pulse &#8599;</a></p><p class="small">Tap empty space to float back out here. Drag to look around. Golden lines are paths you’ve travelled; faint dashed lines are unexplored.</p>'+
           '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
           '<p class="care">If you ever feel unsafe, please reach out &mdash; in the UK, <b>Samaritans are free on 116 123</b>, any time.</p></details>'; },
-    mood:function(){ var h=eb('Mood','#ff4fa8')+'<h2>How are you feeling right now?</h2><p>Tap the light that matches you. Add a few words if you like.</p><div class="orbs">'+
+    mood:function(){ var days=weekDays(weekOff);
+      var h=eb('Mood','#ff4fa8')+'<h2>How are you feeling right now?</h2><p>Tap the light that matches you. The week sits in a line, left to right, and the same charts hang beside the Mood neuron.</p><div class="orbs">'+
         MOODS.map(function(m){ return '<button class="orb" data-mood="'+m.n+'" style="--oc:'+m.c+'"><i></i><span>'+m.n+'</span></button>'; }).join('')+'</div>'+
         '<input class="field" id="mNote" placeholder="What\'s behind this feeling? (optional)" maxlength="160"><div class="row"><button class="btn" data-act="logMood">Save mood</button></div>'+
-        '<h3>Your recent moods</h3>'+(S.moods.length?'<ul class="thread">'+S.moods.slice(0,10).map(function(m){ return '<li style="--dot:'+moodOf(m.m).c+'"><b>'+esc(m.m)+'</b>'+(m.note?' &mdash; '+esc(m.note):'')+'<span class="meta">'+nice(m.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">No moods yet &mdash; your first one starts your history.</p>')+
-        '<button class="link" data-go="progress">See your mood chart</button>';
+        '<div class="row"><button class="ghost" data-act="moodPrev">Earlier week</button><button class="ghost" data-act="moodNext"'+(weekOff>=0?' disabled':'')+'>Later week</button></div>'+
+        '<p class="small" id="moodWeekLbl">'+weekTitle(weekOff)+'</p>'+
+        '<div class="weekstrip" id="weekStrip">'+days.map(function(d){ var c=d.last?moodOf(d.last.m).c:'transparent'; return '<b>'+d.label+'<i style="--c:'+c+';background:'+(d.last?c:'var(--line)')+'"></i></b>'; }).join('')+'</div>'+
+        '<div class="mood-grid"><canvas id="moodWeek"></canvas><canvas id="moodPie"></canvas></div>'+
+        '<canvas id="moodFlow"></canvas>'+
+        '<p id="moodRead">'+esc(localMoodRead(days))+'</p>'+
+        '<div class="row"><button class="btn" data-act="moodAI" style="--c:#ff4fa8">Summarise this week</button></div>'+
+        '<p class="small">The summary asks a free helper. Only this week’s mood names and notes are sent, just for that reading, and nothing is stored there.</p>'+
+        '<h3>Your recent moods</h3>'+(S.moods.length?'<ul class="thread">'+S.moods.slice(0,10).map(function(m){ return '<li style="--dot:'+moodOf(m.m).c+'"><b>'+esc(m.m)+'</b>'+(m.note?' &mdash; '+esc(m.note):'')+'<span class="meta">'+nice(m.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">No moods yet — your first one starts the week.</p>');
       return h; },
     progress:function(){ return eb('Progress','#2ee6ff')+'<h2>How you\'ve been.</h2><p>Your last 14 days: the line is your mood, the bars are what you did.</p><canvas class="chart" id="chart"></canvas>'+
         '<div class="stats"><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+S.moods.length+'</b><span>Moods logged</span></div><div><b>'+S.notes.length+'</b><span>Diary entries</span></div><div><b>'+S.todos.filter(function(t){ return t.done; }).length+'</b><span>Tasks done</span></div></div>'+
@@ -1309,7 +1337,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
         (S.videos.length?'<ul class="thread" style="--c:#ff4f6d">'+S.videos.slice(0,6).map(function(v){ return '<li><button data-yt="'+esc(v)+'" style="text-align:left">&#9654; youtu.be/'+esc(v)+'</button></li>'; }).join('')+'</ul>':''); },
     arcade:function(){ var A=window.MUArcade||{games:[],shelves:[],recs:[],freeware:[]}, cabs=ARCADE, md=MEGADRIVE;
       function cabPlay(list){ return '<div class="cab">'+list.map(function(x){ return '<button type="button" data-play="'+esc(x.id)+'" style="--c:'+x.c+'">'+esc(x.n)+'<br><span class="tag">'+esc(x.tag)+'</span></button>'; }).join('')+'</div>'; }
-      var h=eb('Arcade','#ff4f6d')+'<h2>Play inside the mind.</h2><p>Original games on the floating TV — or walk the Cube Keep, a tower of floors, not space-fly.</p><div class="row"><button class="btn" data-act="worldCube" style="--c:#2ee6ff">Walk the Cube Keep</button></div>';
+      var h=eb('Arcade','#ff4f6d')+'<h2>Play inside the mind.</h2><p>Original games on the floating TV — or fly Cube Keep the same way you fly here.</p><div class="row"><button class="btn" data-act="worldCube" style="--c:#2ee6ff">Fly Cube Keep</button></div>';
       (A.shelves||[]).forEach(function(sh){ var list=(A.games||[]).filter(function(g){ return (g.s||[]).indexOf(sh.id)>=0; });
         h+='<h3>'+esc(sh.n)+'</h3><p class="small">'+esc(sh.p)+'</p>'+cabPlay(list); });
       h+='<h3>Why this shelf</h3><p class="small">The action games are for everyone. The girls &amp; women shelf is extra: cozy, creative, puzzle and care, so the arcade is not only shooters. Recommendations below are free and legal — ours, or open pages on the web. Not commercial cartridge dumps.</p>'+
@@ -1370,9 +1398,9 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
         '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
     light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); },
-    worlds:function(){ return eb('Cube Keep','#2ee6ff')+'<h2>A tower of cubes. You walk it.</h2><p>Mind Universe stays the sky of neurons. Cube Keep is the other place: floors of cubes, top to bottom. Hold to walk, drag to look, take the stairs down.</p>'+
+    worlds:function(){ return eb('Cube Keep','#2ee6ff')+'<h2>A tower of cubes. You fly it.</h2><p>Same as the mind. Drag to turn. Hold the orb, or W, to move the way you are looking. Each floor is something strange. Down a floor drops you there, or look down and fly it yourself.</p>'+
       '<div class="row"><button class="btn" data-act="worlds" style="--c:#2ee6ff">Enter Cube Keep</button></div>'+
-      '<p class="small">On a phone: touch and hold to walk, drag to look. Path back / Path on moves you a floor. Back to Mind returns here.</p>'; }
+      '<p class="small">A and D turn. S backs up. The dots along the bottom jump to a floor. Back to Mind returns here.</p>'; }
   };
   function hiddenNote(k){ var all=DESTS.filter(function(d){ return d.kind===k; }), f=all.filter(function(d){ return S.visited[d.id]; }).length; return '<p class="empty">'+(f?f+' found \u00B7 ':'')+(all.length-f)+' still hidden around here. Fly close to discover them.</p>'; }
   function eb(t,c){ return '<div class="eyebrow" style="--c:'+c+'">'+t+'</div>'; }
@@ -1500,6 +1528,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(id==='listen') initListen();
     if(id==='ramadan') paintRam();
     if(id==='progress') drawChart(document.getElementById('chart'));
+    if(id==='mood') updateMoodBoards();
     if(id==='gallery') paintGallery();
     if(id==='arcade') paintRoms();
     if(id==='year'||(byId[id]&&byId[id].kind==='month')) paintYear();
@@ -1554,8 +1583,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(a==='gGrat'){ var g3=[].map.call(stage.querySelectorAll('[data-grat]'),function(x){ return x.value.trim(); }).filter(Boolean); if(!g3.length){ toast('Write at least one'); return; }
       S.notes.unshift({id:Date.now(),title:'Three good things',text:g3.map(function(x,i){ return (i+1)+'. '+x; }).join('\n'),ts:Date.now()}); logDay('note'); save(); toast('Saved to your diary'); M.fire('diary'); return; }
 
+    if(a==='moodPrev'){ weekOff--; render('mood'); return; }
+    if(a==='moodNext'){ if(weekOff<0) weekOff++; render('mood'); return; }
+    if(a==='moodAI'){ askWeek(); return; }
     if(a==='logMood'){ if(!selMood){ toast('Tap a mood light first'); return; } var note=(document.getElementById('mNote').value||'').trim();
-      S.moods.unshift({m:selMood,note:note,ts:Date.now(),day:today()}); logDay('mood'); save(); quest('mood'); M.fire('mood'); toast('Mood saved'); updateChartBoard();
+      S.moods.unshift({m:selMood,note:note,ts:Date.now(),day:today()}); logDay('mood'); save(); quest('mood'); M.fire('mood'); toast('Mood saved'); updateChartBoard(); updateMoodBoards();
       if(selMood==='Low'||selMood==='Anxious'){ render('mood'); var c=document.createElement('p'); c.className='care'; c.innerHTML='Thank you for being honest with yourself. Be gentle today &mdash; a slow breath, a short walk, or talking to someone you trust can help. If things feel too heavy, <b>Samaritans are free on 116 123</b> (UK), any time.'; stage.querySelector('.pg').insertBefore(c,stage.querySelector('.pg').children[3]); }
       else render('mood'); selMood=null; return; }
     if(a==='addNote'){ var tx=(document.getElementById('dText').value||'').trim(); if(!tx){ toast('Write something first'); return; } S.notes.unshift({id:Date.now(),title:(document.getElementById('dTitle').value||'').trim(),text:tx,ts:Date.now()}); logDay('note'); save(); M.fire('diary'); render('diary'); quest('diary'); return; }
@@ -1567,8 +1599,10 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(a==='export'){ var copy=JSON.parse(JSON.stringify(S)); delete copy.vaultPin; if(copy.vault) copy.vault={hash:copy.vault.hash,salt:copy.vault.salt}; var blob=new Blob([JSON.stringify(copy,null,2)],{type:'application/json'}), u=URL.createObjectURL(blob), l=document.createElement('a'); l.href=u; l.download='mind-universe-'+today()+'.json'; l.click(); setTimeout(function(){ URL.revokeObjectURL(u); },2000); return; }
     if(a==='wipe'){ if(!confirm('Delete everything in your mind on this device? This cannot be undone.')) return; localStorage.removeItem(KEY); indexedDB.deleteDatabase('mindu-media'); location.reload(); return; }
     if(a==='addMedia'){ var mf=document.getElementById('mFile'); mf.onchange=function(){ var files=[].slice.call(mf.files); Promise.all(files.map(function(file){ var isV=/^video/.test(file.type), locked=albumLocked(S.album);
-        if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now(),when:isoDay(Date.now()),album:S.album,locked:locked}); });
-        return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now(),when:isoDay(Date.now()),album:S.album,locked:locked}); })).then(function(){ M.fire('gallery'); M.fire('year'); paintGallery(); paintYear(); refreshBoards(); quest('gallery'); }); }; mf.click(); return; }
+        return takenOf(file).then(function(t){
+          if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now(),when:t.when,at:t.at,album:S.album,locked:locked}); });
+          return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now(),when:t.when,at:t.at,album:S.album,locked:locked});
+        }); })).then(function(){ M.fire('gallery'); M.fire('year'); paintGallery(); paintYear(); refreshBoards(); quest('gallery'); toast('Placed on the timeline by date'); }); }; mf.click(); return; }
     if(a==='addRom'){ var rf=document.getElementById('romFile'); if(!rf) return; rf.onchange=function(){ var files=[].slice.call(rf.files); Promise.all(files.map(function(file){
         return mPut({id:'rom'+Date.now()+Math.random().toString(36).slice(2,6),type:'rom',name:file.name,core:coreFromFile(file.name),blob:file,ts:Date.now()});
       })).then(function(){ toast(files.length===1?'Cartridge loaded':'Cartridges loaded'); paintRoms(); M.fire('arcade'); }); }; rf.click(); return; }
@@ -1870,6 +1904,79 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   function drawChart(c){ if(!c) return; var dpr=Math.min(2,devicePixelRatio||1), w=c.clientWidth, h=c.clientHeight; c.width=w*dpr; c.height=h*dpr; var g=c.getContext('2d'); g.scale(dpr,dpr); paintChart(c,w,h,S.theme==='dark'); }
   var chartCanvas=document.createElement('canvas'); chartCanvas.width=512; chartCanvas.height=256; var chartBoard=null;
   function updateChartBoard(){ var g=chartCanvas.getContext('2d'); g.setTransform(1,0,0,1,0,0); g.clearRect(0,0,512,256); paintChart(chartCanvas,512,256,S.theme==='dark'); if(chartBoard) chartBoard.update(); }
+  function localMoodRead(days){
+    var all=[]; days.forEach(function(d){ d.moods.forEach(function(m){ all.push(m); }); });
+    if(!all.length) return 'Nothing logged this week yet. One mood is enough to start the line.';
+    var counts={}; all.forEach(function(m){ counts[m.m]=(counts[m.m]||0)+1; });
+    var top=Object.keys(counts).sort(function(a,b){ return counts[b]-counts[a]; })[0];
+    var first=null, last=null; days.forEach(function(d){ if(d.mood!=null){ if(first==null) first=d.mood; last=d.mood; } });
+    var trend=last>first+.4?' It lifted as the week went on.':(first>last+.4?' It got heavier toward the end.':' It stayed in a similar place.');
+    var quiet=days.filter(function(d){ return !d.moods.length; }).length;
+    var note=all.map(function(m){ return m.note; }).filter(Boolean)[0];
+    var heavy=all.some(function(m){ return m.m==='Low'||m.m==='Anxious'; });
+    return 'This week shows up most as '+top+'.'+trend+(quiet?' '+quiet+' day'+(quiet===1?' was':'s were')+' left blank.':'')+(note?' You wrote: “'+note.slice(0,90)+'”.':'')+(heavy?' Some of it was heavy. If that stays, Samaritans are free on 116 123.':' The line gets clearer each time you log.');
+  }
+  function paintWeek(c,w,h,dark){
+    var g=c.getContext('2d'), days=weekDays(weekOff), pad=28, ink=dark?'rgba(238,241,255,':'rgba(11,23,48,';
+    g.clearRect(0,0,w,h); g.strokeStyle=ink+'.12)'; g.lineWidth=1;
+    for(var y=0;y<=4;y++){ var yy=pad+(h-pad*2)*y/4; g.beginPath(); g.moveTo(pad,yy); g.lineTo(w-10,yy); g.stroke(); }
+    var bw=(w-pad-16)/7;
+    days.forEach(function(d,i){ var x=pad+i*bw, v=d.mood==null?0:d.mood, bh=(h-pad*2)*((v||0)/5), col=d.last?moodOf(d.last.m).c:'rgba(120,140,180,.25)';
+      g.fillStyle=col; g.globalAlpha=d.mood==null?.35:1; g.fillRect(x+bw*.22,h-pad-bh,bw*.56,Math.max(bh,4)); g.globalAlpha=1;
+      g.fillStyle=ink+'.7)'; g.font='11px JetBrains Mono, monospace'; g.textAlign='center'; g.fillText(d.label,x+bw/2,h-8); });
+    g.strokeStyle='#ff4fa8'; g.lineWidth=2.5; g.beginPath(); var st=false;
+    days.forEach(function(d,i){ if(d.mood==null) return; var x=pad+i*bw+bw/2, y=pad+(h-pad*2)*(1-(d.mood)/5); if(!st){ g.moveTo(x,y); st=true; } else g.lineTo(x,y); }); g.stroke();
+  }
+  function paintPie(c,w,h,dark){
+    var g=c.getContext('2d'), days=weekDays(weekOff), counts={}, n=0;
+    days.forEach(function(d){ d.moods.forEach(function(m){ counts[m.m]=(counts[m.m]||0)+1; n++; }); });
+    g.clearRect(0,0,w,h); var cx=w*.46, cy=h*.52, r=Math.min(w,h)*.32;
+    if(!n){ g.fillStyle=dark?'rgba(238,241,255,.45)':'rgba(11,23,48,.45)'; g.font='13px Inter, sans-serif'; g.textAlign='center'; g.fillText('No moods this week',w/2,h/2); return; }
+    var a=-Math.PI/2, keys=Object.keys(counts);
+    keys.forEach(function(k){ var slice=counts[k]/n*Math.PI*2; g.beginPath(); g.moveTo(cx,cy); g.arc(cx,cy,r,a,a+slice); g.closePath(); g.fillStyle=moodOf(k).c; g.fill(); a+=slice; });
+    g.beginPath(); g.arc(cx,cy,r*.55,0,Math.PI*2); g.fillStyle=dark?'#12182a':'#eef2f8'; g.fill();
+    g.fillStyle=dark?'#eef1ff':'#0b1730'; g.font='700 18px Inter, sans-serif'; g.textAlign='center'; g.fillText(String(n),cx,cy+6);
+    g.font='10px JetBrains Mono, monospace'; g.textAlign='left';
+    keys.forEach(function(k,i){ g.fillStyle=moodOf(k).c; g.fillRect(w*.78, 18+i*16, 8, 8); g.fillStyle=dark?'#eef1ff':'#0b1730'; g.fillText(k,w*.78+12,26+i*16); });
+  }
+  var flowT=0;
+  function paintFlow(c,w,h,dark){
+    var g=c.getContext('2d'), days=weekDays(weekOff);
+    g.clearRect(0,0,w,h);
+    var bg=dark?'#0c1224':'#e7eef8'; g.fillStyle=bg; g.fillRect(0,0,w,h);
+    for(var x=0;x<w;x++){
+      var u=((x/w)+flowT)%1, idx=Math.min(6,Math.floor(u*7)), d=days[idx], col=d&&d.last?moodOf(d.last.m).c:(dark?'#24304a':'#c5d0e4');
+      var mid=h*.55, amp=(d&&d.mood?d.mood:2.2)*h*.06, y=mid+Math.sin(x*.045+flowT*12)*amp;
+      g.strokeStyle=col; g.globalAlpha=.85; g.beginPath(); g.moveTo(x,y-10); g.lineTo(x,y+18); g.stroke();
+    }
+    g.globalAlpha=1; g.fillStyle=dark?'rgba(238,241,255,.7)':'rgba(11,23,48,.65)'; g.font='11px JetBrains Mono, monospace'; g.textAlign='left'; g.fillText('flowing week',12,18);
+  }
+  function drawBox(c,fn){ if(!c||!c.clientWidth) return; var dpr=Math.min(2,devicePixelRatio||1), w=c.clientWidth, h=c.clientHeight||120, W=Math.floor(w*dpr), H=Math.floor(h*dpr);
+    if(c.width!==W||c.height!==H){ c.width=W; c.height=H; } var g=c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); fn(c,w,h,S.theme!=='light'); }
+  var moodWeekCanvas=document.createElement('canvas'); moodWeekCanvas.width=640; moodWeekCanvas.height=280;
+  var moodPieCanvas=document.createElement('canvas'); moodPieCanvas.width=480; moodPieCanvas.height=360;
+  var moodFlowCanvas=document.createElement('canvas'); moodFlowCanvas.width=640; moodFlowCanvas.height=200;
+  var moodWeekBoard=null, moodPieBoard=null, moodFlowBoard=null;
+  function updateMoodBoards(){
+    paintWeek(moodWeekCanvas,640,280,true); paintPie(moodPieCanvas,480,360,true); paintFlow(moodFlowCanvas,640,200,true);
+    if(moodWeekBoard) moodWeekBoard.update(); if(moodPieBoard) moodPieBoard.update(); if(moodFlowBoard) moodFlowBoard.update();
+    drawBox(document.getElementById('moodWeek'), paintWeek); drawBox(document.getElementById('moodPie'), paintPie); drawBox(document.getElementById('moodFlow'), paintFlow);
+  }
+  function tickMoodFlow(){ flowT+=.0035; paintFlow(moodFlowCanvas,640,200,true); if(moodFlowBoard) moodFlowBoard.update(); var page=document.getElementById('moodFlow'); if(page) drawBox(page, paintFlow); }
+  function askWeek(){
+    var el=document.getElementById('moodRead'); if(!el) return;
+    var days=weekDays(weekOff), local=localMoodRead(days);
+    if(!days.some(function(d){ return d.moods.length; })){ el.textContent=local; return; }
+    el.textContent='Reading this week…';
+    var brief=days.map(function(d){ return d.moods.length?d.label+': '+d.moods.map(function(m){ return m.m+(m.note?' "'+m.note.slice(0,70)+'"':''); }).join(', '):d.label+': quiet'; }).join('; ');
+    var q='Write 3 short warm sentences about this week of moods. Do not diagnose or give medical advice. If Low or Anxious appears, mention that Samaritans are free on 116 123 in the UK. Week: '+brief;
+    fetch('https://text.pollinations.ai/'+encodeURIComponent(q)).then(function(r){ return r.text(); }).then(function(t){
+      t=(t||'').trim();
+      if(!el.isConnected) return;
+      if(!t||t.charAt(0)==='{'||t.length>800){ el.textContent=local; return; }
+      el.textContent=t;
+    }).catch(function(){ if(el.isConnected) el.textContent=local; });
+  }
 
   /* memories: photos and videos as big TV screens floating in the mind */
   var boards=[];
@@ -1878,13 +1985,44 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
       el.innerHTML=list.map(function(m){ var sealed=mediaSealed(m), src=sealed?'':(m.type==='video'?URL.createObjectURL(m.blob):m.url);
         return '<figure data-mid="'+esc(m.id)+'" class="'+(sealed?'sealed':'')+(mediaLocked(m)?' locked':'')+'">'+(sealed?'<div class="vpadlock">&#128274;</div>':(m.type==='video'?'<video src="'+src+'" muted loop playsinline autoplay></video>':'<img src="'+src+'" alt="">'))+'<button class="lockish" data-lock-media="'+m.id+'" aria-label="Lock">'+(mediaLocked(m)?'&#128274;':'&#128275;')+'</button><button data-del-media="'+m.id+'" aria-label="Remove">&#10005;</button></figure>'; }).join(''); }); }
   function tvSize(w0, iw, ih){ var w=w0, h=w*(ih||9)/(iw||16); if(h>w0*0.7){ var k=(w0*0.7)/h; w*=k; h*=k; } return [w,h]; }
-  function placeTV(m,anchor,off,w0){
+  function whenLabel(m){ var p=(mediaWhen(m)||'').split('-'); if(p.length<3) return ''; var s=+p[2]+' '+MN[(+p[1]||1)-1]+' '+p[0]; return m.at?s+' · '+m.at:s; }
+  function coverSquare(im, label){
+    var c=document.createElement('canvas'); c.width=c.height=512; var g=c.getContext('2d');
+    var s=Math.max(512/im.width,512/im.height), dw=im.width*s, dh=im.height*s;
+    g.drawImage(im,(512-dw)/2,(512-dh)/2,dw,dh);
+    g.fillStyle='rgba(6,10,22,.78)'; g.fillRect(0,424,512,88);
+    g.fillStyle='#ffe7b0'; g.font='700 36px Inter, sans-serif'; g.textAlign='center'; g.fillText(label||'',256,478);
+    return c;
+  }
+  function stampDate(rec, label){
+    if(!rec||!rec.group||!label||!window.THREE) return;
+    var c=document.createElement('canvas'); c.width=640; c.height=120; var x=c.getContext('2d');
+    x.fillStyle='rgba(6,10,22,.8)'; x.fillRect(0,0,640,120); x.fillStyle='#ffe7b0'; x.font='700 48px Inter, sans-serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(label,320,60);
+    var tex=new THREE.CanvasTexture(c), sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false}));
+    var w=rec.w||16; sp.scale.set(w*.96,w*.2,1); sp.position.set(0,-(rec.h||w)/2-w*.18,.5); rec.group.add(sp);
+    var old=rec.remove; rec.remove=function(){ try{ tex.dispose(); sp.material.dispose(); }catch(e){} old.call(rec); };
+  }
+  function placeTV(m,anchor,off,w0,square){
     if(!M.addTV) return;
     if(m.type==='video'){ var v=document.createElement('video'); v.muted=true; v.playsInline=true; v.preload='auto'; v.src=URL.createObjectURL(m.blob);
       v.addEventListener('loadeddata',function(){ try{ v.pause(); v.currentTime=Math.min(0.12,(v.duration||1)*0.05); }catch(e){}
-        var s=tvSize(w0,v.videoWidth,v.videoHeight), b=M.addTV(anchor,v,s[0],s[1],off,{kind:'video',mid:m.id,album:mediaAlbum(m)});
-        if(b){ b.video=v; boards.push(b); } },{once:true}); }
-    else { var im=new Image(); im.onload=function(){ var s=tvSize(w0*0.92,im.width,im.height), b=M.addTV(anchor,im,s[0],s[1],off,{kind:'image',mid:m.id,album:mediaAlbum(m)}); if(b) boards.push(b); }; im.src=m.url; } }
+        var s=square?[w0,w0]:tvSize(w0,v.videoWidth,v.videoHeight), b=M.addTV(anchor,v,s[0],s[1],off,{kind:'video',mid:m.id,album:mediaAlbum(m)});
+        if(b){ b.video=v; if(square) stampDate(b, whenLabel(m)); boards.push(b); } },{once:true}); }
+    else { var im=new Image(); im.onload=function(){ var b; if(square){ b=M.addTV(anchor,coverSquare(im, whenLabel(m)),w0,w0,off,{kind:'image',mid:m.id,album:mediaAlbum(m)}); } else { var s=tvSize(w0*0.92,im.width,im.height); b=M.addTV(anchor,im,s[0],s[1],off,{kind:'image',mid:m.id,album:mediaAlbum(m)}); } if(b) boards.push(b); }; im.src=m.url; } }
+  function takenOf(file){
+    var fallback=function(){ var d=new Date(file.lastModified||Date.now()); return {when:isoDay(d.getTime()), at:String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}; };
+    if(!file.arrayBuffer || /^video/.test(file.type)) return Promise.resolve(fallback());
+    return file.slice(0,160000).arrayBuffer().then(function(buf){
+      var u=new Uint8Array(buf), best=null;
+      for(var i=0;i<u.length-19;i++){
+        if(u[i+4]!==58||u[i+7]!==58||u[i+10]!==32||u[i+13]!==58||u[i+16]!==58) continue;
+        var t=''; for(var k=0;k<19;k++){ var ch=u[i+k]; if(ch<32||ch>126){ t=''; break; } t+=String.fromCharCode(ch); }
+        if(/^\d{4}:\d{2}:\d{2} \d{2}:\d{2}:\d{2}$/.test(t)){ best=t; break; }
+      }
+      if(!best) return fallback();
+      return {when:best.slice(0,10).replace(/:/g,'-'), at:best.slice(11,16)};
+    }).catch(fallback);
+  }
   function floatMedia(list,anchor,max,r0){ var mine=list.filter(function(m){ return !mediaSealed(m); }).slice(0,max), n=Math.max(1,mine.length);
     mine.forEach(function(m,i){ var a=i/n*Math.PI*2, r=r0+(i%2)*5.5, off=[Math.cos(a)*r, Math.sin(a*.85)*r*.42, Math.sin(a)*r*.72];
       placeTV(m,anchor,off,anchor==='gallery'?(innerWidth<900?14:18):(innerWidth<900?11:14)); }); }
@@ -1893,8 +2031,15 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
       var cap=innerWidth<900; floatMedia(list.filter(function(m){ return mediaAlbum(m)===S.album; }),'gallery',cap?6:10, cap?14:18);
       floatMedia(list.filter(function(m){ return m.album==='Ramadan'; }),'ramadan',cap?4:8, cap?12:16);
       floatYear(list); floatYT(); }); }
-  function floatYear(list){ var Y=S.yearView||2025, mine=list.filter(function(m){ return yearOf(m)===Y && !mediaSealed(m); }).sort(function(a,b){ return mediaWhen(a).localeCompare(mediaWhen(b)); }).slice(0, innerWidth<900?18:36), counts={};
-    mine.forEach(function(m){ var d=doyOf(mediaWhen(m)), k=counts[d]||0; counts[d]=k+1; placeTV(m,'year',yearOff(d,k), innerWidth<900?8:11); }); }
+  function floatYear(list){
+    var mine=list.filter(function(m){ return (m.type==='image'||m.type==='video') && !mediaSealed(m); });
+    mine.sort(function(a,b){ var aw=mediaWhen(a)+(a.at||'00:00'), bw=mediaWhen(b)+(b.at||'00:00'); if(aw!==bw) return bw.localeCompare(aw); return (b.ts||0)-(a.ts||0); });
+    var cap=innerWidth<900?14:36, size=innerWidth<900?13:17, step=size+4.5, yaw=(byId.year&&byId.year.yaw)||0;
+    mine.slice(0,cap).forEach(function(m,i){
+      var along=18-i*step;
+      placeTV(m,'year',[Math.sin(yaw)*along, 2.4, Math.cos(yaw)*along], size, true);
+    });
+  }
   function floatYT(){ var ids=(S.videos||[]).slice(0, innerWidth<900?4:8), n=Math.max(1,ids.length);
     ids.forEach(function(id,i){ var a=i/n*Math.PI*2+0.4, r=18+(i%2)*4, off=[Math.cos(a)*r, Math.sin(a)*r*.4, Math.sin(a)*r*.7];
       var im=new Image(); im.onload=function(){ var b=M.addTV('portals',im, innerWidth<900?12:16, innerWidth<900?6.75:9, off,{kind:'yt',yt:id,title:'YouTube'}); if(b) boards.push(b); };
@@ -2295,7 +2440,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   }
   lw.addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return;
     e.preventDefault(); tapNeuron(b.dataset.go); });
-  M.onFrame(function(){ var tr=M.travelling(); moveGoalOrbs(performance.now()/1000); moveIdeaOrbs(performance.now()/1000); if(typeof moveGuide==='function') moveGuide();
+  M.onFrame(function(){ var tr=M.travelling(); tickMoodFlow(); moveGoalOrbs(performance.now()/1000); moveIdeaOrbs(performance.now()/1000); if(typeof moveGuide==='function') moveGuide();
     var near=[];
     DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); if(d.dormant||!el){ if(el){ el.style.opacity='0'; el.style.pointerEvents='none'; } return; }
       var atCur=d.id===cur, reading=atCur&&shown===d.id, kn=knownOf(d);
@@ -2479,7 +2624,12 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     try{ speechSynthesis.cancel(); }catch(e){}
     M.enter(function(){ document.body.classList.add('inside'); cur='me'; M.setTheme(S.theme);
       M.setSeen(S.paths||[]); M.onPath(function(keys){ S.paths=(S.paths||[]).concat(keys); save(); toast('\u2726 New path explored'); });
-      chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard(); refreshBoards(); refreshGoalOrbs(); refreshIdeaOrbs(); S.wishes.forEach(function(w,i){ addWishStar(i); });
+      chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard();
+      moodWeekBoard=M.addBillboard('mood',moodWeekCanvas,22,10,[0,16,8]);
+      moodPieBoard=M.addBillboard('mood',moodPieCanvas,12,12,[16,7,-6]);
+      moodFlowBoard=M.addBillboard('mood',moodFlowCanvas,24,8,[-4,5,14]);
+      updateMoodBoards();
+      refreshBoards(); refreshGoalOrbs(); refreshIdeaOrbs(); S.wishes.forEach(function(w,i){ addWishStar(i); });
       var last=S.moods[0]; if(last) M.setColor('mood',moodOf(last.m).c);
       setTimeout(function(){ M.fire('me'); emerge('me'); if(localStorage.getItem('mindu.intro')!=='1') setTimeout(showIntro,1200); },2300); }); }
   document.getElementById('gEnter').onclick=enter;
