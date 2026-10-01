@@ -607,7 +607,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 <div id="worldLayer" aria-hidden="true"></div>
 <div id="worldHud">
   <div class="wh-top">
-    <div><b id="whName">Worlds</b><span id="whStop"></span></div>
+    <div><b id="whName">Cube Keep</b><span id="whStop"></span></div>
     <button class="wh-exit" type="button" id="whExit">Back to Mind</button>
   </div>
   <div class="wh-map" id="whMap"></div>
@@ -635,7 +635,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 </div>
 
 <div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
-<div class="hud tools"><span class="chip" id="presence" hidden><i class="pdot"></i><span id="presenceTxt"></span></span><button class="chip" id="worldsChip" type="button" title="Other worlds">Worlds</button><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div class="hud tools"><span class="chip" id="presence" hidden><i class="pdot"></i><span id="presenceTxt"></span></span><button class="chip" id="worldsChip" type="button" title="Cube Keep">Cube Keep</button><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
 <div id="soundMenu" role="menu" aria-label="Sound">
   <div class="h">Calm</div>
   <button type="button" data-snd="off"><i></i>Silence</button>
@@ -745,7 +745,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     {id:'studio',  name:'Creative studio',col:'#ffc44d', pos:[98,-36,-132], yaw:-.5,  dist:32, scale:1.1},
     {id:'arcade',  name:'Arcade',       col:'#ff4f6d', pos:[0,-58,-148],   yaw:0,    dist:34, scale:1.15},
     {id:'connect', name:'Community',  col:'#cfd6ff', pos:[0,8,-170],     yaw:0,    dist:32},
-    {id:'worlds',  name:'Worlds',      col:'#7fe0c3', pos:[0,22,-195],    yaw:0,    dist:40, scale:1.45, hint:'a doorway to other universes'},
+    {id:'worlds',  name:'Cube Keep',   col:'#7fe0c3', pos:[0,22,-195],    yaw:0,    dist:40, scale:1.45, hint:'a tower of cubes you can walk'},
     {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-1180,90,-380],  yaw:.9,   dist:34, scale:1.2, hidden:true},
     {id:'light',   name:'Light',        col:'#19f0b0', pos:[1180,80,-420],   yaw:-.9,  dist:34, scale:1.2, hidden:true}
   ];
@@ -855,7 +855,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 <script src="assets/mind-garden.js?v=1"></script>
 <script src="assets/mind-draw.js?v=1"></script>
 <script src="assets/mind-cube.js?v=1"></script>
-<script src="assets/mind-worlds.js?v=5"></script>
+<script src="assets/mind-worlds.js?v=6"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -1241,7 +1241,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
       ];
       return eb('Home','#ffffff')+'<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2><p>Your whole mind, from the outside. Double-tap a far light to travel. Tap when you are next to one to open it.</p>'+
         coreRow()+statRings(rows,qd,qt)+'<div class="hstats">'+rows.map(function(r,i){ var unk=false; return '<button class="hstat" '+(r[0]!=='me'&&!unk?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
-        '<div class="row"><button class="btn" data-act="worlds" style="--c:#7fe0c3">Enter Worlds</button></div>'+
+        '<div class="row"><button class="btn" data-act="worlds" style="--c:#2ee6ff">Enter Cube Keep</button></div>'+
         '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button></div>'+
         '<details class="hmore"><summary>Today’s quests &middot; '+qd+'/'+qt+'</summary><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return true?'<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button></li>':'<li style="--dot:#cfd6ff"><span>? Find this neuron to unlock its quest</span></li>'; }).join('')+'</ul>'+
           '<p class="small"><b>Mind Vision</b> (50 coins): every hidden light reveals itself for a minute.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision · 50':(50-S.coins)+' coins to go')+'</button></div></details>'+
@@ -1370,18 +1370,9 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
         '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
     light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); },
-    worlds:function(){ return eb('Worlds','#7fe0c3')+'<h2>Other universes, each with its own way of moving.</h2><p>Mind Universe stays home — health, quotes, tracking. The worlds beyond are not the same sky. Each has an inner path so you can see it clearly.</p>'+
-      '<ul class="thread" style="--c:#7fe0c3">'+
-      '<li><b>Mind Universe</b><span class="meta">this sky — fly between neurons</span></li>'+
-      '<li><b>Cube Keep</b><span class="meta">walk floors of cubes, top to bottom. No space-doodling.</span></li>'+
-      '<li><b>The Gardens</b><span class="meta">night garden and the gardens along a living path</span></li>'+
-      '<li><b>The Living Path</b><span class="meta">walk past animals beside the track</span></li>'+
-      '<li><b>Nearby worlds</b><span class="meta">the real planets of our sun, one orbital hop at a time</span></li>'+
-      '<li><b>Science hall</b><span class="meta">living animations on an exhibit rail</span></li>'+
-      '</ul>'+
-      '<div class="row"><button class="btn" data-act="worlds" style="--c:#7fe0c3">Enter the Worlds gate</button></div>'+
-      '<div class="row"><button class="ghost" data-act="worldCube">Cube Keep</button><button class="ghost" data-act="worldGarden">Night garden</button><button class="ghost" data-act="worldAnimals">Living Path</button><button class="ghost" data-act="worldPlanets">Planets</button><button class="ghost" data-act="worldScience">Science</button></div>'+
-      '<p class="small">On a phone: touch and hold to walk, drag to look. Path back / Path on rides that world’s inner route. Esc or Back to Mind returns here.</p>'; }
+    worlds:function(){ return eb('Cube Keep','#2ee6ff')+'<h2>A tower of cubes. You walk it.</h2><p>Mind Universe stays the sky of neurons. Cube Keep is the other place: floors of cubes, top to bottom. Hold to walk, drag to look, take the stairs down.</p>'+
+      '<div class="row"><button class="btn" data-act="worlds" style="--c:#2ee6ff">Enter Cube Keep</button></div>'+
+      '<p class="small">On a phone: touch and hold to walk, drag to look. Path back / Path on moves you a floor. Back to Mind returns here.</p>'; }
   };
   function hiddenNote(k){ var all=DESTS.filter(function(d){ return d.kind===k; }), f=all.filter(function(d){ return S.visited[d.id]; }).length; return '<p class="empty">'+(f?f+' found \u00B7 ':'')+(all.length-f)+' still hidden around here. Fly close to discover them.</p>'; }
   function eb(t,c){ return '<div class="eyebrow" style="--c:'+c+'">'+t+'</div>'; }
@@ -1442,11 +1433,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     after(id,pg); }
   function openWorlds(which){
     markVisited('worlds');
-    if(!window.MUWorlds){ toast('Worlds are still loading — try again in a moment'); return; }
-    retract(function(){ MUWorlds.enter(which||'gate'); });
+    if(!window.MUWorlds){ toast('Cube Keep is still loading — try again in a moment'); return; }
+    retract(function(){ MUWorlds.enter(which||'cube'); });
   }
   function emerge(id){
-    if(id==='worlds' && window.MUWorlds){ openWorlds('gate'); return; }
+    if(id==='worlds' && window.MUWorlds){ openWorlds('cube'); return; }
     shown=id; stage.classList.add('live'); haze.classList.add('on'); stage.scrollTop=0; render(id);
     if(id==='gallery'&&albumLocked(S.album)&&!hasVault()) setTimeout(function(){ if(shown===id&&!VK.on) vkOpen('set'); },480);
     else if(hasVault()&&!vaultOpen&&(nodeSealed(id)||(id==='gallery'&&albumSealed(S.album)))) setTimeout(function(){ if(shown===id&&!VK.on) vkOpen('open'); },480); }
@@ -1519,7 +1510,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   }
   stage.addEventListener('click',function(e){
     var b=e.target.closest('button,input[type=checkbox]'); if(!b) return;
-    if(b.dataset.go){ if(b.dataset.go==='worlds'){ openWorlds('gate'); return; } travelTo(b.dataset.go); return; }
+    if(b.dataset.go){ if(b.dataset.go==='worlds'){ openWorlds('cube'); return; } travelTo(b.dataset.go); return; }
     if(b.dataset.mood){ selMood=b.dataset.mood; stage.querySelectorAll('.orb').forEach(function(o){ o.classList.toggle('sel',o===b); }); M.setColor('mood',moodOf(selMood).c); return; }
     if(b.dataset.todo){ var t=S.todos.filter(function(x){ return String(x.id)===b.dataset.todo; })[0]; if(t){ t.done=b.checked; if(t.done){ logDay('task'); quest('todo'); } save(); setTimeout(function(){ render('todo'); },250); } return; }
     if(b.dataset.delTodo){ S.todos=S.todos.filter(function(x){ return String(x.id)!==b.dataset.delTodo; }); save(); render('todo'); return; }
@@ -1549,12 +1540,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(a==='seeScreens'){ retract(); toast('Drag to look around the screens · tap one to play or open it fully'); return; }
     if(a==='door'){ enterRoom(); return; }
     if(a==='fly'){ startFly(); return; }
-    if(a==='worlds'){ openWorlds('gate'); return; }
-    if(a==='worldCube'){ openWorlds('cube'); return; }
-    if(a==='worldGarden'){ openWorlds('garden'); return; }
-    if(a==='worldAnimals'){ openWorlds('animals'); return; }
-    if(a==='worldPlanets'){ openWorlds('planets'); return; }
-    if(a==='worldScience'){ openWorlds('science'); return; }
+    if(a==='worlds'||a==='worldCube'||a==='worldGarden'||a==='worldAnimals'||a==='worldPlanets'||a==='worldScience'){ openWorlds('cube'); return; }
     if(a==='gReset'){ startGame(shown); return; }
     if(a==='gSkip'){ nextWord(); return; }
     if(a==='gFocusStop'){ clearInterval(G.timer); return; }
@@ -2339,7 +2325,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   function paintDock(){
     var row=document.getElementById('dockRow'); if(!row) return;
     var h='<button class="dk fly found" data-fly="1" style="--c:#a45cff"><i>✦</i><span>Fly</span></button>';
-    h+='<button class="dk found worlds" data-go="worlds" title="Worlds" style="--c:#7fe0c3"><i>W</i><span>Worlds</span></button>';
+    h+='<button class="dk found worlds" data-go="worlds" title="Cube Keep" style="--c:#2ee6ff"><i>K</i><span>Keep</span></button>';
     var foundN=0, total=0;
     function addBtn(d){
       if(!d||d.dormant||d.id==='worlds') return;
@@ -2356,8 +2342,8 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(tEl) tEl.textContent=total;
     paintRail(); lastNearKey='';
   }
-  document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('gate'); return; } travelTo(b.dataset.go); });
-  document.getElementById('coreRail').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('gate'); return; } travelTo(b.dataset.go); });
+  document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('cube'); return; } travelTo(b.dataset.go); });
+  document.getElementById('coreRail').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('cube'); return; } travelTo(b.dataset.go); });
   paintDock();
 
 
@@ -2403,7 +2389,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 
   Snd.paint(); paintCoins();
   document.getElementById('coinChip').onclick=function(){ travelTo('me'); };
-  document.getElementById('worldsChip').onclick=function(){ openWorlds('gate'); };
+  document.getElementById('worldsChip').onclick=function(){ openWorlds('cube'); };
 
 
   /* ── sound effects (calm neuron pings) ── */
