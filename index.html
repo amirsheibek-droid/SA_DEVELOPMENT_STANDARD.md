@@ -641,6 +641,26 @@ details.legal{margin-left:auto;margin-right:auto}
 /* no JavaScript or no WebGL: show everything as a plain page */
 .nojs .pg{display:block;position:static}
 @media (prefers-reduced-motion: reduce){.pg > *,.pg.out > *{animation-duration:.01s}}
+/* engineer network: locked member profiles, depth tables, skill chips */
+.mb-lock{display:inline-block;font-family:var(--mono);font-size:.76rem;color:var(--mute);background:rgba(31,107,255,.07);border-radius:999px;padding:6px 12px;margin:4px 0 8px}
+.mb-badge{color:var(--green);font-weight:700}
+.mb-h{font-size:1rem;margin:22px 0 6px;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:6px 0 4px}
+.chips span{font-size:.8rem;padding:4px 10px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(31,107,255,.25);color:var(--ink)}
+.depth{width:100%;max-width:560px;margin:6px auto;border-collapse:collapse}
+.depth td{padding:6px 4px;font-size:.9rem;border-bottom:1px solid rgba(31,107,255,.12);text-align:left;color:var(--ink)}
+.depth td:last-child{text-align:right;font-family:var(--mono);font-size:.72rem;color:var(--mute);white-space:nowrap}
+.lv{display:inline-flex;gap:3px;vertical-align:middle;margin-right:8px}
+.lv i{width:14px;height:6px;border-radius:3px;background:rgba(31,107,255,.15)}
+.lv i.on{background:linear-gradient(90deg,var(--blue),var(--green))}
+.mb-case{border-left:3px solid var(--green);padding:8px 14px;margin:12px 0;color:var(--ink);font-size:.95rem;text-align:left}
+.dq{margin:4px 0 14px;text-align:left}
+.dq>b{display:block;font-size:.86rem;margin-bottom:6px;color:var(--ink)}
+.members{display:grid;gap:8px;margin:10px 0}
+.mbl{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:14px;border:0;background:#fff;box-shadow:0 0 0 1px rgba(31,107,255,.2);cursor:pointer;font:inherit;color:var(--ink)}
+.mbl b{font-family:var(--mono);font-size:.78rem;color:var(--blue)}
+.mbl small{display:block;color:var(--mute);font-size:.82rem;margin-top:3px}
+.mbl:hover{box-shadow:0 0 0 2px var(--blue)}
 </style>
 </head>
 <body>
@@ -674,7 +694,7 @@ details.legal{margin-left:auto;margin-right:auto}
 
 <div id="choice" role="group" aria-label="How would you like to explore?">
   <div class="ask0" id="ask0">You're inside. Which way?</div>
-  <button class="ch" type="button" data-go="guild"><b>I'm an engineer</b><span>Join our engineer network free &mdash; we'll reach out when a project needs your skills.</span></button>
+  <button class="ch" type="button" data-go="guild"><b>I'm an engineer</b><span>Join our engineer network free &mdash; from HTML to AI. Profiled in depth, identity locked.</span></button>
   <button class="ch g" type="button" data-go="build"><b>I need an engineer</b><span>Describe your project &mdash; we'll shape it into a plan.</span></button>
   <div class="ch-more"><button type="button" data-fly>&#10022; Fly freely and explore</button><button type="button" data-go="core">Take me to the core</button></div>
 </div>
@@ -787,12 +807,12 @@ Anywhere. Every project is run remotely, worldwide.
 &gt; how?
 A free mock-up first. Fixed written quotes. No lock-in.
 &gt; engineers?
-Join the network free. When a project needs your skills, we call."></div>
+Join the network free. Get verified. Clients find your skills; your name stays locked."></div>
     <p><a class="go" href="#guild" data-go="guild">Engineer or developer? Join the network free</a></p>
     <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a></p>
-    <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising.</p></details>
+    <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising. Approved engineer network members have a public profile showing only their skills, depth, anonymised case study, availability and region &mdash; their name, email, city and links are never published.</p></details>
     <details class="legal" id="cookies"><summary>Cookies</summary><p>Strictly necessary browser storage only (your sound setting, which neurons you've found, and your unsent brief), cleared when you close the tab. No analytics, tracking or advertising cookies.</p></details>
-    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill. <b>Engineer network.</b> Joining is free. If we place you on a client project, SA Intelligent Designs keeps an agreed percentage of the project fee, confirmed in writing before work starts.</p></details>
+    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill. <b>Engineer network.</b> Free for engineers to join and free for clients to request an engineer. After we confirm scope, the client pays a deposit through SA (usually 20% of the agreed price), which counts towards the project and unlocks the engineer's identity; it's refunded in full if the engineer can't take the project before the introduction. All project payments go through SA, which keeps a 15% platform fee from the engineer's share. See the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</p></details>
     <p class="whisper">&copy; 2026 SA Intelligent Designs &middot; by a mystery designer</p>
   </article>
 
@@ -805,7 +825,8 @@ Join the network free. When a project needs your skills, we call."></div>
       <button aria-expanded="false">Do I see anything before I pay?</button><div class="a">Yes. Every package begins with a complimentary working mock-up, so you can review the direction before committing to anything.</div>
       <button aria-expanded="false">Do you build mobile apps?</button><div class="a">Yes &mdash; for specialist niches. Voltz CRM, our voice-first app for self-employed tradespeople, is live on the App Store, and Contract Analyser is in development.</div>
       
-      <button aria-expanded="false">I'm an engineer &mdash; how does joining work?</button><div class="a">Joining the network is free. Tell us your skills, rates and availability, and when a client project needs your expertise we'll get in touch with the details. If you take it on, SA Intelligent Designs keeps an agreed percentage of the project fee &mdash; always confirmed with you before work starts.</div>
+      <button aria-expanded="false">I'm an engineer &mdash; how does joining work?</button><div class="a">Joining is free. Build a depth profile of your languages, frameworks and tools, then we check your work and hold a short technical call. Once you're verified you get your own neuron in the mind &mdash; clients see your skills, never your name or contact details. When a client's deposit is paid, you're introduced. All project payments go through SA, and SA keeps a 15% platform fee from your share. <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</div>
+      <button aria-expanded="false">How do I hire an engineer from the network?</button><div class="a">Open the &ldquo;Join as an engineer&rdquo; neuron, search by any skill and open an engineer's profile, then tap Request &mdash; it's free. We confirm scope and availability, then send you a quote and a secure deposit link (usually 20% of the agreed price, counted towards the project). Once the deposit is paid, the engineer's identity unlocks and we introduce you. If the engineer can't take the project before the introduction, the deposit is refunded in full.</div>
       <button aria-expanded="false">Am I tied into a contract?</button><div class="a">No. The care plan is optional, billed in advance and can be cancelled any time. You own your domain in your own name.</div>
     </div>
   </article>
@@ -871,11 +892,25 @@ Join the network free. When a project needs your skills, we call."></div>
     <div id="arch"></div>
   </article>
 
-  <!-- THE GUILD (engineer network: free to join, SA takes a % when a project is placed) -->
+  <!-- THE GUILD (engineer network: free to join, identity locked, SA takes a % when a project is placed) -->
   <article class="pg" id="p-guild" data-node="guild">
-    <div class="eye">Join as an engineer &middot; free</div>
+    <div class="eye">Engineer network &middot; free to join</div>
+    <h2 class="decode">Real engineers. Profiled in depth.</h2>
+    <p>From HTML websites and WordPress to full-stack, mobile, cloud, data, machine learning and AI. Every member is reviewed and profiled language by language, tool by tool &mdash; so clients see exactly what you can do, while your identity stays locked.</p>
+    <ul class="lines g">
+      <li><b>1 &middot; Join free and get verified.</b> <small>Build your depth profile below. We check your work and hold a short technical call before your neuron goes live.</small></li>
+      <li><b>2 &middot; A client requests you.</b> <small>They see your skills, depth and case study &mdash; never your name or contact details. We check scope with you first, and you can always say no.</small></li>
+      <li><b>3 &middot; The deposit unlocks you.</b> <small>When the client pays their project deposit through SA, your identity unlocks to that client only and we introduce you.</small></li>
+      <li><b>4 &middot; Paid through SA.</b> <small>Clients pay SA. You receive your agreed price minus a 15% platform fee, within 7 days of each payment clearing.</small></li>
+    </ul>
+    <p class="pkg-note">Read the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a> &mdash; plain English, two minutes.</p>
     <div id="guildWiz"></div>
+    <h3 class="mb-h">Engineers in the network</h3>
+    <input class="field" id="memberFind" placeholder="Search any skill &mdash; e.g. Python, React, WordPress, PyTorch" autocomplete="off">
+    <div class="members" id="memberList"></div>
+    <p class="pkg-note">Hiring? Open an engineer to request them for free &mdash; or <a href="#build" data-go="build">describe your project</a> and we'll match you.</p>
   </article>
+  <div id="hireHold" hidden><div id="hireWiz"></div></div>
 
   <!-- THE PULSE (community news) -->
   <article class="pg" id="p-news" data-node="news">
@@ -912,6 +947,45 @@ window.SA_DESTS=[
 ];
 window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core','about'],['core','process'],['core','build'],['services','process'],['services','faq'],
   ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret'],['build','guild'],['faq','guild'],['services','guild'],['core','news'],['referral','news'],['news','process']];
+</script>
+<script src="/assets/members.js?v=1"></script>
+<script>
+/* ── approved engineers: one locked neuron + profile page each, clustered round "Join as an engineer" ── */
+(function(){
+  var L=window.SA_MEMBERS||[], g=[-34,-6,-44], stage=document.getElementById('stage'), LV={'Basic':1,'Working':2,'Strong':3,'Expert':4};
+  function e(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function chips(a){ return (a&&a.length)?'<div class="chips">'+a.map(function(x){ return '<span>'+e(x)+'</span>'; }).join('')+'</div>':''; }
+  function depth(rows){ if(!rows||!rows.length) return '';
+    return '<table class="depth"><tbody>'+rows.map(function(r){ var n=LV[r.level]||0, b='';
+      for(var k=1;k<=4;k++) b+='<i'+(k<=n?' class="on"':'')+'></i>';
+      return '<tr><td>'+e(r.name)+'</td><td><span class="lv">'+b+'</span>'+e(r.level)+'</td></tr>'; }).join('')+'</tbody></table>'; }
+  window.SA_MEMBER_TAGS={};
+  L.forEach(function(m,i){
+    var id='m-'+String(m.code||i).toLowerCase().replace(/[^a-z0-9]+/g,'-'), n=L.length;
+    var y=n<2?0:1-(i+.5)/n*2, r=Math.sqrt(1-y*y), th=i*2.39996, R=19;
+    window.SA_DESTS.push({id:id,member:true,found:true,code:m.code,name:m.code+' \u00B7 '+(m.role||'Engineer'),hint:m.role||'engineer',
+      pos:[g[0]+Math.cos(th)*r*R,g[1]+y*R*.6,g[2]+Math.sin(th)*r*R],yaw:.35,dist:22,c:i%2?'g':'b',scale:.6});
+    window.SA_LINKS.push(['guild',id]);
+    var sk=m.skills||{}, groups=Object.keys(sk).filter(function(k){ return sk[k]&&sk[k].length; }), ai=m.ai||null;
+    var tags=[m.role,m.level].concat(m.disciplines||[],(m.languages||[]).map(function(x){ return x.name; }));
+    groups.forEach(function(k){ tags=tags.concat(sk[k]); });
+    if(ai) tags=tags.concat((ai.specialisms||[]).map(function(x){ return x.name; }));
+    window.SA_MEMBER_TAGS[id]=tags.filter(Boolean);
+    var h='<div class="eye">Engineer network &middot; '+e(m.code)+(m.verified?' &middot; <span class="mb-badge">&#10003; Verified</span>':'')+'</div>'+
+      '<h2 class="decode">'+e((m.level?m.level+' ':'')+(m.role||'Engineer'))+'</h2>'+
+      '<p class="mb-lock">&#128274; Identity locked &mdash; unlocks when your project deposit is paid</p>'+
+      (m.pitch?'<p>&ldquo;'+e(m.pitch)+'&rdquo;</p>':'')+
+      chips(m.disciplines)+
+      ((m.languages&&m.languages.length)?'<h3 class="mb-h">Languages</h3>'+depth(m.languages):'')+
+      groups.map(function(k){ return '<h3 class="mb-h">'+e(k)+'</h3>'+chips(sk[k]); }).join('')+
+      (ai&&ai.specialisms&&ai.specialisms.length?'<h3 class="mb-h">AI &amp; ML depth</h3>'+depth(ai.specialisms):'')+
+      (m.caseStudy?'<h3 class="mb-h">A system they built</h3><p class="mb-case">'+e(m.caseStudy)+'</p>':'')+
+      '<ul class="lines g">'+[['Experience',m.experience],['Shipped AI / ML to production',ai&&ai.production],['Largest scale',ai&&ai.scale],['Credentials',m.education],['Availability',m.availability],['Region',m.region]]
+        .filter(function(x){ return x[1]; }).map(function(x){ return '<li><b>'+e(x[0])+'</b> <small>'+e(x[1])+'</small></li>'; }).join('')+'</ul>'+
+      '<div class="hire-slot"></div>';
+    var a=document.createElement('article'); a.className='pg'; a.id='p-'+id; a.dataset.node=id; a.innerHTML=h; stage.appendChild(a);
+  });
+})();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="/assets/mind-bg.js?v=7"></script>
@@ -1164,15 +1238,16 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   /* discoveries */
   var found={}; try{ found=JSON.parse(ss('saFound')||'{}'); }catch(e){}
   DESTS.forEach(function(d){ if(d.found) found[d.id]=1; });
-  var total=DESTS.length;
-  function paintFound(){ var n=Object.keys(found).length; document.getElementById('foundN').textContent=n; document.getElementById('foundT').textContent=total;
+  var total=DESTS.filter(function(d){ return !d.member; }).length;
+  function nFound(){ return Object.keys(found).filter(function(k){ return byId[k]&&!byId[k].member; }).length; }
+  function paintFound(){ var n=nFound(); document.getElementById('foundN').textContent=n; document.getElementById('foundT').textContent=total;
     document.getElementById('foundBar').style.width=(n/total*100)+'%'; }
-  function hiddenLeft(){ return total-Object.keys(found).length; }
+  function hiddenLeft(){ return total-nFound(); }
   function huntText(){ var left=hiddenLeft(); return left<=0?'Every neuron found. You know this mind inside out.':(total+' neurons live in this mind \u2014 '+left+' still hidden'+(found.secret?'.':'. One of them is very hard to find.')); }
   function paintHunt(){ var h=document.getElementById('hunt'); if(h) h.textContent=huntText(); }
   function discover(id){ if(found[id]) return false; found[id]=1; ss('saFound',JSON.stringify(found)); paintFound();
     labels[id] && labels[id].classList.add('found'); setTimeout(function(){ paintDock&&paintDock(); },0);
-    var n=Object.keys(found).length; toast(n===total?'Whole mind mapped \u2014 every neuron found':byId[id].name+' found \u00B7 '+n+' of '+total+' \u00B7 '+(total-n)+' still hidden'); paintHunt(); return true; }
+    var n=nFound(); toast(n===total?'Whole mind mapped \u2014 every neuron found':byId[id].name+' found \u00B7 '+n+' of '+total+' \u00B7 '+(total-n)+' still hidden'); paintHunt(); return true; }
   var toastT; function toast(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(function(){ el.classList.remove('on'); },2600); }
 
   /* labels sitting on every neuron */
@@ -1223,7 +1298,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       el.style.setProperty('--dx',(dx*.85).toFixed(0)+'px'); el.style.setProperty('--dy',(dy*.85).toFixed(0)+'px'); el.style.setProperty('--d',(i*85)+'ms'); });
     drift.classList.add('on'); placeDrift(); setTimeout(placeDrift,620);
     if(WEAVE[id]) weave(pg); else pg.classList.remove('weaving');
-    var sp=SPECIAL[id]; if(sp) setTimeout(function(){ sp(pg); },250);
+    var sp=SPECIAL[id]||(byId[id]&&byId[id].member?memberPage:null); if(sp) setTimeout(function(){ sp(pg); },250);
     pg.querySelectorAll('.decode').forEach(decode);
   }
   function retract(done){
@@ -1326,7 +1401,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   /* The Pulse — newest first. Add a line here to post an update. */
   var NEWS=[
     {d:'1 Oct 2026',t:'The Braintrix is open',b:'Our new home is a mind you can fly through. Eleven neurons, one of them very well hidden. Happy hunting.'},
-    {d:'1 Oct 2026',t:'Now open: the SA engineer network',b:'Software developers, engineers and AI specialists anywhere in the world can join free. When a client project needs your expertise, we\'ll reach out. Join in the \u201CI\'m an engineer\u201D neuron.'},
+    {d:'1 Oct 2026',t:'Now open: the SA engineer network',b:'From HTML and WordPress to full-stack, mobile, data, ML and AI. Engineers anywhere in the world can join free, build a depth profile of every language and tool they use, and get their own neuron \u2014 identity locked until a client commits.'},
     {d:'1 Oct 2026',t:'Meet the Architect',b:'Describe your idea in a few words and watch the blueprint draw itself as you type.'},
     {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built by SA Intelligent Designs.'}
   ];
@@ -1342,7 +1417,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       var tmp=document.createElement('textarea'); tmp.innerHTML=txt; txt=tmp.value;
       (function tick(){ if(shown!=='about') { log.textContent=txt; return; } i+=2; log.innerHTML=txt.slice(0,i).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="c"></span>'; if(i<txt.length) setTimeout(tick,18); })(); },
     build:function(){ Arch.start(); },
-    guild:function(){ Guild.start(); },
+    guild:function(){ Guild.start(); paintMembers(); },
     secret:function(){ playground(true); }
   };
   document.querySelectorAll('.echo button').forEach(function(b){ b.addEventListener('click',function(){ var a=b.nextElementSibling, on=b.getAttribute('aria-expanded')==='true';
@@ -1385,6 +1460,9 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         if(q.kind==='rate') a+='<label class="field-l">Your rate</label><input class="field" data-f="txt" placeholder="'+esc(q.ph())+'" value="'+esc(A[q.k]||'')+'">';
         a+=nav(q.kind!=='one'); }
       else if(q.kind==='short'||q.kind==='long'){ a=(q.kind==='long'?'<textarea class="field" data-f="txt" rows="3" placeholder="'+esc(q.ph())+'">'+esc(A[q.k]||'')+'</textarea>':'<input class="field" data-f="txt" placeholder="'+esc(q.ph())+'" value="'+esc(A[q.k]||'')+'">')+nav(true); }
+      else if(q.kind==='depth'){ var dv=A[q.k]||{}; a=q.areas().map(function(ar){ return '<div class="dq"><b>'+esc(ar)+'</b><div class="opts">'+q.levels.map(function(l){ return '<button class="opt" aria-pressed="'+(dv[ar]===l)+'" data-ar="'+esc(ar)+'" data-lv="'+esc(l)+'">'+esc(l)+'</button>'; }).join('')+'</div></div>'; }).join('')+nav(true); }
+      else if(q.kind==='groups'){ var gv=A[q.k]||{}; a=q.groups.map(function(gr){ var on=gv[gr[0]]||[]; return '<div class="dq"><b>'+esc(gr[0])+'</b><div class="opts">'+gr[1].map(function(o){ return '<button class="opt" aria-pressed="'+(on.indexOf(o)>=0)+'" data-g="'+esc(gr[0])+'" data-go2="'+esc(o)+'">'+esc(o)+'</button>'; }).join('')+'</div></div>'; }).join('')+
+          '<input class="field" data-f="other" placeholder="Anything else? (optional, comma-separated)" value="'+esc(A[q.k+'Other']||'')+'">'+nav(true); }
       else if(q.kind==='contact'){ a='<label class="field-l">Your name</label><input class="field" data-f="name" autocomplete="name" value="'+esc(A.name||'')+'">'+
           '<label class="field-l">Email</label><input class="field" data-f="email" type="email" autocomplete="email" value="'+esc(A.email||'')+'">'+
           '<div class="err"></div>'+nav(true); }
@@ -1403,15 +1481,20 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       if(q.kind==='many'){ var o=F('other'); if(o) A[q.k+'Other']=o.value.trim(); var arr=lst(A[q.k]).slice(); if(A[q.k+'Other']) arr.push(A[q.k+'Other']);
         if(!arr.length && !q.optional){ shake(); return false; } A[q.k]=lst(A[q.k]); }
       if(q.kind==='one' && !A[q.k]){ shake(); return false; }
+      if(q.kind==='depth'){ var dv=A[q.k]||{}; if(q.areas().some(function(ar){ return !dv[ar]; })){ shake(); return false; } }
+      if(q.kind==='groups'){ var go=F('other'); A[q.k+'Other']=go?go.value.trim():''; A[q.k]=A[q.k]||{}; }
       if(q.kind==='rate'){ A[q.k]=(F('txt').value||'').trim(); if(!A[q.k+'Basis']||!A[q.k]){ shake(); return false; } }
       if(q.kind==='contact'){ A.name=F('name').value.trim(); A.email=F('email').value.trim(); A.phone='';
         if(!A.name){ err('What should we call you?'); return false; } if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A.email)){ err('That email doesn\'t look quite right.'); return false; } }
       return true; }
     function err(t){ var e=root.querySelector('.err'); if(e) e.textContent=t; shake(); }
     function shake(){ var a=root.querySelector('.ans'); if(a&&a.animate) a.animate([{transform:'translateX(0)'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}],{duration:300}); }
-    function next(){ if(!collect()) return; if(i<Q.length-1){ i++; save(); FX('zoop',.8); M.fire(cfg.node); render(); } }
-    function back(){ if(i>0){ i--; save(); FX('zoop',.5); render(); } }
+    function skipped(k){ return Q[k].skip && Q[k].skip(A); }
+    function next(){ if(!collect()) return; if(i<Q.length-1){ i++; while(i<Q.length-1 && skipped(i)) i++; save(); FX('zoop',.8); M.fire(cfg.node); render(); } }
+    function back(){ if(i>0){ i--; while(i>0 && skipped(i)) i--; save(); FX('zoop',.5); render(); } }
     root.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var q=Q[i];
+      if(b.dataset.lv!==undefined){ var dv=A[q.k]=A[q.k]||{}; dv[b.dataset.ar]=b.dataset.lv; b.parentNode.querySelectorAll('.opt').forEach(function(x){ x.setAttribute('aria-pressed',x===b); }); FX('zoop',.6); save(); return; }
+      if(b.dataset.go2!==undefined){ var gv=A[q.k]=A[q.k]||{}, arr=gv[b.dataset.g]=gv[b.dataset.g]||[], at=arr.indexOf(b.dataset.go2); if(at>=0) arr.splice(at,1); else arr.push(b.dataset.go2); b.setAttribute('aria-pressed',at<0); FX('zoop',.6); save(); return; }
       if(b.dataset.o!==undefined){ var o=b.dataset.o.replace(/&amp;/g,'&');
         if(q.kind==='one'){ A[q.k]=o; FX('zoop',.8); root.querySelectorAll('.opt').forEach(function(x){ x.setAttribute('aria-pressed',x===b); }); save(); setTimeout(next,320); }
         else if(q.kind==='rate'){ A[q.k+'Basis']=o; FX('zoop',.6); root.querySelectorAll('.opt').forEach(function(x){ x.setAttribute('aria-pressed',x===b); }); save(); var f=F('txt'); if(f) f.focus(); }
@@ -1678,7 +1761,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         (extra?'\n\nFollow-up answers:\n'+extra:'')+
         '\n\nCore modules & screens:\n'+S.mods.map(function(id){ return '  • '+MOD[id].n+' — '+(SCREENS[id]||[]).join(', '); }).join('\n')+
         '\n\nPhase 1: '+ph.p1.map(function(id){ return MOD[id].n; }).join(', ')+(ph.p2.length?'\nPhase 2: '+ph.p2.map(function(id){ return MOD[id].n; }).join(', '):'')+
-        '\n\n'+lines([['Feel',join(S.feel)],['Already has',join(S.have)],['Timeline',S.ans.timeline],['Budget',S.ans.budget],['Said (name answer)',S.ans.name],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',Object.keys(found).length+' / '+total]]); }
+        '\n\n'+lines([['Feel',join(S.feel)],['Already has',join(S.have)],['Timeline',S.ans.timeline],['Budget',S.ans.budget],['Said (name answer)',S.ans.name],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',nFound()+' / '+total]]); }
     function send(btn){
       if(document.getElementById('aBot').checked) return;
       btn.disabled=true; btn.textContent='Transmitting…';
@@ -1709,32 +1792,109 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       preset:function(k,v){ if(sent) return; var map={'A website':'Website','A mobile app':'Mobile app'}; var ty=map[v]||v; if(S.types.indexOf(ty)<0) S.types.push(ty); typeMods(); if(step<2){ step=2; } save(); render(); } };
   })();
 
-  /* The Guild — engineers join the network; SA reaches out when a client project fits */
-  var Guild=Wizard({root:'guildWiz',key:'saGuild',node:'guild',sendLabel:'Join the network',
+  /* The Guild — developers, engineers and builders in software build a deep, verified skills profile.
+     Public profile = skills only; identity stays locked until a client's deposit is paid through SA. */
+  var SK={
+    disciplines:['Websites (HTML & CSS)','WordPress / CMS sites','E-commerce stores','Front-end development','Back-end development','Full-stack development','Mobile apps','Desktop apps','Game development','Embedded / IoT','DevOps & cloud','Data engineering','Data science & analytics','Machine learning engineering','AI / LLM engineering','Cyber security','QA & test automation','UI / UX for software','Solutions architecture'],
+    ai:['Data engineering','Data science & analytics','Machine learning engineering','AI / LLM engineering'],
+    languages:['HTML','CSS / Sass','JavaScript','TypeScript','Python','Java','C#','C','C++','Go','Rust','PHP','Ruby','Swift','Kotlin','Dart','R','SQL','Scala','Bash / Shell','Solidity','MATLAB','Lua','Elixir'],
+    levels:['Basic','Working','Strong','Expert'],
+    web:[['Front-end',['React','Next.js','Vue','Nuxt','Angular','Svelte','Tailwind CSS','Bootstrap','jQuery','Redux','Three.js / WebGL']],
+         ['Back-end',['Node.js / Express','NestJS','Django','Flask','FastAPI','Spring Boot','.NET / ASP.NET','Laravel','Ruby on Rails','GraphQL','REST APIs','WebSockets']],
+         ['Mobile & desktop',['React Native','Expo','Flutter','SwiftUI / UIKit','Jetpack Compose','Ionic / Capacitor','Electron','Unity','Unreal']],
+         ['CMS & e-commerce',['WordPress','WooCommerce','Shopify','Webflow','Wix / Squarespace','Drupal','Strapi / Sanity','Magento']]],
+    tools:[['Databases',['PostgreSQL','MySQL','SQL Server','SQLite','MongoDB','Redis','Firebase','Supabase','DynamoDB','Elasticsearch']],
+           ['Cloud & DevOps',['AWS','Google Cloud','Azure','Vercel / Netlify','Cloudflare','Docker','Kubernetes','Terraform','GitHub Actions / CI','Linux']],
+           ['Testing & quality',['Jest / Vitest','Cypress','Playwright','PyTest','Selenium','Unit & integration testing']],
+           ['Integrations',['Stripe / payments','Auth (OAuth, Auth0, Clerk)','Maps & geolocation','Email & SMS (Twilio etc.)','Analytics','Web3 / blockchain']]],
+    aitools:[['ML & data',['pandas / NumPy','scikit-learn','PyTorch','TensorFlow / Keras','JAX','XGBoost / LightGBM','OpenCV','Spark / Databricks','Airflow','dbt']],
+             ['AI & LLM',['OpenAI API','Anthropic API','Open-source LLMs (Llama, Mistral)','Hugging Face','LangChain / LlamaIndex','Vector DBs (pgvector, Pinecone)','Prompt engineering & evals','CUDA / GPU','MLflow / W&B']]],
+    aiAreas:['LLM apps & agents','RAG & semantic search','Fine-tuning & training models','Computer vision','NLP & speech','Recommenders & ranking','Forecasting & classical ML','MLOps & model deployment','Data pipelines & warehousing','Evaluation & AI safety']
+  };
+  function isAI(A){ return lst(A.disciplines).some(function(d){ return SK.ai.indexOf(d)>=0; }); }
+  function withOther(A,k){ return lst(A[k]).concat(A[k+'Other']?String(A[k+'Other']).split(',').map(function(x){ return x.trim(); }).filter(Boolean):[]); }
+  function groupsOut(A,k){ var o={}, gv=A[k]||{}; Object.keys(gv).forEach(function(t){ if(lst(gv[t]).length) o[t]=lst(gv[t]); });
+    var ex=withOther({x:[],xOther:A[k+'Other']},'x'); if(ex.length) o['Other']=(o['Other']||[]).concat(ex); return o; }
+  function depthOut(names,dv){ return names.map(function(n){ return {name:n,level:(dv||{})[n]||''}; }); }
+  function profile(A){ var ai=isAI(A), sk=Object.assign({},groupsOut(A,'web'),groupsOut(A,'tools'),ai?groupsOut(A,'aitools'):{});
+    return {code:'SA-ENG-000',verified:false,role:A.role||'',level:A.level||'',disciplines:withOther(A,'disciplines'),
+      languages:depthOut(withOther(A,'languages'),A.langDepth),skills:sk,
+      ai:ai?{specialisms:depthOut(withOther(A,'aiAreas'),A.aiDepth),production:A.production||'',scale:A.scale||''}:null,
+      caseStudy:A.caseStudy||'',education:A.education||'',experience:A.experience||'',availability:A.availability||'',region:A.region||'',pitch:A.pitch||''}; }
+
+  var Guild=Wizard({root:'guildWiz',key:'saGuild2',node:'guild',sendLabel:'Submit my profile',
     Q:function(A){ return [
-      {k:'intro',kind:'intro',btn:'Join free',ask:function(){ return 'Join the SA engineer network.'; },sub:'For software developers, engineers, AI specialists, designers and architects anywhere in the world. Joining is free. When a client project needs your expertise, we\'ll reach out with the details. If you take it on, SA Intelligent Designs keeps an agreed percentage of the project fee &mdash; confirmed with you before any work starts. Tell us who you are, what you offer and what you charge &mdash; about three minutes.'},
-      {k:'role',kind:'one',ask:function(){ return 'What do you build?'; },opts:function(){ return ['Web developer','Mobile engineer','Full-stack developer','Solutions architect','UI / UX designer','AI / ML engineer','Something else']; },ack:function(){ return A.role+'. Welcome.'; }},
-      {k:'experience',kind:'one',ask:function(){ return 'How long have you been doing it professionally?'; },opts:function(){ return ['Under 2 years','2–5 years','5–10 years','10+ years']; },ack:function(){ return A.experience+' of experience.'; }},
-      {k:'skills',kind:'many',other:true,ask:function(){ return 'Which tools are you strongest in?'; },sub:'Pick your best — not everything you\'ve touched.',opts:function(){ return ['React','React Native','Next.js','Node.js','Python','Swift','Kotlin','Flutter','Supabase / Postgres','AWS / GCP','AI & LLMs','Three.js / WebGL','Figma']; },ack:function(){ return lst(A.skills).length+' core skills logged.'; }},
-      {k:'services',kind:'many',other:true,ask:function(){ return 'What would you offer SA clients?'; },opts:function(){ return ['Full builds','Front-end','Back-end & APIs','Mobile apps','AI integrations','Architecture & code reviews','Design & prototyping','DevOps & hosting','Maintenance & support']; },ack:function(){ return 'Services captured.'; }},
-      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Pick how you usually price, then your rate. You set your own rates; SA\'s percentage is agreed per project.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
+      {k:'intro',kind:'intro',btn:'Build my profile',ask:function(){ return 'Build your engineer depth profile.'; },sub:'For developers, engineers and builders in tech and software &mdash; from HTML websites to machine learning. Free to join, about eight minutes. Your name, email, city and links are never shown publicly.'},
+      {k:'disciplines',kind:'many',other:true,ask:function(){ return 'What kind of software do you build?'; },sub:'Pick everything you could deliver for a paying client.',opts:function(){ return SK.disciplines; },ack:function(){ return withOther(A,'disciplines').length+' disciplines logged.'; }},
+      {k:'role',kind:'one',ask:function(){ return 'Which one is your main title?'; },opts:function(){ var d=withOther(A,'disciplines'); return d.length?d:SK.disciplines; },ack:function(){ return A.role+'.'; }},
+      {k:'level',kind:'one',ask:function(){ return 'How senior are you?'; },opts:function(){ return ['Junior','Mid-level','Senior','Lead / principal']; },ack:function(){ return A.level+'.'; }},
+      {k:'experience',kind:'one',ask:function(){ return 'How long have you been building professionally?'; },opts:function(){ return ['Under 2 years','2–5 years','5–10 years','10+ years']; },ack:function(){ return A.experience+' of experience.'; }},
+      {k:'languages',kind:'many',other:true,ask:function(){ return 'Which languages do you write?'; },sub:'Markup, scripting and programming languages all count.',opts:function(){ return SK.languages; },ack:function(){ return withOther(A,'languages').length+' languages logged.'; }},
+      {k:'langDepth',kind:'depth',levels:SK.levels,areas:function(){ return withOther(A,'languages'); },ask:function(){ return 'How deep does each language go?'; },sub:'Be honest &mdash; we test this on the technical call. Basic: can edit it. Working: build with it. Strong: design systems in it. Expert: others come to you.',ack:function(){ return 'Language depth mapped.'; }},
+      {k:'web',kind:'groups',groups:SK.web,ask:function(){ return 'Which frameworks and platforms do you use in real work?'; },sub:'Skip any group that isn\'t you.',ack:function(){ return 'Frameworks logged.'; }},
+      {k:'tools',kind:'groups',groups:SK.tools,ask:function(){ return 'Databases, cloud and tooling?'; },sub:'Skip any group that isn\'t you.',ack:function(){ return 'Tooling logged.'; }},
+      {k:'aitools',kind:'groups',groups:SK.aitools,skip:function(A){ return !isAI(A); },ask:function(){ return 'Which ML, data and AI tools do you use?'; },ack:function(){ return 'AI tooling logged.'; }},
+      {k:'aiAreas',kind:'many',other:true,skip:function(A){ return !isAI(A); },ask:function(){ return 'Which AI and ML areas could you deliver in?'; },opts:function(){ return SK.aiAreas; },ack:function(){ return withOther(A,'aiAreas').length+' AI areas logged.'; }},
+      {k:'aiDepth',kind:'depth',levels:SK.levels,skip:function(A){ return !isAI(A); },areas:function(){ return withOther(A,'aiAreas'); },ask:function(){ return 'How deep does each AI area go?'; },ack:function(){ return 'AI depth mapped.'; }},
+      {k:'production',kind:'one',skip:function(A){ return !isAI(A); },ask:function(){ return 'Have you shipped ML or AI to production?'; },opts:function(){ return ['Yes — several systems','Yes — one system','Prototypes and research only','Not yet']; },ack:function(){ return A.production+'.'; }},
+      {k:'scale',kind:'one',skip:function(A){ return !isAI(A); },ask:function(){ return 'Biggest scale you\'ve worked at?'; },opts:function(){ return ['Prototype / internal','Thousands of users','Hundreds of thousands','Millions of users or TB-scale data']; },ack:function(){ return 'Scale: '+A.scale+'.'; }},
+      {k:'caseStudy',kind:'long',ask:function(){ return 'Describe one thing you built: the problem, your approach and the result.'; },sub:'Shown on your public profile, so leave out client names. Numbers help.',ph:function(){ return 'e.g. Rebuilt a booking site in Next.js and Postgres; page loads went from 4s to 0.8s and bookings rose 30%'; },ack:function(){ return 'Case study saved.'; }},
+      {k:'education',kind:'short',optional:true,ask:function(){ return 'Any degrees, research or certifications?'; },ph:function(){ return 'e.g. BSc Computer Science, AWS Solutions Architect, MSc Machine Learning (optional)'; },ack:function(){ return A.education?'Credentials noted.':'No problem — the work speaks.'; }},
+      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Private &mdash; used for matching and quotes. SA\'s 15% platform fee comes out of the agreed price, so price accordingly.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
       {k:'availability',kind:'one',ask:function(){ return 'How much time could you give?'; },opts:function(){ return ['Full-time','Part-time','Evenings & weekends','Project by project']; },ack:function(){ return 'Availability: '+A.availability.toLowerCase()+'.'; }},
-      {k:'based',kind:'short',ask:function(){ return 'Where are you based, and how do you like to work?'; },ph:function(){ return 'e.g. Lisbon, Lagos or Leeds — remote, hybrid or on-site'; },ack:function(){ return 'Based: '+A.based+'.'; }},
-      {k:'links',kind:'short',optional:true,ask:function(){ return 'Where can we see your work?'; },ph:function(){ return 'GitHub, portfolio, LinkedIn or App Store links (optional)'; },ack:function(){ return A.links?'Links saved — we\'ll take a look.':'No links — we can talk it through.'; }},
-      {k:'pitch',kind:'long',ask:function(){ return 'In a line or two, what makes your work stand out?'; },ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part we read twice.'; }},
-      {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'We\'ll confirm you\'re in the network within a few working days.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
+      {k:'region',kind:'one',ask:function(){ return 'Which region should your profile show?'; },sub:'Only the region is public &mdash; never your city.',opts:function(){ return ['UK & Ireland','Europe','North America','Latin America','Africa','Middle East','South Asia','East & South-East Asia','Oceania']; },ack:function(){ return 'Region: '+A.region+'.'; }},
+      {k:'based',kind:'short',ask:function(){ return 'Which city are you in, and how do you like to work?'; },sub:'Private.',ph:function(){ return 'e.g. Leeds — remote, or hybrid in the North'; },ack:function(){ return 'Noted, privately.'; }},
+      {k:'links',kind:'short',ask:function(){ return 'Where can we check your work?'; },sub:'Private &mdash; used to verify you. GitHub, GitLab, Kaggle, Hugging Face, App Store, papers or a portfolio.',ph:function(){ return 'e.g. github.com/you, yoursite.dev'; },ack:function(){ return 'Links saved for verification.'; }},
+      {k:'pitch',kind:'long',ask:function(){ return 'In a line, what makes your work stand out?'; },sub:'Shown on your public profile.',ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part clients read first.'; }},
+      {k:'terms',kind:'one',ask:function(){ return 'Do you agree to the Engineer Network Terms?'; },sub:'<a href="/engineer-terms.html" target="_blank" rel="noopener">Read the terms</a> &mdash; plain English. Free to join. A 15% platform fee only on paid projects we place you on. Clients we introduce are billed through SA for 12 months.',opts:function(){ return ['I agree to the Engineer Network Terms']; },ack:function(){ return 'Terms agreed.'; }},
+      {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'Private. We\'ll reply within a few working days to book your technical call.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
       {k:'review',kind:'review',ask:function(){ return 'Your engineer profile.'; }}
     ]; },
-    vision:function(A){ var s='<em>'+esc(A.name||'You')+'</em> — '+esc((A.role||'builder').toLowerCase())+' with <em>'+esc((A.experience||'').toLowerCase())+'</em> of experience'+(A.based?', based in '+esc(A.based):'')+'. ';
-      if(lst(A.skills).length) s+='Strongest in '+esc(join(A.skills))+'. ';
-      if(lst(A.services).length) s+='Offers '+esc(join(A.services).toLowerCase())+'. ';
-      if(A.rate) s+='Charges <em>'+esc(A.rate)+'</em> ('+esc((A.rateBasis||'').toLowerCase())+'), available <em>'+esc((A.availability||'').toLowerCase())+'</em>. ';
-      if(A.pitch) s+='“'+esc(A.pitch)+'”'; return s; },
-    plain:function(A){ return 'ENGINEER NETWORK SIGN-UP — from the Braintrix\n\n'+lines([['Role',A.role],['Experience',A.experience],['Skills',join(A.skills)],['Services offered',join(A.services)],['Pricing',A.rateBasis],['Rate',A.rate],['Availability',A.availability],['Based / works',A.based],['Links',A.links],['Stand-out',A.pitch],['Name',A.name],['Email',A.email]]); },
-    subject:function(A){ return 'Engineer network sign-up — '+(A.name||'')+' ('+(A.role||'builder')+')'; },
-    fields:function(A){ return {role:A.role||'',rate:(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':''),availability:A.availability||''}; },
-    done:function(A){ return '<h2 class="decode">You\'re in the network.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. Joining is free &mdash; we\'ll be in touch when a client project needs your expertise.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+    vision:function(A){ var P=profile(A), s='<em>'+esc((P.level?P.level+' ':'')+(P.role||'engineer').toLowerCase())+'</em>, '+esc((P.experience||'').toLowerCase())+' building. ';
+      if(P.languages.length) s+='Writes '+esc(join(P.languages.map(function(l){ return l.name+' ('+l.level.toLowerCase()+')'; })))+'. ';
+      var tools=[]; Object.keys(P.skills).forEach(function(k){ tools=tools.concat(P.skills[k]); }); if(tools.length) s+='Works with '+esc(join(tools))+'. ';
+      if(P.ai) s+='AI depth: '+esc(join(P.ai.specialisms.map(function(l){ return l.name+' ('+l.level.toLowerCase()+')'; })))+'. ';
+      s+='<br><br>Public profile shows your skills, depth, case study, availability and <em>'+esc(P.region)+'</em>. Your name, email, city and links stay locked.'; return s; },
+    plain:function(A){ var P=profile(A);
+      return 'ENGINEER NETWORK PROFILE — from the Braintrix\n\n'+lines([['Name',A.name],['Email',A.email],['City / way of working',A.based],['Links to verify',A.links],['Rate',(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':'')],['Terms',A.terms?'Agreed '+new Date().toISOString():''],
+        ['Main title',(P.level?P.level+' ':'')+P.role],['Experience',P.experience],['Disciplines',join(P.disciplines)],
+        ['Languages',P.languages.map(function(l){ return l.name+' — '+l.level; }).join('; ')]])+
+        '\n'+Object.keys(P.skills).map(function(k){ return k+': '+P.skills[k].join(', '); }).join('\n')+
+        (P.ai?'\nAI / ML depth: '+P.ai.specialisms.map(function(l){ return l.name+' — '+l.level; }).join('; ')+'\nShipped to production: '+P.ai.production+'\nScale: '+P.ai.scale:'')+
+        '\n\n'+lines([['Case study',P.caseStudy],['Credentials',P.education],['Availability',P.availability],['Region',P.region],['Stand-out',P.pitch]])+
+        '\n\nPUBLIC PROFILE — to approve: give it a unique code, set verified to true after the technical call, and paste it into assets/members.js:\n'+JSON.stringify(P)+','; },
+    subject:function(A){ return 'Engineer network profile — '+(A.name||'')+' ('+(A.level?A.level+' ':'')+(A.role||'engineer')+')'; },
+    fields:function(A){ return {role:A.role||'',level:A.level||'',region:A.region||'',rate:(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':''),availability:A.availability||''}; },
+    done:function(A){ return '<h2 class="decode">Profile received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll check your work and book a short technical call. Once you\'re verified, your neuron goes live in the mind &mdash; with your identity locked.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
   });
+
+  /* Request an engineer: free; SA confirms scope, then the client's deposit unlocks the engineer */
+  function memberOf(code){ var L=window.SA_MEMBERS||[]; for(var k=0;k<L.length;k++) if(L[k].code===code) return L[k]; return null; }
+  var Hire=Wizard({root:'hireWiz',key:'saHire',node:'guild',sendLabel:'Send my request',
+    Q:function(A){ return [
+      {k:'intro',kind:'intro',btn:'Request this engineer',ask:function(){ return 'Request '+(A.eng||'this engineer')+' — free.'; },sub:'Tell us about your project. We check scope and availability with the engineer, then send you a quote and a secure deposit link (usually 20% of the agreed price, counted towards the project). Once the deposit is paid, their identity unlocks and we introduce you. Refunded in full if they can\'t take it on before the introduction.'},
+      {k:'project',kind:'long',ask:function(){ return 'What do you need built?'; },ph:function(){ return 'e.g. A booking app with payments and an admin dashboard'; },ack:function(){ return 'Project noted.'; }},
+      {k:'budget',kind:'one',ask:function(){ return 'Rough budget?'; },opts:function(){ return ['Under £1,000','£1,000–£5,000','£5,000–£15,000','£15,000–£50,000','£50,000+','Not sure yet']; },ack:function(){ return 'Budget: '+A.budget+'.'; }},
+      {k:'timeline',kind:'one',ask:function(){ return 'When do you need it?'; },opts:function(){ return ['As soon as possible','Within a month','1–3 months','Flexible']; },ack:function(){ return 'Timeline: '+A.timeline.toLowerCase()+'.'; }},
+      {k:'you',kind:'contact',ask:function(){ return 'Who should we reply to?'; },sub:'We reply within one working day.',ack:function(){ return 'Thanks, '+(A.name||'').split(' ')[0]+'.'; }},
+      {k:'review',kind:'review',ask:function(){ return 'Your request.'; }}
+    ]; },
+    vision:function(A){ var m=memberOf(A.eng)||{}; return 'Requesting <em>'+esc(A.eng)+'</em>'+(m.role?' ('+esc(((m.level?m.level+' ':'')+m.role).toLowerCase())+')':'')+' for: '+esc(A.project)+'. Budget <em>'+esc(A.budget)+'</em>, timeline <em>'+esc((A.timeline||'').toLowerCase())+'</em>.'; },
+    plain:function(A){ var m=memberOf(A.eng)||{}; return 'ENGINEER REQUEST — from the Braintrix\n\n'+lines([['Engineer',A.eng],['Their title',(m.level?m.level+' ':'')+(m.role||'')],['Project',A.project],['Budget',A.budget],['Timeline',A.timeline],['Client',A.name],['Email',A.email]])+
+      '\n\nNext: confirm scope and availability with the engineer, then send the client a quote and deposit link.'; },
+    subject:function(A){ return 'Engineer request — '+(A.eng||'')+' — '+(A.name||''); },
+    fields:function(A){ return {engineer:A.eng||'',budget:A.budget||'',timeline:A.timeline||''}; },
+    done:function(A){ return '<h2 class="decode">Request received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll confirm scope and availability with '+esc(A.eng)+' and reply within one working day with a quote and a secure deposit link.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+  });
+  function memberPage(pg){ var d=byId[pg.dataset.node]; var slot=pg.querySelector('.hire-slot'); if(!d||!slot) return;
+    slot.appendChild(document.getElementById('hireWiz')); Hire.preset('eng',d.code); }
+  function paintMembers(){ var el=document.getElementById('memberList'), q=(document.getElementById('memberFind').value||'').trim().toLowerCase();
+    var ms=DESTS.filter(function(d){ return d.member; }), T=window.SA_MEMBER_TAGS||{};
+    if(!ms.length){ el.innerHTML='<p class="sub">The first engineers are being verified now. Describe your project and we\'ll match you by hand.</p>'; return; }
+    var hit=ms.filter(function(d){ return !q || T[d.id].join(' | ').toLowerCase().indexOf(q)>=0; });
+    el.innerHTML=hit.length?hit.map(function(d){ var m=memberOf(d.code)||{}; return '<button class="mbl" type="button" data-go="'+d.id+'"><b>'+esc(d.code)+(m.verified?' &middot; &#10003; verified':'')+'</b> '+esc((m.level?m.level+' ':'')+(m.role||''))+'<small>'+esc(T[d.id].slice(2,9).join(' · '))+'</small></button>'; }).join('')
+      :'<p class="sub">No engineer matches &ldquo;'+esc(q)+'&rdquo; yet. Describe your project and we\'ll find one.</p>'; }
+  (function(){ var f=document.getElementById('memberFind'); if(f) f.addEventListener('input',paintMembers); paintMembers(); })();
 
   /* ══ FREE FLIGHT ══ */
   var choice=document.getElementById('choice'), thrust=document.getElementById('thrust'), flyNear=document.getElementById('flyNear');
@@ -1800,10 +1960,10 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   function paintDock(){
     if(!dockRow) return;
     var h='<button class="dk fly" type="button" data-fly><i>&#10022;</i><span>Fly</span></button><button class="dk fly" type="button" data-soundtoggle><i>&#9835;</i><span>Sound</span></button>';
-    DESTS.forEach(function(d){ if(d.secret && !found[d.id]) return;
+    DESTS.forEach(function(d){ if((d.secret && !found[d.id])||d.member) return;
       var f=!!found[d.id]; h+='<button class="dk'+(d.c==='g'?' g':'')+(f?' found':'')+(d.id===cur?' here':'')+'" type="button" data-go="'+d.id+'"><i>'+(f?'':'?')+'</i><span>'+(f?d.name.replace(/^The /,''):'unknown')+'</span></button>'; });
     dockRow.innerHTML=h;
-    document.getElementById('dockN').textContent=Object.keys(found).length; document.getElementById('dockT').textContent=total;
+    document.getElementById('dockN').textContent=nFound(); document.getElementById('dockT').textContent=total;
   }
   paintDock();
   setInterval(function(){ var s=stage.classList.contains('live'); document.body.classList.toggle('sheet',s && isMob()); },150);
