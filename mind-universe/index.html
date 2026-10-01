@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mind Universe — your mind, as a universe</title>
+<meta name="description" content="Mind Universe: your moods, diary, goals, habits, memories, hadith and positive thoughts as glowing neurons you can fly through.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#03040a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--mono:'JetBrains Mono',ui-monospace,monospace;--sans:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;--ar:'Amiri',serif;
+  --blue:#4f7dff;--cyan:#2ee6ff;--green:#19f0b0;--purple:#a45cff;--gold:#ffc44d;--pink:#ff4fa8;--orange:#ff8a3d}
+body.dark{--bg:#03040a;--ink:#eef1ff;--mute:#9aa3c7;--mute2:#6b7399;--line:rgba(160,175,255,.18);--glow:rgba(3,4,10,.85);--soft:rgba(255,255,255,.06)}
+body.light{--bg:#eef2f8;--ink:#0b1730;--mute:#4a5872;--mute2:#7a879c;--line:rgba(31,107,255,.18);--glow:rgba(246,249,253,.92);--soft:rgba(31,107,255,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;transition:background .6s,color .6s}
+body.dark{background:radial-gradient(120% 90% at 30% 20%,#0b0f24 0%,#05060f 50%,#020208 100%)}
+body.light{background:radial-gradient(120% 90% at 30% 20%,#fff 0%,#eef2f8 55%,#e3e9f3 100%)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+#neural{position:fixed;inset:0;z-index:0}
+.grad{background:linear-gradient(110deg,var(--cyan),var(--purple) 50%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* gate */
+.gate{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .9s,transform 1.2s cubic-bezier(.6,0,.2,1)}
+.gate.gone{opacity:0;transform:scale(1.6);pointer-events:none}
+.gate .eye{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.gate h1{font-size:clamp(2.4rem,7vw,5rem);font-weight:800;letter-spacing:-.04em;margin:14px 0 10px;line-height:1}
+.gate p{color:var(--mute);max-width:520px;line-height:1.6}
+.gate input{margin-top:26px;width:min(320px,80vw);text-align:center;background:transparent;border:0;border-bottom:2px solid var(--line);padding:10px;font-size:1.1rem;outline:none}
+.gate input:focus{border-color:var(--cyan)}
+.enter{margin-top:26px;position:relative;padding:18px 44px;border-radius:999px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#fff;background:linear-gradient(110deg,var(--blue),var(--purple) 55%,var(--pink));box-shadow:0 0 40px -6px rgba(164,92,255,.8)}
+.enter::after{content:"";position:absolute;inset:-9px;border-radius:999px;border:1px solid rgba(46,230,255,.5);animation:ping 2.4s ease-out infinite}
+@keyframes ping{from{transform:scale(.92);opacity:.9}to{transform:scale(1.25);opacity:0}}
+.gate small{position:absolute;bottom:22px;left:0;right:0;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute2)}
+
+/* HUD */
+.hud{position:fixed;z-index:30;opacity:0;transition:opacity .8s}
+body.inside .hud{opacity:1}
+.brand{top:16px;left:18px;display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.06em;font-size:1.05rem}
+.brand i{width:30px;height:30px;border-radius:50%;background:conic-gradient(var(--cyan),var(--purple),var(--pink),var(--gold),var(--green),var(--cyan));box-shadow:0 0 20px -2px rgba(164,92,255,.8);animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tools{top:16px;right:16px;display:flex;gap:8px}
+.chip{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 13px;border-radius:999px;background:var(--soft);box-shadow:inset 0 0 0 1px var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+/* labels on neurons */
+#labels{position:fixed;inset:0;z-index:12;pointer-events:none;visibility:hidden}
+body.inside #labels{visibility:visible}
+.nl{position:absolute;left:0;top:0;pointer-events:auto;display:flex;align-items:center;gap:9px;padding:12px 12px 12px 0;white-space:nowrap;transition:opacity .4s}
+.nl i{width:11px;height:11px;border-radius:50%;margin-left:-5px;background:#fff;box-shadow:0 0 0 2px var(--c),0 0 16px 3px var(--c)}
+.nl span{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-shadow:0 0 10px var(--bg),0 0 4px var(--bg)}
+.nl.mini span{font-size:.6rem;opacity:.85}
+.nl:hover span{color:var(--c)}
+
+/* stage: words without boxes */
+#stage{position:fixed;z-index:20;left:46%;right:4vw;top:46%;transform:translateY(-50%);max-height:74vh;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;pointer-events:none;padding:26px 6px 40px;text-align:center;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(180deg,transparent 0,#000 22px,#000 calc(100% - 36px),transparent)}
+#stage::-webkit-scrollbar{display:none}
+#stage.live{pointer-events:auto}
+#haze{position:fixed;z-index:15;inset:0;pointer-events:none;opacity:0;transition:opacity .8s;background:radial-gradient(ellipse 44% 70% at 72% 48%,var(--glow) 0%,transparent 100%)}
+#haze.on{opacity:1}
+.pg{display:none;position:relative}
+.pg.on{display:block}
+.pg > *{animation:emerge .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
+.pg.out > *{animation:retract .38s ease-in both}
+@keyframes emerge{from{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(.4);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes retract{to{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(.3);filter:blur(8px)}}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c,var(--cyan));display:flex;align-items:center;justify-content:center;gap:10px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--cyan));box-shadow:0 0 12px 3px var(--c,var(--cyan))}
+.pg h2{font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.08;margin:12px auto 10px;max-width:620px}
+.pg h3{font-size:1.1rem;font-weight:800;margin:24px 0 6px}
+.pg p{color:var(--mute);line-height:1.6;max-width:560px;margin:8px auto 0}
+.lead{font-size:1.05rem}
+.small{font-size:.85rem}
+.link{display:inline-flex;align-items:center;gap:8px;margin:18px 10px 0;font-weight:700;color:var(--c,var(--cyan));position:relative;padding:3px 0}
+.link::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:linear-gradient(90deg,var(--c,var(--cyan)),transparent)}
+.field{display:block;width:100%;max-width:520px;margin:14px auto 0;background:transparent;border:0;border-bottom:2px solid var(--line);padding:10px 4px;font-size:1rem;outline:none;text-align:center}
+textarea.field{text-align:left;min-height:90px;resize:vertical;line-height:1.55}
+.field:focus{border-color:var(--c,var(--cyan))}
+.btn{display:inline-flex;align-items:center;gap:8px;margin:16px 6px 0;padding:12px 22px;border-radius:999px;font-weight:800;color:#fff;background:linear-gradient(110deg,var(--c,var(--blue)),var(--purple));box-shadow:0 10px 26px -12px var(--c,var(--blue))}
+.ghost{display:inline-flex;align-items:center;gap:6px;margin:12px 6px 0;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.ghost:hover{color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute2)}
+.empty{font-family:var(--mono);font-size:.74rem;color:var(--mute2);margin-top:18px}
+
+/* items that float on a thread rather than sit in boxes */
+.thread{list-style:none;max-width:540px;margin:18px auto 0;position:relative;text-align:left;padding-left:30px}
+.thread::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--c,var(--cyan)),transparent);opacity:.6}
+.thread li{position:relative;padding:9px 0 9px 4px;line-height:1.45}
+.thread li::before{content:"";position:absolute;left:-26px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 2px var(--dot,var(--c,var(--cyan))),0 0 10px 2px var(--dot,var(--c,var(--cyan)))}
+.thread li.done{opacity:.5;text-decoration:line-through}
+.thread li .meta{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute2);margin-top:3px}
+.thread li .x{float:right;color:var(--mute2);font-size:.8rem;padding:0 4px}
+.thread li .x:hover{color:var(--pink)}
+.thread li input[type=checkbox]{accent-color:var(--green);margin-right:8px;transform:translateY(1px) scale(1.15)}
+
+/* mood orbs */
+.orbs{display:flex;flex-wrap:wrap;justify-content:center;gap:18px 22px;margin:22px auto 6px;max-width:560px}
+.orb{display:flex;flex-direction:column;align-items:center;gap:8px;width:70px}
+.orb i{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--oc) 45%,transparent 72%);box-shadow:0 0 26px 2px var(--oc);transition:transform .25s;animation:float 5s ease-in-out infinite}
+.orb:nth-child(2n) i{animation-delay:-1.4s}.orb:nth-child(3n) i{animation-delay:-2.8s}
+.orb:hover i{transform:scale(1.15)}
+.orb.sel i{transform:scale(1.22);box-shadow:0 0 0 3px #fff,0 0 36px 6px var(--oc)}
+.orb span{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
+@keyframes float{50%{transform:translateY(-6px)}}
+
+/* rings for goals */
+.ring{display:inline-grid;place-items:center;width:84px;height:84px;border-radius:50%;background:conic-gradient(var(--c,var(--green)) calc(var(--p)*1%),var(--line) 0);margin:6px auto 0;position:relative}
+.ring::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--bg)}
+.ring b{position:relative;z-index:1;font-family:var(--mono);font-size:.9rem}
+.goal{max-width:540px;margin:26px auto 0}
+.goal h3{margin-top:8px}
+.next{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--c,var(--green));margin-top:6px}
+
+/* trackers */
+.habit{max-width:520px;margin:20px auto 0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 16px;text-align:left}
+.habit b{font-size:1rem}
+.habit .dots{grid-column:1/-1;display:flex;gap:6px}
+.habit .dots i{flex:1;height:6px;border-radius:6px;background:var(--line)}
+.habit .dots i.on{background:var(--hc);box-shadow:0 0 8px var(--hc)}
+.count{display:flex;align-items:center;gap:10px;font-family:var(--mono)}
+.count button{width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--hc);color:var(--hc);font-size:1.1rem;font-weight:700}
+
+/* charts */
+canvas.chart{width:100%;max-width:560px;height:220px;display:block;margin:16px auto 0}
+.stats{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:12px}
+.stats div{display:flex;flex-direction:column;align-items:center}
+.stats b{font-size:1.8rem;font-weight:800;letter-spacing:-.03em}
+.stats span{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute2)}
+
+/* hadith */
+.ar{font-family:var(--ar);direction:rtl;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.9;margin:18px auto 6px;max-width:600px;color:var(--ink)}
+.en{font-size:1.1rem;color:var(--ink)!important;font-style:italic}
+.src{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute2);margin-top:12px}
+.verify{font-family:var(--mono);font-size:.6rem;color:var(--orange);margin-top:8px}
+
+/* gallery */
+.gal{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:18px auto 0;max-width:600px}
+.gal figure{position:relative;width:132px;height:132px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px var(--c,var(--pink)),0 0 22px -4px var(--c,var(--pink));animation:float 6s ease-in-out infinite}
+.gal figure:nth-child(2n){animation-delay:-2s;margin-top:22px}
+.gal img,.gal video{width:100%;height:100%;object-fit:cover;display:block}
+.gal figure button{position:absolute;top:6px;right:22px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;opacity:0;transition:.2s}
+.gal figure:hover button{opacity:1}
+.file{display:none}
+
+/* drawing */
+.drawwrap{position:relative;max-width:620px;margin:16px auto 0}
+#pad{width:100%;height:340px;border-radius:24px;display:block;touch-action:none;background:radial-gradient(circle at 50% 40%,rgba(164,92,255,.08),transparent 70%);box-shadow:inset 0 0 0 1px var(--line)}
+.swatches{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.swatches button{width:26px;height:26px;border-radius:50%;background:var(--sc);box-shadow:0 0 10px var(--sc)}
+.swatches button.sel{outline:2px solid var(--ink);outline-offset:2px}
+
+/* dock */
+#dock{position:fixed;z-index:21;left:50%;bottom:12px;transform:translateX(-50%);max-width:min(1000px,96vw);padding:8px 8px 10px;border-radius:22px;background:var(--soft);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 1px var(--line);opacity:0;pointer-events:none;transition:opacity .6s}
+body.inside #dock{opacity:1;pointer-events:auto}
+.dock-row{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:0 4px}
+.dock-row::-webkit-scrollbar{display:none}
+.dk{flex:0 0 auto;width:64px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:2px 0;border-radius:12px}
+.dk i{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--c) 50%,transparent 75%);box-shadow:0 0 14px -2px var(--c)}
+.dk.here i{box-shadow:0 0 0 2px var(--ink),0 0 18px 2px var(--c)}
+.dk span{font-family:var(--mono);font-size:.52rem;letter-spacing:.06em;text-transform:uppercase;text-align:center;line-height:1.2}
+.dk .soon{color:var(--mute2)}
+#readout{position:fixed;z-index:34;left:50%;bottom:96px;transform:translateX(-50%);font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);opacity:0;transition:opacity .3s;white-space:nowrap;text-shadow:0 0 8px var(--bg)}
+#readout.on{opacity:1}
+#toast{position:fixed;z-index:36;left:50%;bottom:100px;transform:translate(-50%,10px);font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;border-radius:999px;background:var(--soft);box-shadow:inset 0 0 0 1px var(--line);backdrop-filter:blur(8px);opacity:0;transition:.5s;pointer-events:none;white-space:nowrap}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.care{max-width:520px;margin:18px auto 0;font-size:.88rem;color:var(--mute);line-height:1.6}
+.care b{color:var(--ink)}
+
+@media(max-width:899px){
+  #stage{left:0;right:0;top:auto;bottom:86px;transform:none;max-height:58vh;padding:44px 20px 20px;
+    background:linear-gradient(180deg,transparent 0,var(--glow) 60px,var(--glow) 100%);-webkit-mask-image:none;mask-image:none}
+  #haze{display:none}
+  .brand{font-size:.9rem}.brand i{width:24px;height:24px}
+  #pad{height:280px}
+}
+</style>
+</head>
+<body class="dark">
+<div id="neural" aria-hidden="true"></div>
+
+<div class="gate" id="gate">
+  <div class="eye">Mind Universe</div>
+  <h1>Enter your <span class="grad">mind</span></h1>
+  <p>Your moods, thoughts, goals and memories &mdash; living as glowing neurons in your own universe. Private, and only on this device.</p>
+  <input id="gName" placeholder="What should your mind call you?" autocomplete="given-name" maxlength="30">
+  <button class="enter" id="gEnter">Enter</button>
+  <small>Your private universe &mdash; saved only on this device</small>
+</div>
+
+<div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
+<div class="hud tools"><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div id="labels"></div>
+<div id="haze"></div>
+<div id="readout"></div>
+<div id="toast"></div>
+<nav id="dock" aria-label="Your neurons"><div class="dock-row" id="dockRow"></div></nav>
+<main id="stage" aria-live="polite"></main>
+
+<script src="assets/hadith.js"></script>
+<script>
+/* ── the map of the mind ── */
+(function(){
+  var D=[
+    {id:'me',      name:'You',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:34, scale:1.4},
+    {id:'mood',    name:'Mood',         col:'#ff4fa8', pos:[-40,10,-30],   yaw:.5,   dist:30, scale:1.15},
+    {id:'progress',name:'Progress',     col:'#2ee6ff', pos:[42,14,-34],    yaw:-.5,  dist:34, scale:1.15},
+    {id:'diary',   name:'Diary',        col:'#ffc44d', pos:[-32,-24,-62],  yaw:.35,  dist:30},
+    {id:'todo',    name:'To-do',        col:'#19f0b0', pos:[34,-26,-60],   yaw:-.35, dist:30},
+    {id:'goals',   name:'Goals',        col:'#a45cff', pos:[0,32,-72],     yaw:0,    dist:32, scale:1.1},
+    {id:'plan',    name:'Plan',         col:'#ff8a3d', pos:[0,-42,-84],    yaw:0,    dist:30},
+    {id:'trackers',name:'Trackers',     col:'#3dffd0', pos:[-72,-4,-92],   yaw:.6,   dist:30},
+    {id:'gallery', name:'Memories',     col:'#ff4fa8', pos:[72,-2,-94],    yaw:-.6,  dist:36},
+    {id:'draw',    name:'Magic drawing',col:'#ff6bd6', pos:[-58,40,-124],  yaw:.4,   dist:32},
+    {id:'ai',      name:'Talk to AI',   col:'#4f7dff', pos:[58,42,-126],   yaw:-.4,  dist:30},
+    {id:'connect', name:'Connections',  col:'#cfd6ff', pos:[0,8,-170],     yaw:0,    dist:32},
+    {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-120,12,-40],  yaw:.9,   dist:34, scale:1.2},
+    {id:'light',   name:'Light',        col:'#19f0b0', pos:[120,10,-44],   yaw:-.9,  dist:34, scale:1.2}
+  ];
+  var L=[['me','mood'],['me','progress'],['me','diary'],['me','todo'],['me','goals'],['me','plan'],['mood','progress'],['goals','plan'],['plan','todo'],
+    ['diary','trackers'],['todo','gallery'],['goals','draw'],['goals','ai'],['draw','connect'],['ai','connect'],['mood','sage'],['progress','light'],['trackers','sage'],['gallery','light']];
+  var TH={}; (window.H_THEMES||[]).forEach(function(t){ TH[t.id]=t; });
+  (window.H_HADITH||[]).forEach(function(h,i,arr){ var a=i/arr.length*Math.PI*2, r=24+(i%3)*6;
+    D.push({id:h.id,name:h.title,col:(TH[h.theme]||{}).col||'#ffc44d',pos:[-120+Math.cos(a)*r*.6,12+Math.sin(a)*r,-40+Math.cos(a)*r],yaw:.9,dist:20,scale:.55,mini:true,kind:'hadith'});
+    L.push(['sage',h.id]); });
+  window.H_LIGHT=[
+    {t:'Small steps count',b:'Tiny actions done often change more than big plans done once.'},
+    {t:'You are not your thoughts',b:'A thought is something you have, not something you are. You can notice it and let it pass.'},
+    {t:'Gratitude rewires',b:'Naming three good things each day trains your attention to find more of them.'},
+    {t:'Rest is productive',b:'Sleep and stillness are when the mind files away the day and repairs itself.'},
+    {t:'Kindness returns',b:'Helping someone else is one of the quickest ways to lift your own mood.'},
+    {t:'Breathe slowly',b:'Breathing out longer than you breathe in tells your body it is safe to calm down.'},
+    {t:'Progress, not perfection',b:'Look at how far you have come, not only at how far there is to go.'},
+    {t:'Nature heals',b:'A few minutes outside, under the sky or among trees, can settle a busy mind.'},
+    {t:'You can begin again',b:'Every morning, every hour, every breath is a chance to start fresh.'},
+    {t:'Talk it out',b:'Saying a worry out loud to someone you trust often makes it lighter.'},
+    {t:'Move a little',b:'A short walk or stretch releases tension and brightens your mood.'},
+    {t:'Be your own friend',b:'Speak to yourself the way you would speak to someone you love.'}
+  ];
+  H_LIGHT.forEach(function(x,i){ var a=i/H_LIGHT.length*Math.PI*2, r=22+(i%3)*6; x.id='l'+(i+1);
+    D.push({id:x.id,name:x.t,col:['#19f0b0','#2ee6ff','#ffc44d','#ff4fa8','#a45cff'][i%5],pos:[120+Math.cos(a)*r*.6,10+Math.sin(a)*r,-44+Math.cos(a)*r],yaw:-.9,dist:20,scale:.55,mini:true,kind:'light'});
+    L.push(['light',x.id]); });
+  window.H_DESTS=D; window.H_LINKS=L;
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="assets/mind-space.js?v=1"></script>
+<script>
+(function(){
+  var M=window.HMind, DESTS=window.H_DESTS, byId={}; DESTS.forEach(function(d){ byId[d.id]=d; });
+  var stage=document.getElementById('stage'), haze=document.getElementById('haze');
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var toastT; function toast(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(function(){ el.classList.remove('on'); },2400); }
+  function today(d){ d=d||new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function nice(ts){ var d=new Date(ts); return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}); }
+
+  /* ── storage: everything stays on this device ── */
+  var KEY='mindu.v1', S={};
+  try{ S=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ S={}; }
+  S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[];
+  S.focus=S.focus||{}; S.habits=S.habits||[{id:'water',n:'Water (glasses)',t:8,c:'#2ee6ff'},{id:'sleep',n:'Sleep (hours)',t:8,c:'#a45cff'},{id:'move',n:'Move (minutes)',t:30,c:'#19f0b0'},{id:'read',n:'Read (pages)',t:10,c:'#ffc44d'}];
+  S.log=S.log||{}; S.visited=S.visited||{}; S.keep=S.keep||{}; S.theme=S.theme||'dark';
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){ toast('Storage is full'); } }
+  // pictures and videos live in IndexedDB (too big for localStorage)
+  var DB=null;
+  function db(){ return new Promise(function(res,rej){ if(DB) return res(DB); var r=indexedDB.open('mindu-media',1); r.onupgradeneeded=function(){ r.result.createObjectStore('m',{keyPath:'id'}); }; r.onsuccess=function(){ DB=r.result; res(DB); }; r.onerror=rej; }); }
+  function mPut(o){ return db().then(function(d){ return new Promise(function(res){ var tx=d.transaction('m','readwrite'); tx.objectStore('m').put(o); tx.oncomplete=res; }); }); }
+  function mAll(){ return db().then(function(d){ return new Promise(function(res){ var q=d.transaction('m').objectStore('m').getAll(); q.onsuccess=function(){ res(q.result||[]); }; }); }); }
+  function mDel(id){ return db().then(function(d){ return new Promise(function(res){ var tx=d.transaction('m','readwrite'); tx.objectStore('m').delete(id); tx.oncomplete=res; }); }); }
+  function logDay(kind){ var k=today(); S.log[k]=S.log[k]||{}; S.log[k][kind]=(S.log[k][kind]||0)+1; save(); }
+
+  /* ── theme ── */
+  var themeBtn=document.getElementById('themeBtn');
+  function applyTheme(){ document.body.classList.toggle('dark',S.theme==='dark'); document.body.classList.toggle('light',S.theme==='light');
+    themeBtn.innerHTML=S.theme==='dark'?'&#9788; Light':'&#9790; Dark'; if(M&&M.setTheme) M.setTheme(S.theme);
+    document.querySelector('meta[name=theme-color]').content=S.theme==='dark'?'#03040a':'#eef2f8'; }
+  themeBtn.onclick=function(){ S.theme=S.theme==='dark'?'light':'dark'; save(); applyTheme(); if(shown==='progress') render('progress'); updateChartBoard(); };
+  applyTheme();
+
+  /* ── moods ── */
+  var MOODS=[{n:'Joyful',c:'#ffc44d',v:5},{n:'Grateful',c:'#19f0b0',v:5},{n:'Hopeful',c:'#ff4fa8',v:4},{n:'Calm',c:'#2ee6ff',v:4},{n:'Tired',c:'#a45cff',v:2},{n:'Anxious',c:'#ff8a3d',v:2},{n:'Low',c:'#4f7dff',v:1}];
+  function moodOf(n){ for(var i=0;i<MOODS.length;i++) if(MOODS[i].n===n) return MOODS[i]; return MOODS[3]; }
+
+  /* ── pages ── */
+  var PAGES={
+    me:function(){ var p=S.profile, lastMood=S.moods[0], left=S.todos.filter(function(t){ return !t.done; }).length;
+      return eb('Your centre','#ffffff')+(p.photo?'<img src="'+p.photo+'" alt="" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block;box-shadow:0 0 0 2px #fff,0 0 30px -4px var(--purple)">':'')+
+        '<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2>'+
+        '<p class="lead">'+esc(p.line||'Every light around you is part of you. Fly to one to begin.')+'</p>'+
+        '<div class="stats"><div><b>'+(lastMood&&lastMood.day===today()?esc(lastMood.m):'—')+'</b><span>Mood today</span></div><div><b>'+left+'</b><span>To-dos left</span></div><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+Object.keys(S.visited).filter(function(k){ return byId[k]&&byId[k].kind==='hadith'; }).length+'/'+(window.H_HADITH||[]).length+'</b><span>Hadith read</span></div></div>'+
+        '<div class="row"><button class="link" data-go="mood">How are you feeling?</button><button class="link" data-go="plan">Today\'s plan</button></div>'+
+        '<h3>Your profile</h3><input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
+        '<div class="row"><button class="ghost" data-act="photo">&#9673; Add a photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
+        '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
+        '<p class="care">If you ever feel unsafe, please reach out &mdash; in the UK, <b>Samaritans are free on 116 123</b>, any time.</p>'; },
+    mood:function(){ var h=eb('Mood','#ff4fa8')+'<h2>How are you feeling right now?</h2><p>Tap the light that matches you. Add a few words if you like.</p><div class="orbs">'+
+        MOODS.map(function(m){ return '<button class="orb" data-mood="'+m.n+'" style="--oc:'+m.c+'"><i></i><span>'+m.n+'</span></button>'; }).join('')+'</div>'+
+        '<input class="field" id="mNote" placeholder="What\'s behind this feeling? (optional)" maxlength="160"><div class="row"><button class="btn" data-act="logMood">Save mood</button></div>'+
+        '<h3>Your recent moods</h3>'+(S.moods.length?'<ul class="thread">'+S.moods.slice(0,10).map(function(m){ return '<li style="--dot:'+moodOf(m.m).c+'"><b>'+esc(m.m)+'</b>'+(m.note?' &mdash; '+esc(m.note):'')+'<span class="meta">'+nice(m.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">No moods yet &mdash; your first one starts your history.</p>')+
+        '<button class="link" data-go="progress">See your mood chart</button>';
+      return h; },
+    progress:function(){ return eb('Progress','#2ee6ff')+'<h2>How you\'ve been.</h2><p>Your last 14 days: the line is your mood, the bars are what you did.</p><canvas class="chart" id="chart"></canvas>'+
+        '<div class="stats"><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+S.moods.length+'</b><span>Moods logged</span></div><div><b>'+S.notes.length+'</b><span>Diary entries</span></div><div><b>'+S.todos.filter(function(t){ return t.done; }).length+'</b><span>Tasks done</span></div></div>'+
+        '<p class="small">This chart also floats in your mind, beside the Progress neuron.</p>'; },
+    diary:function(){ return eb('Diary','#ffc44d')+'<h2>Write it down.</h2><p>Your diary is yours alone &mdash; it never leaves this device.</p>'+
+        '<input class="field" id="dTitle" placeholder="Title (optional)" maxlength="80"><textarea class="field" id="dText" placeholder="Today I..."></textarea><div class="row"><button class="btn" data-act="addNote">Save entry</button></div>'+
+        (S.notes.length?'<ul class="thread">'+S.notes.map(function(n){ return '<li><button class="x" data-del-note="'+n.id+'" aria-label="Delete">&#10005;</button><b>'+esc(n.title||'Untitled')+'</b><br>'+esc(n.text).replace(/\n/g,'<br>')+'<span class="meta">'+nice(n.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">Your first entry will appear here.</p>'); },
+    todo:function(){ return eb('To-do','#19f0b0')+'<h2>Things to do.</h2><input class="field" id="tText" placeholder="Add something to do, then press Enter" maxlength="120">'+
+        (S.todos.length?'<ul class="thread">'+S.todos.map(function(t){ return '<li class="'+(t.done?'done':'')+'"><button class="x" data-del-todo="'+t.id+'">&#10005;</button><label><input type="checkbox" data-todo="'+t.id+'" '+(t.done?'checked':'')+'>'+esc(t.text)+'</label></li>'; }).join('')+'</ul><button class="ghost" data-act="clearDone">Clear finished</button>':'<p class="empty">Nothing yet. What\'s one small thing you could do today?</p>'); },
+    goals:function(){ var h=eb('Goals','#a45cff')+'<h2>Where you\'re heading.</h2><p>Add a goal and the steps to reach it. Your mind shows how far you\'ve come.</p>'+
+        '<input class="field" id="gTitle" placeholder="A goal (e.g. Run 5k, learn Arabic)" maxlength="80"><input class="field" id="gWhy" placeholder="Why it matters to you" maxlength="140"><div class="row"><button class="btn" data-act="addGoal">Add goal</button></div>';
+      S.goals.forEach(function(g){ var tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?Math.round(dn/tot*100):0, nx=g.steps.filter(function(s){ return !s.done; })[0];
+        h+='<div class="goal"><div class="ring" style="--p:'+pc+'"><b>'+pc+'%</b></div><h3>'+esc(g.title)+'</h3>'+(g.why?'<p class="small">'+esc(g.why)+'</p>':'')+
+          (nx?'<div class="next">Next: '+esc(nx.text)+'</div>':(tot?'<div class="next">Goal complete. Beautiful.</div>':''))+
+          '<ul class="thread">'+g.steps.map(function(s){ return '<li class="'+(s.done?'done':'')+'"><label><input type="checkbox" data-step="'+g.id+':'+s.id+'" '+(s.done?'checked':'')+'>'+esc(s.text)+'</label></li>'; }).join('')+'</ul>'+
+          '<input class="field" data-addstep="'+g.id+'" placeholder="Add a step, then press Enter" maxlength="100"><button class="ghost" data-del-goal="'+g.id+'">Remove goal</button></div>'; });
+      if(!S.goals.length) h+='<p class="empty">No goals yet.</p>';
+      return h; },
+    plan:function(){ var f=S.focus[today()]||['','',''], steps=[];
+      S.goals.forEach(function(g){ var nx=g.steps.filter(function(s){ return !s.done; })[0]; if(nx) steps.push({g:g.title,t:nx.text}); });
+      return eb('Plan','#ff8a3d')+'<h2>Your plan of action.</h2><p>Three things to focus on today &mdash; and the next step on each of your goals.</p>'+
+        [0,1,2].map(function(i){ return '<input class="field" data-focus="'+i+'" placeholder="Focus '+(i+1)+'" value="'+esc(f[i]||'')+'" maxlength="100">'; }).join('')+
+        '<h3>Next steps on your goals</h3>'+(steps.length?'<ul class="thread">'+steps.map(function(s){ return '<li><b>'+esc(s.t)+'</b><span class="meta">'+esc(s.g)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">Add goals and steps, and they\'ll appear here.</p>')+
+        '<button class="link" data-go="goals">Open your goals</button><button class="link" data-go="todo">Open your to-dos</button>'; },
+    trackers:function(){ var k=today(), lg=S.log[k]||{}, h=eb('Trackers','#3dffd0')+'<h2>Daily trackers.</h2><p>Tap + as you go. The dots show your last seven days.</p>';
+      S.habits.forEach(function(x){ var v=(S.log[k]&&S.log[k]['h_'+x.id])||0, dots='';
+        for(var i=6;i>=0;i--){ var d=new Date(); d.setDate(d.getDate()-i); var dv=(S.log[today(d)]||{})['h_'+x.id]||0; dots+='<i class="'+(dv>=x.t?'on':'')+'"></i>'; }
+        h+='<div class="habit" style="--hc:'+x.c+'"><b>'+esc(x.n)+'</b><div class="count"><button data-hab="'+x.id+'" data-d="-1">&minus;</button><span>'+v+' / '+x.t+'</span><button data-hab="'+x.id+'" data-d="1">+</button></div><div class="dots">'+dots+'</div></div>'; });
+      h+='<input class="field" id="hName" placeholder="New tracker (e.g. Prayers)" maxlength="40"><input class="field" id="hTarget" type="number" min="1" max="999" placeholder="Daily target (e.g. 5)"><div class="row"><button class="btn" data-act="addHabit">Add tracker</button></div>';
+      return h; },
+    gallery:function(){ return eb('Memories','#ff4fa8')+'<h2>Your memories.</h2><p>Add photos and videos. The pictures also float around this neuron in your mind.</p><div class="row"><button class="btn" data-act="addMedia">Add photos or videos</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile"><div class="gal" id="gal"><p class="empty">Loading…</p></div>'; },
+    draw:function(){ return eb('Magic drawing','#ff6bd6')+'<h2>Draw anything.</h2><p>Glowing brushes for whatever is on your mind. Save it to your memories.</p><div class="drawwrap"><canvas id="pad"></canvas></div>'+
+        '<div class="swatches">'+['#2ee6ff','#a45cff','#ff4fa8','#ffc44d','#19f0b0','#ffffff'].map(function(c,i){ return '<button data-sw="'+c+'" class="'+(i===0?'sel':'')+'" style="--sc:'+c+'"></button>'; }).join('')+'</div>'+
+        '<div class="row"><button class="ghost" data-act="padSize">&#9679; Brush size</button><button class="ghost" data-act="padClear">Clear</button><button class="btn" data-act="padSave">Save to memories</button></div>'+
+        '<p class="small" style="margin-top:18px">&#10022; <b>AI magic</b> &mdash; turn your sketch into art or bring it to life &mdash; is coming as a paid upgrade.</p>'; },
+    ai:function(){ return eb('Talk to AI','#4f7dff')+'<h2>A companion for your thoughts.</h2><p class="lead">Talk things through, get ideas, plan your day, or reflect on a hadith &mdash; with an AI that knows your goals and moods (only if you allow it).</p>'+
+        '<ul class="thread" style="--c:#4f7dff"><li>"Help me plan a calmer week."</li><li>"Give me three ideas to reach my goal."</li><li>"What could this hadith mean for my day?"</li></ul>'+
+        '<p class="small">Coming soon as a paid upgrade. It will be built carefully: it supports reflection, it never diagnoses, and it points to real help when someone needs it.</p>'; },
+    connect:function(){ return eb('Connections','#cfd6ff')+'<h2>Minds that connect.</h2><p class="lead">Soon you\'ll be able to link your mind with friends and family &mdash; see their shared neurons glow beside yours, and send each other light.</p><p class="small">Coming later, with full privacy controls: nothing is shared unless you choose it.</p>'; },
+    sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Each golden light around the Sage holds a saying of the Prophet &#65018;. Fly to one, or choose below.</p>'+
+        '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+(S.visited[h.id]?'<span class="meta">read</span>':'')+'</li>'; }).join('')+'</ul>'; },
+    light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind. Each one is a neuron you can visit.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'; }
+  };
+  function eb(t,c){ return '<div class="eyebrow" style="--c:'+c+'">'+t+'</div>'; }
+  function hadithPage(h){ var th=(window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{name:'',col:'#ffc44d'};
+    return eb(th.name,th.col)+'<h2>'+esc(h.title)+'</h2><div class="ar">'+h.ar+'</div><p class="en">&ldquo;'+esc(h.en)+'&rdquo;</p><div class="src">'+esc(h.src)+'</div>'+
+      '<div class="row"><button class="btn" data-act="narrate" style="--c:'+th.col+'">&#9654; Hear the Sage</button><button class="ghost" data-act="keep">'+(S.keep[h.id]?'&#9733; Kept':'&#9734; Keep')+'</button></div>'+
+      '<button class="link" data-act="nextHadith" style="--c:'+th.col+'">Next saying</button><button class="link" data-go="sage" style="--c:'+th.col+'">All sayings</button>'+
+      '<p class="verify">Text and reference being checked against the source collections before the Sage\'s recorded voice is added.</p>'; }
+  function lightPage(x){ return eb('Light','#19f0b0')+'<h2>'+esc(x.t)+'</h2><p class="lead">'+esc(x.b)+'</p><button class="link" data-act="nextLight">Next light</button><button class="link" data-go="light">All lights</button>'; }
+
+  /* ── showing a neuron's words ── */
+  var shown=null, busy=false, cur='me';
+  function pageHTML(id){ var d=byId[id]; if(!d) return '';
+    if(d.kind==='hadith') return hadithPage((window.H_HADITH||[]).filter(function(h){ return h.id===id; })[0]);
+    if(d.kind==='light') return lightPage(H_LIGHT.filter(function(x){ return x.id===id; })[0]);
+    return PAGES[id]?PAGES[id]():''; }
+  function render(id){ var pg=document.createElement('article'); pg.className='pg on'; pg.innerHTML=pageHTML(id); stage.innerHTML=''; stage.appendChild(pg);
+    var s=M.restScreen(id)||{x:innerWidth*.3,y:innerHeight*.4};
+    [].forEach.call(pg.children,function(el,i){ var r=el.getBoundingClientRect(); el.style.setProperty('--dx',((s.x-(r.left+r.width/2))*.8).toFixed(0)+'px'); el.style.setProperty('--dy',((s.y-(r.top+r.height/2))*.8).toFixed(0)+'px'); el.style.setProperty('--d',Math.min(i,12)*70+'ms'); });
+    after(id,pg); }
+  function emerge(id){ shown=id; stage.classList.add('live'); haze.classList.add('on'); stage.scrollTop=0; render(id); }
+  function retract(done){ var pg=stage.querySelector('.pg'); shown=null; haze.classList.remove('on'); stage.classList.remove('live'); if(!pg){ done&&done(); return; } pg.classList.add('out'); setTimeout(function(){ stage.innerHTML=''; done&&done(); },380); }
+  function travelTo(id){ if(!byId[id]||busy) return; if(id===cur&&shown===id) return; busy=true; cur=id;
+    retract(function(){ var dur=M.go(id,arrive)||0; if(dur>600) readoutRun(id,dur); paintDock(); });
+    function arrive(){ busy=false; document.getElementById('readout').classList.remove('on'); M.fire(id); if(!S.visited[id]){ S.visited[id]=Date.now(); save(); } emerge(id); paintDock(); } }
+  function readoutRun(id,dur){ var r=document.getElementById('readout'), t0=performance.now(); r.classList.add('on');
+    (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur); r.textContent='◉ travelling to '+byId[id].name+' · '+String(Math.round(k*100)).padStart(3,'0')+'%'; if(k<1&&r.classList.contains('on')) requestAnimationFrame(tick); })(); }
+
+  /* after a page appears: wire up its live parts */
+  var selMood=null, padState={c:'#2ee6ff',w:6};
+  function after(id,pg){
+    if(id==='progress') drawChart(document.getElementById('chart'));
+    if(id==='gallery') paintGallery();
+    if(id==='draw') initPad();
+    if(id==='todo'){ var f=document.getElementById('tText'); f&&f.addEventListener('keydown',function(e){ if(e.key==='Enter'&&f.value.trim()){ S.todos.unshift({id:Date.now(),text:f.value.trim(),done:false}); save(); render('todo'); setTimeout(function(){ var g=document.getElementById('tText'); g&&g.focus(); },50); } }); }
+    pg.querySelectorAll('[data-addstep]').forEach(function(inp){ inp.addEventListener('keydown',function(e){ if(e.key==='Enter'&&inp.value.trim()){ var g=S.goals.filter(function(x){ return String(x.id)===inp.dataset.addstep; })[0]; if(g){ g.steps.push({id:Date.now(),text:inp.value.trim(),done:false}); save(); render('goals'); } } }); });
+    pg.querySelectorAll('[data-focus]').forEach(function(inp){ inp.addEventListener('change',function(){ var f=S.focus[today()]||['','','']; f[+inp.dataset.focus]=inp.value.trim(); S.focus[today()]=f; save(); toast('Plan saved'); }); });
+  }
+  stage.addEventListener('click',function(e){
+    var b=e.target.closest('button,input[type=checkbox]'); if(!b) return;
+    if(b.dataset.go){ travelTo(b.dataset.go); return; }
+    if(b.dataset.mood){ selMood=b.dataset.mood; stage.querySelectorAll('.orb').forEach(function(o){ o.classList.toggle('sel',o===b); }); M.setColor('mood',moodOf(selMood).c); return; }
+    if(b.dataset.todo){ var t=S.todos.filter(function(x){ return String(x.id)===b.dataset.todo; })[0]; if(t){ t.done=b.checked; if(t.done) logDay('task'); save(); setTimeout(function(){ render('todo'); },250); } return; }
+    if(b.dataset.delTodo){ S.todos=S.todos.filter(function(x){ return String(x.id)!==b.dataset.delTodo; }); save(); render('todo'); return; }
+    if(b.dataset.delNote){ if(!confirm('Delete this diary entry?')) return; S.notes=S.notes.filter(function(x){ return String(x.id)!==b.dataset.delNote; }); save(); render('diary'); return; }
+    if(b.dataset.step){ var pr=b.dataset.step.split(':'), g=S.goals.filter(function(x){ return String(x.id)===pr[0]; })[0]; if(g){ var st=g.steps.filter(function(x){ return String(x.id)===pr[1]; })[0]; if(st){ st.done=b.checked; if(st.done){ logDay('step'); M.fire('goals'); } save(); setTimeout(function(){ render('goals'); },250); } } return; }
+    if(b.dataset.delGoal){ if(!confirm('Remove this goal?')) return; S.goals=S.goals.filter(function(x){ return String(x.id)!==b.dataset.delGoal; }); save(); render('goals'); return; }
+    if(b.dataset.hab){ var k=today(); S.log[k]=S.log[k]||{}; var key='h_'+b.dataset.hab; S.log[k][key]=Math.max(0,(S.log[k][key]||0)+(+b.dataset.d)); save(); M.fire('trackers'); render('trackers'); return; }
+    if(b.dataset.sw){ padState.c=b.dataset.sw; stage.querySelectorAll('[data-sw]').forEach(function(x){ x.classList.toggle('sel',x===b); }); return; }
+    if(b.dataset.delMedia){ mDel(b.dataset.delMedia).then(function(){ paintGallery(); refreshBoards(); }); return; }
+    var a=b.dataset.act; if(!a) return;
+    if(a==='logMood'){ if(!selMood){ toast('Tap a mood light first'); return; } var note=(document.getElementById('mNote').value||'').trim();
+      S.moods.unshift({m:selMood,note:note,ts:Date.now(),day:today()}); logDay('mood'); save(); M.fire('mood'); toast('Mood saved'); updateChartBoard();
+      if(selMood==='Low'||selMood==='Anxious'){ render('mood'); var c=document.createElement('p'); c.className='care'; c.innerHTML='Thank you for being honest with yourself. Be gentle today &mdash; a slow breath, a short walk, or talking to someone you trust can help. If things feel too heavy, <b>Samaritans are free on 116 123</b> (UK), any time.'; stage.querySelector('.pg').insertBefore(c,stage.querySelector('.pg').children[3]); }
+      else render('mood'); selMood=null; return; }
+    if(a==='addNote'){ var tx=(document.getElementById('dText').value||'').trim(); if(!tx){ toast('Write something first'); return; } S.notes.unshift({id:Date.now(),title:(document.getElementById('dTitle').value||'').trim(),text:tx,ts:Date.now()}); logDay('note'); save(); M.fire('diary'); toast('Saved to your diary'); render('diary'); return; }
+    if(a==='clearDone'){ S.todos=S.todos.filter(function(t){ return !t.done; }); save(); render('todo'); return; }
+    if(a==='addGoal'){ var gt=(document.getElementById('gTitle').value||'').trim(); if(!gt){ toast('Name your goal first'); return; } S.goals.unshift({id:Date.now(),title:gt,why:(document.getElementById('gWhy').value||'').trim(),steps:[]}); save(); M.fire('goals'); render('goals'); return; }
+    if(a==='addHabit'){ var hn=(document.getElementById('hName').value||'').trim(), ht=+document.getElementById('hTarget').value||1; if(!hn){ toast('Name your tracker'); return; } S.habits.push({id:'c'+Date.now(),n:hn,t:ht,c:['#ff4fa8','#ffc44d','#2ee6ff','#a45cff','#19f0b0'][S.habits.length%5]}); save(); render('trackers'); return; }
+    if(a==='saveProfile'){ S.profile.name=(document.getElementById('pName').value||'').trim(); S.profile.line=(document.getElementById('pLine').value||'').trim(); save(); toast('Profile saved'); render('me'); return; }
+    if(a==='photo'){ var f=document.getElementById('pPhoto'); f.onchange=function(){ var file=f.files[0]; if(!file) return; shrink(file,320).then(function(url){ S.profile.photo=url; save(); render('me'); }); }; f.click(); return; }
+    if(a==='export'){ var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}), u=URL.createObjectURL(blob), l=document.createElement('a'); l.href=u; l.download='mind-universe-'+today()+'.json'; l.click(); setTimeout(function(){ URL.revokeObjectURL(u); },2000); return; }
+    if(a==='wipe'){ if(!confirm('Delete everything in your mind on this device? This cannot be undone.')) return; localStorage.removeItem(KEY); indexedDB.deleteDatabase('mindu-media'); location.reload(); return; }
+    if(a==='addMedia'){ var mf=document.getElementById('mFile'); mf.onchange=function(){ var files=[].slice.call(mf.files); Promise.all(files.map(function(file){ var isV=/^video/.test(file.type);
+        if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now()}); });
+        return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'video',blob:file,ts:Date.now()}); })).then(function(){ toast('Added to your memories'); M.fire('gallery'); paintGallery(); refreshBoards(); }); }; mf.click(); return; }
+    if(a==='padClear'){ var c=document.getElementById('pad'); c.getContext('2d').clearRect(0,0,c.width,c.height); return; }
+    if(a==='padSize'){ padState.w=padState.w>=18?3:padState.w+5; toast('Brush size '+padState.w); return; }
+    if(a==='padSave'){ var pc=document.getElementById('pad'); mPut({id:'m'+Date.now(),type:'image',url:pc.toDataURL('image/png'),ts:Date.now(),drawing:true}).then(function(){ toast('Saved to your memories'); refreshBoards(); }); return; }
+    if(a==='narrate'){ narrate(shown); return; }
+    if(a==='keep'){ S.keep[shown]=!S.keep[shown]; save(); render(shown); return; }
+    if(a==='nextHadith'){ var H=window.H_HADITH||[], i=H.map(function(h){ return h.id; }).indexOf(shown); travelTo(H[(i+1)%H.length].id); return; }
+    if(a==='nextLight'){ var j=H_LIGHT.map(function(x){ return x.id; }).indexOf(shown); travelTo(H_LIGHT[(j+1)%H_LIGHT.length].id); return; }
+  });
+  function shrink(file,max){ return new Promise(function(res){ var r=new FileReader(); r.onload=function(){ var im=new Image(); im.onload=function(){ var k=Math.min(1,max/Math.max(im.width,im.height)), c=document.createElement('canvas'); c.width=im.width*k; c.height=im.height*k; c.getContext('2d').drawImage(im,0,0,c.width,c.height); res(c.toDataURL('image/jpeg',.85)); }; im.src=r.result; }; r.readAsDataURL(file); }); }
+
+  /* the Sage: device voice for now (Arabic, then English); recorded Gemini voice comes once texts are verified */
+  function narrate(id){ var h=(window.H_HADITH||[]).filter(function(x){ return x.id===id; })[0]; if(!h||!window.speechSynthesis){ toast('Voice not available on this device'); return; }
+    speechSynthesis.cancel(); var vs=speechSynthesis.getVoices(), ar=vs.filter(function(v){ return /^ar/i.test(v.lang); })[0], en=vs.filter(function(v){ return /en-GB/i.test(v.lang); })[0];
+    var u1=new SpeechSynthesisUtterance(h.ar.replace(/[ً-ْ]/g,'')); u1.lang='ar-SA'; if(ar) u1.voice=ar; u1.rate=.85;
+    var u2=new SpeechSynthesisUtterance(h.en); u2.lang='en-GB'; if(en) u2.voice=en; u2.rate=.95;
+    if(!ar) toast('No Arabic voice on this device — reading the meaning in English');
+    if(ar) speechSynthesis.speak(u1); speechSynthesis.speak(u2); }
+
+  /* charts: in the page and floating in space */
+  function series(){ var days=[]; for(var i=13;i>=0;i--){ var d=new Date(); d.setDate(d.getDate()-i); var k=today(d), ms=S.moods.filter(function(m){ return m.day===k; }), lg=S.log[k]||{};
+      days.push({k:k,label:d.getDate(),mood:ms.length?ms.reduce(function(s,m){ return s+moodOf(m.m).v; },0)/ms.length:null,act:(lg.note||0)+(lg.task||0)+(lg.step||0)+(lg.mood||0)}); } return days; }
+  function paintChart(c,w,h,dark){ var g=c.getContext('2d'), days=series(), pad=26, maxA=Math.max(3,Math.max.apply(null,days.map(function(d){ return d.act; })));
+    g.clearRect(0,0,w,h); var ink=dark?'rgba(238,241,255,':'rgba(11,23,48,';
+    g.strokeStyle=ink+'.12)'; g.lineWidth=1; for(var y=0;y<=4;y++){ var yy=pad+(h-pad*2)*y/4; g.beginPath(); g.moveTo(pad,yy); g.lineTo(w-pad/2,yy); g.stroke(); }
+    var bw=(w-pad*1.5)/days.length;
+    days.forEach(function(d,i){ var x=pad+i*bw, bh=(h-pad*2)*d.act/maxA, gr=g.createLinearGradient(0,h-pad-bh,0,h-pad); gr.addColorStop(0,'rgba(46,230,255,.75)'); gr.addColorStop(1,'rgba(164,92,255,.15)');
+      g.fillStyle=gr; g.fillRect(x+bw*.22,h-pad-bh,bw*.56,bh); g.fillStyle=ink+'.45)'; g.font='10px JetBrains Mono, monospace'; g.textAlign='center'; g.fillText(d.label,x+bw/2,h-8); });
+    var pts=days.map(function(d,i){ return d.mood==null?null:[pad+i*bw+bw/2,pad+(h-pad*2)*(1-(d.mood-1)/4)]; });
+    g.lineWidth=3; g.strokeStyle='#ff4fa8'; g.shadowColor='#ff4fa8'; g.shadowBlur=12; g.beginPath(); var st=false; pts.forEach(function(p){ if(!p) return; if(!st){ g.moveTo(p[0],p[1]); st=true; } else g.lineTo(p[0],p[1]); }); g.stroke(); g.shadowBlur=0;
+    pts.forEach(function(p,i){ if(!p) return; var m=S.moods.filter(function(x){ return x.day===days[i].k; })[0]; g.fillStyle=m?moodOf(m.m).c:'#fff'; g.beginPath(); g.arc(p[0],p[1],5,0,Math.PI*2); g.fill(); });
+    if(!pts.some(Boolean)){ g.fillStyle=ink+'.5)'; g.font='13px Inter, sans-serif'; g.textAlign='center'; g.fillText('Log a mood to start your line',w/2,h/2); } }
+  function drawChart(c){ if(!c) return; var dpr=Math.min(2,devicePixelRatio||1), w=c.clientWidth, h=c.clientHeight; c.width=w*dpr; c.height=h*dpr; var g=c.getContext('2d'); g.scale(dpr,dpr); paintChart(c,w,h,S.theme==='dark'); }
+  var chartCanvas=document.createElement('canvas'); chartCanvas.width=512; chartCanvas.height=256; var chartBoard=null;
+  function updateChartBoard(){ var g=chartCanvas.getContext('2d'); g.setTransform(1,0,0,1,0,0); g.clearRect(0,0,512,256); paintChart(chartCanvas,512,256,S.theme==='dark'); if(chartBoard) chartBoard.update(); }
+
+  /* memories: list + pictures floating around the neuron */
+  var boards=[];
+  function paintGallery(){ var el=document.getElementById('gal'); if(!el) return; mAll().then(function(list){ list.sort(function(a,b){ return b.ts-a.ts; });
+      if(!list.length){ el.innerHTML='<p class="empty">No memories yet.</p>'; return; }
+      el.innerHTML=list.map(function(m){ var src=m.type==='video'?URL.createObjectURL(m.blob):m.url; return '<figure>'+(m.type==='video'?'<video src="'+src+'" muted loop playsinline autoplay></video>':'<img src="'+src+'" alt="">')+'<button data-del-media="'+m.id+'" aria-label="Remove">&#10005;</button></figure>'; }).join(''); }); }
+  function refreshBoards(){ boards.forEach(function(b){ b.remove(); }); boards=[]; mAll().then(function(list){ list.filter(function(m){ return m.type==='image'; }).sort(function(a,b){ return b.ts-a.ts; }).slice(0,6).forEach(function(m,i){
+      var im=new Image(); im.onload=function(){ var a=i/6*Math.PI*2, r=17, w=9, h=w*im.height/im.width; boards.push(M.addBillboard('gallery',im,w,h,[Math.cos(a)*r,Math.sin(a)*r*.7,Math.sin(a)*6])); }; im.src=m.url; }); }); }
+
+  /* drawing pad with glowing brushes */
+  function initPad(){ var c=document.getElementById('pad'); if(!c) return; var dpr=Math.min(2,devicePixelRatio||1); c.width=c.clientWidth*dpr; c.height=c.clientHeight*dpr; var g=c.getContext('2d'); g.scale(dpr,dpr); g.lineCap='round'; g.lineJoin='round';
+    var down=false,last=null; function pt(e){ var r=c.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]; }
+    c.onpointerdown=function(e){ down=true; last=pt(e); c.setPointerCapture(e.pointerId); };
+    c.onpointermove=function(e){ if(!down) return; var p=pt(e); g.strokeStyle=padState.c; g.lineWidth=padState.w; g.shadowColor=padState.c; g.shadowBlur=padState.w*2.2; g.beginPath(); g.moveTo(last[0],last[1]); g.lineTo(p[0],p[1]); g.stroke(); last=p; };
+    c.onpointerup=c.onpointercancel=function(){ down=false; }; }
+
+  function streak(){ var n=0; for(var i=0;i<365;i++){ var d=new Date(); d.setDate(d.getDate()-i); var lg=S.log[today(d)]; if(lg&&Object.keys(lg).length) n++; else if(i>0) break; } return n; }
+
+  /* labels and dock */
+  var lw=document.getElementById('labels'), labels={};
+  DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':''); b.dataset.go=d.id; b.style.setProperty('--c',d.col); b.innerHTML='<i></i><span>'+esc(d.name)+'</span>'; lw.appendChild(b); labels[d.id]=b; });
+  lw.addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
+  M.onFrame(function(){ var tr=M.travelling();
+    DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr)&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(!d.mini||s.dist<90);
+      if(!vis){ el.style.opacity='0'; el.style.pointerEvents='none'; return; }
+      el.style.opacity=(tr?.35:Math.max(.45,Math.min(1,1.3-s.dist/320))).toFixed(2); el.style.pointerEvents=tr?'none':'auto';
+      el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(0,-50%)'; }); });
+  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','gallery','draw','ai','connect','sage','light'];
+  function paintDock(){ document.getElementById('dockRow').innerHTML=DOCK.map(function(id){ var d=byId[id]; return '<button class="dk'+(id===cur?' here':'')+'" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+esc(d.name)+'</span></button>'; }).join(''); }
+  document.getElementById('dock').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
+  paintDock();
+
+  /* the gate */
+  var gate=document.getElementById('gate'), gName=document.getElementById('gName');
+  if(S.profile.name){ gName.value=S.profile.name; }
+  function enter(){ var n=gName.value.trim(); if(n){ S.profile.name=n; save(); } gate.classList.add('gone');
+    M.enter(function(){ document.body.classList.add('inside'); cur='me'; M.setTheme(S.theme);
+      chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard(); refreshBoards();
+      var last=S.moods[0]; if(last) M.setColor('mood',moodOf(last.m).c);
+      setTimeout(function(){ M.fire('me'); emerge('me'); },2300); }); }
+  document.getElementById('gEnter').onclick=enter;
+  gName.addEventListener('keydown',function(e){ if(e.key==='Enter') enter(); });
+  setInterval(function(){ if(shown==='me') return; },60000);
+})();
+</script>
+</body>
+</html>
