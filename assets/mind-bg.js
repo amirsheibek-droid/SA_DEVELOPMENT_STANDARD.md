@@ -229,7 +229,7 @@
     var lift=V(0,dist*.12,0);
     var curve=new T.CubicBezierCurve3(camPos.clone(), camPos.clone().addScaledVector(dirv,dist*.3).add(side).add(lift), P1.clone().addScaledVector(dirv,-dist*.3).add(side).add(lift), P1.clone());
     var A=axonBetween(from,id); if(A) A.boost=2.5;
-    var dur=reduce?10:Math.max(2600,Math.min(5600,1500+dist*16)), la=.06;
+    var dur=reduce?10:Math.max(1200,Math.min(2400,800+dist*8)), la=.06;
     // ride the neural lines: follow the axons from neuron to neuron, close to the wire
     var route=reduce?null:routeBetween(from,id);
     if(route && route.length>1){
@@ -238,7 +238,7 @@
         for(var sI=1;sI<=16;sI++){ var tt=sI/17; ax.curve.getPoint(fw?tt:1-tt,tmpA); pts.push(tmpA.clone().add(up)); } }
       pts.push(P1.clone());
       curve=new T.CatmullRomCurve3(pts,false,'centripetal',.5);
-      dur=Math.max(3800,Math.min(9500,2400+curve.getLength()*13)); la=.02;
+      dur=Math.max(1600,Math.min(3200,1100+curve.getLength()*5)); la=.03;
     }
     travel={t0:performance.now(),dur:dur,curve:curve,fromLook:camLook.clone(),toLook:L1,cb:cb,to:id,la:la};
     fpul.burst(60);
