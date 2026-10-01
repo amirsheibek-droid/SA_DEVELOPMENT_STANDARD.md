@@ -6,16 +6,14 @@
   var T=window.THREE, host=document.getElementById('neural');
   if(!T||!host) return;
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var small=Math.min(innerWidth,innerHeight)<700 || innerWidth<900 || !!(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
-  var lite=small;
-  var renderer; try{ renderer=new T.WebGLRenderer({antialias:!lite,alpha:true,powerPreference:'high-performance',precision:lite?'mediump':'highp'}); }catch(e){ return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, lite?1.15:1.6));
+  var small=Math.min(innerWidth,innerHeight)<700;
+  var renderer; try{ renderer=new T.WebGLRenderer({antialias:!small,alpha:true,powerPreference:'high-performance'}); }catch(e){ return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, small?1.5:1.75));
   renderer.setClearColor(0x000000,0);
   host.appendChild(renderer.domElement);
   var scene=new T.Scene();
-  scene.fog=new T.Fog(0x03040a, 110, 520);
-  var cam=new T.PerspectiveCamera(58,1,0.1,9000);
-  var FOG_IN_N=320, FOG_IN_F=5200;
+  scene.fog=new T.Fog(0x03040a, 80, 300);
+  var cam=new T.PerspectiveCamera(58,1,0.1,1400);
   function size(){ var w=innerWidth,h=innerHeight; renderer.setSize(w,h); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   size(); addEventListener('resize',size);
   function narrow(){ return innerWidth<900; }
@@ -72,7 +70,7 @@
 
   /* ══════════ OUTSIDE: the brain at the gate ══════════ */
   var brain=new T.Group(); scene.add(brain);
-  var N=lite?380:(small?700:2400), BP=[], bcol=[];
+  var N=small?1300:2400, BP=[], bcol=[];
   function fold(x,y,z){ return 1+0.075*Math.sin(9*x+2*y)*Math.sin(8*y+3*z)*Math.sin(7*z+x)+0.03*Math.sin(23*x*y+11*z); }
   for(var i=0;i<N;i++){
     var s=i%2?1:-1, u=Math.random()*2-1, th=Math.random()*Math.PI*2, r=Math.sqrt(1-u*u);
@@ -80,9 +78,9 @@
     x=x*0.62*f; y=y*0.78*f; z=z*1.05*f; if(y<-0.25) y*=0.72; if(z>0.55 && y<0) y*=0.85; x=s*(0.06+Math.abs(x));
     BP.push(V(x*16,y*16,z*16));
   }
-  for(var k=0;k<(lite?50:small?120:280);k++){ var a=Math.random()*Math.PI*2,b=Math.random()*Math.PI, rr=rnd(.7,1);
+  for(var k=0;k<(small?160:280);k++){ var a=Math.random()*Math.PI*2,b=Math.random()*Math.PI, rr=rnd(.7,1);
     BP.push(V(Math.cos(a)*Math.sin(b)*5.4*rr, -9+Math.cos(b)*2.6*rr, -11+Math.sin(a)*Math.sin(b)*3.4*rr)); }
-  for(var k2=0;k2<(lite?16:small?40:70);k2++) BP.push(V(rnd(-1.2,1.2), rnd(-17,-9), rnd(-6,-3)));
+  for(var k2=0;k2<(small?40:70);k2++) BP.push(V(rnd(-1.2,1.2), rnd(-17,-9), rnd(-6,-3)));
   function colourCloud(P,cols){ var pos=new Float32Array(P.length*3), pc=new Float32Array(P.length*3);
     P.forEach(function(p,i){ pos[i*3]=p.x; pos[i*3+1]=p.y; pos[i*3+2]=p.z;
       var q=Math.random(), c=q<.4?SILVER.clone().lerp(STEEL,Math.random()):PAL[(Math.random()*PAL.length)|0].clone().lerp(SILVER,Math.random()*.3);
@@ -90,19 +88,19 @@
     var g=new T.BufferGeometry(); g.setAttribute('position',new T.BufferAttribute(pos,3)); g.setAttribute('color',new T.BufferAttribute(pc,3)); return g; }
   var bpts=new T.Points(colourCloud(BP,bcol),new T.PointsMaterial({size:small?.55:.48,map:DOT,vertexColors:true,transparent:true,opacity:.95,depthWrite:false,blending:ADD}));
   brain.add(bpts);
-  var bnet=wire(BP,bcol,lite?120:small?320:1300,9,lite?12:small?30:80,22,brain,.42);
-  var bpul=pulses(BP,bnet,lite?14:small?28:110,small?1.5:1.35,brain);
+  var bnet=wire(BP,bcol,small?700:1300,9,small?40:80,22,brain,.42);
+  var bpul=pulses(BP,bnet,small?50:110,small?1.5:1.35,brain);
   var core=new T.Sprite(new T.SpriteMaterial({map:dotTex('rgba(164,92,255,.55)','rgba(46,230,255,0)'),transparent:true,opacity:.3,depthWrite:false,blending:ADD})); core.scale.set(46,40,1); brain.add(core);
 
   // glass cubes that crash and shatter (gate only)
   var boxG=new T.BoxGeometry(1,1,1), edgeG=new T.EdgesGeometry(boxG);
   function makeCube(tint){ var g=new T.Group();
-    var m=new T.Mesh(boxG,new T.MeshBasicMaterial({color:0x1b1f3a,transparent:true,opacity:.55,depthWrite:false}));
+    var m=new T.Mesh(boxG,new T.MeshPhongMaterial({color:0x1b1f3a,specular:0xffffff,shininess:110,transparent:true,opacity:.55,depthWrite:false}));
     var l=new T.LineSegments(edgeG,new T.LineBasicMaterial({color:tint,transparent:true,opacity:.95}));
     g.add(m); g.add(l); g.userData={mesh:m,line:l}; g.visible=false; scene.add(g); return g; }
   var cubes=[], frags=[], flashes=[];
-  for(var cI=0;cI<(lite?4:small?8:16);cI++) cubes.push({g:makeCube([0x4f7dff,0xa45cff,0x19f0b0,0xffc44d][cI%4]),on:false});
-  for(var fI=0;fI<(lite?10:small?24:100);fI++) frags.push({g:makeCube([0x2ee6ff,0xff4fa8,0xffc44d][fI%3]),on:false});
+  for(var cI=0;cI<(small?10:16);cI++) cubes.push({g:makeCube([0x4f7dff,0xa45cff,0x19f0b0,0xffc44d][cI%4]),on:false});
+  for(var fI=0;fI<(small?50:100);fI++) frags.push({g:makeCube([0x2ee6ff,0xff4fa8,0xffc44d][fI%3]),on:false});
   for(var hI=0;hI<5;hI++){ var fsp=new T.Sprite(new T.SpriteMaterial({map:dotTex('rgba(120,190,255,1)','rgba(18,217,138,0)'),transparent:true,depthWrite:false,opacity:0})); scene.add(fsp); flashes.push({s:fsp,t:1}); }
   function free(list){ for(var i=0;i<list.length;i++) if(!list[i].on) return list[i]; return null; }
   function spawnPair(){ var A=free(cubes); if(!A) return; A.on=true; var B=free(cubes); if(!B){ A.on=false; return; } B.on=true;
@@ -112,15 +110,15 @@
       c.rv=V(rnd(-1.5,1.5),rnd(-1.5,1.5),rnd(-1.5,1.5)); c.mate=(c===A?B:A); c.solo=false; }); }
   function spawnSolo(){ var c=free(cubes); if(!c) return; c.on=true; c.size=rnd(2,5); c.g.scale.setScalar(c.size); c.g.visible=true;
     c.p=V(rnd(-60,60),rnd(-35,35),-220); c.v=V(rnd(-3,3),rnd(-2,2),rnd(10,25)); c.rv=V(rnd(-1,1),rnd(-1,1),rnd(-1,1)); c.mate=null; c.solo=true; }
-  function explode(at){ for(var k=0;k<(lite?5:small?8:16);k++){ var f=free(frags); if(!f) break; f.on=true; f.life=rnd(1.1,1.9); f.age=0;
+  function explode(at){ for(var k=0;k<(small?10:16);k++){ var f=free(frags); if(!f) break; f.on=true; f.life=rnd(1.1,1.9); f.age=0;
       f.size=rnd(.5,1.4); f.g.visible=true; f.g.scale.setScalar(f.size); f.p=at.clone().add(V(rnd(-1,1),rnd(-1,1),rnd(-1,1)));
       f.v=V(rnd(-1,1),rnd(-1,1),rnd(-1,1)).normalize().multiplyScalar(rnd(10,32)); f.rv=V(rnd(-6,6),rnd(-6,6),rnd(-6,6)); }
     for(var i=0;i<flashes.length;i++) if(flashes[i].t>=1){ flashes[i].t=0; flashes[i].s.position.copy(at); break; }
     bpul.burst(12); }
 
   /* deep space: stars in every colour */
-  (function(){ var n=lite?280:small?700:2600, sp=new Float32Array(n*3), sc2=new Float32Array(n*3);
-    for(var i=0;i<n;i++){ var u=Math.random()*2-1, th=Math.random()*Math.PI*2, r=900+Math.random()*4200, q=Math.sqrt(1-u*u);
+  (function(){ var n=small?1400:2600, sp=new Float32Array(n*3), sc2=new Float32Array(n*3);
+    for(var i=0;i<n;i++){ var u=Math.random()*2-1, th=Math.random()*Math.PI*2, r=600+Math.random()*250, q=Math.sqrt(1-u*u);
       sp[i*3]=q*Math.cos(th)*r; sp[i*3+1]=u*r; sp[i*3+2]=q*Math.sin(th)*r; var c=Math.random()<.6?new T.Color(1,1,1):PAL[(Math.random()*PAL.length)|0]; sc2.set([c.r,c.g,c.b],i*3); }
     var g=new T.BufferGeometry(); g.setAttribute('position',new T.BufferAttribute(sp,3)); g.setAttribute('color',new T.BufferAttribute(sc2,3));
     var stars=new T.Points(g,new T.PointsMaterial({size:2.2,map:DOT,vertexColors:true,transparent:true,opacity:.85,depthWrite:false,fog:false,blending:ADD,sizeAttenuation:false}));
@@ -130,17 +128,17 @@
   var mind=new T.Group(); mind.visible=false; scene.add(mind);
   var DESTS=window.H_DESTS||[], LINKS=window.H_LINKS||[], D={};
   DESTS.forEach(function(d){ D[d.id]=d; d.v=V(d.pos[0],d.pos[1],d.pos[2]); });
-  // sparse field so real neurons and memories read from close to far
-  var FP=[], fcol=[], mains=DESTS.filter(function(d){ return !d.mini; }), FN=small?180:280;
+  // the field: thousands of neurons, denser around each destination
+  var FP=[], fcol=[], FN=small?1500:2800;
   for(var q=0;q<FN;q++){
-    if(mains.length && q%5<3){ var dd=mains[(Math.random()*mains.length)|0]; FP.push(dd.v.clone().add(V(rnd(-1,1),rnd(-1,1),rnd(-1,1)).normalize().multiplyScalar(rnd(50,220)))); }
-    else { var uu=Math.random()*2-1, tt=Math.random()*Math.PI*2, rr2=200+Math.cbrt(Math.random())*2200, rq=Math.sqrt(1-uu*uu);
-      FP.push(V(rq*Math.cos(tt)*rr2, uu*rr2*.45, rq*Math.sin(tt)*rr2-40)); }
+    if(q%5<2 && DESTS.length){ var dd=DESTS[(Math.random()*DESTS.length)|0]; FP.push(dd.v.clone().add(V(rnd(-1,1),rnd(-1,1),rnd(-1,1)).normalize().multiplyScalar(rnd(9,30)))); }
+    else { var uu=Math.random()*2-1, tt=Math.random()*Math.PI*2, rr2=Math.cbrt(Math.random())*250, rq=Math.sqrt(1-uu*uu);
+      FP.push(V(rq*Math.cos(tt)*rr2+40, uu*rr2*.55, rq*Math.sin(tt)*rr2-80)); }
   }
-  var fpts=new T.Points(colourCloud(FP,fcol),new T.PointsMaterial({size:small?1.4:1.25,map:DOT,vertexColors:true,transparent:true,opacity:.42,depthWrite:false,blending:ADD,sizeAttenuation:true}));
+  var fpts=new T.Points(colourCloud(FP,fcol),new T.PointsMaterial({size:small?1.05:.95,map:DOT,vertexColors:true,transparent:true,opacity:.9,depthWrite:false,blending:ADD}));
   mind.add(fpts);
-  var fnet=wire(FP,fcol,small?140:220,120000,small?18:28,520,mind,.16);
-  var fpul=pulses(FP,fnet,small?22:36,small?2.2:2.0,mind);
+  var fnet=wire(FP,fcol,small?1000:1900,260,small?60:120,60,mind,.3);
+  var fpul=pulses(FP,fnet,small?90:180,small?2.6:2.3,mind);
 
   // destination neurons: soma, rings, branching dendrites with signals running in
   var DEST_IDS=[], MINITEX={};
@@ -152,19 +150,16 @@
     var glowC=d.mini?(MINITEX[d.col]||(MINITEX[d.col]=dotTex(cs+'1)',cs+'0)'))):dotTex(cs+'1)',cs+'0)');
     d.halo=new T.Sprite(new T.SpriteMaterial({map:glowC,transparent:true,depthWrite:false,opacity:.75,blending:ADD})); d.halo.scale.set(8*sc,8*sc,1); g.add(d.halo);
     d.core=new T.Sprite(new T.SpriteMaterial({map:DOT,color:0xffffff,transparent:true,depthWrite:false})); d.core.scale.set(2.2*sc,2.2*sc,1); g.add(d.core);
-    d.halo.userData.dest=d.id; d.core.userData.dest=d.id;
-    var ringSegs=lite?16:64;
-    d.ring=new T.Mesh(new T.RingGeometry(3.3*sc,3.45*sc,ringSegs),new T.MeshBasicMaterial({color:hex,transparent:true,opacity:.6,side:T.DoubleSide,depthWrite:false})); g.add(d.ring);
-    d.ring.userData.dest=d.id;
-    d.ring2=new T.Mesh(new T.RingGeometry(4.6*sc,4.68*sc,ringSegs,1,0,Math.PI*1.3),new T.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.45,side:T.DoubleSide,depthWrite:false})); g.add(d.ring2);
-    d.shock=new T.Mesh(new T.RingGeometry(.94,1,ringSegs),new T.MeshBasicMaterial({color:hex,transparent:true,opacity:0,side:T.DoubleSide,depthWrite:false})); g.add(d.shock); d.shockT=1;
+    d.ring=new T.Mesh(new T.RingGeometry(3.3*sc,3.45*sc,64),new T.MeshBasicMaterial({color:hex,transparent:true,opacity:.6,side:T.DoubleSide,depthWrite:false})); g.add(d.ring);
+    d.ring2=new T.Mesh(new T.RingGeometry(4.6*sc,4.68*sc,64,1,0,Math.PI*1.3),new T.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.45,side:T.DoubleSide,depthWrite:false})); g.add(d.ring2);
+    d.shock=new T.Mesh(new T.RingGeometry(.94,1,64),new T.MeshBasicMaterial({color:hex,transparent:true,opacity:0,side:T.DoubleSide,depthWrite:false})); g.add(d.shock); d.shockT=1;
     // dendrites
     var branches=[];
     function grow(start,dir,len,depth){ var pts=[start.clone()], p=start.clone(), dv=dir.clone(), segs=3+((Math.random()*3)|0);
       for(var j=0;j<segs;j++){ dv.add(V(rnd(-.5,.5),rnd(-.5,.5),rnd(-.5,.5))).normalize(); p=p.clone().addScaledVector(dv,len*rnd(.6,1.1)); pts.push(p);
-        if(depth<(lite?0:2) && Math.random()<.38) grow(p,dv.clone().add(V(rnd(-.9,.9),rnd(-.9,.9),rnd(-.9,.9))).normalize(),len*.7,depth+1); }
+        if(depth<2 && Math.random()<.38) grow(p,dv.clone().add(V(rnd(-.9,.9),rnd(-.9,.9),rnd(-.9,.9))).normalize(),len*.7,depth+1); }
       branches.push(pts); }
-    var nb=d.mini?(lite?0:5):Math.round((lite?3:(d.secret?6:10))*(sc>1?1.2:1));
+    var nb=d.mini?5:Math.round((d.secret?6:10)*(sc>1?1.2:1));
     for(var b2=0;b2<nb;b2++){ var dir=V(rnd(-1,1),rnd(-1,1),rnd(-1,1)).normalize(); grow(dir.clone().multiplyScalar(1.6*sc),dir,2.6*sc,0); }
     var segs=[], cols=[], base=col;
     branches.forEach(function(pts){ for(var j=1;j<pts.length;j++){ var a=pts[j-1], bb=pts[j];
@@ -173,7 +168,7 @@
     var dg=new T.BufferGeometry(); dg.setAttribute('position',new T.Float32BufferAttribute(segs,3)); dg.setAttribute('color',new T.Float32BufferAttribute(cols,3));
     d.dend=new T.LineSegments(dg,new T.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.85,depthWrite:false,blending:ADD})); g.add(d.dend);
     d.branches=branches; d.sig=[];
-    for(var s2=0;s2<(d.mini?0:(lite?2:(d.secret?3:7)));s2++){ var sp=new T.Sprite(new T.SpriteMaterial({map:glowC,transparent:true,depthWrite:false,blending:ADD})); sp.scale.set(.9*sc,.9*sc,1); g.add(sp);
+    for(var s2=0;s2<(d.mini?2:(d.secret?3:7));s2++){ var sp=new T.Sprite(new T.SpriteMaterial({map:glowC,transparent:true,depthWrite:false,blending:ADD})); sp.scale.set(.9*sc,.9*sc,1); g.add(sp);
       d.sig.push({s:sp,b:(Math.random()*branches.length)|0,t:Math.random(),v:rnd(.35,.7)}); }
     d.i=i; d.fire=0;
     if(d.secret){ d.halo.material.opacity=.35; }
@@ -184,15 +179,15 @@
   var axons=[];
   LINKS.forEach(function(L,k){
     var A=D[L[0]], B=D[L[1]]; if(!A||!B) return;
-    var a=A.v, b=B.v, dl=a.distanceTo(b), w=Math.min(90,dl*.04);
+    var a=A.v, b=B.v, dl=a.distanceTo(b), w=Math.min(14,dl*.12);
     var c1=a.clone().lerp(b,.33).add(V(rnd(-w,w),rnd(-w,w),rnd(-w,w))), c2=a.clone().lerp(b,.66).add(V(rnd(-w,w),rnd(-w,w),rnd(-w,w)));
     var curve=new T.CatmullRomCurve3([a.clone(),c1,c2,b.clone()]);
-    var mini=A.mini||B.mini, seg=lite?Math.max(8,Math.min(28,Math.round(dl/80))):(mini?Math.max(12,Math.min(40,Math.round(dl/50))):Math.max(24,Math.min(90,Math.round(dl/40))));
-    var tube=lite?null:new T.Mesh(new T.TubeGeometry(curve,mini?Math.max(12,seg>>2):seg,mini?.07:.16,mini?4:6,false),new T.MeshBasicMaterial({color:mini?(B.col?new T.Color(B.col).getHex():0x4f7dff):(k%2?0x2ee6ff:0xa45cff),transparent:true,opacity:.22,depthWrite:false,blending:ADD}));
+    var seg=Math.max(40,Math.round(dl));
+    var tube=new T.Mesh(new T.TubeGeometry(curve,mini?Math.max(12,seg>>2):seg,mini?.07:.16,mini?4:6,false),new T.MeshBasicMaterial({color:mini?(B.col?new T.Color(B.col).getHex():0x4f7dff):(k%2?0x2ee6ff:0xa45cff),transparent:true,opacity:.22,depthWrite:false,blending:ADD}));
     var line=new T.Line(new T.BufferGeometry().setFromPoints(curve.getPoints(seg)),new T.LineBasicMaterial({color:k%3?0x4f7dff:0x19f0b0,transparent:true,opacity:.6,blending:ADD}));
-    if(A.secret||B.secret){ if(tube) tube.material.opacity=.06; line.material.opacity=.12; }
-    if(tube) mind.add(tube); mind.add(line);
-    var comets=[], nC=lite?0:(mini?1:Math.min(3,1+Math.round(dl/60)));
+    if(A.secret||B.secret){ tube.material.opacity=.06; line.material.opacity=.12; }
+    mind.add(tube); mind.add(line);
+    var mini=A.mini||B.mini, comets=[], nC=mini?1:Math.min(4,1+Math.round(dl/60));
     for(var c=0;c<nC;c++){ var parts=[];
       for(var q2=0;q2<(mini?4:7);q2++){ var sp=new T.Sprite(new T.SpriteMaterial({map:(k+c)%2?glowG:glowB,transparent:true,depthWrite:false,opacity:1-q2/7,blending:ADD})); var sz=(q2?1.0:1.6)*(1-q2/9); sp.scale.set(sz,sz,1); mind.add(sp); parts.push(sp); }
       comets.push({t:Math.random(),v:rnd(.05,.1)*60/Math.max(60,dl),dir:Math.random()<.5?1:-1,parts:parts}); }
@@ -214,7 +209,7 @@
   function axonBetween(a,b){ for(var i=0;i<axons.length;i++){ var L=axons[i]; if((L.a===a&&L.b===b)||(L.a===b&&L.b===a)) return L; } return null; }
 
   // dust streaks — always rushing toward the viewer, faster while you travel
-  var ND=lite?50:small?140:800, dust=[], dp=new Float32Array(ND*6), dc=new Float32Array(ND*6);
+  var ND=small?380:800, dust=[], dp=new Float32Array(ND*6), dc=new Float32Array(ND*6);
   for(var q3=0;q3<ND;q3++){ dust.push({x:rnd(-90,90),y:rnd(-55,55),z:rnd(-230,5)});
     var c4=Math.random()<.5?SILVER:PAL[(Math.random()*PAL.length)|0]; dc.set([c4.r,c4.g,c4.b,1,1,1],q3*6); }
   var dg2=new T.BufferGeometry(); dg2.setAttribute('position',new T.BufferAttribute(dp,3)); dg2.setAttribute('color',new T.BufferAttribute(dc,3));
@@ -237,7 +232,7 @@
   addEventListener('pointermove',function(e){ mx=(e.clientX/innerWidth-.5); my=(e.clientY/innerHeight-.5); },{passive:true});
   var fly={mode:'return',t:0,next:16,v:0}, tmpV=V(0,0,0), tmpA=V(0,0,0), tmpB=V(0,0,0);
   var camPos=V(0,0,0), camLook=V(0,0,-60), prevCam=V(0,0,0), camVel=0;
-  var cur=DESTS[0]?DESTS[0].id:null, travel=null, drift=0, orbY=0, orbP=0, orbYt=0, orbPt=0, parked=false;
+  var cur=DESTS[0]?DESTS[0].id:null, travel=null, drift=0, orbY=0, orbP=0, orbYt=0, orbPt=0;
   var enterCb=null, enterT=0, enterFrom=null, enterSwap=false;
 
 
@@ -245,7 +240,7 @@
   function brainShell(){ brain.visible=true; brain.position.set(0,-6,-95); brain.scale.setScalar(13); brain.rotation.set(-.05,Math.PI/2,0);
     bpts.material.size=small?7:6; bpts.material.opacity=.55;
     brain.children.forEach(function(c){ if(c.type==='LineSegments'&&c!==bpts) c.material.opacity=.16; if(c.type==='Points'&&c!==bpts) c.material.size=small?4.5:4; if(c.type==='Sprite') c.visible=false; });
-    scene.fog.far=FOG_IN_F; }
+    scene.fog.far=520; }
 
   /* ── the voyage: drift through space, past the Earth and the planets, and back into the mind ── */
   var planets=new T.Group(); planets.visible=false; scene.add(planets); var PL=[];
@@ -259,20 +254,18 @@
       for(y=0;y<256;y+=8){ g.fillStyle=cols[(y/8+(Math.random()<.3?1:0))%cols.length|0]; g.fillRect(0,y,512,8); } if(kind==='jupiter'){ g.fillStyle='#b5523a'; g.beginPath(); g.ellipse(330,160,26,14,0,0,Math.PI*2); g.fill(); } }
     else if(kind==='ring'){ c.width=256; c.height=8; g=c.getContext('2d'); for(x=0;x<256;x++){ g.fillStyle='rgba(225,205,160,'+(.15+.6*Math.abs(Math.sin(x*.21)*Math.sin(x*.05)))+')'; g.fillRect(x,0,1,8); } }
     var t2=new T.CanvasTexture(c); return t2; }
-  function planet(kind,pos,r){ var segs=lite?16:48, rings=lite?12:32, Mat=lite?T.MeshBasicMaterial:T.MeshPhongMaterial;
-    var m=new T.Mesh(new T.SphereGeometry(r,segs,rings),new Mat({map:ptex(kind),fog:false,shininess:kind==='earth'?25:5})); m.position.set(pos[0],pos[1],pos[2]); planets.add(m); PL.push({m:m,r:r,kind:kind}); return m; }
+  function planet(kind,pos,r){ var m=new T.Mesh(new T.SphereGeometry(r,48,32),new T.MeshPhongMaterial({map:ptex(kind),shininess:kind==='earth'?25:5,fog:false})); m.position.set(pos[0],pos[1],pos[2]); planets.add(m); PL.push({m:m,r:r,kind:kind}); return m; }
   (function(){ var sun=new T.Sprite(new T.SpriteMaterial({map:dotTex('rgba(255,240,200,1)','rgba(255,170,60,0)'),transparent:true,depthWrite:false,fog:false,blending:T.AdditiveBlending})); sun.scale.set(420,420,1); sun.position.set(900,300,1350); planets.add(sun);
-    if(!lite){ var sl=new T.PointLight(0xfff1d6,1.6,0,0); sl.position.copy(sun.position); planets.add(sl); }
-    planets.add(new T.AmbientLight(0x334466,.35));
-    var earth=planet('earth',[-130,0,520],34); var cl=new T.Mesh(new T.SphereGeometry(34.8,lite?16:48,lite?12:32),new (lite?T.MeshBasicMaterial:T.MeshPhongMaterial)({map:ptex('clouds'),transparent:true,depthWrite:false,fog:false})); earth.add(cl); earth.userData.clouds=cl;
+    var sl=new T.PointLight(0xfff1d6,1.6,0,0); sl.position.copy(sun.position); planets.add(sl); planets.add(new T.AmbientLight(0x334466,.35));
+    var earth=planet('earth',[-130,0,520],34); var cl=new T.Mesh(new T.SphereGeometry(34.8,48,32),new T.MeshPhongMaterial({map:ptex('clouds'),transparent:true,depthWrite:false,fog:false})); earth.add(cl); earth.userData.clouds=cl;
     var atm=new T.Sprite(new T.SpriteMaterial({map:dotTex('rgba(90,170,255,.5)','rgba(90,170,255,0)'),transparent:true,depthWrite:false,fog:false,blending:T.AdditiveBlending})); atm.scale.set(96,96,1); earth.add(atm);
     planet('moon',[-50,40,470],9); planet('mars',[190,30,760],20); planet('jupiter',[-300,-40,980],70);
-    var sat=planet('saturn',[330,70,1180],52); var ring=new T.Mesh(new T.RingGeometry(66,110,lite?32:96),new T.MeshBasicMaterial({map:ptex('ring'),transparent:true,side:T.DoubleSide,depthWrite:false,fog:false}));
+    var sat=planet('saturn',[330,70,1180],52); var ring=new T.Mesh(new T.RingGeometry(66,110,96),new T.MeshBasicMaterial({map:ptex('ring'),transparent:true,side:T.DoubleSide,depthWrite:false,fog:false}));
     var rp=ring.geometry.attributes.position, uv=ring.geometry.attributes.uv, v3=new T.Vector3(); for(var i=0;i<rp.count;i++){ v3.fromBufferAttribute(rp,i); uv.setXY(i,(v3.length()-66)/44,.5); }
     ring.rotation.x=-1.2; ring.rotation.y=.3; sat.add(ring); })();
   var voyage=null, VPATH=new T.CatmullRomCurve3([V(0,90,1600),V(240,110,1320),V(150,60,1080),V(-150,-10,1060),V(-170,-60,880),V(60,40,820),V(170,10,680),V(20,20,600),V(-70,10,430),V(-20,5,300),V(0,0,140),V(40,10,20),V(-30,-5,-90),V(30,20,-200),V(-60,30,-120),V(-20,60,300),V(-120,120,900)],true,'centripetal',.5);
-  function voyageStart(){ if(mode!=='inside') return; flight=null; travel=null; voyage={t0:performance.now(),dur:150000,u0:0}; planets.visible=true; scene.fog.far=5200; }
-  function voyageStop(){ if(!voyage) return; voyage=null; planets.visible=false; scene.fog.far=FOG_IN_F; }
+  function voyageStart(){ if(mode!=='inside') return; flight=null; travel=null; voyage={t0:performance.now(),dur:150000,u0:0}; planets.visible=true; scene.fog.far=2600; }
+  function voyageStop(){ if(!voyage) return; voyage=null; planets.visible=false; scene.fog.far=520; }
   function voyageStep(dt){ var k=((performance.now()-voyage.t0)/voyage.dur)%1; VPATH.getPointAt(k,camPos); VPATH.getPointAt((k+.006)%1,tmpA);
     var best=null,bd=1e9; PL.forEach(function(q){ var d=q.m.position.distanceTo(camPos)-q.r; if(d<bd){ bd=d; best=q; } });
     if(best&&bd<260){ var w=Math.max(0,1-bd/260)*.65; tmpA.lerp(best.m.position,w); }
@@ -283,24 +276,11 @@
     mode='entering'; enterT=performance.now(); enterCb=cb; speed=260; shake=1.2; bpul.burst(80);
     enterFrom={p:brain.position.clone()};
   }
-  function alreadyAt(id){
-    if(!D[id]) return false;
-    var P=V(0,0,0), L=V(0,0,0); pose(id,P,L);
-    var rest=(D[id].dist||30)*(narrow()?1.25:1);
-    return camPos.distanceTo(P)<95 || camPos.distanceTo(D[id].v)<Math.max(55, rest*1.15);
-  }
-  function park(id){
-    flight=null; travel=null; parked=true;
-    if(id&&D[id]) cur=id;
-  }
-  function go(id,cb,force){
+  function go(id,cb){
     if(!D[id]){ cb&&cb(); return; }
-    if(mode!=='inside' && mode!=='entering'){ cur=id; cb&&cb(); return; }
-    if(voyage) voyageStop();
-    if(!force && (alreadyAt(id) || (id===cur && !travel && !flight))){
-      park(id); orbY=orbYt=0; orbP=orbPt=0; cb&&cb(); return 0;
-    }
-    parked=false; var wasFree=!!flight; flight=null; orbY=orbYt=0; orbP=orbPt=0;
+    if(mode!=='inside'){ cur=id; cb&&cb(); return; }
+    if(voyage) voyageStop(); var wasFree=!!flight; flight=null; orbY=orbYt=0; orbP=orbPt=0;
+    if(id===cur && !travel && !wasFree){ cb&&cb(); return; }
     var from=cur; cur=id;
     var P1=V(0,0,0), L1=V(0,0,0); pose(id,P1,L1);
     var dist=camPos.distanceTo(P1), dirv=P1.clone().sub(camPos).normalize();
@@ -308,7 +288,7 @@
     var lift=V(0,dist*.12,0);
     var curve=new T.CubicBezierCurve3(camPos.clone(), camPos.clone().addScaledVector(dirv,dist*.3).add(side).add(lift), P1.clone().addScaledVector(dirv,-dist*.3).add(side).add(lift), P1.clone());
     var A=axonBetween(from,id); if(A){ A.boost=2.5; if(!A.seen){ A.seen=true; pathLook(A); pathHook&&pathHook([A.key]); } }
-    var dur=reduce?10:Math.max(2800,Math.min(12000,1800+dist*2.4)), la=.06;
+    var dur=reduce?10:Math.max(2600,Math.min(5600,1500+dist*16)), la=.06;
     var route=reduce?null:routeBetween(from,id);
     if(route && route.length>1){
       var pts=[camPos.clone()], up=V(0,1.8,0);
@@ -316,22 +296,20 @@
         for(var sI=1;sI<=16;sI++){ var tt=sI/17; ax.curve.getPoint(fw?tt:1-tt,tmpA); pts.push(tmpA.clone().add(up)); } }
       pts.push(P1.clone());
       curve=new T.CatmullRomCurve3(pts,false,'centripetal',.5); markRoute(route);
-      dur=Math.max(4200,Math.min(16000,2800+curve.getLength()*1.6)); la=.02;
+      dur=Math.max(3800,Math.min(9500,2400+curve.getLength()*13)); la=.02;
     }
     travel={t0:performance.now(),dur:dur,curve:curve,fromLook:camLook.clone(),toLook:L1,cb:cb,to:id,la:la};
     fpul.burst(60);
     return dur;
   }
   /* ── free flight: the visitor takes the controls ── */
-  var flight=null, nearHook=null, fwd=V(0,0,-1), CENTER=V(0,0,-200), BOUND=7000;
-  function reach(d){ return (d.scale||1)*3.4+4; }
+  var flight=null, nearHook=null, fwd=V(0,0,-1), CENTER=V(40,0,-80), BOUND=290;
+  function reach(d){ return (d.scale||1)*5+3; }
   function freeStart(target){
-    if(mode!=='inside' && mode!=='entering') return false;
-    if(mode==='entering') mode='inside';
-    parked=false; if(travel){ travel=null; }
-    var dir=camLook.clone().sub(camPos); if(!dir.lengthSq()) dir.set(0,0,-1); dir.normalize();
-    if(target&&D[target]){ /* keep current view — turning first, then the fly button moves you */ }
-    flight={t0:performance.now(),yaw:Math.atan2(-dir.x,-dir.z),pitch:Math.asin(Math.max(-1,Math.min(1,dir.y))),vel:0,thrust:0,turn:0,tilt:0,max:small?140:220,ignore:cur,ignoreR:D[cur]?reach(D[cur])+18:0};
+    if(mode!=='inside') return false;
+    if(travel){ travel=null; }
+    var dir=(target&&D[target])?D[target].v.clone().sub(camPos).normalize():camLook.clone().sub(camPos).normalize();
+    flight={t0:performance.now(),yaw:Math.atan2(-dir.x,-dir.z),pitch:Math.asin(Math.max(-1,Math.min(1,dir.y))),vel:0,thrust:0,turn:0,tilt:0,max:small?55:70,ignore:cur,ignoreR:D[cur]?reach(D[cur])+14:0};
     return true;
   }
   function freeStep(dt){
@@ -341,10 +319,10 @@
     fwd.set(-Math.sin(f.yaw)*Math.cos(f.pitch), Math.sin(f.pitch), -Math.cos(f.yaw)*Math.cos(f.pitch));
     camPos.addScaledVector(fwd,f.vel*dt);
     tmpA.copy(camPos).sub(CENTER); var r=tmpA.length(); if(r>BOUND) camPos.addScaledVector(tmpA.normalize(),-(r-BOUND)*Math.min(1,dt*2));
-    tmpB.copy(camPos).addScaledVector(fwd,140); camLook.lerp(tmpB,Math.min(1,dt*3.5));
+    tmpB.copy(camPos).addScaledVector(fwd,40); camLook.lerp(tmpB,Math.min(1,dt*3.5));
     if(f.ignore && D[f.ignore].v.distanceTo(camPos)>f.ignoreR) f.ignore=null;
     if(performance.now()-f.t0>3000) for(var i=0;i<DESTS.length;i++){ var d=DESTS[i]; if(d.id===f.ignore) continue;
-      if(d.v.distanceTo(camPos)<reach(d)){ f.ignore=d.id; f.ignoreR=reach(d)+18; if(nearHook) nearHook(d.id); break; } }
+      if(d.v.distanceTo(camPos)<reach(d)){ f.ignore=d.id; f.ignoreR=reach(d)+14; if(nearHook) nearHook(d.id); break; } }
   }
   function nearest(){ var best=null, bd=1e9; DESTS.forEach(function(d){ var dd=d.v.distanceTo(camPos); if(dd<bd){ bd=dd; best=d.id; } }); return {id:best,dist:bd}; }
   function fire(id){ var d=D[id]; if(!d) return; d.fire=1; d.shockT=0; fpul.burst(40,3.5); }
@@ -380,7 +358,7 @@
       var el=performance.now()-enterT;
       if(el<1300){ var kk=el/1300, e=kk*kk*kk; brain.position.lerpVectors(enterFrom.p,tmpV.set(0,0,45),e); brain.rotation.y+=dt*.6; camPos.set(0,0,0); camLook.set(0,0,-60); }
       else {
-        if(!enterSwap){ enterSwap=true; mind.visible=true; scene.fog.near=FOG_IN_N; scene.fog.far=FOG_IN_F; brainShell();
+        if(!enterSwap){ enterSwap=true; mind.visible=true; scene.fog.near=60; scene.fog.far=330; brainShell();
           cubes.forEach(function(c){ c.on=false; c.g.visible=false; }); frags.forEach(function(f){ f.on=false; f.g.visible=false; });
           var cb=enterCb; enterCb=null; cb&&cb(); }
         var k1=Math.min(1,(el-1300)/2600), e1=ease(k1), P0=V(0,0,0), L0=V(0,0,0); pose(cur,P0,L0);
@@ -401,8 +379,6 @@
         else lookAhead.copy(tmpA);
         camLook.copy(lookAhead).lerp(travel.toLook,smooth(.55,1,k2));
         if(k2>=1){ var cb2=travel.cb; travel=null; drift=0; cb2&&cb2(); }
-      } else if(parked){
-        /* stay at this view — do not lerp back to Home */
       } else {
         drift+=dt; pose(cur,P1,L1);
         // look around by dragging: orbit the camera around the current neuron
@@ -419,7 +395,6 @@
         var hs=(on?9.5:8)*sc*p*(1+d.fire*.5); d.halo.scale.set(hs,hs,1);
         d.halo.material.opacity=(d.secret?.3:.72)+d.fire*.25;
         var cs=2.2*sc*(1+d.fire*.8); d.core.scale.set(cs,cs,1);
-        if(lite && !on){ if(d.shockT<1) d.shockT=1; if(d.shock) d.shock.material.opacity=0; return; }
         d.ring.lookAt(cam.position); d.ring.rotateZ(t*.3+d.i); d.ring2.lookAt(cam.position); d.ring2.rotateZ(-t*.5-d.i);
         d.ring.material.opacity=on?.7:.45; d.ring2.material.opacity=on?.55:.3;
         if(d.shockT<1){ d.shockT+=dt*.9; d.shock.lookAt(cam.position); var ss=3+d.shockT*16*sc; d.shock.scale.set(ss,ss,1); d.shock.material.opacity=.7*(1-d.shockT); } else d.shock.material.opacity=0;
@@ -427,24 +402,19 @@
           along(d.branches[g.b],g.t,g.s.position); g.s.material.opacity=Math.min(1,(1-g.t)*2)*(d.secret?.5:1); });
       });
       axons.forEach(function(L){ L.boost*=Math.pow(.35,dt); var hot=(L.a===cur||L.b===cur);
-        var hide=(D[L.a]&&D[L.a].g&&D[L.a].g.visible===false)||(D[L.b]&&D[L.b].g&&D[L.b].g.visible===false);
-        if(L.tube) L.tube.visible=!hide; L.line.visible=!hide;
-        L.comets.forEach(function(c){ c.parts.forEach(function(p){ p.visible=!hide; }); });
-        if(hide) return;
-        if(!L.secret){ if(L.tube) L.tube.material.opacity=(L.seen?.22:.08)+(hot?.12:0)+L.boost*.2; L.line.material.opacity=L.seen?(.75+(hot?.2:0)):(.28+(hot?.25:0)); }
-        if(lite && !hot) return;
+        if(!L.secret){ L.tube.material.opacity=(L.seen?.22:.08)+(hot?.12:0)+L.boost*.2; L.line.material.opacity=L.seen?(.75+(hot?.2:0)):(.28+(hot?.25:0)); }
         L.comets.forEach(function(c){ c.t+=dt*c.v*(1+L.boost*5)*c.dir; if(c.t>1) c.t-=1; if(c.t<0) c.t+=1;
           for(var q=0;q<c.parts.length;q++){ var tt=c.t-c.dir*q*.012; tt=tt<0?tt+1:(tt>1?tt-1:tt); L.curve.getPoint(tt,c.parts[q].position);
             var dd=c.parts[q].position.distanceTo(cam.position); c.parts[q].material.opacity=(1-q/7)*Math.max(0,Math.min(1,(dd-10)/30))*(L.secret?.35:1); } }); });
-      if(!lite || (performance.now()*0.06|0)%2) fpul.step(dt);
+      fpul.step(dt);
     }
-    if(brain.visible && (!lite || mode==='outside')) bpul.step(dt);
+    if(brain.visible) bpul.step(dt);
     core.material.opacity=.22+Math.sin(t*1.7)*.05;
 
     // cubes (gate only)
     pairT-=dt; soloT-=dt;
     var cubesOn=mode==='outside';
-    if(cubesOn){ if(pairT<=0){ spawnPair(); pairT=rnd(lite?2.8:1.4, lite?4.4:2.6); } if(soloT<=0){ spawnSolo(); soloT=rnd(lite?1.8:.9, lite?3.2:2); } }
+    if(cubesOn){ if(pairT<=0){ spawnPair(); pairT=rnd(1.4,2.6); } if(soloT<=0){ spawnSolo(); soloT=rnd(.9,2); } }
     var worldDz=(speed-baseSpeed)*dt;
     cubes.forEach(function(c){ if(!c.on) return;
       c.p.addScaledVector(c.v,dt); c.p.z+=worldDz+(c.solo?0:baseSpeed*.15*dt);
@@ -465,26 +435,12 @@
     cam.position.copy(camPos); cam.position.x+=(Math.random()-.5)*shake*.6; cam.position.y+=(Math.random()-.5)*shake*.6;
     cam.lookAt(camLook);
     dustObj.position.copy(cam.position); dustObj.quaternion.copy(cam.quaternion);
-    if(mode==='inside' && typeof tvList!=='undefined' && tvList.length){
-      var tnow=clock.elapsedTime;
-      for(var ti=0;ti<tvList.length;ti++){
-        var tv=tvList[ti];
-        tv.group.quaternion.copy(cam.quaternion);
-        var ts=tv.focus?(lite?1.32:1.52):1;
-        var cs=tv.group.scale.x; tv.group.scale.setScalar(cs+(ts-cs)*Math.min(1,dt*7));
-        tv.group.position.copy(tv.base);
-        tv.group.position.y+=Math.sin(tnow*.75+tv.bob)*.65;
-        if(tv.tex && tv.video && !tv.video.paused) tv.tex.needsUpdate=true;
-        if(tv.badge) tv.badge.visible=!!((tv.kind==='video'&&tv.video&&tv.video.paused)||tv.kind==='yt');
-      }
-    }
-    if(mode==='inside' && labelHook){ if(!lite || (++skipLabel&1)) labelHook(); }
+    if(mode==='inside' && labelHook) labelHook();
   }
-  var skipLabel=0;
-  function loop(){ if(!running) return; var dt=Math.min(clock.getDelta(), lite?.04:.05); frame(dt); renderer.render(scene,cam); requestAnimationFrame(loop); }
+  function loop(){ if(!running) return; var dt=Math.min(clock.getDelta(),.05); frame(dt); renderer.render(scene,cam); requestAnimationFrame(loop); }
 
   /* ── screen positions, for labels and for words pouring out of the neuron ── */
-  var tcam=new T.PerspectiveCamera(58,1,0.1,9000), pv=V(0,0,0);
+  var tcam=new T.PerspectiveCamera(58,1,0.1,900), pv=V(0,0,0);
   function screenOf(id){ var d=D[id]; if(!d) return null; pv.copy(d.v).project(cam);
     return {x:(pv.x+1)/2*innerWidth, y:(1-pv.y)/2*innerHeight, z:pv.z, on:pv.z<1, dist:d.v.distanceTo(cam.position)}; }
   function restScreen(id){ var d=D[id]; if(!d) return null; var P=V(0,0,0), L=V(0,0,0); pose(id,P,L);
@@ -508,96 +464,18 @@
     sp.position.copy(d.v).add(V(off[0],off[1],off[2])); mind.add(sp);
     return {sprite:sp,update:function(){ tex.needsUpdate=true; },remove:function(){ mind.remove(sp); tex.dispose(); sp.material.dispose(); }};
   }
-  /* big TV screens: photos already visible, videos wait for play */
-  var tvList=[], tvRay=new T.Raycaster(), tvNdc=new T.Vector2(), PLAYTEX=null;
-  function playTex(){
-    if(PLAYTEX) return PLAYTEX;
-    var c=document.createElement('canvas'); c.width=c.height=128; var g=c.getContext('2d');
-    g.beginPath(); g.arc(64,64,58,0,Math.PI*2); g.fillStyle='rgba(6,10,22,.78)'; g.fill();
-    g.strokeStyle='rgba(46,230,255,.95)'; g.lineWidth=5; g.stroke();
-    g.fillStyle='#fff'; g.beginPath(); g.moveTo(50,38); g.lineTo(50,90); g.lineTo(96,64); g.closePath(); g.fill();
-    PLAYTEX=new T.CanvasTexture(c); return PLAYTEX;
-  }
-  function addTV(id,src,w,h,off,meta){
-    var d=D[id]; if(!d) return null;
-    w=Math.max(6,w||16); h=Math.max(4,h||9);
-    var tex=src.tagName==='CANVAS'?new T.CanvasTexture(src):src.tagName==='VIDEO'?new T.VideoTexture(src):new T.Texture(src);
-    tex.minFilter=T.LinearFilter; tex.needsUpdate=true;
-    var g=new T.Group();
-    var fw=w+1.15, fh=h+1.15, fd=lite?.32:.5;
-    var chassis=new T.Mesh(new T.BoxGeometry(fw,fh,fd), new T.MeshBasicMaterial({color:0x070910}));
-    chassis.position.z=-fd*.5-.02;
-    var lip=new T.Mesh(new T.PlaneGeometry(fw+.1,fh+.1), new T.MeshBasicMaterial({color:0x151c32}));
-    lip.position.z=-.04;
-    var screen=new T.Mesh(new T.PlaneGeometry(w,h), new T.MeshBasicMaterial({map:tex}));
-    screen.position.z=.04;
-    g.add(chassis,lip,screen);
-    if(!lite){
-      var glow=new T.Sprite(new T.SpriteMaterial({map:dotTex('rgba(80,170,255,.45)','rgba(80,170,255,0)'),transparent:true,depthWrite:false,blending:ADD,opacity:.55}));
-      glow.scale.set(w*1.55,h*1.55,1); glow.position.z=-1.2; g.add(glow);
-    }
-    var kind=(meta&&meta.kind)||(src.tagName==='VIDEO'?'video':'image');
-    var badge=null;
-    if(kind==='video'||kind==='yt'){
-      badge=new T.Sprite(new T.SpriteMaterial({map:playTex(),transparent:true,depthWrite:false}));
-      var bs=Math.min(w,h)*.32; badge.scale.set(bs,bs,1); badge.position.z=.28; g.add(badge);
-    }
-    var base=d.v.clone().add(V(off[0],off[1],off[2]));
-    g.position.copy(base); mind.add(g);
-    var rec={group:g,sprite:g,screen:screen,tex:tex,video:src.tagName==='VIDEO'?src:null,kind:kind,meta:meta||{},base:base,bob:Math.random()*Math.PI*2,focus:false,badge:badge,w:w,h:h,
-      update:function(){ tex.needsUpdate=true; },
-      remove:function(){ mind.remove(g); tex.dispose(); chassis.material.dispose(); lip.material.dispose(); screen.material.dispose(); chassis.geometry.dispose(); lip.geometry.dispose(); screen.geometry.dispose();
-        var ix=tvList.indexOf(rec); if(ix>=0) tvList.splice(ix,1); }};
-    screen.userData.rec=rec; chassis.userData.rec=rec;
-    tvList.push(rec);
-    return rec;
-  }
-  function pickTV(cx,cy){
-    if(!tvList.length||mode!=='inside') return null;
-    tvNdc.set((cx/innerWidth)*2-1, -(cy/innerHeight)*2+1);
-    tvRay.setFromCamera(tvNdc, cam);
-    var meshes=[]; for(var i=0;i<tvList.length;i++){ meshes.push(tvList[i].screen); meshes.push(tvList[i].group.children[0]); }
-    var hits=tvRay.intersectObjects(meshes,false);
-    return hits.length?hits[0].object.userData.rec:null;
-  }
-  function focusTV(rec,on){
-    for(var i=0;i<tvList.length;i++){
-      var t=tvList[i]; t.focus=!!(on&&t===rec);
-      if(t.video && t!==rec){ try{ t.video.pause(); t.video.muted=true; }catch(e){} }
-    }
-  }
   function setColor(id,hex){ var d=D[id]; if(!d) return; var c=new T.Color(hex); d.ring.material.color.copy(c); d.shock.material.color.copy(c);
     var cs='rgba('+Math.round(c.r*255)+','+Math.round(c.g*255)+','+Math.round(c.b*255)+','; d.halo.material.map=dotTex(cs+'1)',cs+'0)'); d.halo.material.needsUpdate=true; }
   function orbit(dx,dy){ orbYt-=dx*.006; orbPt=Math.max(-1.1,Math.min(1.1,orbPt-dy*.004)); }
-  var destRay=new T.Raycaster(), destNdc=new T.Vector2();
-  function pickDest(cx,cy){
-    if(mode!=='inside' && mode!=='entering') return null;
-    destNdc.set((cx/innerWidth)*2-1, -(cy/innerHeight)*2+1);
-    destRay.setFromCamera(destNdc, cam);
-    destRay.params.Points=destRay.params.Points||{}; destRay.params.Points.threshold=12;
-    var meshes=[];
-    for(var i=0;i<DESTS.length;i++){ var d=DESTS[i]; if(d.dormant||!d.g||!d.g.visible) continue;
-      if(d.halo) meshes.push(d.halo); if(d.core) meshes.push(d.core); if(d.ring) meshes.push(d.ring); }
-    var hits=destRay.intersectObjects(meshes,false);
-    if(hits.length && hits[0].object.userData.dest) return hits[0].object.userData.dest;
-    var best=null, bd=0.045;
-    for(var j=0;j<DESTS.length;j++){ var dd=DESTS[j]; if(dd.dormant) continue;
-      var s=screenOf(dd.id); if(!s||!s.on) continue;
-      var dx=(s.x-cx)/innerWidth, dy=(s.y-cy)/innerHeight, r=dx*dx+dy*dy;
-      if(r<bd){ bd=r; best=dd.id; } }
-    return best;
-  }
-  window.HMind={voyageStart:voyageStart,voyageStop:voyageStop,voyaging:function(){ return !!voyage; },setSeen:setSeen,onPath:function(fn){ pathHook=fn; },unexploredFrom:unexploredFrom,orbit:orbit,setTheme:setTheme,addBillboard:addBillboard,addTV:addTV,pickTV:pickTV,focusTV:focusTV,setColor:setColor,enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
+  window.HMind={voyageStart:voyageStart,voyageStop:voyageStop,voyaging:function(){ return !!voyage; },setSeen:setSeen,onPath:function(fn){ pathHook=fn; },unexploredFrom:unexploredFrom,orbit:orbit,setTheme:setTheme,addBillboard:addBillboard,setColor:setColor,enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
     mode:function(){ return mode; }, current:function(){ return cur; }, travelling:function(){ return !!travel; },
     onFrame:function(fn){ labelHook=fn; },
-    park:park, alreadyAt:alreadyAt, setCurrent:function(id){ if(D[id]) cur=id; }, pickDest:pickDest,
     freeStart:freeStart, isFree:function(){ return !!flight; }, onNear:function(fn){ nearHook=fn; }, nearest:nearest,
-    freeLook:function(dx,dy){ if(!flight) return; var k=small?.008:.005; flight.yaw-=dx*k; flight.pitch=Math.max(-1.25,Math.min(1.25,flight.pitch-dy*k*.8)); },
+    freeLook:function(dx,dy){ if(!flight) return; flight.yaw-=dx*.0045; flight.pitch=Math.max(-1.25,Math.min(1.25,flight.pitch-dy*.0035)); },
     freeThrust:function(v){ if(flight) flight.thrust=v; }, freeTurn:function(v){ if(flight) flight.turn=v; }, freeTilt:function(v){ if(flight) flight.tilt=v; },
-    freeKick:function(v){ if(flight) flight.vel=Math.max(-80,Math.min(flight.max*1.4,flight.vel+v)); },
-    pause:function(v){ running=!v; if(!v){ clock.getDelta(); loop(); } }};
+    freeKick:function(v){ if(flight) flight.vel=Math.max(-25,Math.min(flight.max*1.2,flight.vel+v)); }};
   if(reduce){
-    window.HMind.enter=function(cb){ mode='inside'; mind.visible=true; brainShell(); scene.fog.near=FOG_IN_N; scene.fog.far=FOG_IN_F; var P=V(0,0,0),L=V(0,0,0); pose(cur,P,L); camPos.copy(P); camLook.copy(L); cb&&cb(); };
+    window.HMind.enter=function(cb){ mode='inside'; mind.visible=true; brainShell(); scene.fog.near=60; scene.fog.far=330; var P=V(0,0,0),L=V(0,0,0); pose(cur,P,L); camPos.copy(P); camLook.copy(L); cb&&cb(); };
   }
   loop();
 })();

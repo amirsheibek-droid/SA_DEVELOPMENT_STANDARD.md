@@ -529,83 +529,6 @@ body.flying #flyChip{display:none}
 #p-portfolio .vz-chip{flex-direction:row;gap:12px;align-items:center}
 #p-portfolio .vz-chip img{height:72px;max-height:72px}
 #p-portfolio .vz-word{font-size:1.55rem;white-space:nowrap}
-/* Showroom: real 3D devices you can spin round */
-.np-show{margin:18px 0 26px;text-shadow:none}
-.np-hint{font-family:var(--mono);font-size:.64rem!important;letter-spacing:.14em;text-transform:uppercase;color:var(--mute2);margin:0!important}
-#npLane{position:fixed;inset:0;z-index:18;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .7s,visibility 0s .7s}
-#npLane.on{opacity:1;visibility:visible;transition:opacity .7s}
-.np-item{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;width:232px;margin-left:-116px;margin-top:-186px;transform-origin:50% 186px;pointer-events:auto}
-.np-item.mac{width:316px;margin-left:-158px;margin-top:-150px;transform-origin:50% 150px}
-.np-dev{position:relative;width:100%;height:372px;perspective:1100px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
-.np-item.mac .np-dev{height:300px}
-.np-item.back .np-dev{cursor:pointer}
-.np-dev:active{cursor:grabbing}
-.np-float{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;animation:npFloat 6s ease-in-out infinite}
-@keyframes npFloat{0%,100%{transform:translateY(-6px)}50%{transform:translateY(8px)}}
-.np-spin,.np-rig,.np-lid{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
-.np-f{position:absolute;left:0;top:0;box-sizing:border-box;transform-style:preserve-3d}
-.np-shadow{position:absolute;left:50%;bottom:14px;width:150px;height:22px;margin-left:-75px;border-radius:50%;background:radial-gradient(closest-side,rgba(11,23,48,.28),rgba(11,23,48,0));animation:npShadow 6s ease-in-out infinite;pointer-events:none}
-.np-item.mac .np-shadow{width:250px;margin-left:-125px;bottom:10px}
-@keyframes npShadow{0%,100%{transform:scale(.92);opacity:.85}50%{transform:scale(1.05);opacity:.6}}
-/* phone 150 x 314 x 12 */
-.np-ph-front{width:150px;height:314px;margin:-157px 0 0 -75px;transform:translateZ(6px);border-radius:26px;background:#0a0f1a;box-shadow:inset 0 0 0 1.5px #3a4352}
-.np-ph-back{width:150px;height:314px;margin:-157px 0 0 -75px;transform:rotateY(180deg) translateZ(6px);border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;font-weight:800;letter-spacing:-.01em}
-.np-ph-back .cam{position:absolute;top:14px;left:14px;width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
-.np-ph-back .cam::before,.np-ph-back .cam::after{content:'';position:absolute;width:15px;height:15px;border-radius:50%;background:#05070d;box-shadow:0 0 0 2px rgba(255,255,255,.3)}
-.np-ph-back .cam::before{left:7px;top:7px}.np-ph-back .cam::after{right:7px;bottom:7px}
-.np-ph-back img{width:58px;height:58px;border-radius:14px}
-.np-ph-back small{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;opacity:.75;font-weight:600}
-.np-ph-side{background:linear-gradient(180deg,#5d6676,#2c3340 50%,#5d6676)}
-.np-ph-side.l{width:12px;height:270px;margin:-135px 0 0 -6px;transform:translateX(-75px) rotateY(-90deg)}
-.np-ph-side.r{width:12px;height:270px;margin:-135px 0 0 -6px;transform:translateX(75px) rotateY(90deg)}
-.np-ph-side.t{width:106px;height:12px;margin:-6px 0 0 -53px;transform:translateY(-157px) rotateX(90deg)}
-.np-ph-side.b{width:106px;height:12px;margin:-6px 0 0 -53px;transform:translateY(157px) rotateX(-90deg)}
-.np-notch{position:absolute;top:13px;left:50%;width:44px;height:13px;margin-left:-22px;border-radius:10px;background:#000;transform:translateZ(1.5px);z-index:2}
-/* macbook: base 260 x 168 x 8, lid 260 x 166 x 6 */
-.np-mb-top{width:260px;height:168px;margin:-84px 0 0 -130px;transform:rotateX(90deg);border-radius:10px 10px 12px 12px;background:linear-gradient(180deg,#cfd4dc,#e4e7ec 40%,#c9ced6);padding:12px 16px}
-.np-mb-top .kb{height:76px;border-radius:5px;background:#1b2029;background-image:linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:15.2px 12.6px;box-shadow:inset 0 0 0 2px #1b2029}
-.np-mb-top .tp{width:96px;height:56px;margin:10px auto 0;border-radius:6px;background:linear-gradient(180deg,#d5d9e0,#c3c8d0);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
-.np-mb-bot{width:260px;height:168px;margin:-84px 0 0 -130px;transform:translateY(8px) rotateX(-90deg);border-radius:12px;background:#aeb4bd}
-.np-mb-edge{background:linear-gradient(180deg,#d6dae0,#9aa1ab)}
-.np-mb-edge.f{width:260px;height:8px;margin:-4px 0 0 -130px;transform:translate3d(0,4px,84px)}
-.np-mb-edge.k{width:260px;height:8px;margin:-4px 0 0 -130px;transform:translate3d(0,4px,-84px) rotateY(180deg)}
-.np-mb-edge.l{width:168px;height:8px;margin:-4px 0 0 -84px;transform:translate3d(-130px,4px,0) rotateY(-90deg)}
-.np-mb-edge.r{width:168px;height:8px;margin:-4px 0 0 -84px;transform:translate3d(130px,4px,0) rotateY(90deg)}
-.np-mb-front{width:260px;height:166px;margin:-83px 0 0 -130px;transform:translate3d(0,-83px,3px);border-radius:10px 10px 2px 2px;background:#0a0d14;box-shadow:inset 0 0 0 1.5px #3a4352}
-.np-mb-front::after{content:'';position:absolute;top:4px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#2a3140;transform:translateZ(1px)}
-.np-mb-back{width:260px;height:166px;margin:-83px 0 0 -130px;transform:translate3d(0,-83px,-3px) rotateY(180deg);border-radius:10px 10px 2px 2px;background:linear-gradient(145deg,#e3e6eb,#c4c9d1 60%,#d9dce2);display:flex;align-items:center;justify-content:center}
-.np-mb-lidedge{background:#b7bdc6}
-.np-mb-lidedge.t{width:260px;height:6px;margin:-3px 0 0 -130px;transform:translateY(-166px) rotateX(90deg)}
-.np-mb-lidedge.l{width:6px;height:160px;margin:-80px 0 0 -3px;transform:translate3d(-130px,-83px,0) rotateY(90deg)}
-.np-mb-lidedge.r{width:6px;height:160px;margin:-80px 0 0 -3px;transform:translate3d(130px,-83px,0) rotateY(90deg)}
-.np-logo{position:relative;width:34px;height:34px}
-.np-logo i{position:absolute;inset:0;border:2px solid var(--blue);transform:rotate(45deg);box-shadow:0 0 12px -1px var(--blue);animation:npBeat 1.8s cubic-bezier(.3,0,.3,1) infinite}
-.np-logo i+i{inset:10px;border-color:var(--green);box-shadow:0 0 10px -2px var(--green);animation-name:npBeatIn;animation-delay:.12s}
-/* the screen and its flying tiles */
-.np-screen{position:absolute;display:grid;transform-style:preserve-3d;transform:translateZ(.6px)}
-.np-ph-front .np-screen{inset:6px;border-radius:21px}
-.np-mb-front .np-screen{left:8px;right:8px;top:10px;bottom:12px;border-radius:3px}
-.np-tile{background-repeat:no-repeat;backface-visibility:hidden;-webkit-backface-visibility:hidden;opacity:0}
-.np-tile.glow{box-shadow:0 0 0 1px rgba(31,107,255,.6),0 0 14px rgba(31,107,255,.5)}
-.np-scan{position:absolute;left:-6px;right:-6px;top:0;height:3px;border-radius:3px;opacity:0;pointer-events:none;transform:translateZ(2px);background:linear-gradient(90deg,transparent,#22d3ee,#1f6bff,#22d3ee,transparent);box-shadow:0 0 18px 3px rgba(34,211,238,.55)}
-.np-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transform:translateZ(1.5px);background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.5) 45%,transparent 60%);background-size:250% 100%}
-.np-glare.on{animation:npGlare 1.2s ease-out}
-@keyframes npGlare{0%{opacity:1;background-position:130% 0}100%{opacity:1;background-position:-60% 0}}
-.np-cap{text-align:center;margin-top:-6px;position:relative;z-index:2;transition:opacity .4s}
-.np-item.back .np-cap{opacity:0;pointer-events:none}
-.np-hud{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);min-height:1.2em}
-.np-hud b{color:var(--ink)}
-.np-cap h4{margin:4px 0 2px;font-size:1rem;letter-spacing:-.01em}
-.np-cap .st{font-size:.78rem;color:var(--mute)}
-.np-go{display:inline-block;margin-top:8px;padding:9px 16px;border-radius:999px;font-weight:800;font-size:.82rem;text-decoration:none;color:#fff!important;background:linear-gradient(110deg,var(--blue),#5b8cff);box-shadow:0 8px 22px -8px rgba(31,107,255,.7);text-shadow:none}
-.np-go.mu{background:linear-gradient(110deg,#2ee6ff,#a45cff 55%,#ff4fa8);box-shadow:0 8px 24px -8px rgba(164,92,255,.8)}
-.np-nav{position:absolute;left:0;top:0;display:flex;align-items:center;gap:10px;pointer-events:auto;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:var(--mute);transform:translate(-50%,0)}
-.np-nav button{width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;font-size:1.1rem;color:var(--blue);background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(31,107,255,.3),0 6px 18px -8px rgba(31,107,255,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.np-nav button:disabled{opacity:.35;cursor:default}
-#npLight{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--lx,50%) var(--ly,50%),#fff 0,#fff 18%,rgba(240,248,255,.96) 40%,rgba(200,225,255,.9) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;font-family:var(--sans);color:var(--ink);text-align:center}
-#npLight h3{margin:0;font-size:1.6rem;letter-spacing:-.02em}
-#npLight p{margin:0;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
-@media(prefers-reduced-motion:reduce){.np-float,.np-shadow,.np-logo i{animation:none}}
 @media(max-width:899px){
   #p-portfolio .folio-grid{padding-left:26px}
   #p-portfolio .folio-card,#p-portfolio .folio-top{grid-template-columns:1fr;margin-left:0!important}
@@ -922,7 +845,6 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
     <div class="eye">The Vault &middot; Portfolio</div>
     <h2 class="decode">Products and brands built by Neuron Pulse.</h2>
     <p>The brands we've designed and launched, and the applications our engineering team is building right now.</p>
-    <div class="np-show" id="npShow"><p class="np-hint">Every app floats in line from the Vault into deep space. Scroll or use the arrows to bring one forward, drag it to spin it right round, tap it to travel in.</p></div>
 <div class="folio-grid">
         <div class="card folio-card folio-top">
           <div class="folio-logo-chip vz-chip">
@@ -980,7 +902,6 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
   </article>
 
   <!-- THE ARCHITECT (brief) -->
-  <script src="/assets/showroom.js?v=2"></script>
   <article class="pg" id="p-build" data-node="build" data-wide="1">
     <div class="eye">Find an engineer &middot; the Architect</div>
     <div id="arch"></div>
@@ -1312,9 +1233,8 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   if(!M){ document.documentElement.classList.add('nojs'); document.getElementById('btx').style.display='none'; document.body.style.overflow='auto'; stage.style.cssText='position:static;max-height:none;overflow:visible;transform:none;padding:24px;pointer-events:auto'; return; }
 
   /* Jess: recorded Gemini voice lines, one shared player (unlocked on the first tap for iPhone) */
-  /* Only the welcome speaks, once per visit, then Jess stays quiet */
   var Jess=(function(){
-    var el=new Audio(), on=false, cb=null, unlocked=false, welcomed=false;
+    var el=new Audio(), on=false, cb=null, unlocked=false;
     el.preload='auto';
     function end(){ var c=cb; cb=null; try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(false); }catch(e){} c&&c(); }
     el.addEventListener('ended',end);
@@ -1322,8 +1242,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       try{ S.cancel(); }catch(e){} var u=new SpeechSynthesisUtterance(text); u.lang='en-GB'; var fin=false; function f(){ if(fin) return; fin=true; done&&done(); } u.onend=f; u.onerror=f; setTimeout(f,Math.max(3500,text.length*85)); S.speak(u); }
     return {
       unlock:function(){ if(unlocked) return; unlocked=true; try{ el.muted=true; el.src='/assets/voice/arch/mind-inside.m4a?v=2'; var pr=el.play(); if(pr&&pr.then) pr.then(function(){ el.pause(); el.currentTime=0; el.muted=false; }).catch(function(){ el.muted=false; }); else el.muted=false; }catch(e){} },
-      play:function(id,text,done){ if(id!=='mind-inside'||welcomed||ss('saWelcomed')==='1'||ss('saArchVoice')==='off'){ setTimeout(function(){ done&&done(); },250); return; }
-        welcomed=true; ss('saWelcomed','1');
+      play:function(id,text,done){ if(true){ setTimeout(function(){ done&&done(); },250); return; }
         this.stop(); cb=done||null; try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(true); }catch(e){}
         el.muted=false; el.src='/assets/voice/arch/'+id+'.m4a?v='+(id==='mind-inside'?2:1);
         var failed=false; function fail(){ if(failed) return; failed=true; var c=cb; cb=null; fallback(text,function(){ try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(false); }catch(e){} c&&c(); }); }
@@ -1449,8 +1368,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       if(k<1 && electron.classList.contains('on')) requestAnimationFrame(tick); })();
   }
   function unlockVault(){ var cards=document.querySelectorAll('#p-portfolio .folio-card'); cards.forEach(function(c){ c.classList.remove('in'); });
-    cards.forEach(function(c,i){ setTimeout(function(){ c.classList.add('in'); FX('zoop',.4); },700+i*140); });
-    if(window.NPShow) NPShow.open(); }
+    cards.forEach(function(c,i){ setTimeout(function(){ c.classList.add('in'); FX('zoop',.4); },700+i*140); }); }
 
   document.addEventListener('click',function(e){ var a=e.target.closest('[data-go]'); if(!a) return; e.preventDefault();
     if(!document.body.classList.contains('inside')) return; delete skip[a.dataset.go]; travelTo(a.dataset.go,{type:a.dataset.type}); });

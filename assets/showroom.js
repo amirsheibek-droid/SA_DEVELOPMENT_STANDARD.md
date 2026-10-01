@@ -1,41 +1,38 @@
-/* Neuron Pulse portfolio: real iPhones hanging in the 3D mind around the neuron you are looking at. */
+/* Neuron Pulse showroom: every product as a 3D iPhone floating around the Vault neuron.
+   Screens preview the app (or a branded splash if it is still in the pipeline). They hover and slowly rotate. */
 (function(){
   var page=document.getElementById('p-portfolio');
   if(!page) return;
+  var row=document.createElement('div'); row.id='npLane'; document.body.appendChild(row);
+  var light=document.createElement('div'); light.id='npLight'; document.body.appendChild(light);
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var lite=Math.min(innerWidth,innerHeight)<700 || innerWidth<900 || !!(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
-  var logos=page.querySelectorAll('#npLogos img, .folio-logo-chip img');
-  var V='/voltz/assets/screens/', U='/mind-universe/assets/screens/';
+  var cards=page.querySelectorAll('.folio-card');
+  var V='/voltz/assets/screens/', M='/mind-universe/assets/screens/';
   var DEVS=[
-    {name:'Voltz CRM',status:'Live on the App Store',href:'/voltz',cta:'Open Voltz CRM',card:0,accent:'#1f6bff',
-      say:'Voltz is a voice-first job app for tradespeople. Speak a job and it books it, quotes it and invoices it.',
+    {name:'Voltz CRM',status:'Live on the App Store',href:'/voltz',cta:'See Voltz CRM \u2192',card:0,accent:'#1f6bff',
+      back:'linear-gradient(160deg,#3d86ff,#0b3fb8)',backHtml:'<img src="/voltz/assets/voltz-icon.png" alt="">Voltz CRM<small>by Neuron Pulse</small>',
       screens:[[V+'clean-01-home.jpg','AI voice home'],[V+'clean-02-birds-eye.jpg',"Bird's-eye view"],[V+'clean-03-schedule.jpg','Your diary'],[V+'clean-05-new-client.jpg','New client'],[V+'clean-04-command-icons.jpg','Command centre']]},
-    {name:'Mind Universe',status:'In progress · open preview',href:'/mind-universe/',cta:'Enter Mind Universe',mu:true,card:1,accent:'#a45cff',
-      say:'Mind Universe is your mind as a place you can fly through. Moods, diary, goals and memories live as glowing neurons.',
-      screens:[[U+'mu-02-home.jpg','Your mind'],[U+'mu-03-mood.jpg','Mood'],[U+'mu-01-enter.jpg','Enter your mind']]},
-    {name:'SpareDrive',status:'In development',card:2,accent:'#12b877',text:['Spare','Drive'],tag:'Launching soon',
-      say:'SpareDrive is in development. A Neuron Pulse app, still being built.'},
-    {name:'Qlarvia',status:'In the pipeline',card:3,accent:'#6d4aff',tag:'Software intelligence',
-      say:'Qlarvia is a software intelligence platform, still in the pipeline.'},
-    {name:'NEX License',status:'In the pipeline',card:4,accent:'#1f6bff',tag:'Consulting',
-      say:'NEX is a consulting platform, still in the pipeline.'},
-    {name:'The Talking Therapist',status:'In the pipeline',card:5,accent:'#14b8a6',tag:'Therapy and wellbeing',
-      say:'The Talking Therapist is a wellbeing app, still in the pipeline.'},
-    {name:'Eid in Bedford',status:'In the pipeline',card:6,accent:'#d4a017',tag:'Community events',
-      say:'Eid in Bedford is a community events app, still in the pipeline.'},
-    {name:'Contract Analyser',status:'In development',card:7,accent:'#334155',text:['Contract','Analyser'],tag:'Contract review',
-      say:'Contract Analyser reads contracts and highlights what matters. It is in development now.'}
+    {name:'Mind Universe',status:'In progress \u00b7 open preview',href:'/mind-universe/',cta:'Enter the Mind Universe \u2192',mu:true,card:1,accent:'#a45cff',
+      back:'radial-gradient(circle at 30% 22%,rgba(255,79,168,.85),transparent 46%),radial-gradient(circle at 72% 80%,rgba(46,230,255,.75),transparent 46%),linear-gradient(160deg,#3b1d7a,#0b0820)',
+      backHtml:'<span style="font-size:1.05rem">Mind<span style="color:#d4b8ff">Universe</span></span><small>by Neuron Pulse</small>',
+      screens:[[M+'mu-02-home.jpg','Your mind'],[M+'mu-03-mood.jpg','Mood'],[M+'mu-01-enter.jpg','Enter your mind']]},
+    {name:'SpareDrive',status:'In development',card:2,accent:'#12b877',text:['Spare','Drive'],tag:'Launching soon'},
+    {name:'Qlarvia',status:'In the pipeline',card:3,accent:'#6d4aff',tag:'Software intelligence platform'},
+    {name:'NEX License',status:'In the pipeline',card:4,accent:'#1f6bff',tag:'Consulting platform'},
+    {name:'The Talking Therapist',status:'In the pipeline',card:5,accent:'#14b8a6',tag:'Therapy and wellbeing'},
+    {name:'Eid in Bedford',status:'In the pipeline',card:6,accent:'#d4a017',tag:'Community events'},
+    {name:'Contract Analyser',status:'In development',card:7,accent:'#334155',text:['Contract','Analyser'],tag:'Intelligent contract review'}
   ];
 
-  var caps=document.createElement('div'); caps.id='npCaps'; document.body.appendChild(caps);
-  var light=document.getElementById('npLight');
-  if(!light){ light=document.createElement('div'); light.id='npLight'; document.body.appendChild(light); }
-
   function el(t,c,p,h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; if(p) p.appendChild(e); return e; }
-  function hexA(h,a){ var n=parseInt((h||'#1f6bff').slice(1),16); return 'rgba('+(n>>16)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
+  function R_(a,b){ return a+Math.random()*(b-a); }
+  function hexA(h,a){ var n=parseInt(h.slice(1),16); return 'rgba('+(n>>16)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
   function loadImg(src){ return new Promise(function(res){ if(!src) return res(null); var im=new Image(); im.onload=function(){ res(im); }; im.onerror=function(){ res(null); }; im.src=src; }); }
-  function logoOf(i){ var im=logos[i]; return im?im.src:null; }
+  function logoOf(i){ var im=cards[i]&&cards[i].querySelector('.folio-logo-chip img'); return im?im.src:null; }
   function rr(c,x,y,w,h,r){ c.beginPath(); if(c.roundRect) c.roundRect(x,y,w,h,r); else c.rect(x,y,w,h); }
 
+  /* apps still in the pipeline get a branded phone splash so every device still has a live preview */
   function splashScreens(d,logo){
     var W=lite?390:780, H=lite?844:1688, out=[];
     function paint(kind){
@@ -47,142 +44,179 @@
       else { var t=d.text||[d.name,'']; c.textAlign='center'; c.textBaseline='middle'; c.font='800 '+Math.round(W*.11)+'px Inter,system-ui,sans-serif';
         c.fillStyle='#fff'; c.fillText(t[0],W/2,H*.34); c.fillStyle=d.accent; c.fillText(t[1]||'',W/2,H*.34+W*.13); c.textBaseline='alphabetic'; c.textAlign='left'; }
       c.textAlign='center'; c.fillStyle='rgba(255,255,255,.72)'; c.font='600 '+Math.round(W*.045)+'px Inter,system-ui,sans-serif';
-      c.fillText(kind==='build'?'Building the app…':(d.tag||d.name),W/2,H*.58);
-      c.textAlign='left'; return a;
+      c.fillText(kind==='build'?'Building the app\u2026':(d.tag||d.name),W/2,H*.58);
+      c.font='700 '+Math.round(W*.032)+'px "JetBrains Mono",monospace'; c.fillStyle=d.accent;
+      c.fillText('NEURON PULSE',W/2,H*.66);
+      if(kind==='build'){ for(var i=0;i<5;i++){ c.fillStyle=i===0?hexA(d.accent,.35):'rgba(255,255,255,.08)'; rr(c,W*.16,H*.72+i*(H*.035),W*(i===0?.5:.28+((i*17)%20)/100),H*.018,H*.009); c.fill(); } }
+      c.textAlign='left'; return a.toDataURL('image/jpeg',lite?.7:.86);
     }
     out.push([paint('hero'),d.name]);
     out.push([paint('build'),'The build']);
     return out;
   }
 
-  var placed=false, list=[], cycling=false, flying=null, lastVoice=null, voiceT=0;
-
-  function placeNow(){
-    if(placed) return true;
-    var M=window.SAMind; if(!M||!M.addPhone) return false;
-    placed=true;
-    var n=DEVS.length;
-    DEVS.forEach(function(d,i){
-      if(!d.imgs||!d.imgs.length){ var sp=splashScreens(d,null); d.imgs=sp.map(function(s){ return s[0]; }); d.captions=sp.map(function(s){ return s[1]; }); }
-      var a=(i/n)*Math.PI*2 + .28, r=36+(i%3)*14, y=(i%3-1)*12;
-      var rec=M.addPhone('core', d.imgs[0], [Math.cos(a)*r, y, Math.sin(a)*r], {name:d.name, href:d.href, cta:d.cta, status:d.status, col:parseInt((d.accent||'#1f6bff').slice(1),16), i:i});
-      if(!rec) return;
-      d.rec=rec; d.cur=0;
-      var cap=el('div','np-floatcap',caps);
-      cap.innerHTML='<b>'+d.name+'</b>'+(d.href?'<a class="np-go'+(d.mu?' mu':'')+'" href="'+d.href+'">'+(d.cta||'Open')+'</a>':'');
-      d.cap=cap;
-      list.push(d);
-    });
-    if(M.anchorPhones) M.anchorPhones('core');
-    cycle();
-    return true;
+  function phoneBack(d){
+    if(d.backHtml) return d;
+    d.back=d.back||('linear-gradient(160deg,'+d.accent+',#0b1220)');
+    d.backHtml='<span>'+d.name+'</span><small>by Neuron Pulse</small>';
+    return d;
   }
 
-  function around(id){
-    var M=window.SAMind;
-    if(!placeNow()) return false;
-    if(M&&M.anchorPhones) M.anchorPhones(id||'core');
-    document.body.classList.add('np-phones');
-    return true;
-  }
-
-  function fillScreens(){
-    DEVS.forEach(function(d){
-      if(d.screens && typeof d.screens[0][0]==='string'){
-        Promise.all(d.screens.map(function(s){ return loadImg(s[0]).then(function(im){ return [im||s[0], s[1]]; }); }))
-          .then(function(rows){
-            d.imgs=rows.map(function(r){ return r[0]; });
-            d.captions=rows.map(function(r){ return r[1]; });
-            if(d.rec && d.imgs[0]) d.rec.setScreen(d.imgs[0]);
-          });
-      } else {
-        loadImg(logoOf(d.card)).then(function(im){
-          var sp=splashScreens(d,im); d.imgs=sp.map(function(s){ return s[0]; }); d.captions=sp.map(function(s){ return s[1]; });
-          if(d.rec && d.imgs[0]) d.rec.setScreen(d.imgs[0]);
-        });
-      }
-    });
-  }
-
-  function boot(){
-    if(placeNow()){ fillScreens(); hookFrame(); return; }
-    setTimeout(boot,80);
-  }
-
-  function cycle(){
-    if(cycling) return; cycling=true;
-    function tick(){
-      list.forEach(function(d){
-        if(!d.imgs||d.imgs.length<2||!d.rec) return;
-        d.cur=(d.cur+1)%d.imgs.length;
-        d.rec.setScreen(d.imgs[d.cur]);
-      });
-      setTimeout(tick, 4800);
+  var list=DEVS.map(function(d,idx){
+    phoneBack(d);
+    var item=el('div','np-item phone',row), dev=el('div','np-dev',item), flo=el('div','np-float',dev), spin=el('div','np-spin',flo), rig=el('div','np-rig',spin), front;
+    el('div','np-shadow',dev);
+    dev.setAttribute('role','img'); dev.setAttribute('aria-label',d.name+' on a floating iPhone');
+    front=el('div','np-f np-ph-front',rig); el('i','np-notch',front);
+    el('div','np-f np-ph-back',rig,'<i class="cam"></i>'+d.backHtml).style.background=d.back;
+    ['l','r','t','b'].forEach(function(s){ el('div','np-f np-ph-side '+s,rig); });
+    d.C=lite?3:5; d.R=lite?6:10; d.rad='21px'; d.off=0; d.rx0=-8; d.home=idx*18;
+    var scr=el('div','np-screen',front); d.tiles=[];
+    scr.style.gridTemplateColumns='repeat('+d.C+',1fr)'; scr.style.gridTemplateRows='repeat('+d.R+',1fr)';
+    for(var r=0;r<d.R;r++) for(var c=0;c<d.C;c++){
+      var t=el('div','np-tile',scr);
+      t.style.backgroundSize=(d.C*100)+'% '+(d.R*100)+'%'; t.style.backgroundPosition=(c/(d.C-1)*100)+'% '+(r/(d.R-1)*100)+'%';
+      if(r===0&&c===0) t.style.borderTopLeftRadius=d.rad; if(r===0&&c===d.C-1) t.style.borderTopRightRadius=d.rad;
+      if(r===d.R-1&&c===0) t.style.borderBottomLeftRadius=d.rad; if(r===d.R-1&&c===d.C-1) t.style.borderBottomRightRadius=d.rad;
+      t.dataset.r=r; t.dataset.c=c; d.tiles.push(t);
     }
-    setTimeout(tick, 3600);
-  }
+    d.scan=el('i','np-scan',scr); d.glare=el('i','np-glare',scr);
+    var cap=el('div','np-cap',item); d.hudEl=el('div','np-hud',cap,'&nbsp;'); el('h4','',cap,d.name); el('div','st',cap,d.status);
+    if(d.href){ var go=el('a','np-go'+(d.mu?' mu':''),cap,d.cta); go.href=d.href; }
+    spin.style.opacity=(reduce||lite)?1:0;
+    if(reduce||lite) d.tiles.forEach(function(t){ t.style.opacity=1; });
+    d.item=item; d.dev=dev; d.spin=spin; d.rig=rig; d.ry=d.home; d.rx=d.rx0; d.vy=0; d.ph=idx*1.3; d.idle=0; d.cur=0;
+    d.i=idx; d.kf=idx;
+    dev.addEventListener('pointerdown',function(e){ if(e.button||flying) return; d.drag=true; d.moved=0; d.lx=e.clientX; d.ly=e.clientY; d.vy=0; try{ dev.setPointerCapture(e.pointerId); }catch(_){} });
+    dev.addEventListener('pointermove',function(e){ if(!d.drag) return; var dx=e.clientX-d.lx, dy=e.clientY-d.ly; d.lx=e.clientX; d.ly=e.clientY;
+      d.moved+=Math.abs(dx)+Math.abs(dy); d.ry+=dx*.6; d.vy=dx*.6; d.rx=Math.max(-70,Math.min(45,d.rx-dy*.35)); });
+    dev.addEventListener('pointerup',function(){ if(!d.drag) return; d.drag=false; d.idle=performance.now();
+      if(d.moved<6){ if(d.i===focus) openDev(d); else setFocus(d.i); } });
+    dev.addEventListener('wheel',function(e){ e.preventDefault(); wheel(e.deltaY||e.deltaX); },{passive:false});
+    dev.addEventListener('pointercancel',function(){ d.drag=false; d.idle=performance.now(); });
+    return d;
+  });
 
-  function speakNear(d){
-    if(!d||!d.say) return;
-    var now=performance.now();
-    if(lastVoice===d && now-voiceT<18000) return;
-    lastVoice=d; voiceT=now;
-    try{ if(window.Jess&&Jess.say) Jess.say(d.say); }catch(e){}
+  var focus=0, flying=null, wheelAcc=0, wheelT=0;
+  var nav=el('div','np-nav',row,'<button type="button" aria-label="Previous app">&lsaquo;</button><span></span><button type="button" aria-label="Next app">&rsaquo;</button>');
+  var navB=nav.querySelectorAll('button'), navN=nav.querySelector('span');
+  navB[0].onclick=function(){ setFocus(focus-1); }; navB[1].onclick=function(){ setFocus(focus+1); };
+  function setFocus(i){
+    focus=Math.max(0,Math.min(list.length-1,i));
+    list.forEach(function(d){ d.item.classList.toggle('back',d.i!==focus); });
+    navB[0].disabled=focus===0; navB[1].disabled=focus===list.length-1; navN.textContent=(focus+1)+' / '+list.length;
   }
+  function wheel(dy){ var now=performance.now(); if(now-wheelT>400) wheelAcc=0; wheelT=now; wheelAcc+=dy;
+    if(Math.abs(wheelAcc)>60){ setFocus(focus+(wheelAcc>0?1:-1)); wheelAcc=0; wheelT=now+250; } }
+  addEventListener('keydown',function(e){ if(!row.classList.contains('on')||flying) return;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'){ setFocus(focus+1); e.preventDefault(); }
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ setFocus(focus-1); e.preventDefault(); }
+    else if(e.key==='Enter'&&document.activeElement===document.body) openDev(list[focus]); });
+  setFocus(0);
 
-  function paintCaps(){
-    var M=window.SAMind; if(!M||!M.screenOfPhone) return;
-    var show=document.body.classList.contains('inside');
-    caps.classList.toggle('on', show);
-    var nearest=null, nd=1e9;
-    list.forEach(function(d){
-      if(!d.rec||!d.cap) return;
-      var s=M.screenOfPhone(d.rec);
-      var vis=show&&s&&s.on&&s.dist<320&&s.x>-60&&s.x<innerWidth+60&&s.y>-60&&s.y<innerHeight+60;
-      if(!vis){ d.cap.style.opacity='0'; d.cap.style.pointerEvents='none'; return; }
-      if(s.dist<nd){ nd=s.dist; nearest=d; }
-      var closeK=Math.max(0,Math.min(1,(110-s.dist)/85));
-      var sc=0.9+closeK*1.55;
-      d.cap.style.opacity=(0.3+closeK*0.7).toFixed(2);
-      d.cap.style.pointerEvents=closeK>0.45?'auto':'none';
-      d.cap.classList.toggle('near', closeK>0.45);
-      d.cap.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(-50%,78%) scale('+sc.toFixed(3)+')';
-    });
-    if(nearest && nd<70) speakNear(nearest);
-  }
+  function orb(){ var M=window.SAMind, s=M&&M.screenOf&&M.screenOf('portfolio'); if(s&&s.on) return s;
+    return {x:innerWidth<900?innerWidth/2:innerWidth*.22, y:innerWidth<900?innerHeight*.32:innerHeight*.48}; }
+  function geom(){ var small=innerWidth<900;
+    return small?{S:Math.min(.55,innerHeight*.32/372),fx:0,fy:18,rad:96}
+                :{S:Math.min(.92,innerHeight/980),fx:120,fy:8,rad:210}; }
 
-  var hooked=false;
-  function hookFrame(){
-    if(hooked) return; hooked=true;
-    (function loop(){ paintCaps(); requestAnimationFrame(loop); })();
-  }
-
+  /* travel into the light, then the app takes over */
   function openDev(d){
-    if(!d||flying) return;
-    if(!d.href){ try{ window.SAMind&&SAMind.fire('portfolio'); }catch(e){} light.innerHTML='<h3>'+d.name+'</h3><p>Still being built</p>';
-      light.animate([{opacity:0},{opacity:.9,offset:.4},{opacity:1}],{duration:700,fill:'forwards'});
-      setTimeout(function(){ light.animate([{opacity:1},{opacity:0}],{duration:700,fill:'forwards'}); },1400); return; }
-    flying=d;
+    if(flying||!d.built) return; flying={d:d,t0:performance.now()};
+    var r=d.dev.getBoundingClientRect(); light.style.setProperty('--lx',(r.left+r.width/2)+'px'); light.style.setProperty('--ly',(r.top+r.height/2)+'px');
+    light.innerHTML=d.href?'':'<h3>'+d.name+'</h3><p>In development &middot; Neuron Pulse</p>';
     try{ SAMind.fire('portfolio'); SAMind.warp(); }catch(e){}
-    location.href=d.href;
+    light.animate([{opacity:0},{opacity:.35,offset:.45},{opacity:1}],{duration:950,easing:'cubic-bezier(.5,0,.7,1)',fill:'forwards'});
+    setTimeout(function(){
+      if(d.href){ location.href=d.href; return; }
+      setTimeout(function(){ light.animate([{opacity:1},{opacity:0}],{duration:800,easing:'ease-out',fill:'forwards'}); flying=null; },1100);
+    },1000);
+  }
+  addEventListener('pageshow',function(e){ if(e.persisted){ flying=null; light.getAnimations().forEach(function(a){ a.cancel(); }); } });
+  function hud(d,h){ d.hudEl.innerHTML=h; }
+  function setScreen(d,i){ var u='url("'+d.screens[i][0]+'")'; d.tiles.forEach(function(t){ t.style.backgroundImage=u; }); }
+
+  function assemble(d){
+    d.built=true; setScreen(d,0);
+    if(reduce || lite){ d.tiles.forEach(function(t){ t.style.opacity=1; }); d.spin.style.opacity=1; hud(d,'<b>'+d.screens[0][1]+'</b> &middot; online'); setTimeout(function(){ cycle(d); }, lite?2800:0); return; }
+    d.spin.animate([{opacity:0,transform:'translateZ(-700px) rotateY(540deg) rotateX(25deg) scale(.6)'},
+                    {opacity:1,offset:.75,transform:'translateZ(30px) rotateY(-8deg) scale(1.02)'},
+                    {opacity:1,transform:'none'}],{duration:1300,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
+    var start=700;
+    if(d.lid){ d.lid.animate([{transform:'translateZ(-84px) rotateX(-88deg)'},{transform:'translateZ(-84px) rotateX(22deg)',offset:.8},{transform:'translateZ(-84px) rotateX(14deg)'}],{duration:1000,delay:900,easing:'cubic-bezier(.3,.7,.2,1)',fill:'forwards'}); start=1500; }
+    var order=d.tiles.slice().sort(function(a,b){ return (+a.dataset.r + +a.dataset.c*.6 + Math.random()*1.4)-(+b.dataset.r + +b.dataset.c*.6 + Math.random()*1.4); });
+    var done=0, total=order.length, step=Math.max(16,1000/total);
+    hud(d,'Assembling <b>'+d.name+'</b> &middot; 0%');
+    order.forEach(function(t,k){
+      var a=t.animate([
+        {opacity:0,transform:'translate3d('+R_(-1,1)*380+'px,'+R_(-1,1)*320+'px,'+R_(-700,300)+'px) rotateX('+R_(-540,540)+'deg) rotateY('+R_(-540,540)+'deg) rotateZ('+R_(-180,180)+'deg) scale(.5)'},
+        {opacity:1,offset:.62,transform:'translate3d(0,0,40px) rotateX(0) rotateY(0) rotateZ(0) scale(1.04)'},
+        {opacity:1,offset:.8,transform:'translate3d(0,0,40px)'},
+        {opacity:1,offset:.9,transform:'translate3d(0,0,-3px)'},
+        {opacity:1,transform:'none'}],{duration:950,delay:start+k*step,easing:'cubic-bezier(.25,.8,.3,1)',fill:'forwards'});
+      a.onfinish=function(){ t.classList.add('glow'); setTimeout(function(){ t.classList.remove('glow'); },240);
+        done++; hud(d,'Assembling <b>'+d.name+'</b> &middot; '+Math.round(done/total*100)+'%'); if(done===total) locked(d); };
+    });
+  }
+  function locked(d){
+    hud(d,'<b>'+d.screens[0][1]+'</b> &middot; online');
+    d.scan.animate([{opacity:0,top:'0%'},{opacity:1,offset:.1},{opacity:1,offset:.9},{opacity:0,top:'100%'}],{duration:1100,easing:'ease-in-out'});
+    setTimeout(function(){ d.glare.classList.add('on'); setTimeout(function(){ d.glare.classList.remove('on'); },1300); },700);
+    setTimeout(function(){ cycle(d); },3200+Math.random()*1500);
+  }
+  /* panels flip over in a wave to show the next screen */
+  function cycle(d){
+    if(!row.classList.contains('on')||d.kf>2.5){ setTimeout(function(){ cycle(d); },2000); return; }
+    var nxt=(d.cur+1)%d.screens.length, u='url("'+d.screens[nxt][0]+'")', last=0;
+    hud(d,'Loading <b>'+d.screens[nxt][1]+'</b>');
+    if(lite || reduce){ d.tiles.forEach(function(t){ t.style.backgroundImage=u; }); hud(d,'<b>'+d.screens[nxt][1]+'</b> &middot; online'); d.cur=nxt; setTimeout(function(){ cycle(d); },5200); return; }
+    d.tiles.forEach(function(t){
+      var w=d.lid?(+t.dataset.r*90+ +t.dataset.c*60):(+t.dataset.r*70+ +t.dataset.c*90); if(w>last) last=w;
+      if(!reduce) t.animate([{transform:'none'},{transform:'rotateY(90deg) translateZ(14px)',offset:.5},{transform:'none'}],{duration:620,delay:w,easing:'ease-in-out'});
+      setTimeout(function(){ t.style.backgroundImage=u; },reduce?0:w+310);
+    });
+    setTimeout(function(){ hud(d,'<b>'+d.screens[nxt][1]+'</b> &middot; online'); },last+700);
+    d.cur=nxt; setTimeout(function(){ cycle(d); },4600+Math.random()*1800);
   }
 
-  function tap(e){
-    var M=window.SAMind; if(!M||!M.pickPhone||!document.body.classList.contains('inside')) return false;
-    if(e.target.closest('#stage,button,a,input,textarea,.nl,#dock,#flyHelp,#npCaps')) return false;
-    var rec=M.pickPhone(e.clientX,e.clientY); if(!rec) return false;
-    var s=M.screenOfPhone(rec);
-    if(!s||s.dist>48){ var t=document.getElementById('toast'); if(t){ t.textContent='Fly closer — the phone gets bigger as you close in'; t.classList.add('on'); setTimeout(function(){ t.classList.remove('on'); },2200); } return true; }
-    var d=list.filter(function(x){ return x.rec===rec; })[0];
-    if(d){ speakNear(d); openDev(d); }
-    return true;
+  var opened=false, queue=[], qT=null;
+  function enqueue(d){ if(d.built||d.queued) return; d.queued=true; queue.push(d); pump(); }
+  function pump(){ if(qT||!queue.length) return; var d=queue.shift(); assemble(d); qT=setTimeout(function(){ qT=null; pump(); },lite?160:380); }
+  function prepare(){
+    return Promise.all(list.map(function(d){
+      if(d.screens){ d.screens.forEach(function(s){ new Image().src=s[0]; }); return null; }
+      return loadImg(logoOf(d.card)).then(function(im){ d.screens=splashScreens(d,im); });
+    })).then(function(){ list.forEach(enqueue); });
   }
 
-  window.NPShow={
-    boot:boot,
-    around:around,
-    open:function(){ document.body.classList.add('np-phones'); around('core'); boot(); },
-    tap:tap
-  };
-  boot();
+  function frame(now){
+    requestAnimationFrame(frame);
+    var show=opened&&page.classList.contains('on')&&!page.classList.contains('out')&&document.body.classList.contains('inside');
+    if(row.classList.contains('on')!==show) row.classList.toggle('on',show);
+    if(!show&&!flying) return;
+    var o=orb(), g=geom(), ft=flying?Math.min(1,(now-flying.t0)/950):0, fe=ft*ft*(3-2*ft), n=list.length;
+    list.forEach(function(d){
+      d.kf+=((d.i-focus)-d.kf)*.12;
+      var k=d.kf, spread=Math.PI*1.15/Math.max(5,n-1), ang=k*spread;
+      var x=o.x+g.fx*g.S+Math.sin(ang)*g.rad*g.S;
+      var y=o.y+g.fy*g.S+(1-Math.cos(ang))*g.rad*g.S*.38;
+      var sc=g.S*Math.max(.4,1-Math.abs(k)*.16);
+      var op=Math.max(0,1-Math.abs(k)*.2);
+      if(flying){ if(d===flying.d){ x+=(innerWidth/2-x)*fe; y+=(innerHeight/2-y)*fe; sc*=1+fe*5; } else op*=1-fe; }
+      d.item.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+sc.toFixed(3)+')';
+      d.item.style.opacity=op.toFixed(3); d.item.style.zIndex=String(100-Math.round(Math.abs(k)*10));
+      d.item.style.visibility=op<.02?'hidden':'visible';
+      if(!d.drag){
+        if(reduce){ d.ry+=(d.home-d.ry)*.04; d.rx+=(d.rx0-d.rx)*.04; }
+        else { d.ry+=lite?.12:.2; d.rx=d.rx0+Math.sin(now/2600+d.ph)*6; }
+      } else { d.ry+=d.vy; d.vy*=.93; }
+      d.rig.style.transform='translateY('+d.off+'px) rotateX('+d.rx.toFixed(2)+'deg) rotateY('+d.ry.toFixed(2)+'deg)';
+    });
+    var fy=o.y+g.fy*g.S+186*g.S+(innerWidth<900?48:90);
+    nav.style.transform='translate('+(o.x+g.fx*g.S).toFixed(1)+'px,'+Math.min(innerHeight-56,fy).toFixed(1)+'px) translateX(-50%)';
+    nav.style.opacity=flying?0:1;
+  }
+  requestAnimationFrame(frame);
+
+  window.NPShow={open:function(){ if(opened) return; opened=true; document.body.classList.add('np-phones'); prepare(); }};
 })();
