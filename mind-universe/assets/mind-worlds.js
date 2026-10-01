@@ -18,12 +18,12 @@
   function FX(n){ try{ window.SAFX&&SAFX[n]&&SAFX[n](); }catch(e){} }
 
   var META={
-    gate:{name:'Worlds gate', hint:'Walk the ring. Each doorway is a different universe.', move:'walk'},
-    cube:{name:'Cube Keep', hint:'You are on a floor. Walk. Take the spiral down. This is not space-fly.', move:'walk'},
-    garden:{name:'The Gardens', hint:'Follow the path through garden after garden.', move:'walk'},
-    planets:{name:'Nearby worlds', hint:'An orbital path between the real planets of our sun.', move:'rail'},
-    science:{name:'Science hall', hint:'Ride the exhibit rail. Each stop is a living animation.', move:'rail'},
-    animals:{name:'The Living Path', hint:'Walk the dirt track. Animals stand and walk beside you — look as you pass.', move:'walk'}
+    gate:{name:'Worlds gate', hint:'Walk the plaza. Each ring of light is a different universe.', move:'walk'},
+    cube:{name:'Cube Keep', hint:'Walk the glass floors. Spiral down. This keep is not the mind.', move:'walk'},
+    garden:{name:'Night garden', hint:'Follow the lanterns. Garden after garden in the dark.', move:'walk'},
+    planets:{name:'Nearby worlds', hint:'Ride the orbital path between the real planets.', move:'rail'},
+    science:{name:'Science hall', hint:'Ride the rail. Each floating disc is a living exhibit.', move:'rail'},
+    animals:{name:'The Living Path', hint:'Walk the dirt track. Look as the animals pass.', move:'walk'}
   };
 
   function ptex(kind){
@@ -171,68 +171,99 @@
     sp.scale.set(text==='?'?6:9, text==='?'?2.1:3.2, 1);
     sp.position.set(x,y,z); group.add(sp); return sp;
   }
-
-  /* ── Worlds gate: five unique doorways on a ring ── */
-  function buildGate(){
-    scene.fog=new T.Fog(0x070814, 12, 90); scene.background=new T.Color(0x070814);
-    lights(0x334466, 0xffe9c8, [20,30,10]);
-    box(48,.6,48,0x1a1f3a, 0,0,0); pad(0,0,46,46,0);
-    cyl(1.2,1.2,.4, 0xffc44d, 0,.5,0);
-    var doors=[
-      {id:'mind', name:'Mind Universe', col:0x4f7dff, a:0, note:'Home. Moods, quotes, tracking, diary — neurons in deep space.'},
-      {id:'cube', name:'Cube Keep', col:0x2ee6ff, a:1.047, note:'A tower of cubes. You walk floors, top to bottom.'},
-      {id:'garden', name:'The Gardens', col:0x19f0b0, a:2.094, note:'Garden after garden along a living path.'},
-      {id:'animals', name:'The Living Path', col:0xe8a050, a:3.141, note:'Walk past real-scale animals. They breathe, graze and walk beside you.'},
-      {id:'planets', name:'Nearby worlds', col:0xffc44d, a:4.189, note:'The real planets of our sun, close enough to stand by.'},
-      {id:'science', name:'Science hall', col:0xff4fa8, a:5.236, note:'Living animations — atom, DNA, gravity, light.'}
-    ];
-    doors.forEach(function(d,i){
-      var r=16, x=Math.cos(d.a)*r, z=Math.sin(d.a)*r;
-      box(5,9,.8, d.col, x,4.5,z);
-      box(3.2,6.4,.2, 0x05060c, x+Math.cos(d.a)*.6, 3.6, z+Math.sin(d.a)*.6);
-      box(2,2,2, d.col, x, 10.2, z);
-      pad(x,z,8,8,0);
-      var hex='#'+('000000'+d.col.toString(16)).slice(-6);
-      var known=knownWorld(d.id);
-      doorLabel(known?d.name:'?', hex, x, 12.4, z);
-      stops.push({id:d.id, name:known?d.name:'?', trueName:d.name, pos:V(x*.7,.2,z*.7), look:V(x,3,z), plaque:known?d.note:'A sealed doorway. Walk in to discover this universe.', world:d.id==='mind'?'mind':d.id, col:hex});
-    });
-    for(var s=0;s<(lite?40:90);s++) sph(.06+Math.random()*.08, 0xffffff, rnd(-40,40), rnd(4,28), rnd(-40,40));
-    px=0; pz=8; py=eye; lookYaw=Math.PI; lookPitch=0; stopI=0;
+  function glowTex(inner, outer){
+    var c=document.createElement('canvas'); c.width=c.height=64; var g=c.getContext('2d');
+    var gr=g.createRadialGradient(32,32,0,32,32,32); gr.addColorStop(0,inner); gr.addColorStop(1,outer);
+    g.fillStyle=gr; g.fillRect(0,0,64,64); return new T.CanvasTexture(c);
+  }
+  function glow(hex, s, x,y,z, par){
+    var r=(hex>>16)&255, gc=(hex>>8)&255, b=hex&255;
+    var sp=new T.Sprite(new T.SpriteMaterial({map:glowTex('rgba('+r+','+gc+','+b+',1)','rgba('+r+','+gc+','+b+',0)'),transparent:true,depthWrite:false,blending:T.AdditiveBlending,fog:false}));
+    sp.scale.set(s,s,1); sp.position.set(x,y,z); (par||group).add(sp); return sp;
+  }
+  function portal(hex, x,y,z, yaw){
+    var g=new T.Group(); g.position.set(x,y,z); g.rotation.y=yaw||0; group.add(g);
+    g.add(new T.Mesh(new T.TorusGeometry(2.35,.11,8,lite?20:40), new T.MeshBasicMaterial({color:hex,transparent:true,opacity:.95,blending:T.AdditiveBlending})));
+    g.add(new T.Mesh(new T.CircleGeometry(2.2,lite?16:32), new T.MeshBasicMaterial({color:hex,transparent:true,opacity:.16,side:T.DoubleSide,blending:T.AdditiveBlending})));
+    glow(hex, 6.5, 0,0,.2, g);
+    var lam=new T.PointLight(hex, 1.1, 18); lam.position.set(0,0,1); g.add(lam);
+    return g;
+  }
+  function glassFloor(w,d,y, tint){
+    var m=new T.Mesh(new T.BoxGeometry(w,.08,d), new T.MeshPhongMaterial({color:tint||0x10182c,transparent:true,opacity:.55,shininess:90,specular:0x6688aa}));
+    m.position.set(0,y,0); group.add(m);
+    var edge=new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(w,.08,d)), new T.LineBasicMaterial({color:0x7ad7ff,transparent:true,opacity:.7}));
+    edge.position.copy(m.position); group.add(edge);
+    pad(0,0,w,d,y);
+    return m;
   }
 
-  /* ── Cube Keep: stacked floors, walk, spiral down ── */
-  function buildCube(){
-    scene.fog=new T.Fog(0x0a1020, 18, 120); scene.background=new T.Color(0x0a1020);
-    lights(0x445577, 0xaad4ff, [30,80,20]);
-    var FLOORS=[
-      {n:'Deep gate', note:'The bottom. A doorway toward the planets.', play:null, link:'planets'},
-      {n:'Training cubes', note:'Learn the walk. Hold to move. Drag to look. No flying here.', play:null},
-      {n:'Night farm door', note:'A greenhouse cube. Opens the garden world, or the farm game.', play:'garden', link:'garden'},
-      {n:'Action floor', note:'Star roll and neon cabinets live on this storey.', play:'cube'},
-      {n:'Arcade floor', note:'Original games on the keep. Sit at a cabinet.', play:'ball'},
-      {n:'Cozy floor', note:'Softer rooms. Heartbeat, jewels, a companion.', play:'pet'},
-      {n:'Puzzle floor', note:'Quiet cubes for thinking.', play:'merge'},
-      {n:'Observatory', note:'The roof of the keep. You start here and walk down.'}
+  /* ── Gate: a dark plaza of unique doorways, each a different universe ── */
+  function buildGate(){
+    scene.fog=new T.Fog(0x05070f, 16, 70); scene.background=new T.Color(0x05070f);
+    group.add(new T.HemisphereLight(0x2a3a66, 0x08060c, .55));
+    var floor=new T.Mesh(new T.CircleGeometry(20, lite?24:48), new T.MeshPhongMaterial({color:0x0b1220,shininess:110,specular:0x223355}));
+    floor.rotation.x=-Math.PI/2; group.add(floor); pad(0,0,38,38,0);
+    glow(0x4f7dff, 14, 0, .2, 0);
+    var doors=[
+      {id:'mind', name:'Mind Universe', col:0x4f7dff, a:0, note:'Home. Moods, quotes, diary — neurons in deep space. This is the way back.'},
+      {id:'cube', name:'Cube Keep', col:0x2ee6ff, a:1.047, note:'A tower of glass cubes. You walk the floors, top to bottom. No flying here.'},
+      {id:'garden', name:'Night garden', col:0x19f0b0, a:2.094, note:'Moonlit gardens in a row. Walk the lantern path from one to the next.'},
+      {id:'animals', name:'The Living Path', col:0xe8a050, a:3.141, note:'A dirt track at dusk. Animals stand and walk beside you as you pass.'},
+      {id:'planets', name:'Nearby worlds', col:0xffc44d, a:4.189, note:'The real planets of our sun. Ride the orbital path from one to the next.'},
+      {id:'science', name:'Science hall', col:0xff4fa8, a:5.236, note:'Living exhibits in the dark. Ride the rail. Each stop is an animation.'}
     ];
-    var FH=15, size=22;
+    doors.forEach(function(d){
+      var r=12.5, x=Math.cos(d.a)*r, z=Math.sin(d.a)*r;
+      portal(d.col, x, 2.6, z, -d.a+Math.PI);
+      pad(x,z,7,7,0);
+      var hex='#'+('000000'+d.col.toString(16)).slice(-6);
+      var known=knownWorld(d.id);
+      doorLabel(known?d.name:'?', hex, x, 5.6, z);
+      stops.push({id:d.id, name:known?d.name:'?', trueName:d.name, pos:V(x*.62,.2,z*.62), look:V(x,2.6,z), plaque:known?d.note:'A sealed doorway. Walk in to discover this universe.', world:d.id==='mind'?'mind':d.id, col:hex});
+    });
+    for(var s=0;s<(lite?50:140);s++) sph(.03+Math.random()*.07, 0xffffff, rnd(-55,55), rnd(3,36), rnd(-55,55));
+    px=0; pz=7; py=eye; lookYaw=Math.PI; lookPitch=0; stopI=0;
+  }
+
+  /* ── Cube Keep: a glass tower you walk, top to bottom ── */
+  function buildCube(){
+    scene.fog=new T.Fog(0x050814, 22, 140); scene.background=new T.Color(0x050814);
+    group.add(new T.HemisphereLight(0x3a5080, 0x080814, .45));
+    var key=new T.DirectionalLight(0xaad4ff, .55); key.position.set(20,90,10); group.add(key);
+    var FLOORS=[
+      {n:'Deep gate', note:'The bottom of the keep. A doorway toward the planets.', play:null, link:'planets', col:0x4f7dff},
+      {n:'Training cubes', note:'Learn the walk. Hold to move. Drag to look.', play:null, col:0xffffff},
+      {n:'Night farm door', note:'A greenhouse cube. Opens the night garden, or the farm game.', play:'garden', link:'garden', col:0x19f0b0},
+      {n:'Action floor', note:'Star roll and neon cabinets live on this storey.', play:'cube', col:0xff4fa8},
+      {n:'Arcade floor', note:'Original games on the keep. Sit at a cabinet.', play:'ball', col:0xff8a3d},
+      {n:'Cozy floor', note:'Softer rooms. Heartbeat, jewels, a companion.', play:'pet', col:0xa45cff},
+      {n:'Puzzle floor', note:'Quiet cubes for thinking.', play:'merge', col:0xffc44d},
+      {n:'Observatory', note:'The roof of the keep. You start here and walk down.', col:0x2ee6ff}
+    ];
+    var FH=14, size=20;
+    var well=new T.Mesh(new T.CylinderGeometry(1.1,1.1,FLOORS.length*FH+8,lite?8:16,1,true), new T.MeshBasicMaterial({color:0x2ee6ff,transparent:true,opacity:.12,side:T.DoubleSide,blending:T.AdditiveBlending}));
+    well.position.y=FLOORS.length*FH/2; group.add(well);
+    glow(0x2ee6ff, 18, 0, FLOORS.length*FH, 0);
     for(var f=0;f<FLOORS.length;f++){
-      var y=f*FH, tint=f%2?0x243056:0x1b2444;
-      box(size,.7,size, tint, 0,y,0); pad(0,0,size-1.5,size-1.5,y);
-      box(3,2.2,3, 0x0d1224, size/2-3, y+1.4, size/2-3);
-      box(2.4,3.5,2.4, [0x2ee6ff,0x19f0b0,0xffc44d,0xff4fa8,0xa45cff,0x4f7dff,0xff8a3d,0xffffff][f], -size/2+4, y+2.4, -size/2+4);
-      for(var k=0;k<4;k++) box(1.6+k%2,.9,1.6, 0x2a3558, rnd(-8,8), y+.8, rnd(-8,8));
-      var steps=lite?6:10;
+      var y=f*FH, col=FLOORS[f].col;
+      glassFloor(size, size, y, 0x10182c);
+      var lamp=new T.PointLight(col, .7, 22); lamp.position.set(0, y+4, 0); group.add(lamp);
+      glow(col, 5, 0, y+.2, 0);
+      var cube=new T.Mesh(new T.BoxGeometry(2.2,2.2,2.2), new T.MeshPhongMaterial({color:col,transparent:true,opacity:.35,shininess:80,emissive:col,emissiveIntensity:.25}));
+      cube.position.set(-size/2+4, y+1.6, -size/2+4); group.add(cube);
+      group.add(new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(2.2,2.2,2.2)), new T.LineBasicMaterial({color:col})));
+      group.children[group.children.length-1].position.copy(cube.position);
+      var steps=lite?7:11;
       for(var s=0;s<steps;s++){
-        var a=(s/steps)*Math.PI*2 + f*.4, rr=7.2, sy=y - (s+1)*(FH/steps) + FH;
-        if(sy<0) continue;
+        var a=(s/steps)*Math.PI*2 + f*.45, rr=6.8, sy=y - (s+1)*(FH/steps) + FH;
+        if(sy<0.2) continue;
         var sx=Math.cos(a)*rr, sz=Math.sin(a)*rr;
-        box(2.2,.45,2.2, 0x3dffd0, sx, sy, sz); pad(sx,sz,2.4,2.4,sy);
+        var step=new T.Mesh(new T.BoxGeometry(2,.18,2), new T.MeshPhongMaterial({color:0x1a3048,emissive:0x2ee6ff,emissiveIntensity:.2,shininess:60}));
+        step.position.set(sx, sy, sz); group.add(step); pad(sx,sz,2.2,2.2,sy);
       }
-      var look=V(0, y+eye, size*.32);
-      stops.push({id:'f'+f, name:'Floor '+(FLOORS.length-f)+' · '+FLOORS[f].n, pos:V(0,y, size*.28), look:V(0,y+1.4,0), plaque:FLOORS[f].note, play:FLOORS[f].play, world:FLOORS[f].link, y:y});
+      stops.push({id:'f'+f, name:'Floor '+(FLOORS.length-f)+' · '+FLOORS[f].n, pos:V(0,y, size*.28), look:V(0,y+1.6,0), plaque:FLOORS[f].note, play:FLOORS[f].play, world:FLOORS[f].link, y:y});
     }
-    box(3, FLOORS.length*FH+4, 3, 0x12182c, 0, FLOORS.length*FH/2, 0);
     stops.reverse();
     var top=FLOORS.length-1;
     px=0; pz=size*.28; py=top*FH+eye; lookYaw=Math.PI; lookPitch=-.12; stopI=0;
@@ -244,32 +275,48 @@
     sph(h*.55, leaf||0x2d8a4e, x, y+h+.2, z);
   }
   function flower(x,y,z,c){ sph(.18,c,x,y+.3,z); cyl(.04,.04,.4,0x2d6a3a,x,y+.15,z); }
+  function lantern(x,y,z){
+    cyl(.05,.05,1.6, 0x3a2a18, x, y+.8, z);
+    glow(0xffc44d, 3.2, x, y+1.7, z);
+    var lam=new T.PointLight(0xffc44d, .55, 10); lam.position.set(x,y+1.7,z); group.add(lam);
+  }
   function buildGarden(){
-    scene.fog=new T.Fog(0xcfe8c4, 20, 110); scene.background=new T.Color(0xb7d7a8);
-    lights(0xfff4d6, 0xffe7a8, [10,40,20]);
+    scene.fog=new T.Fog(0x0a1220, 18, 85); scene.background=new T.Color(0x070b14);
+    group.add(new T.HemisphereLight(0x1a2a48, 0x081008, .5));
+    var moon=sph(3.2, 0xf4f0e0, 18, 22, -40); moon.material=new T.MeshBasicMaterial({color:0xf7f1d8});
+    glow(0xfff3c4, 22, 18, 22, -40);
+    var moonL=new T.PointLight(0xdde8ff, .8, 120); moonL.position.set(18,22,-40); group.add(moonL);
     var GARDENS=[
-      {n:'Welcome meadow', note:'The first garden. Walk the pale path. More gardens wait ahead.', ground:0x7bb35a},
-      {n:'Herb knot', note:'Rosemary, mint, thyme in a knot. Smell is imagined. The path is real.', ground:0x6aa34e},
-      {n:'Night vegetable', note:'The night farm’s cousins, grown in rows. Open the farm game from here.', ground:0x4e8a3d, play:'garden'},
-      {n:'Orchard', note:'Fruit trees in two ranks. Walk between them.', ground:0x5b9144},
-      {n:'Water garden', note:'A still pool. Lilies. The path skirts the edge.', ground:0x4a7d6a},
-      {n:'Rose court', note:'A square of roses. Slow down.', ground:0x6b8f4a},
-      {n:'Wildflower ridge', note:'Colour without order. Bees would like it.', ground:0x7aa356},
-      {n:'Moon garden', note:'White blooms for night. A doorway toward the living animals at the end.', ground:0x5d7a62, link:'animals'}
+      {n:'Welcome meadow', note:'The first garden. Walk the lantern path. More gardens wait in the dark.', leaf:0x1e4a2c},
+      {n:'Herb knot', note:'Rosemary, mint, thyme in a knot. Smell is imagined. The path is real.', leaf:0x2a5a34},
+      {n:'Night vegetable', note:'Rows in the moonlight. Open the farm game from here.', leaf:0x245028, play:'garden'},
+      {n:'Orchard', note:'Fruit trees in two ranks. Walk between them.', leaf:0x1c3e24},
+      {n:'Water garden', note:'A still pool holding the moon. The path skirts the edge.', leaf:0x1a3a36, pool:1},
+      {n:'Rose court', note:'A square of dark roses. Slow down.', leaf:0x2a2428, rose:1},
+      {n:'Wildflower ridge', note:'Colour without order, under the night.', leaf:0x244028},
+      {n:'Moon garden', note:'White blooms only. A doorway toward the living animals at the end.', leaf:0xdde8d0, link:'animals'}
     ];
-    var pathZ=0;
     GARDENS.forEach(function(g,i){
-      var z=-i*38; pathZ=z;
-      box(34,.4,32, g.ground, 0,0,z); pad(0,z,32,30,0);
-      box(3.2,.12,32, 0xcbb896, 0,.28,z);
-      if(i===4){ var pool=new T.Mesh(new T.CircleGeometry(6, lite?12:24), new T.MeshLambertMaterial({color:0x3aa0c8})); pool.rotation.x=-Math.PI/2; pool.position.set(0,.35,z); group.add(pool); }
-      for(var t=0;t<(lite?4:8);t++) tree(rnd(-14,14),0,z+rnd(-12,12), rnd(2.4,4.2), i===7?0xdde8d0:0x2d8a4e);
-      for(var fl=0;fl<(lite?8:18);fl++) flower(rnd(-12,12),0,z+rnd(-10,10), [0xff4fa8,0xffc44d,0xffffff,0xff8a3d,0xa45cff][fl%5]);
-      if(i===2){ for(var r=0;r<6;r++) box(1.1,.35,8, 0x6b4423, -8+r*3.2, .4, z); }
-      stops.push({id:'g'+i, name:g.n, pos:V(0,.2,z+10), look:V(0,1.6,z-6), plaque:g.note, play:g.play, world:g.link});
+      var z=-i*40;
+      var ground=new T.Mesh(new T.CircleGeometry(15, lite?16:28), new T.MeshPhongMaterial({color:0x142016,shininess:8}));
+      ground.rotation.x=-Math.PI/2; ground.position.set(0,0,z); group.add(ground); pad(0,z,28,28,0);
+      var path=new T.Mesh(new T.BoxGeometry(2.2,.06,40), new T.MeshPhongMaterial({color:0x3a3428,shininess:20}));
+      path.position.set(0,.05,z); group.add(path);
+      lantern(-1.4,0,z+8); lantern(1.4,0,z-8);
+      if(g.pool){
+        var pool=new T.Mesh(new T.CircleGeometry(5.5, lite?16:28), new T.MeshPhongMaterial({color:0x1a4060,shininess:120,specular:0xaad4ff}));
+        pool.rotation.x=-Math.PI/2; pool.position.set(0,.08,z); group.add(pool);
+        glow(0x88c8ff, 8, 0, .2, z);
+      }
+      for(var t=0;t<(lite?5:10);t++) tree((t%2?1:-1)*(7+rnd(0,6)),0,z+rnd(-12,12), rnd(2.8,5.2), g.leaf);
+      var cols=g.rose?[0x7a1028,0x4a0818,0xffffff]:(i===7?[0xffffff,0xf4f0e0,0xdde8ff]:[0xff4fa8,0xffc44d,0xffffff,0x19f0b0]);
+      for(var fl=0;fl<(lite?10:22);fl++) flower(rnd(-11,11),0,z+rnd(-11,11), cols[fl%cols.length]);
+      if(i===2){ for(var r=0;r<5;r++) box(1,.28,7, 0x3a2814, -7+r*3.4, .22, z); }
+      glow(0x19f0b0, 2.4, 0, .3, z);
+      stops.push({id:'g'+i, name:g.n, pos:V(0,.2,z+12), look:V(0,1.8,z-8), plaque:g.note, play:g.play, world:g.link});
     });
-    box(3.2,.12, GARDENS.length*38+20, 0xcbb896, 0,.26, -GARDENS.length*19);
-    px=0; pz=12; py=eye; lookYaw=Math.PI; lookPitch=-.08; stopI=0;
+    for(var s=0;s<(lite?40:90);s++) sph(.03+Math.random()*.05, 0xffffff, rnd(-40,40), rnd(8,28), rnd(-340,20));
+    px=0; pz=14; py=eye; lookYaw=Math.PI; lookPitch=-.08; stopI=0;
   }
 
   /* ── Living Path: walk past animals at true scale ── */
@@ -293,9 +340,10 @@
     herd.push(a);
   }
   function buildAnimals(){
-    scene.fog=new T.Fog(0xc9d6b8, 22, 95); scene.background=new T.Color(0x9ec4ea);
-    group.add(new T.HemisphereLight(0xcfe8ff, 0x6b8f4a, .85));
-    var sun=new T.DirectionalLight(0xfff1d0, .9); sun.position.set(18,40,10); group.add(sun);
+    scene.fog=new T.Fog(0x6a7a58, 28, 110); scene.background=new T.Color(0x87a0c0);
+    group.add(new T.HemisphereLight(0xffe4c4, 0x4a6a32, .7));
+    var sun=new T.DirectionalLight(0xffd7a0, 1); sun.position.set(22,28,-8); group.add(sun);
+    glow(0xffc44d, 28, 40, 22, -30);
     var LEN=320;
     var ground=new T.Mesh(new T.PlaneGeometry(70, LEN), new T.MeshLambertMaterial({map:grassTex()}));
     ground.rotation.x=-Math.PI/2; ground.position.set(0,0,-LEN/2+20); group.add(ground);
@@ -344,9 +392,10 @@
     {id:'neptune', n:'Neptune', kind:'neptune', au:30, r:4.0, fact:'The farthest planet. Winds over 2,000 km/h. Discovered by maths before it was seen.'}
   ];
   function buildPlanets(){
-    scene.fog=new T.Fog(0x020208, 40, 420); scene.background=new T.Color(0x020208);
-    lights(0x223355, 0xfff1d6, [40,20,80]);
-    var sunL=new T.PointLight(0xfff1d6, 1.4, 500); sunL.position.set(0,0,0); group.add(sunL);
+    scene.fog=new T.Fog(0x020208, 50, 480); scene.background=new T.Color(0x020208);
+    lights(0x112244, 0xfff1d6, [40,20,80]);
+    var sunL=new T.PointLight(0xfff1d6, 1.8, 620); sunL.position.set(0,0,0); group.add(sunL);
+    glow(0xffb347, 48, 0, 0, 0);
     PLANET_DATA.forEach(function(p,i){
       var x=p.au===0?0: 28+Math.sqrt(p.au)*38;
       var mesh=sph(p.r, 0xffffff, x, 0, 0, ptex(p.kind));
@@ -354,13 +403,17 @@
         var ring=new T.Mesh(new T.RingGeometry(p.r*1.35, p.r*2.2, lite?24:48), new T.MeshBasicMaterial({color:0xe8d3a4, side:T.DoubleSide, transparent:true, opacity:.7}));
         ring.rotation.x=-1.15; mesh.add(ring);
       }
+      if(p.au>0){
+        var orb=new T.Mesh(new T.RingGeometry(x-.08, x+.08, lite?32:64), new T.MeshBasicMaterial({color:0x446688, transparent:true, opacity:.35, side:T.DoubleSide}));
+        orb.rotation.x=-Math.PI/2; group.add(orb);
+      }
       planets.push({d:p, m:mesh, x:x});
       var vx=x + p.r + 9, vz=p.r*1.6+6;
       stops.push({id:p.id, name:p.n, pos:V(vx, p.r*.4+3, vz), look:V(x,0,0), plaque:p.fact});
     });
     for(var s=0;s<(lite?80:220);s++){
       var u=Math.random()*2-1, th=Math.random()*Math.PI*2, rr=180+Math.random()*400, q=Math.sqrt(1-u*u);
-      sph(.15, 0xffffff, q*Math.cos(th)*rr, u*rr*.4, q*Math.sin(th)*rr);
+      sph(.12, 0xffffff, q*Math.cos(th)*rr, u*rr*.4, q*Math.sin(th)*rr);
     }
     stopI=3; var st=stops[stopI]; px=st.pos.x; py=st.pos.y; pz=st.pos.z;
     lookYaw=Math.atan2(-(st.look.x-px), -(st.look.z-pz)); lookPitch=-.15;
@@ -368,23 +421,25 @@
 
   /* ── Science hall: exhibit rail with living animations ── */
   function buildScience(){
-    scene.fog=new T.Fog(0x0c1024, 16, 90); scene.background=new T.Color(0x0c1024);
-    lights(0x556688, 0xffffff, [8,20,10]);
+    scene.fog=new T.Fog(0x060814, 18, 95); scene.background=new T.Color(0x060814);
+    group.add(new T.HemisphereLight(0x334466, 0x080814, .4));
     var HALL=[
-      {n:'The atom', note:'A nucleus, electrons in shells. Most of an atom is empty space.', kind:'atom'},
-      {n:'DNA', note:'A double helix. The code of living things, turning slowly.', kind:'dna'},
-      {n:'Light', note:'A wave and a particle. Colour is wavelength.', kind:'wave'},
-      {n:'Gravity', note:'Mass tells space how to curve. Moons fall around a world.', kind:'grav'},
-      {n:'The cell', note:'A living room. Membrane, nucleus, the quiet work of being alive.', kind:'cell'},
-      {n:'Pendulum', note:'Same time, every swing — if the length stays the same.', kind:'pend'},
-      {n:'Fusion', note:'How the Sun shines. Hydrogen into helium, light as leftover.', kind:'fusion'},
-      {n:'A neuron', note:'Back toward Mind. A cell that sparks. You have about 86 billion.', kind:'neuron', link:'gate'}
+      {n:'The atom', note:'A nucleus, electrons in shells. Most of an atom is empty space.', kind:'atom', col:0xff8a3d},
+      {n:'DNA', note:'A double helix. The code of living things, turning slowly.', kind:'dna', col:0x4f7dff},
+      {n:'Light', note:'A wave and a particle. Colour is wavelength.', kind:'wave', col:0xffc44d},
+      {n:'Gravity', note:'Mass tells space how to curve. Moons fall around a world.', kind:'grav', col:0xa45cff},
+      {n:'The cell', note:'A living room. Membrane, nucleus, the quiet work of being alive.', kind:'cell', col:0x19f0b0},
+      {n:'Pendulum', note:'Same time, every swing — if the length stays the same.', kind:'pend', col:0x2ee6ff},
+      {n:'Fusion', note:'How the Sun shines. Hydrogen into helium, light as leftover.', kind:'fusion', col:0xffb347},
+      {n:'A neuron', note:'A cell that sparks. This hall ends toward Mind.', kind:'neuron', col:0x4f7dff, link:'gate'}
     ];
-    box(16,.5, HALL.length*28+20, 0x1a2040, 0,0, -HALL.length*14); pad(0, -HALL.length*14, 14, HALL.length*28+16, 0);
     HALL.forEach(function(h,i){
-      var z=-i*28;
-      box(14,.2,10, 0x222a52, 0,.2,z);
-      var g=new T.Group(); g.position.set(0, 3.2, z-2); group.add(g); anims.push({kind:h.kind, g:g});
+      var z=-i*26;
+      var disc=new T.Mesh(new T.CircleGeometry(5.5, lite?16:28), new T.MeshPhongMaterial({color:0x10182c,shininess:80,specular:0x446688}));
+      disc.rotation.x=-Math.PI/2; disc.position.set(0,0,z); group.add(disc); pad(0,z,10,10,0);
+      glow(h.col, 8, 0, .15, z);
+      var lam=new T.PointLight(h.col, .85, 16); lam.position.set(0, 4, z); group.add(lam);
+      var g=new T.Group(); g.position.set(0, 3.2, z); group.add(g); anims.push({kind:h.kind, g:g});
       if(h.kind==='atom'){ sph(.45,0xff8a3d,0,0,0,null,g); for(var e=0;e<3;e++){ var el=sph(.12,0x2ee6ff,1.6,0,0,null,g); el.userData={shell:e}; } }
       if(h.kind==='dna'){ for(var k=0;k<12;k++){ var yk=k*.38-2.2, a=k*.7; sph(.14,0x4f7dff, Math.cos(a)*.7, yk, Math.sin(a)*.7,null,g); sph(.14,0xff4fa8, Math.cos(a+Math.PI)*.7, yk, Math.sin(a+Math.PI)*.7,null,g); } }
       if(h.kind==='wave'){ var pts=[]; for(var w=0;w<24;w++) pts.push(V(-3+w*.26, Math.sin(w*.5), 0)); var line=new T.Line(new T.BufferGeometry().setFromPoints(pts), new T.LineBasicMaterial({color:0xffc44d})); g.add(line); g.userData.wave=line; }
@@ -393,9 +448,11 @@
       if(h.kind==='pend'){ cyl(.04,.04,2.4,0xcfd6ff,0,-.4,0,g); var bob=sph(.35,0xffc44d,0,-1.7,0,null,g); g.userData.bob=bob; }
       if(h.kind==='fusion'){ sph(.8,0xffb347,0,0,0,null,g); sph(.35,0xff7a2d,.9,.2,0,null,g); sph(.35,0xff7a2d,-.8,-.1,0,null,g); }
       if(h.kind==='neuron'){ sph(.5,0x4f7dff,0,0,0,null,g); for(var d=0;d<6;d++){ var ang=d/6*Math.PI*2; cyl(.05,.02,1.6,0x7aa0ff, Math.cos(ang)*.8, Math.sin(ang)*.8, 0, g); } }
-      stops.push({id:'s'+i, name:h.n, pos:V(0, eye, z+7), look:V(0,3.2,z-2), plaque:h.note, world:h.link});
+      doorLabel(h.n, '#'+('000000'+h.col.toString(16)).slice(-6), 0, 6.2, z);
+      stops.push({id:'s'+i, name:h.n, pos:V(0, eye, z+6), look:V(0,3.2,z), plaque:h.note, world:h.link});
     });
-    stopI=0; px=0; pz=7; py=eye; lookYaw=Math.PI; lookPitch=.05;
+    for(var s=0;s<(lite?40:90);s++) sph(.04, 0xffffff, rnd(-30,30), rnd(2,24), rnd(-220,20));
+    stopI=0; px=0; pz=6; py=eye; lookYaw=Math.PI; lookPitch=.05;
   }
 
   function stepAnims(t){
@@ -410,6 +467,14 @@
       if(a.kind==='cell') a.g.scale.setScalar(1+Math.sin(t)*.06);
     });
     planets.forEach(function(p){ p.m.rotation.y+=0.003; });
+    herd.forEach(function(a){
+      if(!a.g) return;
+      var w=t*(a.gait||1.6)+(a.phase||0);
+      if(a.waddle){ a.g.rotation.z=Math.sin(w*2)*.08; return; }
+      if(a.graze && a.neck) a.neck.rotation.z=0.35+Math.sin(w)*.12;
+      if(a.walk && a.homeZ!=null) a.g.position.z=a.homeZ+Math.sin(w*.12)*1.4;
+      (a.legs||[]).forEach(function(L,i){ if(!L||!L.hip) return; var ph=w+i*1.1; L.hip.rotation.z=Math.sin(ph)*.4; if(L.knee) L.knee.rotation.z=Math.max(0,Math.sin(ph+1))*.35; });
+    });
   }
 
   function onPad(x,z){
@@ -472,7 +537,7 @@
     hud.querySelector('#whCard').innerHTML='<b>'+nm+'</b><p>'+(known?(st.plaque||''):'A sealed doorway. Walk in to discover this universe.')+'</p>'+(known&&st.play?'<button type="button" data-wplay="'+st.play+'">Play here</button>':'')+(st.world?'<button type="button" data-wworld="'+st.world+'">'+(st.world==='mind'?'Back to Mind':(known?'Enter this world':'Enter ?'))+'</button>':'');
     var map=document.getElementById('whMap');
     if(map){
-      var worlds=[{id:'gate',n:'Gate',ch:'G'},{id:'cube',n:'Cube Keep',ch:'C'},{id:'garden',n:'Gardens',ch:'N'},{id:'animals',n:'Living Path',ch:'A'},{id:'planets',n:'Planets',ch:'P'},{id:'science',n:'Science',ch:'S'}];
+      var worlds=[{id:'gate',n:'Gate',ch:'G'},{id:'cube',n:'Cube Keep',ch:'C'},{id:'garden',n:'Night garden',ch:'N'},{id:'animals',n:'Living Path',ch:'A'},{id:'planets',n:'Planets',ch:'P'},{id:'science',n:'Science',ch:'S'}];
       map.innerHTML=worlds.map(function(w){ var k=w.id==='gate'||knownWorld(w.id); return '<button type="button" data-ww="'+w.id+'" class="'+(w.id===cur?'here':'')+(k?'':' unk')+'" title="'+(k?w.n:'Unknown world')+'">'+(k?w.ch:'?')+'</button>'; }).join('');
     }
     hud.querySelectorAll('[data-ww]').forEach(function(b){ b.classList.toggle('here', b.dataset.ww===cur); });
@@ -496,7 +561,7 @@
     host.appendChild(renderer.domElement);
     scene=new T.Scene(); cam=new T.PerspectiveCamera(62, innerWidth/innerHeight, .12, 2000);
     clock=new T.Clock(); group=new T.Group(); scene.add(group);
-    pads=[]; stops=[]; anims=[]; planets=[]; ride=null; keys={}; walkOn=0;
+    pads=[]; stops=[]; anims=[]; planets=[]; herd=[]; ride=null; keys={}; walkOn=0;
     cur=id;
     if(id==='cube') buildCube();
     else if(id==='garden') buildGarden();
@@ -515,7 +580,7 @@
     running=false;
     removeEventListener('resize', onResize);
     if(renderer){ try{ renderer.dispose(); }catch(e){} if(renderer.domElement&&renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement); }
-    renderer=null; scene=null; cam=null; group=null; pads=[]; stops=[]; anims=[]; planets=[];
+    renderer=null; scene=null; cam=null; group=null; pads=[]; stops=[]; anims=[]; planets=[]; herd=[];
   }
 
   function loop(){
