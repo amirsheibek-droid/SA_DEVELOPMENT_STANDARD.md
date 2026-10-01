@@ -303,6 +303,20 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 .mw-note b{color:var(--ink);font-size:1.2rem;margin-bottom:8px}
 .mw-search{padding:14px;overflow:auto;position:absolute;inset:0}
 @media(max-width:899px){#mwin{width:100vw;height:calc(100vh - 150px);top:52%;border-radius:18px 18px 0 0}}
+
+/* Home: stats hovering beside the whole brain */
+.hstats{display:flex;flex-direction:column;gap:6px;max-width:420px;margin:18px auto 0;text-align:left}
+.hstat{display:grid;grid-template-columns:14px 1fr auto;grid-template-rows:auto 3px;column-gap:12px;row-gap:6px;align-items:center;padding:9px 6px;border-radius:12px;animation:float 7s ease-in-out infinite;transition:background .2s}
+.hstat:hover{background:var(--soft)}
+.hstat i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.hl{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.hv{font-weight:700;font-size:.92rem}
+.hb{grid-column:2/4;height:3px;border-radius:3px;background:var(--line);overflow:hidden}
+.hb b{display:block;height:100%;background:var(--c);box-shadow:0 0 8px var(--c);border-radius:3px}
+.hmore{max-width:520px;margin:16px auto 0;text-align:center}
+.hmore summary{cursor:pointer;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:8px;list-style:none}
+.hmore summary::-webkit-details-marker{display:none}
+.hmore[open] summary{color:var(--gold)}
 @media(max-width:899px){
   #stage{left:0;right:0;top:auto;bottom:86px;transform:none;max-height:58vh;padding:44px 20px 20px;
     background:linear-gradient(180deg,transparent 0,var(--glow) 60px,var(--glow) 100%);-webkit-mask-image:none;mask-image:none}
@@ -380,7 +394,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 /* ── the map of the mind ── */
 (function(){
   var D=[
-    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:175, scale:1.4, shift:.5},
+    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:330, scale:1.4, shift:.42},
     {id:'mood',    name:'Mood',         col:'#ff4fa8', pos:[-40,10,-30],   yaw:.5,   dist:30, scale:1.15},
     {id:'progress',name:'Progress',     col:'#2ee6ff', pos:[42,14,-34],    yaw:-.5,  dist:34, scale:1.15},
     {id:'diary',   name:'Diary',        col:'#ffc44d', pos:[-32,-24,-62],  yaw:.35,  dist:30},
@@ -481,7 +495,7 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="assets/mind-space.js?v=3"></script>
+<script src="assets/mind-space.js?v=4"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -728,18 +742,31 @@ canvas.padlike{width:100%;height:320px;border-radius:24px;display:block;touch-ac
 
   /* ── pages ── */
   var PAGES={
-    me:function(){ var p=S.profile, lastMood=S.moods[0], left=S.todos.filter(function(t){ return !t.done; }).length;
-      return eb('Home','#ffffff')+(p.photo?'<img src="'+p.photo+'" alt="" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block;box-shadow:0 0 0 2px #fff,0 0 30px -4px var(--purple)">':'')+
-        '<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2>'+
-        '<p class="lead">'+esc(p.line||'Every light around you is part of you. Fly to one to begin.')+'</p>'+
-        '<div class="stats"><div><b>'+(lastMood&&lastMood.day===today()?esc(lastMood.m):'—')+'</b><span>Mood today</span></div><div><b>'+left+'</b><span>To-dos left</span></div><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+mysteries().n+'/'+mysteries().t+'</b><span>Mysteries found</span></div></div>'+
-        '<p class="small">Tap empty space anywhere to float back out here. Drag to look around. Solid golden lines are paths you\'ve travelled. Faint dashed lines are paths you haven\'t explored yet.</p><div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button><button class="link" data-go="plan">Today\'s plan</button></div>'+
-        '<h3>Today\'s quests</h3><p class="small">Complete a quest at each neuron to earn Mind coins. Finding a mystery is worth 2; finishing every quest in a day earns a bonus of 5.</p><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return '<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button><span class="meta">'+(byId[k]?byId[k].name:'')+(dn?' \u00B7 done':'')+'</span></li>'; }).join('')+'</ul>'+
-        '<h3>&#9673; '+S.coins+' Mind coins</h3><p class="small"><b>Mind Vision</b> costs 50 coins: for one minute every hidden light in your universe reveals itself, wherever you are, and a golden ring guides you to the nearest one.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision \u00B7 50':'Mind Vision \u00B7 '+(50-S.coins)+' coins to go')+'</button></div>'+
-        '<h3>Your profile</h3><input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
-        '<div class="row"><button class="ghost" data-act="photo">&#9673; Add a photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
-        '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
-        '<p class="care">If you ever feel unsafe, please reach out &mdash; in the UK, <b>Samaritans are free on 116 123</b>, any time.</p>'; },
+    me:function(){ var p=S.profile, lastMood=S.moods[0], todayMood=lastMood&&lastMood.day===today()?lastMood.m:null, left=S.todos.filter(function(x){ return !x.done; }).length,
+        gTot=0,gDn=0; S.goals.forEach(function(g){ gTot+=g.steps.length; gDn+=g.steps.filter(function(s){ return s.done; }).length; });
+      var lg=S.log[today()]||{}, habHit=S.habits.filter(function(x){ return (lg['h_'+x.id]||0)>=x.t; }).length, qd=Object.keys(S.quests[today()]||{}).length, qt=Object.keys(QUESTS).length, my=mysteries();
+      var rows=[
+        ['mood','Mood',todayMood||'Not yet today',todayMood?moodOf(todayMood).c:'#ff4fa8',todayMood?100:0],
+        ['trackers','Trackers',habHit+' / '+S.habits.length+' hit today','#3dffd0',S.habits.length?habHit/S.habits.length*100:0],
+        ['goals','Goals',gTot?Math.round(gDn/gTot*100)+'% of steps done':'No goals yet','#a45cff',gTot?gDn/gTot*100:0],
+        ['todo','To-do',left+' left','#19f0b0',S.todos.length?(S.todos.length-left)/S.todos.length*100:0],
+        ['progress','Streak',streak()+' day'+(streak()===1?'':'s'),'#2ee6ff',Math.min(100,streak()/7*100)],
+        ['diary','Diary',S.notes.length+' entries','#ffc44d',Math.min(100,S.notes.length*10)],
+        ['me','Quests',qd+' / '+qt+' today','#ffc44d',qd/qt*100],
+        ['me','Mind coins','◉ '+S.coins,'#ffc44d',Math.min(100,S.coins/50*100)],
+        ['me','Mysteries',my.n+' / '+my.t+' found','#cfd6ff',my.t?my.n/my.t*100:0]
+      ];
+      return eb('Home','#ffffff')+'<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2><p>Your whole mind, from the outside. Tap any light to travel in.</p>'+
+        '<div class="hstats">'+rows.map(function(r,i){ return '<button class="hstat" '+(r[0]!=='me'?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
+        '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button></div>'+
+        '<details class="hmore"><summary>Today’s quests &middot; '+qd+'/'+qt+'</summary><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return '<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button></li>'; }).join('')+'</ul>'+
+          '<p class="small"><b>Mind Vision</b> (50 coins): every hidden light reveals itself for a minute.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision · 50':(50-S.coins)+' coins to go')+'</button></div></details>'+
+        '<details class="hmore"><summary>Profile &amp; settings</summary>'+(p.photo?'<img src="'+p.photo+'" alt="" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block">':'')+
+          '<input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
+          '<div class="row"><button class="ghost" data-act="photo">&#9673; Photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
+          '<p class="small">Tap empty space to float back out here. Drag to look around. Golden lines are paths you’ve travelled; faint dashed lines are unexplored.</p>'+
+          '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
+          '<p class="care">If you ever feel unsafe, please reach out &mdash; in the UK, <b>Samaritans are free on 116 123</b>, any time.</p></details>'; },
     mood:function(){ var h=eb('Mood','#ff4fa8')+'<h2>How are you feeling right now?</h2><p>Tap the light that matches you. Add a few words if you like.</p><div class="orbs">'+
         MOODS.map(function(m){ return '<button class="orb" data-mood="'+m.n+'" style="--oc:'+m.c+'"><i></i><span>'+m.n+'</span></button>'; }).join('')+'</div>'+
         '<input class="field" id="mNote" placeholder="What\'s behind this feeling? (optional)" maxlength="160"><div class="row"><button class="btn" data-act="logMood">Save mood</button></div>'+

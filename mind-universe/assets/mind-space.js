@@ -235,6 +235,12 @@
   var cur=DESTS[0]?DESTS[0].id:null, travel=null, drift=0, orbY=0, orbP=0, orbYt=0, orbPt=0;
   var enterCb=null, enterT=0, enterFrom=null, enterSwap=false;
 
+
+  /* inside, the brain's outline wraps the whole mind: zoom out at Home to see its shape */
+  function brainShell(){ brain.visible=true; brain.position.set(0,-6,-95); brain.scale.setScalar(13); brain.rotation.set(-.05,Math.PI/2,0);
+    bpts.material.size=small?3.2:2.8; bpts.material.opacity=.42;
+    brain.children.forEach(function(c){ if(c.type==='LineSegments'&&c!==bpts) c.material.opacity=.07; if(c.type==='Points'&&c!==bpts) c.material.size=small?4.5:4; if(c.type==='Sprite') c.visible=false; });
+    scene.fog.far=520; }
   function enter(cb){
     if(mode!=='outside'){ cb&&cb(); return; }
     mode='entering'; enterT=performance.now(); enterCb=cb; speed=260; shake=1.2; bpul.burst(80);
@@ -322,7 +328,7 @@
       var el=performance.now()-enterT;
       if(el<1300){ var kk=el/1300, e=kk*kk*kk; brain.position.lerpVectors(enterFrom.p,tmpV.set(0,0,45),e); brain.rotation.y+=dt*.6; camPos.set(0,0,0); camLook.set(0,0,-60); }
       else {
-        if(!enterSwap){ enterSwap=true; brain.visible=false; mind.visible=true; scene.fog.near=60; scene.fog.far=330;
+        if(!enterSwap){ enterSwap=true; mind.visible=true; scene.fog.near=60; scene.fog.far=330; brainShell();
           cubes.forEach(function(c){ c.on=false; c.g.visible=false; }); frags.forEach(function(f){ f.on=false; f.g.visible=false; });
           var cb=enterCb; enterCb=null; cb&&cb(); }
         var k1=Math.min(1,(el-1300)/2600), e1=ease(k1), P0=V(0,0,0), L0=V(0,0,0); pose(cur,P0,L0);
@@ -438,7 +444,7 @@
     freeThrust:function(v){ if(flight) flight.thrust=v; }, freeTurn:function(v){ if(flight) flight.turn=v; }, freeTilt:function(v){ if(flight) flight.tilt=v; },
     freeKick:function(v){ if(flight) flight.vel=Math.max(-25,Math.min(flight.max*1.2,flight.vel+v)); }};
   if(reduce){
-    window.HMind.enter=function(cb){ mode='inside'; brain.visible=false; mind.visible=true; scene.fog.near=60; scene.fog.far=330; var P=V(0,0,0),L=V(0,0,0); pose(cur,P,L); camPos.copy(P); camLook.copy(L); cb&&cb(); };
+    window.HMind.enter=function(cb){ mode='inside'; mind.visible=true; brainShell(); scene.fog.near=60; scene.fog.far=330; var P=V(0,0,0),L=V(0,0,0); pose(cur,P,L); camPos.copy(P); camLook.copy(L); cb&&cb(); };
   }
   loop();
 })();
