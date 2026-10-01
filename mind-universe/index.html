@@ -501,7 +501,7 @@ body.voyage #dock{opacity:.25}
 /* ── the map of the mind ── */
 (function(){
   var D=[
-    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:300, scale:1.4, shift:.42},
+    {id:'me',      name:'Home',          col:'#ffffff', pos:[0,0,0],        yaw:0,    dist:250, scale:1.4, shift:.42},
     {id:'mood',    name:'Mood',         col:'#ff4fa8', pos:[-40,10,-30],   yaw:.5,   dist:30, scale:1.15},
     {id:'progress',name:'Progress',     col:'#2ee6ff', pos:[42,14,-34],    yaw:-.5,  dist:34, scale:1.15},
     {id:'diary',   name:'Diary',        col:'#ffc44d', pos:[-32,-24,-62],  yaw:.35,  dist:30},
@@ -601,6 +601,15 @@ body.voyage #dock{opacity:.25}
    {t:'Celebrate others',b:'Cheering someone else’s win makes room for your own.'}].forEach(function(x,i){ x.id='l'+(30+i); H_LIGHT.push(x); addMystery({id:x.id,name:x.t,col:['#19f0b0','#2ee6ff','#ffc44d','#ff4fa8'][i%4],kind:'light'}); });
 
   H_DROPS.forEach(function(x){ if(new Date()<new Date(x.from)) return; H_LIGHT.push(x); addMystery({id:x.id,name:x.t,col:'#ffc44d',kind:'light'}); });
+  /* keep the core neurons close around Home, in two easy rings, so nobody feels lost */
+  (function(){ var inner=['mood','diary','todo','goals','plan','trackers','progress','gallery','studio'], outer=['rooms','calendar','ramadan','stories','listen','portals','draw','ai','connect'];
+    function place(ids,r,y0,tilt){ ids.forEach(function(id,i){ var d=D.filter(function(x){ return x.id===id; })[0]; if(!d) return; var a=i/ids.length*Math.PI*2+tilt;
+      d.pos=[Math.cos(a)*r, y0+Math.sin(a*2)*6, -20+Math.sin(a)*r*.75]; d.yaw=Math.atan2(Math.cos(a),Math.sin(a))*0+(-Math.cos(a)*.6); }); }
+    place(inner,46,4,.2); place(outer,78,-6,.55);
+    // rooms gather around the Rooms neuron wherever it now sits
+    var hub=D.filter(function(x){ return x.id==='rooms'; })[0], rooms=D.filter(function(x){ return x.kind==='room'; });
+    rooms.forEach(function(r,i){ var a=i/rooms.length*Math.PI*2, rad=14+(i%2)*5; r.pos=[hub.pos[0]+Math.cos(a)*rad, hub.pos[1]+Math.sin(a)*rad*.6, hub.pos[2]+Math.sin(a)*rad*.8]; });
+  })();
   window.H_DESTS=D; window.H_LINKS=L;
 })();
 </script>
