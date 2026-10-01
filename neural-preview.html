@@ -328,6 +328,79 @@ body.flying #flyui{opacity:1}
 #flyChip{display:inline-flex}
 body.flying #flyChip{display:none}
 
+
+/* ══════════ PHONES: a mind built for thumbs ══════════ */
+#dock{display:none}
+@media(max-width:899px){
+  /* words rise up in a glowing membrane sheet instead of floating over the scene */
+  #stage,#stage.wide{left:0;right:0;top:auto;bottom:0;max-height:72vh;height:auto;transform:translateY(105%);transition:transform .55s cubic-bezier(.2,.8,.2,1);
+    padding:30px 22px calc(26px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(250,252,255,.94),rgba(241,246,252,.97));
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:28px 28px 0 0;
+    box-shadow:0 -1px 0 rgba(31,107,255,.35),0 -18px 50px -20px rgba(31,107,255,.45),0 -2px 30px -10px rgba(18,217,138,.35);-webkit-mask-image:none;mask-image:none}
+  #stage.live{transform:none}
+  #stage.drag{transition:none}
+  #stage::before{content:"";position:sticky;top:-18px;display:block;width:44px;height:5px;border-radius:5px;margin:-16px auto 14px;background:linear-gradient(90deg,var(--blue),var(--green));opacity:.6}
+  #stage.wide{max-height:84vh}
+  #haze,#haze.wide{display:none}
+  #wire{display:none}
+  .pg{text-shadow:none}
+  .pg h1,.pg h2{font-size:1.75rem;margin:10px 0 10px}
+  .core-pg h1{font-size:2.05rem}
+  .pg p{font-size:.98rem}
+  .split{grid-template-columns:1fr;gap:0}
+  .drift{right:16px;left:auto!important;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1px rgba(31,107,255,.3)}
+  .ask{font-size:1.45rem}
+  .opt{padding:12px 16px 12px 13px;font-size:.92rem}
+  .send{padding:15px 26px}
+  .gift{font-size:4.6rem}
+
+  /* the first choice: stacked for thumbs */
+  #choice{flex-direction:column;align-items:center;gap:26px;bottom:calc(120px + env(safe-area-inset-bottom))}
+  .ch b{font-size:1.5rem}
+  .ch span{font-size:.86rem}
+
+  /* neuron dock: every neuron you can reach, as a row of lights under your thumb */
+  #dock{display:block;position:fixed;z-index:21;left:0;right:0;bottom:0;padding:8px 0 calc(12px + env(safe-area-inset-bottom));opacity:0;pointer-events:none;transition:opacity .5s, transform .5s;
+    background:linear-gradient(180deg,rgba(238,242,248,0),rgba(238,242,248,.92) 40%)}
+  body.inside #dock{opacity:1;pointer-events:auto}
+  body.sheet #dock{opacity:0;pointer-events:none;transform:translateY(30px)}
+  .dock-top{display:flex;justify-content:space-between;align-items:center;padding:0 18px 6px;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+  .dock-top b{color:var(--blue)}
+  .dock-row{display:flex;gap:6px;overflow-x:auto;padding:4px 14px 2px;scrollbar-width:none;scroll-snap-type:x proximity}
+  .dock-row::-webkit-scrollbar{display:none}
+  .dk{flex:0 0 auto;width:66px;display:flex;flex-direction:column;align-items:center;gap:6px;scroll-snap-align:start}
+  .dk i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-weight:700;font-size:.9rem;color:var(--mute);
+    background:radial-gradient(circle at 50% 40%,#fff,#e8eefb);box-shadow:0 0 0 1.5px rgba(31,107,255,.35),0 0 16px -4px rgba(31,107,255,.5)}
+  .dk.g i{box-shadow:0 0 0 1.5px rgba(18,217,138,.5),0 0 16px -4px rgba(18,217,138,.6)}
+  .dk.found i::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px 3px rgba(31,107,255,.55)}
+  .dk.found.g i::before{background:var(--green);box-shadow:0 0 10px 3px rgba(18,217,138,.6)}
+  .dk.here i{transform:scale(1.12);box-shadow:0 0 0 2px var(--blue),0 0 22px 2px rgba(31,107,255,.6)}
+  .dk span{font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-align:center;line-height:1.2;max-width:66px}
+  .dk:not(.found) span{color:var(--mute2)}
+  .dk.fly i{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;font-size:1.1rem}
+
+  /* tidy HUD */
+  .hud-found,.hud-hint{display:none}
+  #sfxBtn{font-size:0;padding:8px 11px}
+  #sfxBtn::before{content:"\266B";font-size:.85rem}
+  #flyChip{display:none!important}
+
+  /* free flight on phones: touch & hold anywhere to fly, drag to steer */
+  .thrust{display:none}
+  .flyhint{bottom:auto;top:78px;font-size:.6rem}
+  body.flying.touching .cross{box-shadow:inset 0 0 0 2px var(--green),0 0 30px -6px var(--green)}
+
+  /* labels: bigger, easier to tap */
+  .nl{padding:16px 14px 16px 0}
+  .nl span{font-size:.7rem}
+  .nl i{width:14px;height:14px;margin-left:-7px}
+
+  .toast-m{bottom:150px}
+  #toast{bottom:calc(150px + env(safe-area-inset-bottom))}
+  #readout{bottom:calc(130px + env(safe-area-inset-bottom))}
+  .e-count{font-size:3rem}
+}
+
 /* no JavaScript or no WebGL: show everything as a plain page */
 .nojs .pg{display:block;position:static}
 @media (prefers-reduced-motion: reduce){.pg > *,.pg.out > *{animation-duration:.01s}}
@@ -369,10 +442,14 @@ body.flying #flyChip{display:none}
 <div id="flyui" aria-hidden="true">
   <div class="cross"></div>
   <div class="flynear" id="flyNear"></div>
-  <div class="flyhint">Drag to steer &middot; hold to fly &middot; W A S D or arrows &middot; fly into a light to open it</div>
+  <div class="flyhint" id="flyHint">Drag to steer &middot; hold to fly &middot; W A S D or arrows &middot; fly into a light to open it</div>
   <button class="thrust" id="thrust" type="button" aria-label="Hold to fly forward">HOLD<br>TO FLY</button>
 </div>
 <div id="readout"></div>
+<nav id="dock" aria-label="Neurons">
+  <div class="dock-top"><span>Neurons</span><span><b id="dockN">1</b> / <span id="dockT">10</span> found</span></div>
+  <div class="dock-row" id="dockRow"></div>
+</nav>
 <div id="electron" aria-hidden="true">
   <div class="e-rain l" id="rainL"></div><div class="e-rain r" id="rainR"></div>
   <div class="atom"><svg viewBox="0 0 250 250">
@@ -382,7 +459,7 @@ body.flying #flyChip{display:none}
     <circle class="nuc" cx="125" cy="125" r="16"/>
   </svg></div>
   <div class="e-count"><span id="eNum">000</span><small>%</small></div>
-  <div class="e-label">Synaptic link &middot; unlocking the vault</div>
+  <div class="e-label" id="eLabel">Synaptic link &middot; unlocking the vault</div>
   <div class="e-log" id="eLog"></div>
 </div>
 
@@ -575,7 +652,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   ['faq','build'],['process','build'],['about','faq'],['referral','portfolio'],['process','portfolio'],['about','secret'],['build','guild'],['faq','guild'],['services','guild']];
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/assets/mind-bg.js?v=2"></script>
+<script src="/assets/mind-bg.js?v=4"></script>
 <script>
 /* ── Calm neuron-signal sound effects: soft synapse pings on taps, a travelling signal on page changes ── */
 (function(){
@@ -646,7 +723,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   function paintFound(){ var n=Object.keys(found).length; document.getElementById('foundN').textContent=n; document.getElementById('foundT').textContent=total;
     document.getElementById('foundBar').style.width=(n/total*100)+'%'; }
   function discover(id){ if(found[id]) return false; found[id]=1; ss('saFound',JSON.stringify(found)); paintFound();
-    labels[id] && labels[id].classList.add('found');
+    labels[id] && labels[id].classList.add('found'); setTimeout(function(){ paintDock&&paintDock(); },0);
     var n=Object.keys(found).length; toast(n===total?'Whole mind mapped — every neuron found':'Neuron discovered: '+byId[id].name); return true; }
   var toastT; function toast(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(function(){ el.classList.remove('on'); },2600); }
 
@@ -684,7 +761,7 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
     var s=M.restScreen(id)||{x:innerWidth*.3,y:innerHeight*.4};
     [].forEach.call(pg.children,function(el,i){ var r=el.getBoundingClientRect(); var dx=s.x-(r.left+Math.min(r.width,400)/2), dy=s.y-(r.top+r.height/2);
       el.style.setProperty('--dx',(dx*.85).toFixed(0)+'px'); el.style.setProperty('--dy',(dy*.85).toFixed(0)+'px'); el.style.setProperty('--d',(i*85)+'ms'); });
-    drift.classList.add('on'); placeDrift();
+    drift.classList.add('on'); placeDrift(); setTimeout(placeDrift,620);
     var sp=SPECIAL[id]; if(sp) setTimeout(function(){ sp(pg); },250);
     pg.querySelectorAll('.decode').forEach(decode);
   }
@@ -702,12 +779,12 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   function travelTo(id,opts){
     if(!byId[id]||busy) return; opts=opts||{};
     if(id===cur && shown===id) return;
-    busy=true; var from=cur; cur=id; endFly(); hideChoice();
+    busy=true; var from=cur; cur=id; endFly(); hideChoice(); try{ paintDock(); }catch(e){}
     history.replaceState(null,'',byId[id].secret?location.pathname:'#'+id);
     retract(function(){
       FX('warp');
       var dur=M.go(id,arrive)||0;
-      if(id==='portfolio' && dur>600) electronScreen(dur); else if(dur>600) readoutRun(id,dur);
+      if(dur>600) electronScreen(dur,id);
     });
     function arrive(){
       busy=false; electron.classList.remove('on'); readout.classList.remove('on');
@@ -721,9 +798,13 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   function readoutRun(id,dur){ var t0=performance.now(), name=found[id]?byId[id].name:'unknown neuron'; readout.classList.add('on');
     (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur); readout.textContent='◉ routing signal → '+name+' · '+String(Math.round(k*100)).padStart(3,'0')+'%';
       if(k<1 && readout.classList.contains('on')) requestAnimationFrame(tick); })(); }
-  function electronScreen(dur){
+  function electronScreen(dur,id){
     var num=document.getElementById('eNum'), log=document.getElementById('eLog'), rl=document.getElementById('rainL'), rr=document.getElementById('rainR');
-    var LOG=['routing signal through axon 07','crossing the corpus callosum','charging 6 memory engrams','decrypting the vault','synapse aligned — opening'];
+    var name=found[id]?byId[id].name:'an unknown neuron', vault=id==='portfolio';
+    document.getElementById('eLabel').textContent='Synaptic link \u00B7 '+(vault?'unlocking the vault':'travelling to '+name);
+    var ax=String(2+Math.floor(Math.random()*40)).padStart(2,'0');
+    var LOG=vault?['routing signal through axon '+ax,'crossing the corpus callosum','charging 6 memory engrams','decrypting the vault','synapse aligned \u2014 opening']
+      :['firing along axon '+ax,'boosting the signal','crossing '+(2+Math.floor(Math.random()*6))+' synapses','locking onto '+name,'arrived \u2014 opening'];
     electron.classList.add('on'); var t0=performance.now(), last=-1;
     function rain(){ var s=''; for(var i=0;i<46;i++){ for(var j=0;j<10;j++) s+=Math.random()<.5?'0':'1'; s+='\n'; } return s; }
     (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur), e=1-Math.pow(1-k,2.2);
@@ -942,6 +1023,34 @@ window.SA_LINKS=[['core','services'],['core','referral'],['core','about'],['core
   // what's ahead
   setInterval(function(){ if(!M.isFree()) return; var n=M.nearest(); if(!n.id) return; var d=byId[n.id];
     flyNear.textContent=(d.secret&&!found[n.id])?(n.dist<90?'\u00B7 faint signal nearby \u00B7':''):'nearest \u00B7 '+(found[n.id]?d.name:(d.hint||d.name))+' \u00B7 '+Math.round(n.dist)+'m'; },200);
+
+
+  /* ══ PHONES ══ */
+  var mob=matchMedia('(max-width: 899px)');
+  function isMob(){ return mob.matches; }
+  var dockRow=document.getElementById('dockRow');
+  function paintDock(){
+    if(!dockRow) return;
+    var h='<button class="dk fly" type="button" data-fly><i>&#10022;</i><span>Fly</span></button>';
+    DESTS.forEach(function(d){ if(d.secret && !found[d.id]) return;
+      var f=!!found[d.id]; h+='<button class="dk'+(d.c==='g'?' g':'')+(f?' found':'')+(d.id===cur?' here':'')+'" type="button" data-go="'+d.id+'"><i>'+(f?'':'?')+'</i><span>'+(f?d.name.replace(/^The /,''):'unknown')+'</span></button>'; });
+    dockRow.innerHTML=h;
+    document.getElementById('dockN').textContent=Object.keys(found).length; document.getElementById('dockT').textContent=total;
+  }
+  paintDock();
+  setInterval(function(){ var s=stage.classList.contains('live'); document.body.classList.toggle('sheet',s && isMob()); },150);
+  // swipe the sheet down to put the words away
+  (function(){ var y0=null, dy=0;
+    stage.addEventListener('touchstart',function(e){ if(!isMob()||stage.scrollTop>2) { y0=null; return; } y0=e.touches[0].clientY; dy=0; },{passive:true});
+    stage.addEventListener('touchmove',function(e){ if(y0===null) return; dy=e.touches[0].clientY-y0; if(dy>0){ stage.classList.add('drag'); stage.style.transform='translateY('+dy+'px)'; } },{passive:true});
+    stage.addEventListener('touchend',function(){ if(y0===null) return; stage.classList.remove('drag'); stage.style.transform='';
+      if(dy>90){ FX('zoop',.5); retract(); history.replaceState(null,'',location.pathname); } y0=null; dy=0; });
+  })();
+  // touch & hold anywhere to fly; drag to steer
+  addEventListener('pointerdown',function(e){ if(!isMob()||!M.isFree()||e.target.closest('button,a,input,textarea,.nl,#dock')) return; M.freeThrust(1); document.body.classList.add('touching'); });
+  ['pointerup','pointercancel'].forEach(function(n){ addEventListener(n,function(){ if(isMob()&&M.isFree()){ M.freeThrust(0); document.body.classList.remove('touching'); } }); });
+  function hintText(){ var el=document.getElementById('flyHint'); if(el) el.innerHTML=isMob()?'Touch &amp; hold to fly &middot; drag to steer &middot; fly into a light':'Drag to steer &middot; hold to fly &middot; W A S D or arrows &middot; fly into a light to open it'; }
+  hintText(); if(mob.addEventListener) mob.addEventListener('change',hintText);
 
   /* the gate */
   var btx=document.getElementById('btx');

@@ -217,7 +217,7 @@
   function go(id,cb){
     if(!D[id]){ cb&&cb(); return; }
     if(mode!=='inside'){ cur=id; cb&&cb(); return; }
-    var wasFree=!!free; free=null;
+    var wasFree=!!flight; flight=null;
     if(id===cur && !travel && !wasFree){ cb&&cb(); return; }
     var from=cur; cur=id;
     var P1=V(0,0,0), L1=V(0,0,0); pose(id,P1,L1);
@@ -226,23 +226,23 @@
     var lift=V(0,dist*.12,0);
     var curve=new T.CubicBezierCurve3(camPos.clone(), camPos.clone().addScaledVector(dirv,dist*.3).add(side).add(lift), P1.clone().addScaledVector(dirv,-dist*.3).add(side).add(lift), P1.clone());
     var A=axonBetween(from,id); if(A) A.boost=2.5;
-    var dur=reduce?10:Math.max(1700,Math.min(5200,1100+dist*16));
+    var dur=reduce?10:Math.max(2600,Math.min(5600,1500+dist*16));
     travel={t0:performance.now(),dur:dur,curve:curve,fromLook:camLook.clone(),toLook:L1,cb:cb,to:id};
     fpul.burst(60);
     return dur;
   }
   /* ── free flight: the visitor takes the controls ── */
-  var free=null, nearHook=null, fwd=V(0,0,-1), CENTER=V(40,0,-80), BOUND=290;
+  var flight=null, nearHook=null, fwd=V(0,0,-1), CENTER=V(40,0,-80), BOUND=290;
   function reach(d){ return (d.scale||1)*13+6; }
   function freeStart(){
     if(mode!=='inside') return false;
     if(travel){ travel=null; }
     var dir=camLook.clone().sub(camPos).normalize();
-    free={yaw:Math.atan2(-dir.x,-dir.z),pitch:Math.asin(Math.max(-1,Math.min(1,dir.y))),vel:0,thrust:0,turn:0,tilt:0,max:small?55:70,ignore:cur,ignoreR:D[cur]?reach(D[cur])+14:0};
+    flight={yaw:Math.atan2(-dir.x,-dir.z),pitch:Math.asin(Math.max(-1,Math.min(1,dir.y))),vel:0,thrust:0,turn:0,tilt:0,max:small?55:70,ignore:cur,ignoreR:D[cur]?reach(D[cur])+14:0};
     return true;
   }
   function freeStep(dt){
-    var f=free;
+    var f=flight;
     f.yaw+=f.turn*dt*1.3; f.pitch=Math.max(-1.25,Math.min(1.25,f.pitch+f.tilt*dt*.9));
     f.vel+=(f.thrust*f.max-f.vel)*Math.min(1,dt*(f.thrust?1.5:2.2));
     fwd.set(-Math.sin(f.yaw)*Math.cos(f.pitch), Math.sin(f.pitch), -Math.cos(f.yaw)*Math.cos(f.pitch));
@@ -296,7 +296,7 @@
       }
     } else {
       var P1=V(0,0,0), L1=V(0,0,0);
-      if(free && !travel){ freeStep(dt); }
+      if(flight && !travel){ freeStep(dt); }
       else if(travel){
         var k2=Math.min(1,(performance.now()-travel.t0)/travel.dur), e2=ease(k2);
         travel.curve.getPoint(e2,camPos);
@@ -375,10 +375,10 @@
   window.SAMind={enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
     mode:function(){ return mode; }, current:function(){ return cur; }, travelling:function(){ return !!travel; },
     onFrame:function(fn){ labelHook=fn; },
-    freeStart:freeStart, isFree:function(){ return !!free; }, onNear:function(fn){ nearHook=fn; }, nearest:nearest,
-    freeLook:function(dx,dy){ if(!free) return; free.yaw-=dx*.0045; free.pitch=Math.max(-1.25,Math.min(1.25,free.pitch-dy*.0035)); },
-    freeThrust:function(v){ if(free) free.thrust=v; }, freeTurn:function(v){ if(free) free.turn=v; }, freeTilt:function(v){ if(free) free.tilt=v; },
-    freeKick:function(v){ if(free) free.vel=Math.max(-25,Math.min(free.max*1.2,free.vel+v)); }};
+    freeStart:freeStart, isFree:function(){ return !!flight; }, onNear:function(fn){ nearHook=fn; }, nearest:nearest,
+    freeLook:function(dx,dy){ if(!flight) return; flight.yaw-=dx*.0045; flight.pitch=Math.max(-1.25,Math.min(1.25,flight.pitch-dy*.0035)); },
+    freeThrust:function(v){ if(flight) flight.thrust=v; }, freeTurn:function(v){ if(flight) flight.turn=v; }, freeTilt:function(v){ if(flight) flight.tilt=v; },
+    freeKick:function(v){ if(flight) flight.vel=Math.max(-25,Math.min(flight.max*1.2,flight.vel+v)); }};
   if(reduce){
     window.SAMind.enter=function(cb){ mode='inside'; brain.visible=false; mind.visible=true; scene.fog.near=60; scene.fog.far=330; var P=V(0,0,0),L=V(0,0,0); pose(cur,P,L); camPos.copy(P); camLook.copy(L); cb&&cb(); };
   }
