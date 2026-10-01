@@ -395,6 +395,30 @@ body.voyage #dock{opacity:.25}
 .grid30 button.on{background:#ffd27a;color:#2a1d00;box-shadow:0 0 12px -2px #ffd27a}
 .dk.unk i{display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-weight:700;font-size:.72rem;color:var(--mute)}
 .dk.unk i::after{display:none}
+
+.hgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;max-width:460px;margin:16px auto 0}
+.hc{border-radius:10px;padding:7px 2px;box-shadow:inset 0 0 0 1px var(--line);display:flex;flex-direction:column;align-items:center}
+.hc b{font:700 .95rem var(--mono)}.hc span{font-family:var(--mono);font-size:.5rem;color:var(--mute2);letter-spacing:.04em}
+.hc.white{box-shadow:inset 0 0 0 1px rgba(127,224,195,.6),0 0 12px -4px #7fe0c3}
+.hc.today{background:#7fe0c3;color:#04241a;box-shadow:0 0 16px -2px #7fe0c3}.hc.today span{color:#04241a}
+#dock{max-width:none!important;padding:6px 10px 8px!important}
+#dock .dk{width:72px}
+
+.rings{width:min(320px,80vw);margin:14px auto 4px;animation:float 8s ease-in-out infinite}
+.rings svg{width:100%;height:auto;overflow:visible;transform:rotate(-90deg)}
+.rg-bg{fill:none;stroke:var(--line);stroke-width:9}
+.rg{fill:none;stroke:var(--c);stroke-width:9;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);filter:drop-shadow(0 0 6px var(--c));animation:ringIn 1.6s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes ringIn{to{stroke-dashoffset:var(--off)}}
+.rg-dot{fill:#fff;filter:drop-shadow(0 0 6px var(--c))}
+.rg-big,.rg-small{transform:rotate(90deg);transform-origin:160px 160px;text-anchor:middle;fill:var(--ink)}
+.rg-big{font:800 26px var(--sans)}.rg-small{font:500 10px var(--mono);fill:var(--mute);letter-spacing:.1em;text-transform:uppercase}
+.hstats{gap:2px}.hstat{padding:6px}
+
+#intro{position:fixed;inset:0;z-index:37;display:flex;align-items:flex-end;justify-content:center;padding:24px 24px 110px;opacity:0;pointer-events:none;transition:opacity .5s}
+#intro.on{opacity:1;pointer-events:auto}
+.in-card{max-width:440px;text-align:center;padding:24px 26px;border-radius:24px;background:var(--glow);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 1px var(--line),0 30px 70px -30px var(--purple)}
+.in-card h3{font-size:1.4rem;font-weight:800;margin:8px 0 6px}.in-card p{color:var(--mute);line-height:1.6}
+.in-dots{display:flex;justify-content:center;gap:6px;margin-top:14px}.in-dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}.in-dots i.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
 @media(max-width:899px){
   #stage{left:0;right:0;top:auto;bottom:86px;transform:none;max-height:58vh;padding:44px 20px 20px;
     background:linear-gradient(180deg,transparent 0,var(--glow) 60px,var(--glow) 100%);-webkit-mask-image:none;mask-image:none}
@@ -465,6 +489,9 @@ body.voyage #dock{opacity:.25}
 <div id="toast"></div>
 <nav id="dock" aria-label="Your neurons"><div class="dock-row" id="dockRow"></div></nav>
 <main id="stage" aria-live="polite"></main>
+<div id="intro" role="dialog" aria-label="How your mind works"><div class="in-card">
+  <div class="eyebrow">Welcome to your mind</div><h3 id="inTitle"></h3><p id="inText"></p><div class="in-dots" id="inDots"></div>
+  <div class="row"><button class="ghost" type="button" id="inSkip">Skip</button><button class="btn" type="button" id="inNext">Next</button></div></div></div>
 <div id="room" aria-hidden="true"><div class="r-floor"></div><div class="r-horizon"></div><div class="r-in" id="roomIn"></div><button class="r-out" type="button" id="roomOut">&larr; Walk back through the door</button></div>
 <div id="door" aria-hidden="true"><div class="d-light"></div><div class="d-frame"><div class="d-panel l"><i></i></div><div class="d-panel r"><i></i></div></div></div>
 <div id="mwin" role="dialog" aria-label="Mind window"><div class="mw-bar"><b id="mwTitle"></b><span><a id="mwOut" target="_blank" rel="noopener">open outside &#8599;</a><button type="button" id="mwX" aria-label="Close">&#10005;</button></span></div><div class="mw-body" id="mwBody"></div></div>
@@ -535,6 +562,7 @@ body.voyage #dock{opacity:.25}
   ];
   D.push({id:'stories',name:'Books',col:'#ffc44d',pos:[64,66,-44],yaw:-.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','stories'],['goals','stories'],['progress','stories']);
   D.push({id:'ramadan',name:'Ramadan',col:'#ffd27a',pos:[0,96,-60],yaw:0,dist:32,scale:1.15}); MAIN.push(D[D.length-1]); L.push(['goals','ramadan'],['stories','ramadan'],['listen','ramadan']);
+  D.push({id:'calendar',name:'Islamic calendar',col:'#7fe0c3',pos:[-48,90,-70],yaw:.2,dist:32,scale:1.05}); MAIN.push(D[D.length-1]); L.push(['ramadan','calendar'],['listen','calendar'],['plan','calendar']);
   D.push({id:'listen',name:'Listen',col:'#19f0b0',pos:[-60,64,-40],yaw:.3,dist:32,scale:1.1}); MAIN.push(D[D.length-1]); L.push(['me','listen'],['mood','listen'],['goals','listen']);
   /* ── 50 more things ── */
   // Rooms of the mind: personal collections gathered around a Rooms hub
@@ -577,7 +605,7 @@ body.voyage #dock{opacity:.25}
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="assets/mind-space.js?v=6"></script>
+<script src="assets/mind-space.js?v=7"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -840,7 +868,7 @@ body.voyage #dock{opacity:.25}
         ['connect','In your mind',(window.MU_VISITORS&&MU_VISITORS.length)?MU_VISITORS.map(function(v){ return v.name; }).join(', '):'Just you right now','#19f0b0',(window.MU_VISITORS&&MU_VISITORS.length)?100:0]
       ];
       return eb('Home','#ffffff')+'<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2><p>Your whole mind, from the outside. Tap any light to travel in.</p>'+
-        '<div class="hstats">'+rows.map(function(r,i){ var unk=false; return '<button class="hstat" '+(r[0]!=='me'&&!unk?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
+        statRings(rows,qd,qt)+'<div class="hstats">'+rows.map(function(r,i){ var unk=false; return '<button class="hstat" '+(r[0]!=='me'&&!unk?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
         '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button></div>'+
         '<details class="hmore"><summary>Today’s quests &middot; '+qd+'/'+qt+'</summary><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return true?'<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button></li>':'<li style="--dot:#cfd6ff"><span>? Find this neuron to unlock its quest</span></li>'; }).join('')+'</ul>'+
           '<p class="small"><b>Mind Vision</b> (50 coins): every hidden light reveals itself for a minute.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision · 50':(50-S.coins)+' coins to go')+'</button></div></details>'+
@@ -848,7 +876,7 @@ body.voyage #dock{opacity:.25}
         '<details class="hmore"><summary>Profile &amp; settings</summary>'+(p.photo?'<img src="'+p.photo+'" alt="" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block">':'')+
           '<input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
           '<div class="row"><button class="ghost" data-act="photo">&#9673; Photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
-          '<p class="small">Tap empty space to float back out here. Drag to look around. Golden lines are paths you’ve travelled; faint dashed lines are unexplored.</p>'+
+          '<p class="small"><button class="link" data-act="intro" style="margin:0">Show me how it works</button></p><p class="small">Tap empty space to float back out here. Drag to look around. Golden lines are paths you’ve travelled; faint dashed lines are unexplored.</p>'+
           '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
           '<p class="care">If you ever feel unsafe, please reach out &mdash; in the UK, <b>Samaritans are free on 116 123</b>, any time.</p></details>'; },
     mood:function(){ var h=eb('Mood','#ff4fa8')+'<h2>How are you feeling right now?</h2><p>Tap the light that matches you. Add a few words if you like.</p><div class="orbs">'+
@@ -887,7 +915,7 @@ body.voyage #dock{opacity:.25}
         h+='<div class="habit" style="--hc:'+x.c+'"><b>'+esc(x.n)+'</b><div class="count"><button data-hab="'+x.id+'" data-d="-1">&minus;</button><span>'+v+' / '+x.t+'</span><button data-hab="'+x.id+'" data-d="1">+</button></div><div class="dots">'+dots+'</div></div>'; });
       h+='<input class="field" id="hName" placeholder="New tracker (e.g. Prayers)" maxlength="40"><input class="field" id="hTarget" type="number" min="1" max="999" placeholder="Daily target (e.g. 5)"><div class="row"><button class="btn" data-act="addHabit">Add tracker</button></div>';
       return h; },
-    gallery:function(){ return eb('Memories','#ff4fa8')+'<h2>Your memories.</h2><p>Childhood moments, precious days, the people you love. Photos float around this neuron in your mind.</p>'+
+    gallery:function(){ return eb('Memories','#ff4fa8')+'<h2>Your memories.</h2><p>Childhood moments, precious days, the people you love. Your photos and videos float around this neuron in your mind.</p>'+
         '<div class="row">'+S.albums.map(function(al){ return '<button class="ghost" data-album="'+esc(al)+'" style="'+(al===S.album?'color:var(--pink)':'')+'">'+(al===S.album?'&#9673; ':'')+esc(al)+'</button>'; }).join('')+'<button class="ghost" data-act="addAlbum">+ album</button></div>'+
         '<div class="row"><button class="btn" data-act="addMedia" style="--c:#ff4fa8">Add to '+esc(S.album)+'</button><button class="ghost" data-act="aiImage">&#10022; Create with AI (paid)</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile"><div class="gal" id="gal"><p class="empty">Loading…</p></div>'; },
     draw:function(){ return eb('Magic drawing','#ff6bd6')+'<h2>Draw anything &mdash; or describe it.</h2><p>Sketch with glowing brushes (saved automatically), or type what you imagine and let AI create it.</p>'+
@@ -922,6 +950,15 @@ body.voyage #dock{opacity:.25}
         '<h3>Ramadan memories</h3><p class="small">Photos and videos of iftars, nights and the people you share them with.</p><div class="row"><button class="btn" data-act="ramAdd" style="--c:#ffd27a">Add photos or videos</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="ramFile"><div class="gal" id="ramGal"></div>'+
         '<p class="small">Want to plan the month? <button class="link" data-go="goals" style="margin:0">Set Ramadan goals</button></p>'; },
     privacy:function(){ return ''; },
+
+    calendar:function(){ var h=hijri(new Date()), ev=upcoming(), mn=HMONTHS[h.m-1];
+      var grid='', first=new Date(); first.setDate(first.getDate()-(h.d-1));
+      for(var i=0;i<30;i++){ var d=new Date(first); d.setDate(first.getDate()+i); var hd=hijri(d); if(hd.m!==h.m) break; var isT=hd.d===h.d, white=hd.d>=13&&hd.d<=15;
+        grid+='<div class="hc'+(isT?' today':'')+(white?' white':'')+'"><b>'+hd.d+'</b><span>'+d.getDate()+' '+d.toLocaleDateString('en-GB',{month:'short'})+'</span></div>'; }
+      return eb('Islamic calendar','#7fe0c3')+'<h2>'+h.d+' '+mn+' '+h.y+' AH</h2><p>'+new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</p>'+
+        '<div class="hgrid">'+grid+'</div><p class="small">Glowing days are the white days (13th–15th), a sunnah time to fast. Mondays and Thursdays are too.</p>'+
+        '<h3>Coming up</h3><ul class="thread" style="--c:#7fe0c3">'+ev.map(function(e){ var days=Math.round((e.g-new Date().setHours(0,0,0,0))/864e5); return '<li><b>'+esc(e.n)+'</b>'+(e.note?'<br><span class="small" style="color:var(--mute)">'+esc(e.note)+'</span>':'')+'<span class="meta">'+e.g.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+' · '+e.hd+' '+HMONTHS[e.hm-1]+' · '+(days===0?'today':days===1?'tomorrow':'in '+days+' days')+'</span></li>'; }).join('')+'</ul>'+
+        '<p class="small">Dates follow the Umm al-Qura calendar. Local moon sighting can move an event by a day.</p>'; },
     listen:function(){ var Y=function(q){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q); };
       return eb('Listen','#19f0b0')+'<h2>Listen.</h2><p>The Qur\'an from more than 240 reciters, plus nasheeds and lectures.</p>'+
         '<h3>Qur\'an</h3><input class="field" id="qrSearch" placeholder="Search reciters (e.g. Alafasi, Sudais, Minshawi)" autocomplete="off"><select class="field" id="qrRec"><option>Loading reciters…</option></select><select class="field" id="qrSurah"></select>'+
@@ -1053,6 +1090,7 @@ body.voyage #dock{opacity:.25}
     if(b.dataset.yt){ playYT(b.dataset.yt); return; }
     var a=b.dataset.act; if(!a) return;
     if(a==='vision'){ if(S.coins<50){ toast('Keep going \u2014 '+(50-S.coins)+' more coins'); return; } S.coins-=50; save(); paintCoins(); visionUntil=Date.now()+60000; FX('warp'); toast('\u2726 Mind Vision \u00B7 every hidden light is showing for 60 seconds'); render('me'); return; }
+    if(a==='intro'){ showIntro(); return; }
     if(a==='door'){ enterRoom(); return; }
     if(a==='fly'){ startFly(); return; }
     if(a==='gReset'){ startGame(shown); return; }
@@ -1372,8 +1410,15 @@ body.voyage #dock{opacity:.25}
   function paintGallery(){ var el=document.getElementById('gal'); if(!el) return; mAll().then(function(list){ list=list.filter(function(m){ return m.type!=='music' && (m.album||(m.drawing?'Drawings':'Precious'))===S.album; }); list.sort(function(a,b){ return b.ts-a.ts; });
       if(!list.length){ el.innerHTML='<p class="empty">No memories yet.</p>'; return; }
       el.innerHTML=list.map(function(m){ var src=m.type==='video'?URL.createObjectURL(m.blob):m.url; return '<figure>'+(m.type==='video'?'<video src="'+src+'" muted loop playsinline autoplay></video>':'<img src="'+src+'" alt="">')+'<button data-del-media="'+m.id+'" aria-label="Remove">&#10005;</button></figure>'; }).join(''); }); }
-  function refreshBoards(){ boards.forEach(function(b){ b.remove(); }); boards=[]; mAll().then(function(list){ list.filter(function(m){ return m.type==='image' && (m.album||(m.drawing?'Drawings':'Precious'))===S.album; }).sort(function(a,b){ return b.ts-a.ts; }).slice(0,6).forEach(function(m,i){
-      var im=new Image(); im.onload=function(){ var a=i/6*Math.PI*2, r=17, w=9, h=w*im.height/im.width; boards.push(M.addBillboard('gallery',im,w,h,[Math.cos(a)*r,Math.sin(a)*r*.7,Math.sin(a)*6])); }; im.src=m.url; }); }); }
+  /* photos and videos float in the mind: the chosen album around Memories, Ramadan memories around Ramadan */
+  function floatMedia(list,anchor,max,r0){ list.slice(0,max).forEach(function(m,i){ var n=Math.min(max,list.length), a=i/n*Math.PI*2, r=r0+(i%2)*4, off=[Math.cos(a)*r,Math.sin(a)*r*.6,Math.sin(a)*7];
+      if(m.type==='video'){ var v=document.createElement('video'); v.muted=true; v.loop=true; v.playsInline=true; v.autoplay=true; v.src=URL.createObjectURL(m.blob);
+        v.addEventListener('loadeddata',function(){ var w=11, h=w*(v.videoHeight||9)/(v.videoWidth||16); var b=M.addBillboard(anchor,v,w,h,off); if(b){ b.video=v; boards.push(b); } v.play().catch(function(){}); },{once:true}); }
+      else { var im=new Image(); im.onload=function(){ var w=9, h=w*im.height/im.width; var b=M.addBillboard(anchor,im,w,h,off); if(b) boards.push(b); }; im.src=m.url; } }); }
+  function refreshBoards(){ boards.forEach(function(b){ if(b.video){ b.video.pause(); URL.revokeObjectURL(b.video.src); } b.remove(); }); boards=[];
+    mAll().then(function(list){ list=list.filter(function(m){ return m.type==='image'||m.type==='video'; }).sort(function(a,b){ return b.ts-a.ts; });
+      floatMedia(list.filter(function(m){ return (m.album||(m.drawing?'Drawings':'Precious'))===S.album; }),'gallery',10,17);
+      floatMedia(list.filter(function(m){ return m.album==='Ramadan'; }),'ramadan',8,16); }); }
 
   /* drawing pad with glowing brushes */
   var padId='d'+Date.now(), padT=null;
@@ -1507,6 +1552,40 @@ body.voyage #dock{opacity:.25}
   function paintRam(){ var el=document.getElementById('ramGal'); if(!el) return; mAll().then(function(list){ list=list.filter(function(m){ return m.album==='Ramadan'; }).sort(function(a,b){ return b.ts-a.ts; });
       el.innerHTML=list.length?list.map(function(m){ var src=m.type==='video'?URL.createObjectURL(m.blob):m.url; return '<figure>'+(m.type==='video'?'<video src="'+src+'" muted loop playsinline autoplay></video>':'<img src="'+src+'" alt="">')+'<button data-del-media="'+m.id+'" aria-label="Remove">&#10005;</button></figure>'; }).join(''):'<p class="empty">No Ramadan memories yet.</p>'; }); }
 
+
+  /* ── Islamic (Hijri) calendar, built into the browser (Umm al-Qura) ── */
+  var HMONTHS=['Muharram','Safar','Rabiʿ al-Awwal','Rabiʿ al-Thani','Jumada al-Ula','Jumada al-Akhirah','Rajab','Shaʿban','Ramadan','Shawwal','Dhu al-Qaʿdah','Dhu al-Hijjah'];
+  var HFMT=null; try{ HFMT=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{day:'numeric',month:'numeric',year:'numeric'}); }catch(e){}
+  function hijri(d){ if(!HFMT) return {d:1,m:1,y:1448}; var o={}; HFMT.formatToParts(d).forEach(function(p){ o[p.type]=p.value; }); return {d:+o.day,m:+o.month,y:parseInt(o.year,10)}; }
+  var HEVENTS=[[1,1,'Islamic New Year','The first day of Muharram'],[1,10,'Day of Ashura','A recommended day of fasting (with the 9th or 11th)'],[7,27,'Isra and Miʿraj','Commonly remembered on this night'],
+    [8,15,'Mid-Shaʿban','Observed by many as a night of worship'],[9,1,'Ramadan begins','The month of fasting'],[9,27,'Laylat al-Qadr (27th night)','Seek it in the odd nights of the last ten'],
+    [10,1,'Eid al-Fitr','Celebrating the end of Ramadan'],[12,8,'Hajj begins','The pilgrimage days begin'],[12,9,'Day of Arafah','A recommended day of fasting for those not on Hajj'],[12,10,'Eid al-Adha','The festival of sacrifice']];
+  function upcoming(){ var out=[], d=new Date(); d.setHours(0,0,0,0); for(var i=0;i<400&&out.length<10;i++){ var x=new Date(d); x.setDate(d.getDate()+i); var h=hijri(x);
+      HEVENTS.forEach(function(e){ if(e[0]===h.m&&e[1]===h.d) out.push({n:e[2],note:e[3],g:x,hd:h.d,hm:h.m}); }); } return out; }
+
+
+  /* Home dashboard: living rings of light, one per part of your mind */
+  function statRings(rows,qd,qt){ var R=rows.filter(function(r){ return r[1]!=='Mind coins'; }), n=R.length, cx=160, cy=160, h='';
+    R.forEach(function(r,i){ var rad=146-i*15, c=2*Math.PI*rad, v=Math.max(0,Math.min(100,r[4]||0));
+      h+='<circle cx="'+cx+'" cy="'+cy+'" r="'+rad+'" class="rg-bg"/>'+
+         '<circle cx="'+cx+'" cy="'+cy+'" r="'+rad+'" class="rg" style="--c:'+r[3]+';--len:'+c.toFixed(1)+';--off:'+(c*(1-v/100)).toFixed(1)+';animation-delay:'+(i*.12)+'s"/>'+
+         (v>0?'<circle r="4.5" class="rg-dot" style="--c:'+r[3]+'"><animateMotion dur="'+(6+i*1.3)+'s" repeatCount="indefinite" path="M'+cx+','+(cy-rad)+' a'+rad+','+rad+' 0 1,1 -0.01,0"/></circle>':''); });
+    h+='<text x="'+cx+'" y="'+(cy-6)+'" class="rg-big">◉ '+S.coins+'</text><text x="'+cx+'" y="'+(cy+16)+'" class="rg-small">'+qd+' / '+qt+' quests today</text>';
+    return '<div class="rings"><svg viewBox="0 0 320 320" aria-label="Your mind at a glance">'+h+'</svg></div>'; }
+
+
+  /* first visit: a short intro to how the mind works */
+  var INTRO=[['This is your whole mind','Every glowing light is a neuron — a part of you. Drag anywhere to spin your brain and look around.'],
+    ['Tap a light to travel','Tap any named light and you’ll fly along the neural paths to it. Golden lines are paths you’ve travelled; faint dashes are still unexplored.'],
+    ['Some lights are hidden','“?” lights are mysteries — wisdom, games and surprises. Fly close to discover them.'],
+    ['Come back home anytime','Tap empty space, or the Home button at the bottom, to float back out here. Your stats and today’s quests live on this page.']], inI=0;
+  function paintIntro(){ document.getElementById('inTitle').textContent=INTRO[inI][0]; document.getElementById('inText').textContent=INTRO[inI][1];
+    document.getElementById('inDots').innerHTML=INTRO.map(function(_,i){ return '<i class="'+(i===inI?'on':'')+'"></i>'; }).join(''); document.getElementById('inNext').textContent=inI===INTRO.length-1?'Start exploring':'Next'; }
+  function showIntro(){ inI=0; paintIntro(); document.getElementById('intro').classList.add('on'); }
+  function endIntro(){ document.getElementById('intro').classList.remove('on'); try{ localStorage.setItem('mindu.intro','1'); }catch(e){} }
+  document.getElementById('inNext').onclick=function(){ FX('zoop',.5); if(inI<INTRO.length-1){ inI++; paintIntro(); } else endIntro(); };
+  document.getElementById('inSkip').onclick=endIntro;
+
   /* goals floating in space: glowing progress orbs orbiting the Goals neuron */
   var goalOrbs=[];
   function goalCanvas(g,c){ var cv=document.createElement('canvas'); cv.width=cv.height=256; var x=cv.getContext('2d'), tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?dn/tot:0;
@@ -1527,12 +1606,12 @@ body.voyage #dock{opacity:.25}
   DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':'')+(unknown(d)?' hid':''); b.dataset.go=d.id; b.style.setProperty('--c',unknown(d)?'#cfd6ff':d.col); b.innerHTML='<i></i><span>'+esc(labelText(d))+'</span>'; lw.appendChild(b); labels[d.id]=b; });
   lw.addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   M.onFrame(function(){ var tr=M.travelling(); moveGoalOrbs(performance.now()/1000); moveIdeaOrbs(performance.now()/1000); if(typeof moveGuide==='function') moveGuide();
-    DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr||M.isFree())&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(visionOn()||((!d.mini||s.dist<90)&&(!d.hidden||S.visited[d.id]||s.dist<150)));
+    DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); var vis=s&&s.on&&(d.id!==cur||tr||M.isFree())&&s.x>-40&&s.x<innerWidth+40&&s.y>-40&&s.y<innerHeight+40&&(visionOn()||((!d.mini||s.dist<90||(cur==='me'&&!d.hidden))&&(!d.hidden||S.visited[d.id]||s.dist<150)));
       if(!vis){ el.style.opacity='0'; el.style.pointerEvents='none'; return; }
       el.style.opacity=(tr?.35:Math.max(.45,Math.min(1,1.3-s.dist/320))).toFixed(2); el.style.pointerEvents=tr?'none':'auto';
       el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) translate(0,-50%)'; }); });
-  var DOCK=['me','mood','progress','diary','todo','goals','plan','trackers','rooms','stories','listen','gallery','studio','portals','draw','ai','connect'];
-  function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML='<div class="dk myst" title="Hidden lights you have found"><i>?</i><span>'+mm.n+' / '+mm.t+'<br>found</span></div>'+'<button class="dk" data-fly="1" style="--c:#ffffff"><i style="background:linear-gradient(135deg,var(--blue),var(--pink))"></i><span>Fly</span></button>'+DOCK.map(function(id){ var d=byId[id]; var dkn=id==='me'||S.visited[id]; return '<button class="dk'+(id===cur?' here':'')+(dkn?'':' unk')+(QUESTS[id]&&!qDone(id)&&dkn?' q':'')+'" data-go="'+id+'" style="--c:'+(dkn?d.col:'#cfd6ff')+'"><i>'+(dkn?'':'?')+'</i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+(dkn?esc(d.name):'?')+'</span></button>'; }).join(''); }
+  var DOCK=['me'];
+  function paintDock(){ var mm=mysteries(); document.getElementById('dockRow').innerHTML=DOCK.map(function(id){ var d=byId[id]; var dkn=id==='me'||S.visited[id]; return '<button class="dk'+(id===cur?' here':'')+(dkn?'':' unk')+(QUESTS[id]&&!qDone(id)&&dkn?' q':'')+'" data-go="'+id+'" style="--c:'+(dkn?d.col:'#cfd6ff')+'"><i>'+(dkn?'':'?')+'</i><span class="'+(id==='ai'||id==='connect'?'soon':'')+'">'+(dkn?esc(d.name):'?')+'</span></button>'; }).join(''); }
   document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(b) travelTo(b.dataset.go); });
   paintDock();
 
@@ -1661,7 +1740,7 @@ body.voyage #dock{opacity:.25}
       M.setSeen(S.paths||[]); M.onPath(function(keys){ S.paths=(S.paths||[]).concat(keys); save(); toast('\u2726 New path explored'); });
       chartBoard=M.addBillboard('progress',chartCanvas,18,9,[0,13,0]); updateChartBoard(); refreshBoards(); refreshGoalOrbs(); refreshIdeaOrbs(); S.wishes.forEach(function(w,i){ addWishStar(i); });
       var last=S.moods[0]; if(last) M.setColor('mood',moodOf(last.m).c);
-      setTimeout(function(){ M.fire('me'); emerge('me'); },2300); }); }
+      setTimeout(function(){ M.fire('me'); emerge('me'); if(localStorage.getItem('mindu.intro')!=='1') setTimeout(showIntro,1200); },2300); }); }
   document.getElementById('gEnter').onclick=enter;
   gName.addEventListener('keydown',function(e){ if(e.key==='Enter') enter(); });
   setInterval(function(){ if(shown==='me') return; },60000);

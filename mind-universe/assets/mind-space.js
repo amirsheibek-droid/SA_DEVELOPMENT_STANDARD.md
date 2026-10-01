@@ -459,7 +459,7 @@
   }
   /* pictures and charts floating in space beside a neuron */
   function addBillboard(id,src,w,h,off){ var d=D[id]; if(!d) return null;
-    var tex=src.tagName==='CANVAS'?new T.CanvasTexture(src):new T.Texture(src); tex.needsUpdate=true;
+    var tex=src.tagName==='CANVAS'?new T.CanvasTexture(src):src.tagName==='VIDEO'?new T.VideoTexture(src):new T.Texture(src); tex.needsUpdate=true;
     var sp=new T.Sprite(new T.SpriteMaterial({map:tex,transparent:true,depthWrite:false})); sp.scale.set(w,h,1);
     sp.position.copy(d.v).add(V(off[0],off[1],off[2])); mind.add(sp);
     return {sprite:sp,update:function(){ tex.needsUpdate=true; },remove:function(){ mind.remove(sp); tex.dispose(); sp.material.dispose(); }};
