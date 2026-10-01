@@ -191,11 +191,21 @@
     for(var c=0;c<nC;c++){ var parts=[];
       for(var q2=0;q2<(mini?4:7);q2++){ var sp=new T.Sprite(new T.SpriteMaterial({map:(k+c)%2?glowG:glowB,transparent:true,depthWrite:false,opacity:1-q2/7,blending:ADD})); var sz=(q2?1.0:1.6)*(1-q2/9); sp.scale.set(sz,sz,1); mind.add(sp); parts.push(sp); }
       comets.push({t:Math.random(),v:rnd(.05,.1)*60/Math.max(60,dl),dir:Math.random()<.5?1:-1,parts:parts}); }
-    axons.push({a:L[0],b:L[1],curve:curve,tube:tube,line:line,comets:comets,boost:0,len:dl,secret:A.secret||B.secret});
+    var ax={a:L[0],b:L[1],key:[L[0],L[1]].sort().join('|'),curve:curve,tube:tube,line:line,comets:comets,boost:0,len:dl,secret:A.secret||B.secret,seen:false,col:line.material.color.getHex()};
+    axons.push(ax); pathLook(ax);
   });
   function routeBetween(a,b){ if(!a||!b||a===b) return null; var prev={}, q=[a], seen={}; seen[a]=1;
     while(q.length){ var n=q.shift(); if(n===b) break; axons.forEach(function(L){ var m=L.a===n?L.b:(L.b===n?L.a:null); if(m && !seen[m]){ seen[m]=1; prev[m]=n; q.push(m); } }); }
     if(!seen[b]) return null; var path=[b]; while(path[0]!==a) path.unshift(prev[path[0]]); return path; }
+  /* explored paths glow solid; unexplored ones are faint dashes, inviting you to take them */
+  function pathLook(L){ var old=L.line.material;
+    if(L.seen){ L.line.material=new T.LineBasicMaterial({color:0xffe9a8,transparent:true,opacity:.85,blending:ADD}); }
+    else { L.line.material=new T.LineDashedMaterial({color:L.col,transparent:true,opacity:.35,dashSize:1.1,gapSize:1.6,blending:ADD}); L.line.computeLineDistances(); }
+    if(old) old.dispose(); if(theme==='light'){ L.line.material.userData.add=true; L.line.material.blending=T.NormalBlending; } }
+  var pathHook=null;
+  function setSeen(keys){ var set={}; (keys||[]).forEach(function(k){ set[k]=1; }); axons.forEach(function(L){ var v=!!set[L.key]; if(v!==L.seen){ L.seen=v; pathLook(L); } }); }
+  function markRoute(route){ var fresh=[]; for(var i=0;i<route.length-1;i++){ var L=axonBetween(route[i],route[i+1]); if(L&&!L.seen){ L.seen=true; pathLook(L); fresh.push(L.key); } } if(fresh.length&&pathHook) pathHook(fresh); }
+  function unexploredFrom(id){ return axons.filter(function(L){ return (L.a===id||L.b===id)&&!L.seen; }).map(function(L){ return L.a===id?L.b:L.a; }); }
   function axonBetween(a,b){ for(var i=0;i<axons.length;i++){ var L=axons[i]; if((L.a===a&&L.b===b)||(L.a===b&&L.b===a)) return L; } return null; }
 
   // dust streaks — always rushing toward the viewer, faster while you travel
@@ -222,7 +232,7 @@
   addEventListener('pointermove',function(e){ mx=(e.clientX/innerWidth-.5); my=(e.clientY/innerHeight-.5); },{passive:true});
   var fly={mode:'return',t:0,next:16,v:0}, tmpV=V(0,0,0), tmpA=V(0,0,0), tmpB=V(0,0,0);
   var camPos=V(0,0,0), camLook=V(0,0,-60), prevCam=V(0,0,0), camVel=0;
-  var cur=DESTS[0]?DESTS[0].id:null, travel=null, drift=0;
+  var cur=DESTS[0]?DESTS[0].id:null, travel=null, drift=0, orbY=0, orbP=0, orbYt=0, orbPt=0;
   var enterCb=null, enterT=0, enterFrom=null, enterSwap=false;
 
   function enter(cb){
@@ -233,7 +243,7 @@
   function go(id,cb){
     if(!D[id]){ cb&&cb(); return; }
     if(mode!=='inside'){ cur=id; cb&&cb(); return; }
-    var wasFree=!!flight; flight=null;
+    var wasFree=!!flight; flight=null; orbY=orbYt=0; orbP=orbPt=0;
     if(id===cur && !travel && !wasFree){ cb&&cb(); return; }
     var from=cur; cur=id;
     var P1=V(0,0,0), L1=V(0,0,0); pose(id,P1,L1);
@@ -241,7 +251,7 @@
     var side=V(0,1,0).cross(dirv).normalize().multiplyScalar(dist*rnd(.12,.22)*(Math.random()<.5?-1:1));
     var lift=V(0,dist*.12,0);
     var curve=new T.CubicBezierCurve3(camPos.clone(), camPos.clone().addScaledVector(dirv,dist*.3).add(side).add(lift), P1.clone().addScaledVector(dirv,-dist*.3).add(side).add(lift), P1.clone());
-    var A=axonBetween(from,id); if(A) A.boost=2.5;
+    var A=axonBetween(from,id); if(A){ A.boost=2.5; if(!A.seen){ A.seen=true; pathLook(A); pathHook&&pathHook([A.key]); } }
     var dur=reduce?10:Math.max(2600,Math.min(5600,1500+dist*16)), la=.06;
     var route=reduce?null:routeBetween(from,id);
     if(route && route.length>1){
@@ -249,7 +259,7 @@
       for(var r=0;r<route.length-1;r++){ var ax=axonBetween(route[r],route[r+1]); if(!ax) continue; var fw=ax.a===route[r]; ax.boost=3;
         for(var sI=1;sI<=16;sI++){ var tt=sI/17; ax.curve.getPoint(fw?tt:1-tt,tmpA); pts.push(tmpA.clone().add(up)); } }
       pts.push(P1.clone());
-      curve=new T.CatmullRomCurve3(pts,false,'centripetal',.5);
+      curve=new T.CatmullRomCurve3(pts,false,'centripetal',.5); markRoute(route);
       dur=Math.max(3800,Math.min(9500,2400+curve.getLength()*13)); la=.02;
     }
     travel={t0:performance.now(),dur:dur,curve:curve,fromLook:camLook.clone(),toLook:L1,cb:cb,to:id,la:la};
@@ -334,6 +344,10 @@
         if(k2>=1){ var cb2=travel.cb; travel=null; drift=0; cb2&&cb2(); }
       } else {
         drift+=dt; pose(cur,P1,L1);
+        // look around by dragging: orbit the camera around the current neuron
+        orbY+=(orbYt-orbY)*Math.min(1,dt*6); orbP+=(orbPt-orbP)*Math.min(1,dt*6);
+        if(Math.abs(orbY)>1e-4||Math.abs(orbP)>1e-4){ var cv=D[cur].v, rel=P1.clone().sub(cv), lrel=L1.clone().sub(cv), qy=new T.Quaternion().setFromAxisAngle(V(0,1,0),orbY);
+          var side=V(1,0,0).applyQuaternion(qy), qp=new T.Quaternion().setFromAxisAngle(side,orbP), q=qp.multiply(qy); rel.applyQuaternion(q); lrel.applyQuaternion(q); P1.copy(cv).add(rel); L1.copy(cv).add(lrel); }
         P1.x+=Math.sin(drift*.25)*1.2+mx*2.4; P1.y+=Math.sin(drift*.31)*.9-my*1.8;
         camPos.lerp(P1,Math.min(1,dt*2)); camLook.lerp(L1,Math.min(1,dt*2));
       }
@@ -351,7 +365,7 @@
           along(d.branches[g.b],g.t,g.s.position); g.s.material.opacity=Math.min(1,(1-g.t)*2)*(d.secret?.5:1); });
       });
       axons.forEach(function(L){ L.boost*=Math.pow(.35,dt); var hot=(L.a===cur||L.b===cur);
-        if(!L.secret){ L.tube.material.opacity=.18+(hot?.12:0)+L.boost*.2; L.line.material.opacity=.45+(hot?.25:0); }
+        if(!L.secret){ L.tube.material.opacity=(L.seen?.22:.08)+(hot?.12:0)+L.boost*.2; L.line.material.opacity=L.seen?(.75+(hot?.2:0)):(.28+(hot?.25:0)); }
         L.comets.forEach(function(c){ c.t+=dt*c.v*(1+L.boost*5)*c.dir; if(c.t>1) c.t-=1; if(c.t<0) c.t+=1;
           for(var q=0;q<c.parts.length;q++){ var tt=c.t-c.dir*q*.012; tt=tt<0?tt+1:(tt>1?tt-1:tt); L.curve.getPoint(tt,c.parts[q].position);
             var dd=c.parts[q].position.distanceTo(cam.position); c.parts[q].material.opacity=(1-q/7)*Math.max(0,Math.min(1,(dd-10)/30))*(L.secret?.35:1); } }); });
@@ -415,7 +429,8 @@
   }
   function setColor(id,hex){ var d=D[id]; if(!d) return; var c=new T.Color(hex); d.ring.material.color.copy(c); d.shock.material.color.copy(c);
     var cs='rgba('+Math.round(c.r*255)+','+Math.round(c.g*255)+','+Math.round(c.b*255)+','; d.halo.material.map=dotTex(cs+'1)',cs+'0)'); d.halo.material.needsUpdate=true; }
-  window.HMind={setTheme:setTheme,addBillboard:addBillboard,setColor:setColor,enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
+  function orbit(dx,dy){ orbYt-=dx*.006; orbPt=Math.max(-1.1,Math.min(1.1,orbPt-dy*.004)); }
+  window.HMind={setSeen:setSeen,onPath:function(fn){ pathHook=fn; },unexploredFrom:unexploredFrom,orbit:orbit,setTheme:setTheme,addBillboard:addBillboard,setColor:setColor,enter:enter,go:go,fire:fire,warp:warp,screenOf:screenOf,restScreen:restScreen,ids:DEST_IDS,
     mode:function(){ return mode; }, current:function(){ return cur; }, travelling:function(){ return !!travel; },
     onFrame:function(fn){ labelHook=fn; },
     freeStart:freeStart, isFree:function(){ return !!flight; }, onNear:function(fn){ nearHook=fn; }, nearest:nearest,
