@@ -1382,10 +1382,10 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     }
     return {
       unlock:function(){ if(unlocked) return; unlocked=true; try{ el.muted=true; el.src='/assets/voice/arch/mind-inside.m4a?v=3'; var pr=el.play(); if(pr&&pr.then) pr.then(function(){ el.pause(); el.currentTime=0; el.muted=false; }).catch(function(){ el.muted=false; }); else el.muted=false; }catch(e){} },
-      welcome:function(){ if(welcomed||ss('saWelcomed')==='1'||ss('saArchVoice')==='off') return;
+      welcome:function(done){ if(welcomed||ss('saWelcomed')==='1'||ss('saArchVoice')==='off'){ if(done) setTimeout(done,80); return; }
         welcomed=true; ss('saWelcomed','1');
-        var mine=start.call(this,null); fading=true;
-        playSrc('/assets/voice/arch/mind-inside.m4a?v=3',mine,function(){ if(tok!==mine) return; fading=false; fallback(LINE,function(){}); });
+        var mine=start.call(this,done); fading=true;
+        playSrc('/assets/voice/arch/mind-inside.m4a?v=3',mine,function(){ if(tok!==mine) return; fading=false; fallback(LINE,done||function(){}); });
       },
       play:function(id,text,done){
         if(!text&&!id){ setTimeout(function(){ done&&done(); },80); return; }
@@ -1414,6 +1414,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     var PAGES={
       core:'This is the Core — the front door of Neuron Pulse. We build intelligent websites and apps for specialist niches. Fly freely, join as an engineer, or tell us what you want built.',
       services:'The Forge is our services. Starter is a clean one-page site. Signature is a fully custom site or app. Every project starts with a free mock-up before you spend anything.',
+      forge:'The Forge is our services. Starter is a clean one-page site. Signature is a fully custom site or app. Every project starts with a free mock-up before you spend anything.',
       process:'The Pathway is how a build happens. Consult, mock-up, a written quote, then we build and launch. You see the work before you pay.',
       referral:'The Gift is our referral. Send us a client who takes the care plan, and you keep their entire first month. It costs you nothing.',
       about:'The Origin is who we are. The founder built this mind to bring people together, and to use AI to deliver apps that solve real problems — finding the ground between efficiency, safety and security.',
@@ -1435,7 +1436,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     function mark(k){ said[k]=1; ss('saGuideSaid',JSON.stringify(said)); }
     function later(fn){ clearTimeout(t); t=setTimeout(fn,700); }
     var CLIP={
-      core:'guide-core',services:'guide-services',process:'guide-process',referral:'guide-referral',
+      core:'guide-core',services:'guide-services',forge:'guide-services',process:'guide-process',referral:'guide-referral',
       about:'guide-about',faq:'guide-faq',news:'guide-news',secret:'guide-secret',guild:'guide-guild',
       'Voltz CRM':'guide-voltz','Mind Universe':'guide-mind','SpareDrive':'guide-spare',
       'Qlarvia':'guide-qlarvia','NEX License':'guide-nex','The Talking Therapist':'guide-therapist',
@@ -1449,7 +1450,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     return {
       page:function(id){
         if(!id||id==='portfolio'||id==='build'||id.indexOf('m-')===0) return;
-        if(id==='core'&&document.getElementById('choice')&&document.getElementById('choice').classList.contains('on')) return;
+        if(id==='forge') id='services';
         speak('page:'+id,CLIP[id],PAGES[id]);
       },
       app:function(name){
@@ -2248,7 +2249,8 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
 
   /* the gate */
   var btx=document.getElementById('btx');
-  function enter(){ if(document.body.classList.contains('inside')) return; FX('warp'); btx.classList.add('gone'); Jess.unlock(); Jess.welcome();
+  function enter(){ if(document.body.classList.contains('inside')) return; FX('warp'); btx.classList.add('gone'); Jess.unlock();
+    Jess.welcome(function(){ if(cur==='core'&&!shown) NPGuide.page('core'); });
     var target=(location.hash||'').slice(1); if(!byId[target]||byId[target].secret) target='core';
     M.enter(function(){ document.body.classList.add('inside'); cur='core'; setTimeout(function(){ if(cur!=='core'||busy||shown) return; M.fire('core');
         if(target!=='core') travelTo(target); else showChoice(); },2300); }); }
