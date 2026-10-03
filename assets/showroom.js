@@ -17,7 +17,7 @@
       back:'radial-gradient(circle at 30% 22%,rgba(255,79,168,.85),transparent 46%),radial-gradient(circle at 72% 80%,rgba(46,230,255,.75),transparent 46%),linear-gradient(160deg,#3b1d7a,#0b0820)',
       backHtml:'<span style="font-size:1.05rem">Mind<span style="color:#d4b8ff">Universe</span></span><small>by Neuron Pulse</small>',
       screens:[[M+'mu-02-home.jpg','Your mind'],[M+'mu-03-mood.jpg','Mood'],[M+'mu-01-enter.jpg','Enter your mind']]},
-    {name:'SpareDrive',status:'In development',card:2,accent:'#12b877',text:['Spare','Drive'],tag:'Launching soon'},
+    {name:'SpareDrive',status:'In development',card:2,accent:'#12b877',text:['Spare','Drive'],tag:'Spare driveway parking'},
     {name:'Qlarvia',status:'In the pipeline',card:3,accent:'#6d4aff',tag:'Software intelligence platform'},
     {name:'NEX License',status:'In the pipeline',card:4,accent:'#1f6bff',tag:'Consulting platform'},
     {name:'The Talking Therapist',status:'In the pipeline',card:5,accent:'#14b8a6',tag:'Therapy and wellbeing'},
