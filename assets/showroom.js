@@ -29,7 +29,12 @@
   function R_(a,b){ return a+Math.random()*(b-a); }
   function hexA(h,a){ var n=parseInt(h.slice(1),16); return 'rgba('+(n>>16)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
   function loadImg(src){ return new Promise(function(res){ if(!src) return res(null); var im=new Image(); im.onload=function(){ res(im); }; im.onerror=function(){ res(null); }; im.src=src; }); }
-  function logoOf(i){ var im=cards[i]&&cards[i].querySelector('.folio-logo-chip img'); return im?im.src:null; }
+  function logoOf(i){
+    var im=cards[i]&&cards[i].querySelector('.folio-logo-chip img');
+    if(!im||!im.src) return null;
+    if(im.src.indexOf('data:')===0 && im.src.length>80000) return null;
+    return im.src;
+  }
   function rr(c,x,y,w,h,r){ c.beginPath(); if(c.roundRect) c.roundRect(x,y,w,h,r); else c.rect(x,y,w,h); }
 
   /* apps still in the pipeline get a branded phone splash so every device still has a live preview */
@@ -87,10 +92,12 @@
     if(reduce||lite) d.tiles.forEach(function(t){ t.style.opacity=1; });
     d.item=item; d.dev=dev; d.spin=spin; d.rig=rig; d.ry=d.home; d.rx=d.rx0; d.vy=0; d.ph=idx*1.3; d.idle=0; d.cur=0;
     d.i=idx; d.kf=idx;
-    dev.addEventListener('pointerdown',function(e){ if(e.button||flying) return; d.drag=true; d.moved=0; d.lx=e.clientX; d.ly=e.clientY; d.vy=0; try{ dev.setPointerCapture(e.pointerId); }catch(_){} });
+    dev.addEventListener('pointerdown',function(e){ if(e.button) return; clearFly(); d.drag=true; d.moved=0; d.sx=e.clientX; d.sy=e.clientY; d.lx=e.clientX; d.ly=e.clientY; d.vy=0; try{ dev.setPointerCapture(e.pointerId); }catch(_){} });
     dev.addEventListener('pointermove',function(e){ if(!d.drag) return; var dx=e.clientX-d.lx, dy=e.clientY-d.ly; d.lx=e.clientX; d.ly=e.clientY;
       d.moved+=Math.abs(dx)+Math.abs(dy); d.ry+=dx*.6; d.vy=dx*.6; d.rx=Math.max(-70,Math.min(45,d.rx-dy*.35)); });
     dev.addEventListener('pointerup',function(){ if(!d.drag) return; d.drag=false; d.idle=performance.now();
+      var swipe=d.lx-d.sx;
+      if(Math.abs(swipe)>48 && d.i===focus){ setFocus(focus+(swipe<0?1:-1)); return; }
       if(d.moved<6){ if(d.i===focus) openDev(d); else setFocus(d.i); } });
     dev.addEventListener('wheel',function(e){ e.preventDefault(); wheel(e.deltaY||e.deltaX); },{passive:false});
     dev.addEventListener('pointercancel',function(){ d.drag=false; d.idle=performance.now(); });
@@ -101,7 +108,14 @@
   var nav=el('div','np-nav',row,'<button type="button" aria-label="Previous app">&lsaquo;</button><span></span><button type="button" aria-label="Next app">&rsaquo;</button>');
   var navB=nav.querySelectorAll('button'), navN=nav.querySelector('span');
   navB[0].onclick=function(){ setFocus(focus-1); }; navB[1].onclick=function(){ setFocus(focus+1); };
+  function clearFly(){
+    if(!flying) return;
+    flying=null;
+    try{ light.getAnimations().forEach(function(a){ a.cancel(); }); }catch(e){}
+    light.style.opacity='0'; light.innerHTML='';
+  }
   function setFocus(i){
+    clearFly();
     focus=Math.max(0,Math.min(list.length-1,i));
     list.forEach(function(d){ d.item.classList.toggle('back',d.i!==focus); });
     navB[0].disabled=focus===0; navB[1].disabled=focus===list.length-1; navN.textContent=(focus+1)+' / '+list.length;
@@ -109,9 +123,10 @@
   }
   function wheel(dy){ var now=performance.now(); if(now-wheelT>400) wheelAcc=0; wheelT=now; wheelAcc+=dy;
     if(Math.abs(wheelAcc)>60){ setFocus(focus+(wheelAcc>0?1:-1)); wheelAcc=0; wheelT=now+250; } }
-  addEventListener('keydown',function(e){ if(!row.classList.contains('on')||flying) return;
+  addEventListener('keydown',function(e){ if(!row.classList.contains('on')) return;
     if(e.key==='ArrowRight'||e.key==='ArrowDown'){ setFocus(focus+1); e.preventDefault(); }
     else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ setFocus(focus-1); e.preventDefault(); }
+    else if(e.key==='Escape'){ clearFly(); e.preventDefault(); }
     else if(e.key==='Enter'&&document.activeElement===document.body) openDev(list[focus]); });
   setFocus(0);
 
@@ -126,15 +141,13 @@
 
   /* travel into the light, then the app takes over */
   function openDev(d){
-    if(flying||!d.built) return; flying={d:d,t0:performance.now()};
+    if(!d||!d.href||flying||!d.built) return;
+    flying={d:d,t0:performance.now()};
     var r=d.dev.getBoundingClientRect(); light.style.setProperty('--lx',(r.left+r.width/2)+'px'); light.style.setProperty('--ly',(r.top+r.height/2)+'px');
-    light.innerHTML=d.href?'':'<h3>'+d.name+'</h3><p>In development &middot; Neuron Pulse</p>';
+    light.innerHTML='';
     try{ SAMind.fire('portfolio'); SAMind.warp(); }catch(e){}
     light.animate([{opacity:0},{opacity:.35,offset:.45},{opacity:1}],{duration:950,easing:'cubic-bezier(.5,0,.7,1)',fill:'forwards'});
-    setTimeout(function(){
-      if(d.href){ location.href=d.href; return; }
-      setTimeout(function(){ light.animate([{opacity:1},{opacity:0}],{duration:800,easing:'ease-out',fill:'forwards'}); flying=null; },1100);
-    },1000);
+    setTimeout(function(){ location.href=d.href; },1000);
   }
   addEventListener('pageshow',function(e){ if(e.persisted){ flying=null; light.getAnimations().forEach(function(a){ a.cancel(); }); } });
   function hud(d,h){ d.hudEl.innerHTML=h; }
@@ -220,7 +233,7 @@
     });
     var fy=o.y+g.fy+186*g.S+(innerWidth<900?72:110);
     nav.style.transform='translate('+(o.x+g.fx).toFixed(1)+'px,'+Math.min(innerHeight-64,fy).toFixed(1)+'px) translateX(-50%)';
-    nav.style.opacity=(flying||document.body.classList.contains('flying'))?0:1;
+    nav.style.opacity=document.body.classList.contains('flying')?0:1;
   }
   requestAnimationFrame(frame);
 
