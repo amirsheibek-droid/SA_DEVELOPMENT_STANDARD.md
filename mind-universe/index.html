@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mind Universe — your mind, as a universe</title>
+<title>Mind Universe</title>
 <meta http-equiv="Cache-Control" content="no-cache">
-<meta name="description" content="Mind Universe: your moods, diary, goals, habits, memories, hadith and positive thoughts as glowing neurons you can fly through.">
+<meta name="description" content="">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#03040a">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -618,39 +618,17 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 </head>
 <body class="dark">
 <div id="neural" aria-hidden="true"></div>
-<div id="worldLayer" aria-hidden="true"></div>
-<div id="worldHud">
-  <div class="wh-top">
-    <div><b id="whName">Cube Keep</b><span id="whStop"></span></div>
-    <button class="wh-exit" type="button" id="whExit">Back to Mind</button>
-  </div>
-  <div class="wh-map" id="whMap"></div>
-  <div class="wh-mid">
-    <div id="whCard"></div>
-    <div class="wh-nav">
-      <button type="button" id="whPrev">Up a floor</button>
-      <button type="button" id="whNext">Down a floor</button>
-    </div>
-  </div>
-  <div class="wh-bot">
-    <div id="whPath"></div>
-    <div id="whHint"></div>
-    <button type="button" id="whFly">HOLD<br>TO FLY</button>
-  </div>
-</div>
-
-
 <div class="gate" id="gate">
-  <div class="eye">Mind Universe</div>
-  <h1>Enter your <span class="grad">mind</span></h1>
-  <p>Your moods, ideas, goals and memories &mdash; living as glowing neurons in your own universe. Private, and only on this device.</p>
-  <input id="gName" placeholder="What should your mind call you?" autocomplete="given-name" maxlength="30">
+  <div class="eye"></div>
+  <h1><span class="grad">·</span></h1>
+  <p></p>
+  <input id="gName" placeholder="" autocomplete="given-name" maxlength="30">
   <button class="enter" id="gEnter">Enter</button>
-  <small>Your private universe &mdash; saved only on this device &middot; <a href="/" class="sa-link">an app in progress by Neuron Pulse</a></small>
+  <small></small>
 </div>
 
 <div class="hud brand"><i></i><span>MIND UNIVERSE</span></div>
-<div class="hud tools"><span class="chip" id="presence" hidden><i class="pdot"></i><span id="presenceTxt"></span></span><button class="chip" id="worldsChip" type="button" title="Cube Keep">Cube Keep</button><button class="chip" id="coinChip" type="button" data-go="me" title="Mind coins">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835; Sound</button><button class="chip" id="themeBtn" type="button">&#9788; Light</button></div>
+<div class="hud tools"><span class="chip" id="presence" hidden><i class="pdot"></i><span id="presenceTxt"></span></span><button class="chip" id="remindChip" type="button">·</button><button class="chip" id="coinChip" type="button" data-go="me">&#9673; 0</button><button class="chip" id="soundBtn" type="button">&#9835;</button><button class="chip" id="themeBtn" type="button">&#9788;</button></div>
 <div id="soundMenu" role="menu" aria-label="Sound">
   <div class="h">Calm</div>
   <button type="button" data-snd="off"><i></i>Silence</button>
@@ -675,11 +653,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 </div>
 <div id="flyui" aria-hidden="true">
   <div class="cross"></div><div class="flynear" id="flyNear"></div><div class="flyhint" id="flyHint"></div>
-  <button class="thrust" id="thrust" type="button" aria-label="Hold to fly">HOLD<br>TO FLY</button>
+  <button class="thrust" id="thrust" type="button" aria-label="">·</button>
   <button class="enter-pill" id="enterPill" type="button" hidden></button>
 </div>
 <div class="guide" id="guide"><i class="g-ring"></i><i class="g-arrow"></i><span id="guideTxt"></span></div>
-<div id="flyHelp" role="dialog" aria-label="How to fly"><div class="fh-in"><div class="eyebrow">Free flight</div><h3>Hold down and fly</h3><p id="fhText"></p><button class="btn" type="button" id="fhGo">Let's fly</button></div></div>
+<div id="flyHelp" role="dialog" aria-label=""><div class="fh-in"><div class="eyebrow"></div><h3></h3><p id="fhText"></p><button class="btn" type="button" id="fhGo">·</button></div></div>
 <div id="electron" aria-hidden="true">
   <div class="e-rain l" id="rainL"></div><div class="e-rain r" id="rainR"></div>
   <div class="atom"><svg viewBox="0 0 250 250">
@@ -689,19 +667,19 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     <circle class="nuc" cx="125" cy="125" r="15"/>
   </svg></div>
   <div class="e-count"><span id="eNum">000</span><small>%</small></div>
-  <div class="e-label" id="eLabel">Travelling</div>
+  <div class="e-label" id="eLabel"></div>
   <div class="e-log" id="eLog"></div>
 </div>
 <div id="labels"></div>
 <div id="haze"></div>
 <div id="readout"></div>
 <div id="toast"></div>
-<nav id="dock" aria-label="Your neurons">
-  <div class="dock-top"><span>Neurons</span><span><b id="dockN">1</b> / <span id="dockT">0</span> found</span></div>
+<nav id="dock" aria-label="">
+  <div class="dock-top"><span></span><span><b id="dockN">1</b> / <span id="dockT">0</span></span></div>
   <div class="dock-row" id="dockRow"></div>
 </nav>
-<aside id="coreRail" aria-label="Core pages and mysteries">
-  <div class="cr-lab">Pages</div>
+<aside id="coreRail" aria-label="">
+  <div class="cr-lab">·</div>
   <div class="cr-sec" id="crCore"></div>
   <div class="cr-div"></div>
   <div class="cr-lab">?</div>
@@ -731,14 +709,18 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   <div class="vk-space" id="vkBoard"></div>
   <div class="vk-cancel"><button class="ghost" type="button" id="vkCancel">Not now</button></div>
 </div>
-<div id="intro" role="dialog" aria-label="How your mind works"><div class="in-card">
-  <div class="eyebrow">Welcome to your mind</div><h3 id="inTitle"></h3><p id="inText"></p><div class="in-dots" id="inDots"></div>
-  <div class="row"><button class="ghost" type="button" id="inSkip">Skip</button><button class="btn" type="button" id="inNext">Next</button></div></div></div>
+<div id="intro" role="dialog" aria-label="" hidden><div class="in-card">
+  <div class="eyebrow"></div><h3 id="inTitle"></h3><p id="inText"></p><div class="in-dots" id="inDots"></div>
+  <div class="row"><button class="ghost" type="button" id="inSkip">·</button><button class="btn" type="button" id="inNext">·</button></div></div></div>
 <div id="room" aria-hidden="true"><div class="r-floor"></div><div class="r-horizon"></div><div class="r-in" id="roomIn"></div><button class="r-out" type="button" id="roomOut">&larr; Walk back through the door</button></div>
 <div id="door" aria-hidden="true"><div class="d-light"></div><div class="d-frame"><div class="d-panel l"><i></i></div><div class="d-panel r"><i></i></div></div></div>
 <div id="mwin" role="dialog" aria-label="Mind window"><div class="mw-bar"><b id="mwTitle"></b><span><a id="mwOut" target="_blank" rel="noopener">open outside &#8599;</a><button type="button" id="mwX" aria-label="Close">&#10005;</button></span></div><div class="mw-body" id="mwBody"></div></div>
 
 <script src="assets/hadith.js"></script>
+<script src="assets/quran-reminders.js?v=1"></script>
+<script src="assets/duas.js?v=2"></script>
+<script src="assets/deen-year.js?v=2"></script>
+<script src="assets/moods-1000.js?v=1"></script>
 <script src="assets/secrets.js?v=1"></script>
 <script>
 /* ── the map of the mind ── */
@@ -760,12 +742,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     {id:'studio',  name:'Creative studio',col:'#ffc44d', pos:[98,-36,-132], yaw:-.5,  dist:32, scale:1.1},
     {id:'arcade',  name:'Arcade',       col:'#ff4f6d', pos:[0,-58,-148],   yaw:0,    dist:34, scale:1.15},
     {id:'connect', name:'Community',  col:'#cfd6ff', pos:[0,8,-170],     yaw:0,    dist:32},
-    {id:'worlds',  name:'Cube Keep',   col:'#7fe0c3', pos:[0,22,-195],    yaw:0,    dist:40, scale:1.45, hint:'fly it the same way you fly the mind'},
-    {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-1180,90,-380],  yaw:.9,   dist:34, scale:1.2, hidden:true},
+    {id:'sage',    name:'The Sage',     col:'#ffc44d', pos:[-70,26,-48],  yaw:.4,   dist:36, scale:1.3},
     {id:'light',   name:'Light',        col:'#19f0b0', pos:[1180,80,-420],   yaw:-.9,  dist:34, scale:1.2, hidden:true}
   ];
   var L=[['me','mood'],['me','progress'],['me','diary'],['me','todo'],['me','goals'],['me','plan'],['mood','progress'],['goals','plan'],['plan','todo'],
-    ['diary','trackers'],['todo','gallery'],['gallery','year'],['progress','year'],['me','year'],['goals','draw'],['goals','ai'],['draw','connect'],['ai','connect'],['mood','sage'],['progress','light'],['trackers','sage'],['gallery','light'],['trackers','portals'],['diary','portals'],['gallery','studio'],['goals','studio'],['todo','studio'],['portals','connect'],['studio','connect'],['studio','arcade'],['portals','arcade'],['arcade','connect'],['me','worlds'],['arcade','worlds'],['portals','worlds']];
+    ['diary','trackers'],['todo','gallery'],['gallery','year'],['progress','year'],['me','year'],['goals','draw'],['goals','ai'],['draw','connect'],['ai','connect'],['mood','sage'],['progress','light'],['trackers','sage'],['gallery','light'],['trackers','portals'],['diary','portals'],['gallery','studio'],['goals','studio'],['todo','studio'],['portals','connect'],['studio','connect'],['studio','arcade'],['portals','arcade'],['arcade','connect'],['me','sage'],['listen','sage']];
   var TH={}; (window.H_THEMES||[]).forEach(function(t){ TH[t.id]=t; });
   function rng(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0; var x=Math.imul(seed^seed>>>15,1|seed); x=x+Math.imul(x^x>>>7,61|x)^x; return ((x^x>>>14)>>>0)/4294967296; }; }
   var R=rng(2026), MAIN=D.slice();
@@ -776,7 +757,8 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
       var ok=D.every(function(d){ var dx=d.pos[0]-p[0],dy=d.pos[1]-p[1],dz=d.pos[2]-p[2]; return dx*dx+dy*dy+dz*dz>220*220; }); if(ok) return p; }
     return [hub.pos[0]+(R()-.5)*480, hub.pos[1]+(R()-.5)*260, hub.pos[2]+(R()-.5)*480]; }
   function addMystery(o,hubId){ if(o.from && new Date()<new Date(o.from)) return; o.pos=around(hubId||'me'); o.yaw=R()*2-1; o.dist=18; o.scale=.5; o.mini=true; o.hidden=true; D.push(o); L.push([hubId||'me',o.id]); }
-  take(window.H_HADITH||[],8).forEach(function(h){ addMystery({id:h.id,name:h.title,col:(TH[h.theme]||{}).col||'#ffc44d',kind:'hadith'},'sage'); });
+  D.push({id:'quran',name:'Qur’an',col:'#19f0b0',pos:[-80,40,-50],yaw:.3,dist:32,scale:1.2}); MAIN.push(D[D.length-1]); L.push(['me','quran'],['listen','quran'],['sage','quran']);
+  D.push({id:'dua',name:'Duas',col:'#ffc44d',pos:[80,36,-52],yaw:-.3,dist:32,scale:1.15}); MAIN.push(D[D.length-1]); L.push(['me','dua'],['sage','dua'],['quran','dua']);
   window.H_LIGHT=[
     {t:'Small steps count',b:'Tiny actions done often change more than big plans done once.'},
     {t:'You are not your thoughts',b:'A thought is something you have, not something you are. You can notice it and let it pass.'},
@@ -850,10 +832,16 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   take(secretPool,8).forEach(function(x){ var id='s'+(x.i+1); addMystery({id:id,name:x.s[1],col:SCOL[x.s[0]]||'#cfd6ff',kind:'secret',sk:x.s[0]},'connect'); });
   H_DROPS.forEach(function(x){ if(new Date()<new Date(x.from)) return; H_LIGHT.push(x); addMystery({id:x.id,name:x.t,col:'#ffc44d',kind:'light'},'light'); });
   /* stars, not a cluster: core rings far from Home so you turn and find beauty */
-  (function(){ var inner=['mood','diary','todo','goals','plan','trackers','progress','gallery','year','studio'], outer=['rooms','calendar','ramadan','stories','listen','portals','draw','ai','arcade','connect'];
+  (function(){ var inner=['mood','diary','todo','goals','plan','trackers','progress','gallery','year','studio','sage','quran','dua'], outer=['rooms','calendar','ramadan','stories','listen','portals','draw','ai','arcade','connect'];
     function place(ids,r,y0,tilt){ ids.forEach(function(id,i){ var d=D.filter(function(x){ return x.id===id; })[0]; if(!d) return; var a=i/ids.length*Math.PI*2+tilt;
       d.pos=[Math.cos(a)*r, y0+Math.sin(a*2)*28, -40+Math.sin(a)*r*.75]; d.yaw=Math.atan2(Math.cos(a),Math.sin(a))*0+(-Math.cos(a)*.6); }); }
     place(inner,1480,80,.2); place(outer,2860,-140,.55);
+    var sage=D.filter(function(x){ return x.id==='sage'; })[0]||D[0];
+    (window.H_YEAR||[]).forEach(function(x,i){
+      var a=i/Math.max(1,(window.H_YEAR||[]).length)*Math.PI*2, b=((i%9)-4)*0.1, rad=620+(i%7)*42;
+      if(D.filter(function(d){ return d.id===x.id; })[0]) return;
+      D.push({id:x.id,name:x.title,col:x.col||'#cfd6ff',pos:[sage.pos[0]+Math.cos(a)*Math.cos(b)*rad,sage.pos[1]+Math.sin(b)*rad*.65,sage.pos[2]+Math.sin(a)*Math.cos(b)*rad],yaw:0,dist:18,scale:.4,mini:true,hidden:true,kind:x.kind||'deen',yearLight:true,yi:i,n:x.n,ayah:x.a});
+    });
     var hub=D.filter(function(x){ return x.id==='rooms'; })[0], rooms=D.filter(function(x){ return x.kind==='room'; });
     rooms.forEach(function(r,i){ var a=i/rooms.length*Math.PI*2, rad=420+(i%2)*140; r.pos=[hub.pos[0]+Math.cos(a)*rad, hub.pos[1]+Math.sin(a)*rad*.6, hub.pos[2]+Math.sin(a)*rad*.8]; });
     var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'], yhub=D.filter(function(x){ return x.id==='year'; })[0];
@@ -865,12 +853,14 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="assets/mind-space.js?v=14"></script>
+<script src="assets/mind-space.js?v=16"></script>
 <script src="assets/mind-games.js?v=2"></script>
 <script src="assets/mind-garden.js?v=1"></script>
 <script src="assets/mind-draw.js?v=1"></script>
 <script src="assets/mind-cube.js?v=1"></script>
-<script src="assets/mind-worlds.js?v=8"></script>
+<script src="assets/mind-sage.js?v=1"></script>
+<script src="assets/mind-book.js?v=1"></script>
+<script src="assets/mind-ai.js?v=1"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -1106,7 +1096,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     return;
   }
   try{ S=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ S={}; }
-  S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[];
+  S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[]; S.sageVoice=S.sageVoice||'man'; S.mem=S.mem||{}; S.qSurah=S.qSurah||1; S.duaCat=S.duaCat||'';
   S.focus=S.focus||{}; S.habits=S.habits||[{id:'water',n:'Water (glasses)',t:8,c:'#2ee6ff'},{id:'sleep',n:'Sleep (hours)',t:8,c:'#a45cff'},{id:'move',n:'Move (minutes)',t:30,c:'#19f0b0'},{id:'read',n:'Read (pages)',t:10,c:'#ffc44d'}];
   var SOCIAL=[{id:'sm_yt',n:'YouTube',re:/(^|\.)(youtube\.com|youtu\.be)$/i,t:30,c:'#ff4f6d'},{id:'sm_ig',n:'Instagram',re:/(^|\.)instagram\.com$/i,t:20,c:'#ff4fa8'},{id:'sm_fb',n:'Facebook',re:/(^|\.)(facebook\.com|fb\.com)$/i,t:20,c:'#2ee6ff'},{id:'sm_tt',n:'TikTok',re:/(^|\.)tiktok\.com$/i,t:20,c:'#fff'},{id:'sm_x',n:'X / Twitter',re:/(^|\.)(twitter\.com|x\.com)$/i,t:20,c:'#a45cff'},{id:'sm_li',n:'LinkedIn',re:/(^|\.)linkedin\.com$/i,t:20,c:'#4f7dff'},{id:'sm_wa',n:'WhatsApp',re:/(^|\.)whatsapp\.com$/i,t:20,c:'#19f0b0'}];
   (function(){ var have={}; S.habits.forEach(function(h){ have[h.id]=1; }); SOCIAL.forEach(function(s){ if(!have[s.id]) S.habits.push({id:s.id,n:s.n,t:s.t,c:s.c,unit:'min',auto:true}); }); })();
@@ -1217,13 +1207,26 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   applyTheme();
 
   /* ── moods ── */
-  var MOODS=[{n:'Joyful',c:'#ffc44d',v:5},{n:'Grateful',c:'#19f0b0',v:5},{n:'Hopeful',c:'#ff4fa8',v:4},{n:'Calm',c:'#2ee6ff',v:4},{n:'Tired',c:'#a45cff',v:2},{n:'Anxious',c:'#ff8a3d',v:2},{n:'Low',c:'#4f7dff',v:1}];
-  function moodOf(n){ for(var i=0;i<MOODS.length;i++) if(MOODS[i].n===n) return MOODS[i]; return MOODS[3]; }
+  var MOODS=window.H_MOODS&&H_MOODS.length?H_MOODS:[{n:'Joyful',e:'😄',c:'#ffc44d',v:5},{n:'Grateful',e:'🙏',c:'#19f0b0',v:5},{n:'Hopeful',e:'🌅',c:'#ff4fa8',v:4},{n:'Calm',e:'😌',c:'#2ee6ff',v:4},{n:'Tired',e:'😮‍💨',c:'#a45cff',v:2},{n:'Anxious',e:'😰',c:'#ff8a3d',v:2},{n:'Low',e:'😔',c:'#4f7dff',v:1}];
+  var moodQ='', monthOff=0;
+  function moodOf(n){ for(var i=0;i<MOODS.length;i++) if(MOODS[i].n===n) return MOODS[i]; return {n:n||'Calm',e:'🙂',c:'#2ee6ff',v:3,fam:'peace'}; }
+  function monthDays(off){ var d=new Date(); d.setDate(1); d.setMonth(d.getMonth()+(off||0)); d.setHours(12,0,0,0);
+    var y=d.getFullYear(), m=d.getMonth(), first=new Date(y,m,1), start=(first.getDay()+6)%7, last=new Date(y,m+1,0).getDate(), days=[];
+    for(var i=0;i<start;i++) days.push(null);
+    for(var day=1;day<=last;day++){ var k=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0'); var ms=S.moods.filter(function(x){ return x.day===k; }); days.push({k:k,day:day,last:ms[0]||null}); }
+    return {title:MN[m]+' '+y, days:days}; }
   var weekOff=0, WD=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function weekStart(off){ var d=new Date(); d.setHours(12,0,0,0); var day=(d.getDay()+6)%7; d.setDate(d.getDate()-day+(off||0)*7); return d; }
   function weekTitle(off){ var s=weekStart(off), e=new Date(s); e.setDate(s.getDate()+6); var a=s.getDate()+' '+MN[s.getMonth()], b=e.getDate()+' '+MN[e.getMonth()]; return (off===0?'This week · ':'')+a+' – '+b; }
   function weekDays(off){ var s=weekStart(off), days=[]; for(var i=0;i<7;i++){ var d=new Date(s); d.setDate(s.getDate()+i); var k=today(d), ms=S.moods.filter(function(m){ return m.day===k; });
     days.push({k:k,label:WD[i],date:d.getDate(),moods:ms,mood:ms.length?ms.reduce(function(n,m){ return n+moodOf(m.m).v; },0)/ms.length:null,last:ms[0]||null}); } return days; }
+  function voicePick(){ var g=(S.sageVoice||'man'); return '<div class="row"><button type="button" class="ghost" data-act="voiceMan" style="'+(g==='man'?'color:var(--gold)':'')+'">Wise man</button><button type="button" class="ghost" data-act="voiceWoman" style="'+(g==='woman'?'color:var(--gold)':'')+'">Gentle woman</button></div>'; }
+  function todayCard(){ var t=window.H_TODAY?H_TODAY():{title:'Peace',en:'In the remembrance of God do hearts find rest.',src:'Qur’an 13:28',ar:'',kind:'quran'};
+    return '<h3>'+esc(t.title)+'</h3>'+(t.ar?'<div class="ar">'+t.ar+'</div>':'')+'<p class="en">&ldquo;'+esc(t.en)+'&rdquo;</p><p class="src">'+esc(t.src)+'</p>'; }
+  function moodGrid(q){ q=(q||'').toLowerCase(); var src=MOODS, list;
+    if(!q) list=src.slice(0,7);
+    else list=src.filter(function(m){ return m.n.toLowerCase().indexOf(q)>=0||(m.fam&&m.fam.indexOf(q)>=0); }).slice(0,21);
+    return '<div class="orbs" id="moodPick">'+list.map(function(m){ return '<button class="orb'+(selMood===m.n?' sel':'')+'" data-mood="'+esc(m.n)+'" style="--oc:'+m.c+'"><i></i><span>'+(m.e?m.e+' ':'')+esc(m.n)+'</span></button>'; }).join('')+'</div>'; }
 
 
   var YMONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -1233,12 +1236,12 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   function yearOf(m){ return +mediaWhen(m).slice(0,4); }
   function yearOff(doy,k){ var t=doy/365, a=t*Math.PI*2-Math.PI/2, r=30+(k%3)*3; return [Math.cos(a)*r,(k%2?5:-2)+Math.sin(t*Math.PI*2)*5,Math.sin(a)*r]; }
   function yearPage(){ var Y=S.yearView||2025;
-    return eb('The year','#ffd27a')+'<h2>'+Y+'.</h2><p>Beside this neuron, your photos and videos hang as big squares in one line. The newest is closest. Each step back is an older date, using the day the picture was taken. Fly along them.</p>'+
-      '<div class="row"><button class="btn" data-act="yearRide" style="--c:#ffd27a">Fly through '+Y+'</button><button class="ghost" data-act="addMedia">Add photos or videos</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile">'+
+    return eb('','#ffd27a')+'<h2>'+Y+'</h2>'+
+      '<div class="row"><button class="btn" data-act="yearRide" style="--c:#ffd27a">·</button><button class="ghost" data-act="addMedia">+</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile">'+
       '<div class="ybar">'+YMONTHS.map(function(n,i){ return '<span style="left:'+((i+.5)/12*100)+'%">'+n.slice(0,3)+'</span>'; }).join('')+'</div>'+
-      '<div id="yearList"><p class="empty">Loading…</p></div><p class="small">Memories not in '+Y+' stay in albums until you date them onto this year. <button class="link" data-go="gallery" style="margin:0">Open Memories</button></p>'; }
+      '<div id="yearList"></div>'; }
   function yearMonthPage(mo){ var Y=S.yearView||2025, n=YMONTHS[mo];
-    return eb(Y+' · '+n,'#ffd27a')+'<h2>'+n+' '+Y+'.</h2><p>Memories from this month hover around you in the year.</p>'+
+    return eb('','#ffd27a')+'<h2>'+n+' '+Y+'</h2>'+
       '<div class="row"><button class="btn" data-act="yearRide" style="--c:#ffd27a">Fly through '+Y+'</button><button class="ghost" data-go="year">Whole year</button></div>'+
       '<div id="yearList" data-mo="'+mo+'"><p class="empty">Loading…</p></div>'; }
   function memThumb(m){ var sealed=mediaSealed(m), src=sealed?'':(m.type==='video'?(m._src||''):m.url), day=mediaWhen(m);
@@ -1272,156 +1275,139 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
         ['me','Mysteries',my.n+' / '+my.t+' found','#cfd6ff',my.t?my.n/my.t*100:0],
         ['connect','In your mind',(window.MU_VISITORS&&MU_VISITORS.length)?MU_VISITORS.map(function(v){ return v.name; }).join(', '):'Just you right now','#19f0b0',(window.MU_VISITORS&&MU_VISITORS.length)?100:0]
       ];
-      return eb('Home','#ffffff')+'<h2>'+(p.name?'Welcome back, '+esc(p.name)+'.':'Welcome to your mind.')+'</h2><p>Your whole mind, from the outside. Double-tap a far light to travel. Tap when you are next to one to open it.</p>'+
+      return eb('','#ffffff')+(p.name?'<h2>'+esc(p.name)+'</h2>':'')+
         coreRow()+statRings(rows,qd,qt)+'<div class="hstats">'+rows.map(function(r,i){ var unk=false; return '<button class="hstat" '+(r[0]!=='me'&&!unk?'data-go="'+r[0]+'"':'')+' style="--c:'+r[3]+';animation-delay:-'+(i*.7)+'s"><i></i><span class="hl">'+r[1]+'</span><span class="hv">'+esc(r[2])+'</span><span class="hb"><b style="width:'+Math.round(r[4])+'%"></b></span></button>'; }).join('')+'</div>'+
-        '<div class="row"><button class="btn" data-act="worlds" style="--c:#2ee6ff">Enter Cube Keep</button></div>'+
-        '<div class="row"><button class="link" data-act="fly">&#10022; Fly freely</button><button class="link" data-go="mood">How are you feeling?</button></div>'+
-        '<details class="hmore"><summary>Today’s quests &middot; '+qd+'/'+qt+'</summary><ul class="thread" style="--c:#ffc44d">'+Object.keys(QUESTS).map(function(k){ var dn=qDone(k); return true?'<li class="'+(dn?'done':'')+'" style="--dot:'+(byId[k]?byId[k].col:'#ffc44d')+'"><button data-go="'+k+'" style="text-align:left">'+QUESTS[k]+'</button></li>':'<li style="--dot:#cfd6ff"><span>? Find this neuron to unlock its quest</span></li>'; }).join('')+'</ul>'+
-          '<p class="small"><b>Mind Vision</b> (50 coins): every hidden light reveals itself for a minute.</p><div class="row"><button class="btn" data-act="vision" style="--c:#ffc44d">'+(S.coins>=50?'Unlock Mind Vision · 50':(50-S.coins)+' coins to go')+'</button></div></details>'+
-        '<details class="hmore"><summary>Privacy \u00B7 who can see what</summary>'+privacyHTML()+'</details>'+
-        '<details class="hmore"><summary>Profile &amp; settings</summary>'+(p.photo?'<img src="'+p.photo+'" alt="" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block">':'')+
-          '<input class="field" id="pName" placeholder="Your name" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="A line that describes you, or a dream" value="'+esc(p.line)+'">'+
-          '<div class="row"><button class="ghost" data-act="photo">&#9673; Photo</button><button class="btn" data-act="saveProfile">Save</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
-          '<p class="small"><button class="link" data-act="intro" style="margin:0">Show me how it works</button> &middot; <a class="sa-link" href="/#portfolio">Built by Neuron Pulse &#8599;</a></p><p class="small">Tap empty space to float back out here. Drag to look around. Golden lines are paths you’ve travelled; faint dashed lines are unexplored.</p>'+
-          '<div class="row"><button class="ghost" data-act="export">&#8681; Export my data</button><button class="ghost" data-act="wipe">&#10005; Delete everything</button></div>'+
-          '<p class="care">If you ever feel unsafe, please reach out &mdash; in the UK, <b>Samaritans are free on 116 123</b>, any time.</p></details>'; },
+        '<div class="row"><button class="link" data-act="fly">&#10022;</button></div>'+
+        '<details class="hmore"><summary>·</summary>'+(p.photo?'<img src="'+p.photo+'" alt="" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:14px auto 0;display:block">':'')+
+          '<input class="field" id="pName" placeholder="" value="'+esc(p.name)+'"><input class="field" id="pLine" placeholder="" value="'+esc(p.line)+'">'+
+          '<div class="row"><button class="ghost" data-act="photo">&#9673;</button><button class="btn" data-act="saveProfile">·</button><button class="btn" data-act="vision" style="--c:#ffc44d">✦</button></div><input type="file" accept="image/*" class="file" id="pPhoto">'+
+          '<div class="row"><button class="ghost" data-act="export">&#8681;</button><button class="ghost" data-act="wipe">&#10005;</button></div>'+
+          '<p class="care">116 123</p></details>'; },
     mood:function(){ var days=weekDays(weekOff);
-      var h=eb('Mood','#ff4fa8')+'<h2>How are you feeling right now?</h2><p>Tap the light that matches you. The week sits in a line, left to right, and the same charts hang beside the Mood neuron.</p><div class="orbs">'+
-        MOODS.map(function(m){ return '<button class="orb" data-mood="'+m.n+'" style="--oc:'+m.c+'"><i></i><span>'+m.n+'</span></button>'; }).join('')+'</div>'+
-        '<input class="field" id="mNote" placeholder="What\'s behind this feeling? (optional)" maxlength="160"><div class="row"><button class="btn" data-act="logMood">Save mood</button></div>'+
+      var mo=monthDays(monthOff);
+      var h=eb('Mood','#ff4fa8')+'<h2></h2>'+
+        moodGrid(moodQ)+
+        '<input class="field" id="moodFind" placeholder="" value="'+esc(moodQ)+'">'+
+        '<input class="field" id="mNote" placeholder="" maxlength="160"><div class="row"><button class="btn" data-act="logMood">·</button></div>'+
         '<div class="row"><button class="ghost" data-act="moodPrev">Earlier week</button><button class="ghost" data-act="moodNext"'+(weekOff>=0?' disabled':'')+'>Later week</button></div>'+
         '<p class="small" id="moodWeekLbl">'+weekTitle(weekOff)+'</p>'+
         '<div class="weekstrip" id="weekStrip">'+days.map(function(d){ var c=d.last?moodOf(d.last.m).c:'transparent'; return '<b>'+d.label+'<i style="--c:'+c+';background:'+(d.last?c:'var(--line)')+'"></i></b>'; }).join('')+'</div>'+
         '<div class="mood-grid"><canvas id="moodWeek"></canvas><canvas id="moodPie"></canvas></div>'+
         '<canvas id="moodFlow"></canvas>'+
         '<p id="moodRead">'+esc(localMoodRead(days))+'</p>'+
-        '<div class="row"><button class="btn" data-act="moodAI" style="--c:#ff4fa8">Summarise this week</button></div>'+
-        '<p class="small">The summary asks a free helper. Only this week’s mood names and notes are sent, just for that reading, and nothing is stored there.</p>'+
-        '<h3>Your recent moods</h3>'+(S.moods.length?'<ul class="thread">'+S.moods.slice(0,10).map(function(m){ return '<li style="--dot:'+moodOf(m.m).c+'"><b>'+esc(m.m)+'</b>'+(m.note?' &mdash; '+esc(m.note):'')+'<span class="meta">'+nice(m.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">No moods yet — your first one starts the week.</p>');
+        '<div class="row"><button class="ghost" data-act="monthPrev">Earlier month</button><span class="small">'+esc(mo.title)+'</span><button class="ghost" data-act="monthNext"'+(monthOff>=0?' disabled':'')+'>Later month</button></div>'+
+        '<div class="weekstrip">'+mo.days.filter(Boolean).map(function(d){ var c=d.last?moodOf(d.last.m).c:'transparent'; return '<b>'+d.day+'<i style="--c:'+c+';background:'+(d.last?c:'var(--line)')+'"></i></b>'; }).join('')+'</div>'+
+        '<div class="row"><button class="btn" data-act="moodAI" style="--c:#ff4fa8">·</button></div>'+
+        (S.moods.length?'<ul class="thread">'+S.moods.slice(0,10).map(function(m){ return '<li style="--dot:'+moodOf(m.m).c+'"><b>'+esc(m.m)+'</b>'+(m.note?' &mdash; '+esc(m.note):'')+'<span class="meta">'+nice(m.ts)+'</span></li>'; }).join('')+'</ul>':'');
       return h; },
-    progress:function(){ return eb('Progress','#2ee6ff')+'<h2>How you\'ve been.</h2><p>Your last 14 days: the line is your mood, the bars are what you did.</p><canvas class="chart" id="chart"></canvas>'+
-        '<div class="stats"><div><b>'+streak()+'</b><span>Day streak</span></div><div><b>'+S.moods.length+'</b><span>Moods logged</span></div><div><b>'+S.notes.length+'</b><span>Diary entries</span></div><div><b>'+S.todos.filter(function(t){ return t.done; }).length+'</b><span>Tasks done</span></div></div>'+
-        '<p class="small">This chart also floats in your mind, beside the Progress neuron.</p>'; },
-    diary:function(){ if(nodeSealed('diary')) return lockGate('Diary','#ffc44d','Your diary is locked in the vault. Tap the hovering lights to open it.');
-      return eb('Diary','#ffc44d')+'<h2>Write it down.</h2><p>Your diary is yours alone &mdash; it never leaves this device.</p>'+
-        '<input class="field" id="dTitle" placeholder="Title (optional)" maxlength="80"><textarea class="field" id="dText" placeholder="Today I..."></textarea><div class="row"><button class="btn" data-act="addNote">Save entry</button></div>'+
-        (S.notes.length?'<ul class="thread">'+S.notes.map(function(n){ return '<li><button class="x" data-del-note="'+n.id+'" aria-label="Delete">&#10005;</button><b>'+esc(n.title||'Untitled')+'</b><br>'+esc(n.text).replace(/\n/g,'<br>')+'<span class="meta">'+nice(n.ts)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">Your first entry will appear here.</p>')+
-        '<div class="row"><button class="ghost" data-act="'+(hasVault()?(vaultOpen?'lockNow':'unlock'):'vaultSet')+'">'+(hasVault()?(vaultOpen?'Lock vault':'Unlock vault'):'Protect with hovering keys')+'</button></div>'; },
-    todo:function(){ return eb('To-do','#19f0b0')+'<h2>Things to do.</h2>'+'<button class="doorway" data-act="door">Open the door to your Plan room</button>'+'<input class="field" id="tText" placeholder="Add something to do, then press Enter" maxlength="120">'+
-        (S.todos.length?'<ul class="thread">'+S.todos.map(function(t){ return '<li class="'+(t.done?'done':'')+'"><button class="x" data-del-todo="'+t.id+'">&#10005;</button><label><input type="checkbox" data-todo="'+t.id+'" '+(t.done?'checked':'')+'>'+esc(t.text)+'</label></li>'; }).join('')+'</ul><button class="ghost" data-act="clearDone">Clear finished</button>':'<p class="empty">Nothing yet. What\'s one small thing you could do today?</p>'); },
-    goals:function(){ var h=eb('Goals','#a45cff')+'<h2>Where you\'re heading.</h2><p>Each goal floats in your mind and fills with light as you take its steps.</p>'+'<button class="doorway" data-act="door">Open the door to your Plan room</button>'+
-        '<input class="field" id="gTitle" placeholder="A goal (e.g. Run 5k, learn Arabic)" maxlength="60"><input class="field" id="gWhy" placeholder="Why it matters to you" maxlength="140"><div class="row"><button class="btn" data-act="addGoal">Add goal</button></div><div class="gfloat">';
+    progress:function(){ return eb('Progress','#2ee6ff')+'<h2></h2><canvas class="chart" id="chart"></canvas>'+
+        '<div class="stats"><div><b>'+streak()+'</b><span></span></div><div><b>'+S.moods.length+'</b><span></span></div><div><b>'+S.notes.length+'</b><span></span></div><div><b>'+S.todos.filter(function(t){ return t.done; }).length+'</b><span></span></div></div>'; },
+    diary:function(){ if(nodeSealed('diary')) return lockGate('Diary','#ffc44d','');
+      return eb('Diary','#ffc44d')+'<h2></h2>'+
+        '<div class="row"><button class="ghost" data-act="bookPrev">←</button><button class="ghost" data-act="bookNext">→</button></div>'+
+        '<input class="field" id="dTitle" placeholder="" maxlength="80"><textarea class="field" id="dText" placeholder=""></textarea><div class="row"><button class="btn" data-act="addNote">·</button></div>'+
+        (S.notes.length?'<ul class="thread">'+S.notes.map(function(n){ return '<li><button class="x" data-del-note="'+n.id+'" aria-label="">&#10005;</button><b>'+esc(n.title||'·')+'</b><br>'+esc(n.text).replace(/\n/g,'<br>')+'<span class="meta">'+nice(n.ts)+'</span></li>'; }).join('')+'</ul>':'')+
+        '<div class="row"><button class="ghost" data-act="'+(hasVault()?(vaultOpen?'lockNow':'unlock'):'vaultSet')+'">'+(hasVault()?(vaultOpen?'○':'●'):'○')+'</button></div>'; },
+    todo:function(){ return eb('To-do','#19f0b0')+'<h2></h2>'+'<button class="doorway" data-act="door">·</button>'+'<input class="field" id="tText" placeholder="" maxlength="120">'+
+        (S.todos.length?'<ul class="thread">'+S.todos.map(function(t){ return '<li class="'+(t.done?'done':'')+'"><button class="x" data-del-todo="'+t.id+'">&#10005;</button><label><input type="checkbox" data-todo="'+t.id+'" '+(t.done?'checked':'')+'>'+esc(t.text)+'</label></li>'; }).join('')+'</ul><button class="ghost" data-act="clearDone">·</button>':''); },
+    goals:function(){ var h=eb('Goals','#a45cff')+'<h2></h2>'+'<button class="doorway" data-act="door">·</button>'+
+        '<input class="field" id="gTitle" placeholder="" maxlength="60"><input class="field" id="gWhy" placeholder="" maxlength="140"><div class="row"><button class="btn" data-act="addGoal">·</button></div><div class="gfloat">';
       var cols=['#a45cff','#2ee6ff','#ff4fa8','#ffc44d','#19f0b0','#ff8a3d'];
       S.goals.forEach(function(g,gi){ var tot=g.steps.length, dn=g.steps.filter(function(s){ return s.done; }).length, pc=tot?Math.round(dn/tot*100):0, nx=g.steps.filter(function(s){ return !s.done; })[0], c=cols[gi%cols.length];
         h+='<div class="gorb" style="--c:'+c+'"><div class="ring" style="--p:'+pc+'"><b>'+pc+'%</b></div><h3>'+esc(g.title)+'</h3>'+
           (nx?'<div class="next">Next: '+esc(nx.text)+'</div>':(tot?'<div class="next">Complete &#10022;</div>':'<div class="next">Add your first step</div>'))+
           '<div class="steps">'+g.steps.map(function(s){ return '<button class="'+(s.done?'done':'')+'" data-stepbtn="'+g.id+':'+s.id+'">'+esc(s.text)+'</button>'; }).join('')+'</div>'+
           '<input class="field" data-addstep="'+g.id+'" placeholder="+ step, then Enter" maxlength="60"><button class="rm" data-del-goal="'+g.id+'">remove</button></div>'; });
-      h+='</div>'; if(!S.goals.length) h+='<p class="empty">No goals yet &mdash; add one and watch it appear in your mind.</p>';
+      h+='</div>';
       return h; },
     plan:function(){ var f=S.focus[today()]||['','',''], steps=[];
       S.goals.forEach(function(g){ var nx=g.steps.filter(function(s){ return !s.done; })[0]; if(nx) steps.push({g:g.title,t:nx.text}); });
-      return eb('Plan','#ff8a3d')+'<h2>Your plan of action.</h2><p>Three things to focus on today &mdash; and the next step on each of your goals.</p>'+'<button class="doorway" data-act="door">Open the door to your Plan room</button>'+
-        [0,1,2].map(function(i){ return '<input class="field" data-focus="'+i+'" placeholder="Focus '+(i+1)+'" value="'+esc(f[i]||'')+'" maxlength="100">'; }).join('')+
-        '<h3>Next steps on your goals</h3>'+(steps.length?'<ul class="thread">'+steps.map(function(s){ return '<li><b>'+esc(s.t)+'</b><span class="meta">'+esc(s.g)+'</span></li>'; }).join('')+'</ul>':'<p class="empty">Add goals and steps, and they\'ll appear here.</p>')+
-        '<button class="link" data-go="goals">Open your goals</button><button class="link" data-go="todo">Open your to-dos</button>'; },
+      return eb('Plan','#ff8a3d')+'<h2></h2>'+'<button class="doorway" data-act="door">·</button>'+
+        [0,1,2].map(function(i){ return '<input class="field" data-focus="'+i+'" placeholder="" value="'+esc(f[i]||'')+'" maxlength="100">'; }).join('')+
+        (steps.length?'<ul class="thread">'+steps.map(function(s){ return '<li><b>'+esc(s.t)+'</b><span class="meta">'+esc(s.g)+'</span></li>'; }).join('')+'</ul>':''); },
     trackers:function(){ var k=today(), lg=S.log[k]||{}, life=S.habits.filter(function(x){ return x.unit!=='min'; }), social=S.habits.filter(function(x){ return x.unit==='min'; });
       function dotsFor(x,isTime){ var dots=''; for(var i=6;i>=0;i--){ var d=new Date(); d.setDate(d.getDate()-i); var dv=(S.log[today(d)]||{})['h_'+x.id]||0; var on=isTime?(dv>0):(dv>=x.t); var over=isTime&&dv>x.t*60; dots+='<i class="'+(over?'over':on?'on':'')+'"></i>'; } return dots; }
-      var h=eb('Trackers','#3dffd0')+'<h2>Daily trackers.</h2><p>Tap + as you go. Time on social media is logged for you when you open a portal.</p>';
+      var h=eb('Trackers','#3dffd0')+'<h2></h2>';
       social.forEach(function(x){ var v=lg['h_'+x.id]||0, over=v>x.t*60;
-        h+='<div class="habit" style="--hc:'+x.c+'"><b>'+esc(x.n)+'</b><div class="count"><span data-smid="'+x.id+'">'+fmtDur(v)+' / '+x.t+' min</span></div><div class="dots">'+dotsFor(x,true)+'</div>'+(over?'<div class="live">Over your '+x.t+' min mark today</div>':'<div class="live">Logged automatically from Portals</div>')+'</div>'; });
-      h+='<h3>Your other trackers</h3>';
+        h+='<div class="habit" style="--hc:'+x.c+'"><b>'+esc(x.n)+'</b><div class="count"><span data-smid="'+x.id+'">'+fmtDur(v)+' / '+x.t+'</span></div><div class="dots">'+dotsFor(x,true)+'</div></div>'; });
+      h+='<h3></h3>';
       life.forEach(function(x){ var v=lg['h_'+x.id]||0;
         h+='<div class="habit" style="--hc:'+x.c+'"><b>'+esc(x.n)+'</b><div class="count"><button data-hab="'+x.id+'" data-d="-1">&minus;</button><span>'+v+' / '+x.t+'</span><button data-hab="'+x.id+'" data-d="1">+</button></div><div class="dots">'+dotsFor(x,false)+'</div></div>'; });
-      h+='<input class="field" id="hName" placeholder="New tracker (e.g. Prayers)" maxlength="40"><input class="field" id="hTarget" type="number" min="1" max="999" placeholder="Daily target (e.g. 5)"><div class="row"><button class="btn" data-act="addHabit">Add tracker</button></div>';
+      h+='<input class="field" id="hName" placeholder="" maxlength="40"><input class="field" id="hTarget" type="number" min="1" max="999" placeholder=""><div class="row"><button class="btn" data-act="addHabit">·</button></div>';
       return h; },
-    gallery:function(){ var h=eb('Memories','#ff4fa8')+'<h2>Your memories.</h2><p>Albums and videos hang as glowing TV screens around this neuron. You can already see the pictures. Tap a screen to play it inside the mind, or open it fully.</p>'+
+    gallery:function(){ var h=eb('Memories','#ff4fa8')+'<h2></h2>'+
         '<div class="row">'+S.albums.map(function(al){ return '<button class="ghost" data-album="'+esc(al)+'" style="'+(al===S.album?'color:var(--pink)':'')+'">'+(al===S.album?'&#9673; ':'')+(albumLocked(al)?'&#128274; ':'')+esc(al)+'</button>'; }).join('')+'<button class="ghost" data-act="addAlbum">+ album</button></div>';
-      if(albumSealed(S.album)) return h+'<div class="vseal" style="--c:#ff4fa8"><i></i><h2>Sealed.</h2><p>This album is locked. Tap the hovering lights to unlock photos and videos.</p><div class="row"><button class="btn" data-act="unlock" style="--c:#ff4fa8">Tap the hovering keys</button></div></div>';
+      if(albumSealed(S.album)) return h+'<div class="vseal" style="--c:#ff4fa8"><i></i><h2></h2><div class="row"><button class="btn" data-act="unlock" style="--c:#ff4fa8">●</button></div></div>';
       return h+'<div class="row"><button class="btn" data-act="addMedia" style="--c:#ff4fa8">Add to '+esc(S.album)+'</button><button class="ghost" data-act="lockAlbum">'+(albumLocked(S.album)?'Unlock album':'Lock this album')+'</button><button class="ghost" data-act="seeScreens">See the screens</button><button class="ghost" data-go="year">Open 2025 timeline</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="mFile"><div class="gal" id="gal"><p class="empty">Loading…</p></div>'; },
     year:function(){ return yearPage(); },
     draw:function(){ return eb('Magic drawing','#ff6bd6')+(window.MUDraw&&MUDraw.html?MUDraw.html():'<p>Drawing studio failed to load.</p>'); },
 
     portals:function(){ var L=[{n:'YouTube',u:'https://www.youtube.com',c:'#ff4f6d'},{n:'Instagram',u:'https://www.instagram.com',c:'#ff4fa8'},{n:'TikTok',u:'https://www.tiktok.com',c:'#fff'},{n:'Facebook',u:'https://www.facebook.com',c:'#2ee6ff'},{n:'X',u:'https://x.com',c:'#a45cff'},{n:'LinkedIn',u:'https://www.linkedin.com',c:'#4f7dff'},{n:'Wikipedia',u:'https://en.m.wikipedia.org',c:'#4f7dff'}].concat(S.links.map(function(l){ return {n:l.n,u:l.u,c:'#ffc44d',id:l.id}; }));
-      return eb('Portals','#ff4f6d')+'<h2>Doorways to your world.</h2><p>The web, inside your mind. Time you spend on social apps is logged to Trackers.</p>'+
+      return eb('Portals','#ff4f6d')+'<h2></h2>'+
         '<div class="orbs">'+L.map(function(l){ return '<a class="orb" href="'+esc(l.u)+'" target="_blank" rel="noopener" style="--oc:'+l.c+'"><i></i><span>'+esc(l.n)+'</span></a>'+(l.id?'<button class="x" data-del-link="'+l.id+'" title="Remove" style="margin-left:-18px;color:var(--mute2)">&#10005;</button>':''); }).join('')+'</div>'+
-        '<input class="field" id="lName" placeholder="Name a new doorway (e.g. My bank, LinkedIn)" maxlength="30"><input class="field" id="lUrl" placeholder="https://..." maxlength="300"><div class="row"><button class="btn" data-act="addLink" style="--c:#ff4f6d">Add doorway</button></div>'+
-        '<h3>Your daily media time</h3><p class="small">Time on the web and videos is gently limited each day, so your mind stays yours.</p><div class="row">'+[15,30,60].map(function(m){ return '<button class="ghost" data-mlim="'+m+'" style="'+(S.mediaLimit===m?'color:var(--gold)':'')+'">'+m+' min</button>'; }).join('')+'</div><p class="tag">'+fmt(mediaLeft())+' left today</p><h3>Watch here</h3><p class="small">Paste a link. It hangs as a screen around this neuron — tap play in the mind, or open fully.</p><input class="field" id="yt" placeholder="Paste a YouTube link, then press Enter" maxlength="300"><div id="ytBox"></div>'+
+        '<input class="field" id="lName" placeholder="" maxlength="30"><input class="field" id="lUrl" placeholder="" maxlength="300"><div class="row"><button class="btn" data-act="addLink" style="--c:#ff4f6d">·</button></div>'+
+        '<div class="row">'+[15,30,60].map(function(m){ return '<button class="ghost" data-mlim="'+m+'" style="'+(S.mediaLimit===m?'color:var(--gold)':'')+'">'+m+'</button>'; }).join('')+'</div><input class="field" id="yt" placeholder="" maxlength="300"><div id="ytBox"></div>'+
         (S.videos.length?'<ul class="thread" style="--c:#ff4f6d">'+S.videos.slice(0,6).map(function(v){ return '<li><button data-yt="'+esc(v)+'" style="text-align:left">&#9654; youtu.be/'+esc(v)+'</button></li>'; }).join('')+'</ul>':''); },
     arcade:function(){ var A=window.MUArcade||{games:[],shelves:[],recs:[],freeware:[]}, cabs=ARCADE, md=MEGADRIVE;
       function cabPlay(list){ return '<div class="cab">'+list.map(function(x){ return '<button type="button" data-play="'+esc(x.id)+'" style="--c:'+x.c+'">'+esc(x.n)+'<br><span class="tag">'+esc(x.tag)+'</span></button>'; }).join('')+'</div>'; }
-      var h=eb('Arcade','#ff4f6d')+'<h2>Play inside the mind.</h2><p>Original games on the floating TV — or fly Cube Keep the same way you fly here.</p><div class="row"><button class="btn" data-act="worldCube" style="--c:#2ee6ff">Fly Cube Keep</button></div>';
+      var h=eb('Arcade','#ff4f6d')+'<h2></h2>';
       (A.shelves||[]).forEach(function(sh){ var list=(A.games||[]).filter(function(g){ return (g.s||[]).indexOf(sh.id)>=0; });
-        h+='<h3>'+esc(sh.n)+'</h3><p class="small">'+esc(sh.p)+'</p>'+cabPlay(list); });
-      h+='<h3>Why this shelf</h3><p class="small">The action games are for everyone. The girls &amp; women shelf is extra: cozy, creative, puzzle and care, so the arcade is not only shooters. Recommendations below are free and legal — ours, or open pages on the web. Not commercial cartridge dumps.</p>'+
-        '<ul class="grec">'+(A.recs||[]).map(function(r){ var open=r.play?'<button class="link" data-play="'+esc(r.play)+'" style="margin:8px 0 0">Play '+esc(r.n)+'</button>':r.go?'<button class="link" data-go="'+esc(r.go)+'" style="margin:8px 0 0">Open '+esc(r.n)+'</button>':r.href?'<a class="link" href="'+esc(r.href)+'" target="_blank" rel="noopener" style="margin:8px 0 0;display:inline-block">Open '+esc(r.n)+'</a>':'';
-          return '<li><b>'+esc(r.n)+'</b><span>'+esc(r.w)+'</span>'+open+'</li>'; }).join('')+'</ul>'+
-        '<h3>Your Mega Drive</h3><p class="small">Load a cartridge you already have (.md, .bin, .zip, NES, SNES, Game Boy). It stays on this device. Then it plays on the mind TV.</p>'+
-        '<div class="row"><button class="btn" data-act="addRom" style="--c:#2ee6ff">Load cartridge</button></div><input type="file" accept=".md,.bin,.smd,.gen,.zip,.nes,.sfc,.smc,.gb,.gbc,.gba,.sms,.gg" multiple class="file" id="romFile"><div id="romShelf" class="cab"></div>'+
-        '<h3>Free shareware</h3><p class="small">These are shareware or freeware the Internet Archive hosts. Still a bit janky. Jill of the Jungle is a female-led DOS classic that is legal to share this way.</p>'+
-        '<div class="cab">'+(A.freeware||[]).map(function(x){ return '<button type="button" data-cab="'+esc(x.id)+'" data-title="'+esc(x.t)+'" style="--c:'+x.c+'">'+esc(x.t)+'<br><span class="tag">'+esc(x.sys)+'</span></button>'; }).join('')+'</div>'+
-        '<h3>Archive cabinet</h3><p class="small">Internet Archive player if you want the old cabinet. Jankier than the original games above.</p>'+
-        '<div class="cab">'+md.map(function(x){ return '<button type="button" data-cab="'+esc(x.id)+'" data-title="'+esc(x.t)+'" style="--c:'+x.c+'">'+esc(x.t)+'<br><span class="tag">Archive</span></button>'; }).join('')+'</div>'+
-        '<div class="row"><button class="ghost" data-cab="sega_genesis_library" data-title="Mega Drive cabinet">Browse Archive Mega Drive</button></div>'+
-        '<h3>More Archive arcade</h3>'+
-        '<div class="cab">'+cabs.map(function(x){ return '<button type="button" data-cab="'+esc(x.id)+'" data-title="'+esc(x.t)+'" style="--c:'+x.c+'">'+esc(x.t)+'<br><span class="tag">'+esc(x.sys)+'</span></button>'; }).join('')+'</div>';
+        h+='<h3>'+esc(sh.n)+'</h3>'+cabPlay(list); });
+      h+='<div class="row"><button class="btn" data-act="addRom" style="--c:#2ee6ff">·</button></div><input type="file" accept=".md,.bin,.smd,.gen,.zip,.nes,.sfc,.smc,.gb,.gbc,.gba,.sms,.gg" multiple class="file" id="romFile"><div id="romShelf" class="cab"></div>';
+      h+='<div class="cab">'+(A.freeware||[]).map(function(x){ return '<button type="button" data-cab="'+esc(x.id)+'" data-title="'+esc(x.t)+'" style="--c:'+x.c+'">'+esc(x.t)+'</button>'; }).join('')+'</div>';
+      h+='<div class="cab">'+md.map(function(x){ return '<button type="button" data-cab="'+esc(x.id)+'" data-title="'+esc(x.t)+'" style="--c:'+x.c+'">'+esc(x.t)+'</button>'; }).join('')+'</div>';
+      h+='<div class="cab">'+cabs.map(function(x){ return '<button type="button" data-cab="'+esc(x.id)+'" data-title="'+esc(x.t)+'" style="--c:'+x.c+'">'+esc(x.t)+'</button>'; }).join('')+'</div>';
       return h; },
-    studio:function(){ var h=eb('Creative studio','#ffc44d')+'<h2>What do you want to create?</h2><p>A space for your work, your projects and your wildest ideas. Every idea you save floats around this neuron.</p>'+
-        '<textarea class="field" id="sVision" placeholder="Your vision: what do you want to achieve in your work or life?" maxlength="400">'+esc(S.vision)+'</textarea><div class="row"><button class="ghost" data-act="saveVision">Save vision</button></div>'+
-        '<h3>Catch an idea</h3><input class="field" id="sIdea" placeholder="An idea, then press Enter" maxlength="90"><div class="row"><button class="btn" data-act="spark" style="--c:#ffc44d">&#10022; Spark me</button></div><p class="lead" id="sparkTxt" style="min-height:1.6em"></p>';
-      h+=S.ideas.length?'<div class="gfloat">'+S.ideas.map(function(x,i){ var c=['#ffc44d','#ff4fa8','#2ee6ff','#a45cff','#19f0b0'][i%5]; return '<div class="gorb" style="--c:'+c+'"><div class="ring" style="--p:100;width:70px;height:70px"><b>&#10022;</b></div><h3>'+esc(x.t)+'</h3><button class="rm" data-del-idea="'+x.id+'">let go</button></div>'; }).join('')+'</div>':'<p class="empty">No ideas yet. Press "Spark me" if you need a nudge.</p>';
+    studio:function(){ var h=eb('Creative studio','#ffc44d')+'<h2></h2>'+
+        '<textarea class="field" id="sVision" placeholder="" maxlength="400">'+esc(S.vision)+'</textarea><div class="row"><button class="ghost" data-act="saveVision">·</button></div>'+
+        '<input class="field" id="sIdea" placeholder="" maxlength="90"><div class="row"><button class="btn" data-act="spark" style="--c:#ffc44d">&#10022;</button></div><p class="lead" id="sparkTxt" style="min-height:1.6em"></p>';
+      h+=S.ideas.length?'<div class="gfloat">'+S.ideas.map(function(x,i){ var c=['#ffc44d','#ff4fa8','#2ee6ff','#a45cff','#19f0b0'][i%5]; return '<div class="gorb" style="--c:'+c+'"><div class="ring" style="--p:100;width:70px;height:70px"><b>&#10022;</b></div><h3>'+esc(x.t)+'</h3><button class="rm" data-del-idea="'+x.id+'">·</button></div>'; }).join('')+'</div>':'';
       return h; },
 
-    rooms:function(){ return eb('Rooms','#ffd6a5')+'<h2>The rooms of your mind.</h2><p>Each room is a small neuron around this one. Fly close, or choose below.</p><ul class="thread" style="--c:#ffd6a5">'+H_ROOMS.map(function(r){ var n=(S.cols[r.id]||[]).length; return '<li style="--dot:'+r.c+'"><button data-go="'+r.id+'" style="text-align:left"><b>'+esc(r.n)+'</b></button>'+(n?'<span class="meta">'+n+' saved</span>':'')+'</li>'; }).join('')+'</ul>'; },
+    rooms:function(){ return eb('Rooms','#ffd6a5')+'<h2></h2><ul class="thread" style="--c:#ffd6a5">'+H_ROOMS.map(function(r){ var n=(S.cols[r.id]||[]).length; return '<li style="--dot:'+r.c+'"><button data-go="'+r.id+'" style="text-align:left"><b>'+esc(r.n)+'</b></button>'+(n?'<span class="meta">'+n+'</span>':'')+'</li>'; }).join('')+'</ul>'; },
 
-    stories:function(){ return eb('The Library','#ffc44d')+'<h2>Books to read quietly.</h2><p>The Qur\u2019an, the stories of the Prophets, the life of the Prophet \uFDFA, hadith and classical wisdom. When a book is open, every sound goes quiet.</p>'+
-        BOOKS.map(function(x){ return x.k; }).filter(function(k,i,a){ return a.indexOf(k)===i; }).map(function(cat){ return '<h3>'+esc(cat)+'</h3><div class="shelf">'+BOOKS.map(function(x,i){ return x.k!==cat?'':'<button class="book" data-book="'+i+'" style="--bc:'+x.c+'"><span class="b-t">'+esc(x.t)+'</span><span class="b-a">'+esc(x.a)+'</span><span class="b-l">'+esc(x.l)+'</span></button>'; }).join('')+'</div>'; }).join('')+
-        '<p class="small">More books from Imam al-Ghazali, Imam Ibn al-Jawzi and other classical scholars are being added.</p>'; },
+    stories:function(){ return eb('','#ffc44d')+'<h2></h2>'+
+        BOOKS.map(function(x){ return x.k; }).filter(function(k,i,a){ return a.indexOf(k)===i; }).map(function(cat){ return '<h3>'+esc(cat)+'</h3><div class="shelf">'+BOOKS.map(function(x,i){ return x.k!==cat?'':'<button class="book" data-book="'+i+'" style="--bc:'+x.c+'"><span class="b-t">'+esc(x.t)+'</span><span class="b-a">'+esc(x.a)+'</span><span class="b-l">'+esc(x.l)+'</span></button>'; }).join('')+'</div>'; }).join(''); },
 
-    ramadan:function(){ var start=new Date('2027-02-08T00:00:00'), days=Math.ceil((start-new Date())/864e5), juz=Object.keys(S.ram.juz).length, fast=Object.keys(S.ram.fast).length;
-      return eb('Ramadan','#ffd27a')+shareChip('ramadan')+'<h2>'+(days>0?days+' days until Ramadan':'Ramadan Mubarak')+'</h2><p>Expected to begin on Monday 8 February 2027, depending on the sighting of the moon. Prepare your heart, your plans and your memories here.</p>'+
-        '<h3>Qur’an journey · '+juz+' / 30 juz</h3><div class="grid30">'+Array.from({length:30},function(_,i){ return '<button class="'+(S.ram.juz[i+1]?'on':'')+'" data-juz="'+(i+1)+'">'+(i+1)+'</button>'; }).join('')+'</div>'+
-        '<h3>Fasts · '+fast+' / 30</h3><div class="grid30">'+Array.from({length:30},function(_,i){ return '<button class="'+(S.ram.fast[i+1]?'on':'')+'" data-fast="'+(i+1)+'">'+(i+1)+'</button>'; }).join('')+'</div>'+
-        '<h3>Ramadan memories</h3><p class="small">Photos and videos of iftars, nights and the people you share them with.</p><div class="row"><button class="btn" data-act="ramAdd" style="--c:#ffd27a">Add photos or videos</button></div><input type="file" accept="image/*,video/*" multiple class="file" id="ramFile"><div class="gal" id="ramGal"></div>'+
-        '<p class="small">Want to plan the month? <button class="link" data-go="goals" style="margin:0">Set Ramadan goals</button></p>'; },
+    ramadan:function(){ var start=new Date('2027-02-08T00:00:00'), days=Math.ceil((start-new Date())/864e5);
+      return eb('Ramadan','#ffd27a')+'<h2></h2><p>'+(days>0?days:'·')+'</p>'; },
     privacy:function(){ return ''; },
 
     calendar:function(){ var h=hijri(new Date()), ev=upcoming(), mn=HMONTHS[h.m-1];
       var grid='', first=new Date(); first.setDate(first.getDate()-(h.d-1));
       for(var i=0;i<30;i++){ var d=new Date(first); d.setDate(first.getDate()+i); var hd=hijri(d); if(hd.m!==h.m) break; var isT=hd.d===h.d, white=hd.d>=13&&hd.d<=15;
         grid+='<div class="hc'+(isT?' today':'')+(white?' white':'')+'"><b>'+hd.d+'</b><span>'+d.getDate()+' '+d.toLocaleDateString('en-GB',{month:'short'})+'</span></div>'; }
-      return eb('Islamic calendar','#7fe0c3')+'<h2>'+h.d+' '+mn+' '+h.y+' AH</h2><p>'+new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</p>'+
-        '<div class="hgrid">'+grid+'</div><p class="small">Glowing days are the white days (13th–15th), a sunnah time to fast. Mondays and Thursdays are too.</p>'+
-        '<h3>Coming up</h3><ul class="thread" style="--c:#7fe0c3">'+ev.map(function(e){ var days=Math.round((e.g-new Date().setHours(0,0,0,0))/864e5); return '<li><b>'+esc(e.n)+'</b>'+(e.note?'<br><span class="small" style="color:var(--mute)">'+esc(e.note)+'</span>':'')+'<span class="meta">'+e.g.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+' · '+e.hd+' '+HMONTHS[e.hm-1]+' · '+(days===0?'today':days===1?'tomorrow':'in '+days+' days')+'</span></li>'; }).join('')+'</ul>'+
-        '<p class="small">Dates follow the Umm al-Qura calendar. Local moon sighting can move an event by a day.</p>'; },
-    listen:function(){ var Y=function(q){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q); };
-      return eb('Listen','#19f0b0')+'<h2>Listen.</h2><p>The Qur\'an from more than 240 reciters, plus nasheeds and lectures.</p>'+
-        '<h3>Qur\'an</h3><input class="field" id="qrSearch" placeholder="Search reciters (e.g. Alafasi, Sudais, Minshawi)" autocomplete="off"><select class="field" id="qrRec"><option>Loading reciters…</option></select><select class="field" id="qrSurah"></select>'+
-        '<div class="row"><button class="btn" data-act="qrPlay" style="--c:#19f0b0">&#9654; Play</button><button class="ghost" data-act="qrPause">Pause</button><button class="ghost" data-act="qrNext">Next surah</button></div><p class="tag" id="qrNow"></p>'+
-        '<h3>Moutasem Al-Hameed</h3><p class="small">His full Qur\'an recitations are on YouTube.</p><a class="link" target="_blank" rel="noopener" href="'+Y('Moutasem Al-Hameed full Quran')+'" style="--c:#19f0b0">Open his recitations</a>'+
-        '<h3>Nasheeds</h3><div class="row">'+[['Nasheeds (no music)','nasheed no music'],['Calm nasheeds','calm nasheed'],['Children\'s nasheeds','kids nasheed']].map(function(x){ return '<a class="ghost" target="_blank" rel="noopener" href="'+Y(x[1])+'">'+x[0]+' &#8599;</a>'; }).join('')+'</div>'+
-        '<h3>Lectures</h3><div class="row">'+[['Full Islamic lectures','islamic lecture full'],['Tafsir','tafsir lecture full'],['Seerah','seerah full series'],['Short reminders','islamic reminder']].map(function(x){ return '<a class="ghost" target="_blank" rel="noopener" href="'+Y(x[1])+'">'+x[0]+' &#8599;</a>'; }).join('')+'</div>'+
-        '<p class="small">Found a video you love? Paste its link into <button class="link" data-go="portals" style="margin:0">Portals</button> to watch it inside your mind.</p>'; },
-    ai:function(){ return eb('Talk to AI','#4f7dff')+'<h2>A companion for your thoughts.</h2><p class="lead">Talk things through, get ideas, plan your day, or reflect on a hadith &mdash; with an AI that knows your goals and moods (only if you allow it).</p>'+
-        '<ul class="thread" style="--c:#4f7dff"><li>"Help me plan a calmer week."</li><li>"Give me three ideas to reach my goal."</li><li>"What could this hadith mean for my day?"</li></ul>'+
-        '<p class="small">Coming soon as a paid upgrade. It will be built carefully: it supports reflection, it never diagnoses, and it points to real help when someone needs it.</p>'; },
-    connect:function(){ return eb('Community','#cfd6ff')+'<h2>The community of minds.</h2><p class="lead">A chat room for authorised members only &mdash; and the chance to visit each other’s minds, fly through them and explore.</p>'+
-        '<ul class="thread" style="--c:#cfd6ff"><li><b>Authorised members only</b><span class="meta">every member is verified and approved before they can join</span></li><li><b>The community room</b><span class="meta">talk freely, share ideas, wisdom and wins</span></li><li><b>Visit each other’s minds</b><span class="meta">fly through another member’s universe and explore the neurons they choose to share</span></li><li><b>See who\u2019s visiting</b><span class="meta">when a friend is inside your mind, a green dot with their name appears in your stats</span></li><li><b>Talk to them instantly</b><span class="meta">tap their green dot to open a private, secure chat while they explore</span></li><li><b>Remember: friends can look around</b><span class="meta">a connected friend can fly through your mind and open any neuron you have made visible &mdash; switch off anything you want to keep to yourself, like your diary</span></li><li><b>You stay in control</b><span class="meta">your diary, vault and anything private is never visible to anyone</span></li></ul>'+
-        privacyHTML()+'<p class="small">Opening soon. Your mind stays completely private until then.</p>'; },
-    sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
-        '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
-    light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); },
-    worlds:function(){ return eb('Cube Keep','#2ee6ff')+'<h2>Seven cube-neurons. You fly them like the mind.</h2><p>Drag to turn. Hold the orb, or W, to move. Each floor is a destination with real things hanging around it — stars, this week of moods, sayings, games you can play, a garden, a ring course, and a door home.</p>'+
-      '<div class="row"><button class="btn" data-act="worlds" style="--c:#2ee6ff">Enter Cube Keep</button></div>'+
-      '<p class="small">Tap a cube to travel the axon to it. Down a floor does the same. Tap a hanging screen to read it or play.</p>'; }
+      return eb('','#7fe0c3')+'<h2>'+h.d+' '+mn+' '+h.y+'</h2>'+
+        '<div class="hgrid">'+grid+'</div>'+
+        '<ul class="thread" style="--c:#7fe0c3">'+ev.map(function(e){ return '<li><b>'+esc(e.n)+'</b><span class="meta">'+e.g.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'</span></li>'; }).join('')+'</ul>'; },
+    listen:function(){
+      return eb('Listen','#19f0b0')+'<h2></h2>'+
+        '<input class="field" id="qrSearch" placeholder="" autocomplete="off"><select class="field" id="qrRec"><option>…</option></select><select class="field" id="qrSurah"></select>'+
+        '<div class="row"><button class="btn" data-act="qrPlay" style="--c:#19f0b0">&#9654;</button><button class="ghost" data-act="qrPause">·</button><button class="ghost" data-act="qrNext">→</button></div><p class="tag" id="qrNow"></p>'; },
+    ai:function(){ S.aiLog=S.aiLog||[];
+      return eb('','#4f7dff')+'<h2></h2>'+
+        '<ul class="thread" style="--c:#4f7dff" id="aiChat">'+(S.aiLog.length?S.aiLog.slice(-10).map(function(m){ return '<li>'+esc(m.t)+'</li>'; }).join(''):'')+'</ul>'+
+        '<input class="field" id="aiAsk" placeholder="" maxlength="400"><div class="row"><button class="btn" data-act="askAI" style="--c:#4f7dff">·</button></div>'; },
+    connect:function(){ return eb('','#cfd6ff')+'<h2></h2>'; },
+    sage:function(){ var q=window.H_QURAN||[], h=window.H_HADITH||[];
+      return eb('','#ffc44d')+'<h2></h2>'+
+        todayCard()+voicePick()+
+        '<div class="row"><button class="btn" data-act="speakToday" style="--c:#ffc44d">·</button><button class="ghost" data-act="speakStop">·</button></div>'+
+        '<ul class="thread" style="--c:#19f0b0">'+q.map(function(x){ return '<li><button data-speak-q="'+x.id+'" style="text-align:left"><b>'+esc(x.title)+'</b></button><span class="meta">'+esc(x.src)+'</span></li>'; }).join('')+'</ul>'+
+        '<ul class="thread" style="--c:#ffc44d">'+h.map(function(x){ return '<li><button data-speak-h="'+x.id+'" style="text-align:left"><b>'+esc(x.title)+'</b></button><span class="meta">'+esc(x.src)+'</span></li>'; }).join('')+'</ul>'; },
+    quran:function(){ var ss=window.H_SURAHS||[], n=S.qSurah||1;
+      return eb('','#19f0b0')+'<h2></h2><select class="field" id="qSurah">'+ss.map(function(s){ return '<option value="'+s.n+'"'+(s.n===n?' selected':'')+'>'+s.n+'</option>'; }).join('')+'</select><div id="qRead"></div>'; },
+    dua:function(){ var cat=S.duaCat||'', list=(window.H_DUAS||[]).filter(function(x){ return !cat||x.cat===cat; });
+      return eb('','#ffc44d')+'<h2></h2><div class="row">'+((window.H_DUA_CATS||[]).map(function(c){ return '<button class="ghost" data-duacat="'+c.id+'" style="'+(cat===c.id?'color:var(--gold)':'')+'">'+esc(c.n)+'</button>'; }).join(''))+'</div>'+
+        '<ul class="thread" style="--c:#ffc44d">'+list.map(function(x){ return '<li><button data-dua="'+x.id+'" style="text-align:left"><b>'+esc(x.title)+'</b></button><span class="meta">'+(S.mem&&S.mem[x.id]?'●':'○')+'</span></li>'; }).join('')+'</ul>'; },
+    light:function(){ return eb('','#19f0b0')+'<h2></h2><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button></li>'; }).join('')+'</ul>'; },
+    worlds:function(){ return PAGES.sage(); }
   };
-  function hiddenNote(k){ var all=DESTS.filter(function(d){ return d.kind===k; }), f=all.filter(function(d){ return S.visited[d.id]; }).length; return '<p class="empty">'+(f?f+' found \u00B7 ':'')+(all.length-f)+' still hidden around here. Fly close to discover them.</p>'; }
+  function hiddenNote(k){ var all=DESTS.filter(function(d){ return d.kind===k; }), f=all.filter(function(d){ return S.visited[d.id]; }).length; return '<p class="empty">'+(f||0)+' / '+all.length+'</p>'; }
   function eb(t,c){ return '<div class="eyebrow" style="--c:'+c+'">'+t+'</div>'; }
   function hadithPage(h){ var th=(window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{name:'',col:'#ffc44d'};
-    return eb(th.name,th.col)+'<h2>'+esc(h.title)+'</h2><div class="ar">'+h.ar+'</div><p class="en">&ldquo;'+esc(h.en)+'&rdquo;</p><div class="src">'+esc(h.src)+'</div>'+
-      '<div class="row"><button class="ghost" data-act="keep">'+(S.keep[h.id]?'&#9733; Kept':'&#9734; Keep')+'</button></div>'+
-      '<button class="link" data-act="nextHadith" style="--c:'+th.col+'">Next found saying</button><button class="link" data-go="sage" style="--c:'+th.col+'">All sayings</button>'+
-      '<p class="verify">Text and reference being checked against the source collections before the Sage\'s recorded voice is added.</p>'; }
+    return eb('',th.col)+'<h2>'+esc(h.title)+'</h2><div class="ar">'+(h.ar||'')+'</div><p class="en">&ldquo;'+esc(h.en)+'&rdquo;</p><div class="src">'+esc(h.src)+'</div>'+
+      '<div class="row"><button class="btn" data-act="speakShown" style="--c:#ffc44d">·</button><button class="ghost" data-act="memTick" data-mem="'+(h.id)+'">'+(S.mem&&S.mem[h.id]?'●':'○')+'</button></div>'; }
   function lightPage(x){ return eb('Light','#19f0b0')+'<h2>'+esc(x.t)+'</h2><p class="lead">'+esc(x.b)+'</p><button class="link" data-act="nextLight">Next light</button><button class="link" data-go="light">All lights</button>'; }
 
 
@@ -1467,23 +1453,26 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(d.kind==='daily') return dailyPage(id);
     if(d.kind==='fun') return funPage(id);
     if(d.kind==='secret') return secretPage(id);
+    if(d.kind==='qayah'||d.kind==='qsurah'||d.kind==='deen'||d.kind==='dua') return deenPage(d);
     return PAGES[id]?PAGES[id]():''; }
+  function deenPage(d){ var y=(window.H_YEAR||[]).filter(function(x){ return x.id===d.id; })[0]||d, mem=S.mem&&S.mem[d.id];
+    if(y.kind==='qsurah'||d.kind==='qsurah'){ S.qSurah=y.n||d.n||1; return PAGES.quran(); }
+    if(y.kind==='dua'){ var du=(window.H_DUAS||[]).filter(function(x){ return x.id===d.id; })[0]||y;
+      return eb('',du.col||'#ffc44d')+'<h2>'+esc(du.title)+'</h2><div class="ar">'+(du.ar||'')+'</div><p class="en">&ldquo;'+esc(du.en)+'&rdquo;</p><div class="src">'+esc(du.src||'')+'</div>'+
+        '<div class="row"><button class="ghost" data-act="memTick" data-mem="'+d.id+'">'+(mem?'●':'○')+'</button></div>'; }
+    return eb('',y.col||d.col||'#cfd6ff')+'<h2>'+esc(y.title||d.name)+'</h2>'+(y.ar?'<div class="ar">'+y.ar+'</div>':'')+(y.en?'<p class="en">&ldquo;'+esc(y.en)+'&rdquo;</p>':'')+'<div class="src">'+esc(y.src||'')+'</div>'+
+      '<div class="row"><button class="btn" data-act="speakShown" style="--c:#ffc44d">·</button><button class="ghost" data-act="memTick" data-mem="'+d.id+'">'+(mem?'●':'○')+'</button></div>'; }
   function render(id){ var pg=document.createElement('article'); pg.className='pg on'; pg.innerHTML=pageHTML(id); stage.innerHTML=''; stage.appendChild(pg);
     var s=M.restScreen(id)||{x:innerWidth*.3,y:innerHeight*.4};
     [].forEach.call(pg.children,function(el,i){ var r=el.getBoundingClientRect(); el.style.setProperty('--dx',((s.x-(r.left+r.width/2))*.8).toFixed(0)+'px'); el.style.setProperty('--dy',((s.y-(r.top+r.height/2))*.8).toFixed(0)+'px'); el.style.setProperty('--d',Math.min(i,12)*70+'ms'); });
     after(id,pg); }
-  function openWorlds(which){
-    markVisited('worlds');
-    if(!window.MUWorlds){ toast('Cube Keep is still loading — try again in a moment'); return; }
-    retract(function(){ MUWorlds.enter(which||'cube'); });
-  }
   function emerge(id){
-    if(id==='worlds' && window.MUWorlds){ openWorlds('cube'); return; }
+    if(id==='worlds') id='sage';
     shown=id; stage.classList.add('live'); haze.classList.add('on'); stage.scrollTop=0; render(id);
     if(id==='gallery'&&albumLocked(S.album)&&!hasVault()) setTimeout(function(){ if(shown===id&&!VK.on) vkOpen('set'); },480);
     else if(hasVault()&&!vaultOpen&&(nodeSealed(id)||(id==='gallery'&&albumSealed(S.album)))) setTimeout(function(){ if(shown===id&&!VK.on) vkOpen('open'); },480); }
   function retract(done){ var pg=stage.querySelector('.pg'); shown=null; haze.classList.remove('on'); stage.classList.remove('live'); if(!pg){ done&&done(); return; } pg.classList.add('out'); setTimeout(function(){ stage.innerHTML=''; done&&done(); },380); }
-  function travelTo(id,opts){ if(!byId[id]||busy) return; opts=opts||{}; stopWatching();
+  function travelTo(id,opts){ if(id==='worlds') id='sage'; if(!byId[id]||busy) return; opts=opts||{}; stopWatching();
     var here=!opts.ride && (M.alreadyAt?M.alreadyAt(id):(asClose(M.screenOf(id), byId[id])));
     if(here || (!opts.ride && M.isFree() && asClose(M.screenOf(id), byId[id]))){
       try{ M.park(id); }catch(e){}
@@ -1514,9 +1503,8 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     return {go:go}; })();
   function electronRun(id,dur){
     var el=document.getElementById('electron'), num=document.getElementById('eNum'), log=document.getElementById('eLog'), rl=document.getElementById('rainL'), rr=document.getElementById('rainR'), d=byId[id];
-    document.getElementById('eLabel').textContent='Synaptic link \u00B7 travelling to '+(d.hidden&&!S.visited[id]?'an unknown light':d.name);
-    var ax=String(2+Math.floor(Math.random()*40)).padStart(2,'0');
-    var LOG=['firing along axon '+ax,'crossing '+(2+Math.floor(Math.random()*6))+' synapses','charging the signal','locking onto '+d.name,'arrived \u2014 opening'];
+    document.getElementById('eLabel').textContent='';
+    var LOG=['','','','',''];
     el.classList.add('on'); TSnd.go(dur); var t0=performance.now(), last=-1;
     function rain(){ var s=''; for(var i=0;i<46;i++){ for(var j=0;j<10;j++) s+=Math.random()<.5?'0':'1'; s+='\n'; } return s; }
     (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur), e=1-Math.pow(1-k,2.2); num.textContent=String(Math.round(e*100)).padStart(3,'0');
@@ -1526,9 +1514,9 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   }
   function mysteries(){ var all=DESTS.filter(function(d){ return d.hidden; }); return {n:all.filter(function(d){ return S.visited[d.id]; }).length,t:all.length}; }
   function discovered(id){ var d=byId[id], m=mysteries(), lb=labels[id]; if(lb){ lb.querySelector('span').textContent=d.name; lb.style.setProperty('--c',d.col); }
-    toast('\u2726 Mystery found \u00B7 '+m.n+' of '+m.t); paintDock(); }
+    paintDock(); }
   function readoutRun(id,dur){ var r=document.getElementById('readout'), t0=performance.now(); r.classList.add('on');
-    (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur); r.textContent='◉ travelling to '+byId[id].name+' · '+String(Math.round(k*100)).padStart(3,'0')+'%'; if(k<1&&r.classList.contains('on')) requestAnimationFrame(tick); })(); }
+    (function tick(){ var k=Math.min(1,(performance.now()-t0)/dur); r.textContent=String(Math.round(k*100)).padStart(3,'0'); if(k<1&&r.classList.contains('on')) requestAnimationFrame(tick); })(); }
 
   /* after a page appears: wire up its live parts */
   var selMood=null, padState={c:'#2ee6ff',w:6};
@@ -1539,9 +1527,12 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(byId[id]&&byId[id].kind==='play') startGame(id);
     if(EX[id]) EX[id]();
     if(id==='listen') initListen();
+    if(id==='quran') initQuran();
+    if(id==='ai'){ var af=document.getElementById('aiAsk'); af&&af.addEventListener('keydown',function(e){ if(e.key==='Enter') askMind(); }); }
     if(id==='ramadan') paintRam();
     if(id==='progress') drawChart(document.getElementById('chart'));
-    if(id==='mood') updateMoodBoards();
+    if(id==='mood'){ updateMoodBoards(); var mf=document.getElementById('moodFind'); if(mf) mf.oninput=function(){ moodQ=mf.value; var box=document.getElementById('moodPick'); if(box) box.outerHTML=moodGrid(moodQ); }; }
+    if(id==='diary'&&window.MUBook) MUBook.setNotes(S.notes);
     if(id==='gallery') paintGallery();
     if(id==='arcade') paintRoms();
     if(id==='year'||(byId[id]&&byId[id].kind==='month')) paintYear();
@@ -1552,7 +1543,12 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   }
   stage.addEventListener('click',function(e){
     var b=e.target.closest('button,input[type=checkbox]'); if(!b) return;
-    if(b.dataset.go){ if(b.dataset.go==='worlds'){ openWorlds('cube'); return; } travelTo(b.dataset.go); return; }
+    if(b.dataset.go){ travelTo(b.dataset.go); return; }
+    if(b.dataset.speakQ){ var qx=(window.H_QURAN||[]).filter(function(x){ return x.id===b.dataset.speakQ; })[0]; if(qx&&window.MUSage) MUSage.speakItem(qx); return; }
+    if(b.dataset.speakH){ var hx=(window.H_HADITH||[]).filter(function(x){ return x.id===b.dataset.speakH; })[0]; if(hx&&window.MUSage) MUSage.speakItem(hx); return; }
+    if(b.dataset.duacat!==undefined){ S.duaCat=S.duaCat===b.dataset.duacat?'':b.dataset.duacat; save(); render('dua'); return; }
+    if(b.dataset.dua){ var du=(window.H_DUAS||[]).filter(function(x){ return x.id===b.dataset.dua; })[0]; if(!du) return;
+      stage.innerHTML='<article class="pg on">'+eb('', '#ffc44d')+'<h2>'+esc(du.title)+'</h2><div class="ar">'+(du.ar||'')+'</div><p class="en">&ldquo;'+esc(du.en)+'&rdquo;</p><div class="src">'+esc(du.src||'')+'</div><div class="row"><button class="ghost" data-act="memTick" data-mem="'+du.id+'">'+(S.mem&&S.mem[du.id]?'●':'○')+'</button><button class="ghost" data-go="dua">·</button></div></article>'; return; }
     if(b.dataset.mood){ selMood=b.dataset.mood; stage.querySelectorAll('.orb').forEach(function(o){ o.classList.toggle('sel',o===b); }); M.setColor('mood',moodOf(selMood).c); return; }
     if(b.dataset.todo){ var t=S.todos.filter(function(x){ return String(x.id)===b.dataset.todo; })[0]; if(t){ t.done=b.checked; if(t.done){ logDay('task'); quest('todo'); } save(); setTimeout(function(){ render('todo'); },250); } return; }
     if(b.dataset.delTodo){ S.todos=S.todos.filter(function(x){ return String(x.id)!==b.dataset.delTodo; }); save(); render('todo'); return; }
@@ -1582,7 +1578,16 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(a==='seeScreens'){ retract(); toast('Drag to look around the screens · tap one to play or open it fully'); return; }
     if(a==='door'){ enterRoom(); return; }
     if(a==='fly'){ startFly(); return; }
-    if(a==='worlds'||a==='worldCube'||a==='worldGarden'||a==='worldAnimals'||a==='worldPlanets'||a==='worldScience'){ openWorlds('cube'); return; }
+    if(a==='speakToday'){ if(window.MUSage){ var t=MUSage.speakToday(); toast(t?t.title:'Reminder'); } return; }
+    if(a==='speakStop'){ if(window.MUSage) MUSage.stop(); return; }
+    if(a==='speakShown'){ var sh=(window.H_HADITH||[]).filter(function(x){ return x.id===shown; })[0]||(window.H_QURAN||[]).filter(function(x){ return x.id===shown; })[0]; if(sh&&window.MUSage) MUSage.speakItem(sh); return; }
+    if(a==='voiceMan'||a==='voiceWoman'){ S.sageVoice=a==='voiceMan'?'man':'woman'; save(); if(window.MUSage) MUSage.setGender(S.sageVoice); toast(S.sageVoice==='man'?'A wise man will speak':'A woman will speak'); if(shown) render(shown); return; }
+    if(a==='bookPrev'){ if(window.MUBook) MUBook.turn(-1); return; }
+    if(a==='bookNext'){ if(window.MUBook) MUBook.turn(1); return; }
+    if(a==='monthPrev'){ monthOff--; render('mood'); return; }
+    if(a==='monthNext'){ if(monthOff<0) monthOff++; render('mood'); return; }
+    if(a==='askAI'){ askMind(); return; }
+    if(a==='memTick'){ var mid=b.dataset.mem; if(!mid) return; S.mem=S.mem||{}; if(S.mem[mid]) delete S.mem[mid]; else S.mem[mid]=Date.now(); save(); if(shown) render(shown); return; }
     if(a==='gReset'){ startGame(shown); return; }
     if(a==='gSkip'){ nextWord(); return; }
     if(a==='gFocusStop'){ clearInterval(G.timer); return; }
@@ -1599,11 +1604,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(a==='moodPrev'){ weekOff--; render('mood'); return; }
     if(a==='moodNext'){ if(weekOff<0) weekOff++; render('mood'); return; }
     if(a==='moodAI'){ askWeek(); return; }
-    if(a==='logMood'){ if(!selMood){ toast('Tap a mood light first'); return; } var note=(document.getElementById('mNote').value||'').trim();
+    if(a==='logMood'){ if(!selMood){ toast('Tap a mood first'); return; } var note=(document.getElementById('mNote').value||'').trim();
       S.moods.unshift({m:selMood,note:note,ts:Date.now(),day:today()}); logDay('mood'); save(); quest('mood'); M.fire('mood'); toast('Mood saved'); updateChartBoard(); updateMoodBoards();
-      if(selMood==='Low'||selMood==='Anxious'){ render('mood'); var c=document.createElement('p'); c.className='care'; c.innerHTML='Thank you for being honest with yourself. Be gentle today &mdash; a slow breath, a short walk, or talking to someone you trust can help. If things feel too heavy, <b>Samaritans are free on 116 123</b> (UK), any time.'; stage.querySelector('.pg').insertBefore(c,stage.querySelector('.pg').children[3]); }
+      var mv=moodOf(selMood); if(mv.v<=2){ render('mood'); var c=document.createElement('p'); c.className='care'; c.innerHTML='Thank you for being honest. Be gentle today. Remember God is with the patient. If things feel too heavy, <b>Samaritans are free on 116 123</b> (UK), any time.'; stage.querySelector('.pg').insertBefore(c,stage.querySelector('.pg').children[3]); }
       else render('mood'); selMood=null; return; }
-    if(a==='addNote'){ var tx=(document.getElementById('dText').value||'').trim(); if(!tx){ toast('Write something first'); return; } S.notes.unshift({id:Date.now(),title:(document.getElementById('dTitle').value||'').trim(),text:tx,ts:Date.now()}); logDay('note'); save(); M.fire('diary'); render('diary'); quest('diary'); return; }
+    if(a==='addNote'){ var tx=(document.getElementById('dText').value||'').trim(); if(!tx){ toast('Write something first'); return; } S.notes.unshift({id:Date.now(),title:(document.getElementById('dTitle').value||'').trim(),text:tx,ts:Date.now()}); logDay('note'); save(); M.fire('diary'); if(window.MUBook) MUBook.setNotes(S.notes); render('diary'); quest('diary'); return; }
     if(a==='clearDone'){ S.todos=S.todos.filter(function(t){ return !t.done; }); save(); render('todo'); return; }
     if(a==='addGoal'){ var gt=(document.getElementById('gTitle').value||'').trim(); if(!gt){ toast('Name your goal first'); return; } S.goals.unshift({id:Date.now(),title:gt,why:(document.getElementById('gWhy').value||'').trim(),steps:[]}); save(); M.fire('goals'); render('goals'); refreshGoalOrbs(); return; }
     if(a==='addHabit'){ var hn=(document.getElementById('hName').value||'').trim(), ht=+document.getElementById('hTarget').value||1; if(!hn){ toast('Name your tracker'); return; } S.habits.push({id:'c'+Date.now(),n:hn,t:ht,c:['#ff4fa8','#ffc44d','#2ee6ff','#a45cff','#19f0b0'][S.habits.length%5]}); save(); render('trackers'); return; }
@@ -2370,8 +2375,8 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   /* first visit: a short intro to how the mind works */
   var INTRO=[['This is your whole mind','Every glowing light is a neuron — a part of you. Drag anywhere to spin your brain and look around.'],
     ['Double-tap a far light','A single tap on a distant neuron hints. Double-tap it and you travel along the neural paths. If you are already next to one, one tap opens it — you will not ride again.'],
-    ['Lights at the bottom','The row under your thumb is every neuron. Unopened ones are ? — scroll along and tap one to go there, instead of flying back to the same lights.'],
-    ['Stay and look around','You stay at the neuron you opened. Drag to look around it. Core pages sit on the left; tap a ? to visit a mystery. Home is only if you choose it.']], inI=0;
+    ['Lights at the bottom','The row under your thumb is every neuron. Scroll along and tap one to go there.'],
+    ['Stay and look around','You stay at the neuron you opened. Drag to look around it. Core pages sit on the left. Home is only if you choose it.']], inI=0;
   function paintIntro(){ document.getElementById('inTitle').textContent=INTRO[inI][0]; document.getElementById('inText').textContent=INTRO[inI][1];
     document.getElementById('inDots').innerHTML=INTRO.map(function(_,i){ return '<i class="'+(i===inI?'on':'')+'"></i>'; }).join(''); document.getElementById('inNext').textContent=inI===INTRO.length-1?'Start exploring':'Next'; }
   function showIntro(){ inI=0; paintIntro(); document.getElementById('intro').classList.add('on'); }
@@ -2381,11 +2386,11 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 
 
   /* the main core neurons, one tap away on Home */
-  var CORE_MAIN=['worlds','mood','diary','todo','goals','plan','trackers','gallery','year','progress','arcade'];
-  function coreRow(){ return '<div class="hcore">'+CORE_MAIN.map(function(id){ var d=byId[id]; if(!d) return ''; var known=id==='me'||id==='worlds'||S.visited[id]; return '<button class="hc-btn'+(known?'':' unk')+'" data-go="'+id+'" style="--c:'+(known?d.col:'#9eb6ff')+'"><i>'+(known?'':'?')+'</i><span>'+(known?esc(d.name):'?')+(known&&hasVault()&&(id==='diary'||id==='gallery')?' &#128274;':'')+'</span></button>'; }).join('')+'</div>'; }
+  var CORE_MAIN=['sage','quran','dua','listen','ai','mood','diary','todo','goals','plan','trackers','gallery','year','progress','arcade'];
+  function coreRow(){ return '<div class="hcore">'+CORE_MAIN.map(function(id){ var d=byId[id]; if(!d) return ''; return '<button class="hc-btn" data-go="'+id+'" style="--c:'+d.col+'"><i></i><span>'+esc(d.name)+(hasVault()&&(id==='diary'||id==='gallery')?' &#128274;':'')+'</span></button>'; }).join('')+'</div>'; }
   function paintRail(){
     var coreEl=document.getElementById('crCore'), qsEl=document.getElementById('crQs'); if(!coreEl||!qsEl) return;
-    var short={me:'⌂',worlds:'W',mood:'Mo',diary:'Di',todo:'Td',goals:'Go',plan:'Pl',trackers:'Tr',gallery:'Me',year:'25',progress:'Pr',arcade:'Ar'};
+    var short={me:'⌂',sage:'Re',listen:'Li',mood:'Mo',diary:'Di',todo:'Td',goals:'Go',plan:'Pl',trackers:'Tr',gallery:'Me',year:'25',progress:'Pr',arcade:'Ar'};
     var core=['me'].concat(CORE_MAIN);
     coreEl.innerHTML=core.map(function(id){ var d=byId[id]; if(!d) return '';
       var kn=knownOf(d);
@@ -2429,7 +2434,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 
   /* labels and dock */
   var lw=document.getElementById('labels'), labels={};
-  function knownOf(d){ return !d || d.id==='me' || d.id==='worlds' || !!S.visited[d.id]; }
+  function knownOf(d){ return !d || !d.mini || d.kind==='room' || d.kind==='month' || d.id==='me' || !!S.visited[d.id]; }
   function unknown(d){ return !knownOf(d); }
   function labelText(d){ return unknown(d)?'?':d.name; }
   DESTS.forEach(function(d){ var b=document.createElement('button'); b.type='button'; b.className='nl'+(d.mini?' mini':'')+(unknown(d)?' hid':'')+(d.id==='worlds'?' world':''); b.dataset.go=d.id; b.style.setProperty('--c',unknown(d)?'#cfd6ff':d.col); b.innerHTML='<i></i><span>'+esc(labelText(d))+'</span>'; lw.appendChild(b); labels[d.id]=b; });
@@ -2441,7 +2446,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     var d=byId[id]; if(!d||busy) return;
     var s=M.screenOf(id), dist=s&&s.dist, popped=dist!=null&&dist<640;
     if(asClose(s,d) || (M.alreadyAt&&M.alreadyAt(id)) || (dist!=null&&dist<80)){ lastTap={id:null,t:0}; travelTo(id); return; }
-    if(unknown(d)&&!visionOn()&&!popped){ toast('Fly toward the glow — a ? pops up when you are near'); return; }
+    if(unknown(d)&&!visionOn()&&!popped){ return; }
     if(unknown(d)&&popped){ lastTap={id:null,t:0}; travelTo(id); return; }
     var now=Date.now();
     if(lastTap.id===id && now-lastTap.t<560){
@@ -2449,7 +2454,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     }
     lastTap={id:id,t:now};
     var el=labels[id]; if(el){ el.classList.add('armed'); setTimeout(function(){ if(el) el.classList.remove('armed'); },560); }
-    toast('Double tap to travel there');
+    lastTap={id:id,t:now};
   }
   lw.addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return;
     e.preventDefault(); tapNeuron(b.dataset.go); });
@@ -2457,7 +2462,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     var near=[];
     DESTS.forEach(function(d){ var el=labels[d.id], s=M.screenOf(d.id); if(d.dormant||!el){ if(el){ el.style.opacity='0'; el.style.pointerEvents='none'; } return; }
       var atCur=d.id===cur, reading=atCur&&shown===d.id, kn=knownOf(d);
-      var popR=d.mini?300:560, farR=d.mini?540:820, visDist=(kn||visionOn())?farR:popR;
+      var popR=d.mini?900:2400, farR=d.mini?3200:7200, visDist=(kn||visionOn())?farR:popR;
       var vis=s&&s.on&&(!reading||tr||M.isFree())&&s.x>-80&&s.x<innerWidth+80&&s.y>-80&&s.y<innerHeight+80&&s.dist<visDist;
       if(s&&s.dist<640&&d.id!=='me') near.push({d:d,dist:s.dist,known:kn});
       if(!vis){ el.style.opacity='0'; el.style.pointerEvents='none'; el.classList.remove('pop'); return; }
@@ -2482,26 +2487,25 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   }
   function paintDock(){
     var row=document.getElementById('dockRow'); if(!row) return;
-    var h='<button class="dk fly found" data-fly="1" style="--c:#a45cff"><i>✦</i><span>Fly</span></button>';
-    h+='<button class="dk found worlds" data-go="worlds" title="Cube Keep" style="--c:#2ee6ff"><i>K</i><span>Keep</span></button>';
+    var h='<button class="dk fly found" data-fly="1" style="--c:#a45cff"><i>✦</i><span></span></button>';
     var foundN=0, total=0;
     function addBtn(d){
-      if(!d||d.dormant||d.id==='worlds') return;
+      if(!d||d.dormant) return;
       total++;
       var kn=knownOf(d);
       if(kn) foundN++;
       h+='<button class="dk'+(d.id===cur?' here':'')+(kn?' found':' unk')+(d.mini?' mini':'')+(QUESTS[d.id]&&!qDone(d.id)&&kn?' q':'')+'" data-go="'+d.id+'" title="'+(kn?esc(d.name):'Unknown neuron')+'" style="--c:'+(kn?d.col:'#cfd6ff')+'"><i>'+(kn?'':'?')+'</i><span>'+(kn?esc(d.name):'?')+'</span></button>';
     }
-    DESTS.forEach(function(d){ if(!d.mini) addBtn(d); });
-    DESTS.forEach(function(d){ if(d.mini) addBtn(d); });
+    DESTS.forEach(function(d){ if(!d.mini&&!d.yearLight) addBtn(d); });
+    DESTS.forEach(function(d){ if(d.mini&&!d.yearLight) addBtn(d); });
     row.innerHTML=h;
     var nEl=document.getElementById('dockN'), tEl=document.getElementById('dockT');
     if(nEl) nEl.textContent=foundN;
     if(tEl) tEl.textContent=total;
     paintRail(); lastNearKey='';
   }
-  document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('cube'); return; } travelTo(b.dataset.go); });
-  document.getElementById('coreRail').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return; if(b.dataset.go==='worlds'){ openWorlds('cube'); return; } travelTo(b.dataset.go); });
+  document.getElementById('dock').addEventListener('click',function(e){ if(e.target.closest('[data-fly]')){ startFly(); return; } var b=e.target.closest('[data-go]'); if(!b) return; travelTo(b.dataset.go); });
+  document.getElementById('coreRail').addEventListener('click',function(e){ var b=e.target.closest('[data-go]'); if(!b) return; travelTo(b.dataset.go); });
   paintDock();
 
 
@@ -2547,7 +2551,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 
   Snd.paint(); paintCoins();
   document.getElementById('coinChip').onclick=function(){ travelTo('me'); };
-  document.getElementById('worldsChip').onclick=function(){ openWorlds('cube'); };
+  document.getElementById('remindChip').onclick=function(){ travelTo('sage'); if(window.MUSage) MUSage.speakToday(); };
 
 
   /* ── sound effects (calm neuron pings) ── */
@@ -2584,7 +2588,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     DESTS.forEach(function(d){ if(knownOf(d)||d.id==='me') return; var dx=d.pos[0]-from.pos[0], dy=d.pos[1]-from.pos[1], dz=d.pos[2]-from.pos[2], dd=dx*dx+dy*dy+dz*dz; if(dd<bd){ bd=dd; best=d.id; } }); return best; }
   function startFly(){ if(!document.body.classList.contains('inside')||busy) return; if(cur&&shown) skip[cur]=1; guideId=null;
     retract(function(){ if(!M.freeStart(null)) return; document.body.classList.add('flying'); FX('warp'); FlySnd.start();
-      document.getElementById('flyHint').textContent=isMob()?'Drag to turn · hold centre to move · nearby lights pop up as ?':'Drag to turn · hold centre (or W) to move · nearby lights pop up as ?';
+      document.getElementById('flyHint').textContent='';
       paintDock(); }); }
   function endFly(keep){ document.body.classList.remove('flying','touching'); flyHelp.classList.remove('on'); thrust.classList.remove('on'); enterPill.hidden=true; nearId=null; flyNear.textContent=''; FlySnd.stop();
     if(keep){ try{ M.park(); }catch(e){} } else { try{ M.freeThrust(0); M.freeTurn(0); }catch(e){} } }
@@ -2607,14 +2611,14 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   addEventListener('keydown',function(e){ if(e.key!=='Escape') return; if(e.target.closest('input,textarea')) return; if(document.body.classList.contains('in-world')) return; if(room&&room.classList.contains('on')) return; if(shown){ e.preventDefault(); retract(); } });
   addEventListener('wheel',function(e){ if(M.isFree()) M.freeKick(-e.deltaY*.06); },{passive:true});
   setInterval(function(){ if(!M.isFree()) return; FlySnd.speed(thr); var n=M.nearest(); if(!n.id) return; var d=byId[n.id], known=knownOf(d);
-    flyNear.textContent='nearest · '+(known?d.name:'?')+' · '+Math.round(n.dist)+'m';
-    var close=n.dist<nextTo(d)&&!skip[n.id]; if(close){ nearId=n.id; enterPill.hidden=false; enterPill.innerHTML='&#9673; Enter '+(known?esc(d.name):'?'); } else { nearId=null; enterPill.hidden=true; } },200);
+    flyNear.textContent=known?d.name:'?';
+    var close=n.dist<nextTo(d)&&!skip[n.id]; if(close){ nearId=n.id; enterPill.hidden=false; enterPill.innerHTML='·'; } else { nearId=null; enterPill.hidden=true; } },200);
   function moveGuide(){ if(visionOn()&&(!guideId||S.visited[guideId])) guideId=pickGuide(); var on=(M.isFree()||visionOn())&&guideId&&!S.visited[guideId]&&!flyHelp.classList.contains('on'); if(!on){ guideEl.classList.remove('on'); return; }
     var gs=M.screenOf(guideId), W=innerWidth, H=innerHeight, m=60, cx=W/2, cy=H/2, x=gs.x, y=gs.y, off=false;
     if(!gs.on){ x=cx+(cx-x)*1e3; y=cy+(cy-y)*1e3; }
     if(x<m||x>W-m||y<m+40||y>H-m-90||!gs.on){ off=true; var dx=x-cx, dy=y-cy, k=Math.min(Math.abs((cx-m)/(dx||1e-6)),Math.abs((cy-m-60)/(dy||1e-6))); x=cx+dx*k; y=cy+dy*k; guideEl.style.setProperty('--ang',(Math.atan2(dy,dx)*180/Math.PI+90).toFixed(1)+'deg'); }
     guideEl.classList.add('on'); guideEl.classList.toggle('off',off); guideEl.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)';
-    guideTxt.textContent=off?'turn this way':(gs.dist<60?'almost there':'something hidden'); }
+    guideTxt.textContent=''; }
 
 
   /* look around: drag anywhere on the universe to orbit the neuron you're at */
@@ -2625,10 +2629,33 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
         if(!tap) return;
         if(tvAct&&tvAct.classList.contains('on')){ tvAct.classList.remove('on'); tvPick=null; return; }
         var hit=M.pickDest&&M.pickDest(e.clientX,e.clientY); if(hit){ tapNeuron(hit); return; }
+        if(window.MUBook&&M.cam&&MUBook.pick(e.clientX,e.clientY,M.cam())){ MUBook.turn(e.clientX>innerWidth/2?1:-1); return; }
         var tv=M.pickTV&&M.pickTV(e.clientX,e.clientY); if(tv){ openTVChoice(tv); return; }
         if(document.body.classList.contains('watching')){ stopWatching(); return; }
         if(shown&&!busy&&!M.voyaging()) retract(); } }); });
   })();
+
+  function initQuran(){ var sel=document.getElementById('qSurah'), box=document.getElementById('qRead'); if(!sel||!box) return;
+    function load(){ var n=+sel.value||1; S.qSurah=n; save(); box.innerHTML='';
+      fetch('https://api.alquran.cloud/v1/surah/'+n+'/editions/quran-uthmani,en.sahih').then(function(r){ return r.json(); }).then(function(j){
+        var eds=(j.data||[]), ar=eds[0]&&eds[0].ayahs||[], en=eds[1]&&eds[1].ayahs||[];
+        box.innerHTML=ar.map(function(a,i){ return '<div class="ar">'+a.text+'</div>'+(en[i]?'<p class="en">'+esc(en[i].text)+'</p>':'')+'<div class="src">'+n+':'+(a.numberInSurah|| (i+1))+'</div>'; }).join('');
+      }).catch(function(){}); }
+    sel.onchange=load; load();
+  }
+  function askMind(){ var inp=document.getElementById('aiAsk'); if(!inp) return; var t=(inp.value||'').trim(); if(!t) return;
+    S.aiLog=S.aiLog||[]; S.aiLog.push({w:'me',t:t}); save();
+    if(window.MUAI&&MUAI.handle){ MUAI.set({ctx:function(){ return ''; }, run:function(acts){ (acts||[]).forEach(function(a){
+        if(a.op==='mood'&&a.m){ S.moods.unshift({m:a.m,note:a.note||'',ts:Date.now(),day:today()}); }
+        if(a.op==='note'&&a.text){ S.notes.unshift({id:Date.now(),title:a.title||'',text:a.text,ts:Date.now()}); }
+        if(a.op==='todo'&&a.text){ S.todos.unshift({id:Date.now(),text:a.text,done:false}); }
+        if(a.op==='go'&&a.id) travelTo(a.id);
+        if(a.op==='speak'&&window.MUSage) MUSage.speakToday();
+      }); save(); return {say:''}; }});
+      MUAI.handle(t,function(out){ S.aiLog.push({w:'bot',t:(out&&out.say)||'·'}); save(); render('ai'); }); }
+    else { S.aiLog.push({w:'bot',t:'·'}); save(); render('ai'); }
+    inp.value='';
+  }
 
   /* the gate */
   var gate=document.getElementById('gate'), gName=document.getElementById('gName');
@@ -2644,11 +2671,13 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
       updateMoodBoards();
       refreshBoards(); refreshGoalOrbs(); refreshIdeaOrbs(); S.wishes.forEach(function(w,i){ addWishStar(i); });
       var last=S.moods[0]; if(last) M.setColor('mood',moodOf(last.m).c);
-      setTimeout(function(){ M.fire('me'); emerge('me'); if(localStorage.getItem('mindu.intro')!=='1') setTimeout(showIntro,1200); },2300); }); }
+      window.MUSageSave=function(g){ S.sageVoice=g; save(); };
+      if(window.MUSage) MUSage.boot(S.sageVoice);
+      if(window.MUBook){ MUBook.boot(); MUBook.setNotes(S.notes); }
+      setTimeout(function(){ M.fire('me'); emerge('me'); try{ localStorage.setItem('mindu.intro','1'); }catch(e){} },2300); }); }
   document.getElementById('gEnter').onclick=enter;
   gName.addEventListener('keydown',function(e){ if(e.key==='Enter') enter(); });
   setInterval(function(){ if(shown==='me') return; },60000);
-  if(window.MUWorlds) MUWorlds.bind();
   window.MUResumeMind=function(){ if(cur&&!shown) emerge(cur); };
 })();
 </script>

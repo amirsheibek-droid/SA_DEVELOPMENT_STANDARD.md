@@ -595,7 +595,10 @@
     freeLook:function(dx,dy){ if(!flight) return; var k=small?.008:.005; flight.yaw-=dx*k; flight.pitch=Math.max(-1.25,Math.min(1.25,flight.pitch-dy*k*.8)); },
     freeThrust:function(v){ if(flight) flight.thrust=v; }, freeTurn:function(v){ if(flight) flight.turn=v; }, freeTilt:function(v){ if(flight) flight.tilt=v; },
     freeKick:function(v){ if(flight) flight.vel=Math.max(-80,Math.min(flight.max*1.4,flight.vel+v)); },
-    pause:function(v){ running=!v; if(!v){ clock.getDelta(); loop(); } }};
+    pause:function(v){ running=!v; if(!v){ clock.getDelta(); loop(); } },
+    attach:function(obj){ if(obj) mind.add(obj); return obj; },
+    anchor:function(id){ return D[id]&&D[id].v; },
+    cam:function(){ return cam; }};
   if(reduce){
     window.HMind.enter=function(cb){ mode='inside'; mind.visible=true; brainShell(); scene.fog.near=FOG_IN_N; scene.fog.far=FOG_IN_F; var P=V(0,0,0),L=V(0,0,0); pose(cur,P,L); camPos.copy(P); camLook.copy(L); cb&&cb(); };
   }
