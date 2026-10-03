@@ -1,58 +1,69 @@
-/* Sage voice — English translations, spoken on this device.
-   The visitor chooses a wise man or a woman. Uses the voices already on the phone. */
+/* Sage voice — same recorded Jess (Gemini Aoede) as Neuron Pulse.
+   First listen records the line once. Every later listen plays that file. */
 (function(){
-  var gender='man', ready=[], last='';
-  function load(){
+  var gender='woman', last='', audio=null, tok=0;
+  var TTS='https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/site-jess-tts';
+  var BUCKET='https://dyurykdiuwbmadjrljzh.supabase.co/storage/v1/object/public/tmp-site-audio/jess/';
+
+  function hashText(text,done){
     try{
-      ready=speechSynthesis.getVoices()||[];
-      if(!ready.length) speechSynthesis.onvoiceschanged=function(){ ready=speechSynthesis.getVoices()||[]; };
-    }catch(e){ ready=[]; }
+      crypto.subtle.digest('SHA-256', new TextEncoder().encode('jess-aoede-v1|'+String(text||'').trim())).then(function(buf){
+        done(Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join(''));
+      }).catch(function(){ done(''); });
+    }catch(e){ done(''); }
   }
-  load();
-  function pick(){
-    var list=ready.length?ready:(speechSynthesis.getVoices?speechSynthesis.getVoices():[]);
-    var en=list.filter(function(v){ return /en(-|_|$)/i.test(v.lang||''); });
-    var pool=en.length?en:list;
-    function score(v){
-      var n=(v.name||'')+' '+(v.voiceURI||''), s=0;
-      if(/en-GB|UK English|Daniel|Arthur|Malcolm|Oliver|Google UK/i.test(n)) s+=4;
-      if(gender==='man'){
-        if(/male|man|daniel|arthur|alex|fred|david|george|james|thomas|rishi/i.test(n)) s+=8;
-        if(/female|woman|samantha|karen|moira|tessa|fiona|siri|zira|susan/i.test(n)) s-=6;
-      } else {
-        if(/female|woman|samantha|karen|moira|tessa|fiona|susan|zira|serena|martha/i.test(n)) s+=8;
-        if(/male|man|daniel|arthur|alex|fred|david/i.test(n)) s-=6;
-      }
-      return s;
-    }
-    var best=null, bs=-99;
-    pool.forEach(function(v){ var n=score(v); if(n>bs){ bs=n; best=v; } });
-    return best||pool[0]||null;
+  function fallback(text){
+    if(!text||!window.speechSynthesis) return;
+    try{ speechSynthesis.cancel(); }catch(e){}
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang='en-GB'; u.rate=0.92; u.pitch=1.02;
+    try{
+      var vs=speechSynthesis.getVoices()||[];
+      var v=vs.filter(function(x){ return /en-GB|Google UK English Female|Serena|Samantha/i.test((x.name||'')+' '+(x.lang||'')); })[0];
+      if(v) u.voice=v;
+    }catch(e){}
+    speechSynthesis.speak(u);
+  }
+  function playUrl(url,text,mine){
+    try{ if(audio){ audio.pause(); audio=null; } }catch(e){}
+    audio=new Audio(url);
+    audio.onerror=function(){ if(tok===mine) fallback(text); };
+    var p=audio.play(); if(p&&p.catch) p.catch(function(){ if(tok===mine) fallback(text); });
+  }
+  function record(text,mine){
+    fetch(TTS,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text:text})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if(tok!==mine) return; if(j&&j.url) playUrl(j.url,text,mine); else fallback(text); })
+      .catch(function(){ if(tok===mine) fallback(text); });
   }
   function speak(text, src){
-    if(!text) return;
-    try{
-      speechSynthesis.cancel();
-      var u=new SpeechSynthesisUtterance(text+(src?'. '+src:''));
-      u.rate=gender==='man'?0.86:0.92;
-      u.pitch=gender==='man'?0.72:1.05;
-      u.lang='en-GB';
-      var v=pick(); if(v) u.voice=v;
-      last=text; speechSynthesis.speak(u);
-    }catch(e){}
+    var line=(text||'')+(src?'. '+src:'');
+    if(!line) return;
+    last=text; var mine=++tok;
+    try{ speechSynthesis.cancel(); }catch(e){}
+    hashText(line,function(h){
+      if(tok!==mine) return;
+      if(!h){ record(line,mine); return; }
+      var url=BUCKET+h+'.wav';
+      fetch(url,{method:'HEAD'}).then(function(r){
+        if(tok!==mine) return;
+        if(r.ok) playUrl(url,line,mine);
+        else record(line,mine);
+      }).catch(function(){ if(tok===mine) record(line,mine); });
+    });
   }
-  function stop(){ try{ speechSynthesis.cancel(); }catch(e){} }
-  function setGender(g){ gender=g==='woman'?'woman':'man'; try{ if(window.MUSageSave) MUSageSave(gender); }catch(e){} }
-  function todayLine(){
-    var t=window.H_TODAY?H_TODAY():null; if(!t) return '';
-    return t.en;
+  function stop(){
+    tok++;
+    try{ if(audio){ audio.pause(); audio=null; } }catch(e){}
+    try{ speechSynthesis.cancel(); }catch(e){}
   }
+  function setGender(){ gender='woman'; try{ if(window.MUSageSave) MUSageSave(gender); }catch(e){} }
   window.MUSage={
     speak:speak, stop:stop, setGender:setGender, gender:function(){ return gender; },
     speakToday:function(){ var t=window.H_TODAY&&H_TODAY(); if(!t) return; speak(t.en, t.src); return t; },
     speakItem:function(x){ if(!x) return; speak(x.en, x.src); },
     today:function(){ return window.H_TODAY?H_TODAY():null; },
-    todayLine:todayLine,
-    boot:function(g){ if(g) setGender(g); load(); }
+    todayLine:function(){ var t=window.H_TODAY?H_TODAY():null; return t?t.en:''; },
+    boot:function(){ setGender(); }
   };
 })();

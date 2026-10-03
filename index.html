@@ -1322,12 +1322,16 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   function ss(k,v){ try{ if(v===undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k,v); }catch(e){ return null; } }
   if(!M){ document.documentElement.classList.add('nojs'); document.getElementById('btx').style.display='none'; document.body.style.overflow='auto'; stage.style.cssText='position:static;max-height:none;overflow:visible;transform:none;padding:24px;pointer-events:auto'; return; }
 
-  /* Jess: Gemini welcome on Neuron Pulse enter only. Talks a bit, then quietens. Never speaks on Mind Universe. */
+  /* Jess: one recorded Gemini woman (Aoede) across the whole site.
+     Local m4a first, then the one-time cache. Never re-bills a line already recorded. */
   var Jess=(function(){
-    var el=new Audio(), on=false, cb=null, unlocked=false, welcomed=false, fading=false;
+    var el=new Audio(), on=false, cb=null, unlocked=false, welcomed=false, fading=false, tok=0;
     var LINE='Welcome to Neuron Pulse. Every light here is a neuron. Have a look around — I\'ll go quiet.';
+    var TTS='https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/site-jess-tts';
+    var BUCKET='https://dyurykdiuwbmadjrljzh.supabase.co/storage/v1/object/public/tmp-site-audio/jess/';
     el.preload='auto';
     function unduck(){ try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(false); }catch(e){} }
+    function duck(){ try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(true); }catch(e){} }
     function end(){ fading=false; try{ el.volume=1; }catch(e){} var c=cb; cb=null; unduck(); c&&c(); }
     el.addEventListener('ended',end);
     el.addEventListener('timeupdate',function(){
@@ -1338,23 +1342,67 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     function fallback(text,done){ var S=window.speechSynthesis; if(!S||!text){ setTimeout(done||function(){},300); return; }
       try{ S.cancel(); }catch(e){} var u=new SpeechSynthesisUtterance(text); u.lang='en-GB'; var fin=false;
       function f(){ if(fin) return; fin=true; unduck(); done&&done(); } u.onend=f; u.onerror=f; setTimeout(f,Math.max(3500,text.length*85)); S.speak(u); }
+    function hashText(text,done){
+      try{
+        crypto.subtle.digest('SHA-256', new TextEncoder().encode('jess-aoede-v1|'+String(text||'').trim())).then(function(buf){
+          done(Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join(''));
+        }).catch(function(){ done(''); });
+      }catch(e){ done(''); }
+    }
+    function playSrc(src,mine,onFail){
+      el.onerror=function(){ if(tok!==mine) return; onFail(); };
+      el.muted=false; el.src=src;
+      var pr=el.play(); if(pr&&pr.catch) pr.catch(function(){ if(tok===mine) onFail(); });
+    }
+    function playUrl(url,text,mine,done){
+      if(!url){ fallback(text,done); return; }
+      playSrc(url,mine,function(){ if(tok===mine) fallback(text,done); });
+    }
+    function fromCache(text,mine,done){
+      hashText(text,function(h){
+        if(tok!==mine) return;
+        if(!h){ record(text,mine,done); return; }
+        var url=BUCKET+h+'.wav';
+        fetch(url,{method:'HEAD'}).then(function(r){
+          if(tok!==mine) return;
+          if(r.ok) playUrl(url,text,mine,done);
+          else record(text,mine,done);
+        }).catch(function(){ if(tok===mine) record(text,mine,done); });
+      });
+    }
+    function record(text,mine,done){
+      fetch(TTS,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text:text})})
+        .then(function(r){ return r.json(); })
+        .then(function(j){ if(tok!==mine) return; playUrl(j&&j.url,text,mine,done); })
+        .catch(function(){ if(tok===mine) fallback(text,done); });
+    }
+    function start(done){
+      this.stop(); cb=done||null; fading=false; try{ el.volume=1; }catch(e){} duck();
+      return ++tok;
+    }
     return {
       unlock:function(){ if(unlocked) return; unlocked=true; try{ el.muted=true; el.src='/assets/voice/arch/mind-inside.m4a?v=3'; var pr=el.play(); if(pr&&pr.then) pr.then(function(){ el.pause(); el.currentTime=0; el.muted=false; }).catch(function(){ el.muted=false; }); else el.muted=false; }catch(e){} },
       welcome:function(){ if(welcomed||ss('saWelcomed')==='1'||ss('saArchVoice')==='off') return;
         welcomed=true; ss('saWelcomed','1');
-        this.stop(); cb=null; fading=true; try{ el.volume=1; }catch(e){}
-        try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(true); }catch(e){}
-        el.muted=false; el.src='/assets/voice/arch/mind-inside.m4a?v=3';
-        var failed=false; function fail(){ if(failed) return; failed=true; fading=false; fallback(LINE,function(){}); }
-        el.onerror=fail; var pr=el.play(); if(pr&&pr.catch) pr.catch(fail); },
-      play:function(id,text,done){ this.say(text,done); },
-      say:function(text,done){
-        this.stop();
-        if(!text||ss('saArchVoice')==='off'){ setTimeout(function(){ done&&done(); },80); return; }
-        try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(true); }catch(e){}
-        fallback(text,done);
+        var mine=start.call(this,null); fading=true;
+        playSrc('/assets/voice/arch/mind-inside.m4a?v=3',mine,function(){ if(tok!==mine) return; fading=false; fallback(LINE,function(){}); });
       },
-      stop:function(){ fading=false; try{ el.pause(); el.volume=1; }catch(e){} cb=null; unduck(); try{ window.speechSynthesis&&speechSynthesis.cancel(); }catch(e){} },
+      play:function(id,text,done){
+        if(!text&&!id){ setTimeout(function(){ done&&done(); },80); return; }
+        if(ss('saArchVoice')==='off'){ setTimeout(function(){ done&&done(); },80); return; }
+        var mine=start.call(this,done);
+        if(!id || id.indexOf('guide-')===0){ fromCache(text,mine,done); return; }
+        playSrc('/assets/voice/arch/'+id+'.m4a?v=4',mine,function(){
+          if(tok!==mine) return;
+          playSrc('/assets/voice/'+id+'.m4a?v=4',mine,function(){
+            if(tok!==mine) return;
+            if(text) fromCache(text,mine,done);
+            else { var c=cb; cb=null; unduck(); c&&c(); }
+          });
+        });
+      },
+      say:function(text,done){ this.play('',text,done); },
+      stop:function(){ tok++; fading=false; try{ el.pause(); el.volume=1; }catch(e){} cb=null; unduck(); try{ window.speechSynthesis&&speechSynthesis.cancel(); }catch(e){} },
       on:function(){ return on; }, set:function(v){ on=v; ss('saArchVoice',v?'on':'off'); if(!v) this.stop(); }
     };
   })();
@@ -1386,21 +1434,28 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     };
     function mark(k){ said[k]=1; ss('saGuideSaid',JSON.stringify(said)); }
     function later(fn){ clearTimeout(t); t=setTimeout(fn,700); }
-    function speak(key,text){
+    var CLIP={
+      core:'guide-core',services:'guide-services',process:'guide-process',referral:'guide-referral',
+      about:'guide-about',faq:'guide-faq',news:'guide-news',secret:'guide-secret',guild:'guide-guild',
+      'Voltz CRM':'guide-voltz','Mind Universe':'guide-mind','SpareDrive':'guide-spare',
+      'Qlarvia':'guide-qlarvia','NEX License':'guide-nex','The Talking Therapist':'guide-therapist',
+      'Eid in Bedford':'guide-eid','Contract Analyser':'guide-contract'
+    };
+    function speak(key,id,text){
       if(!text||said[key]||ss('saArchVoice')==='off') return;
       mark(key);
-      later(function(){ Jess.say(text); });
+      later(function(){ Jess.play(id,text); });
     }
     return {
       page:function(id){
         if(!id||id==='portfolio'||id==='build'||id.indexOf('m-')===0) return;
         if(id==='core'&&document.getElementById('choice')&&document.getElementById('choice').classList.contains('on')) return;
-        speak('page:'+id,PAGES[id]);
+        speak('page:'+id,CLIP[id],PAGES[id]);
       },
       app:function(name){
         if(!name||!document.body.classList.contains('np-phones')) return;
         if(said['app:'+name]){ clearTimeout(t); Jess.stop(); return; }
-        speak('app:'+name,APPS[name]);
+        speak('app:'+name,CLIP[name],APPS[name]);
       },
       stop:function(){ clearTimeout(t); Jess.stop(); }
     };
@@ -1809,13 +1864,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     if(SYN) SYN.onvoiceschanged=function(){ VOICE=pickVoice(); };
     function speak(text,done,id){
       if(!voiceOn){ setTimeout(function(){ done&&done(); },250); return; }
-      if(id){ Jess.play(id,text,done); return; }
-      if(!voiceOn||!SYN){ setTimeout(done,350); return; }
-      try{ if(SYN.speaking) SYN.cancel(); }catch(e){}
-      duck(true);
-      setTimeout(function(){ var u=new SpeechSynthesisUtterance(text.replace(/—/g,',')); VOICE=VOICE||pickVoice(); if(VOICE) u.voice=VOICE; u.lang='en-GB'; u.rate=1.02; u.pitch=1.04;
-        var fin=false; function end(){ if(fin) return; fin=true; duck(false); done&&done(); }
-        u.onend=end; u.onerror=end; setTimeout(end,Math.max(4000,text.length*90)); SYN.speak(u); },150);
+      Jess.play(id||'',text,done);
     }
     function duck(on){ try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(on); }catch(e){} }
 

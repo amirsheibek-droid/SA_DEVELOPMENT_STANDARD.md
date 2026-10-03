@@ -858,7 +858,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 <script src="assets/mind-garden.js?v=1"></script>
 <script src="assets/mind-draw.js?v=1"></script>
 <script src="assets/mind-cube.js?v=1"></script>
-<script src="assets/mind-sage.js?v=1"></script>
+<script src="assets/mind-sage.js?v=2"></script>
 <script src="assets/mind-book.js?v=1"></script>
 <script src="assets/mind-ai.js?v=1"></script>
 <script>
@@ -1096,7 +1096,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     return;
   }
   try{ S=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ S={}; }
-  S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[]; S.sageVoice=S.sageVoice||'man'; S.mem=S.mem||{}; S.qSurah=S.qSurah||1; S.duaCat=S.duaCat||'';
+  S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[]; S.sageVoice='woman'; S.mem=S.mem||{}; S.qSurah=S.qSurah||1; S.duaCat=S.duaCat||'';
   S.focus=S.focus||{}; S.habits=S.habits||[{id:'water',n:'Water (glasses)',t:8,c:'#2ee6ff'},{id:'sleep',n:'Sleep (hours)',t:8,c:'#a45cff'},{id:'move',n:'Move (minutes)',t:30,c:'#19f0b0'},{id:'read',n:'Read (pages)',t:10,c:'#ffc44d'}];
   var SOCIAL=[{id:'sm_yt',n:'YouTube',re:/(^|\.)(youtube\.com|youtu\.be)$/i,t:30,c:'#ff4f6d'},{id:'sm_ig',n:'Instagram',re:/(^|\.)instagram\.com$/i,t:20,c:'#ff4fa8'},{id:'sm_fb',n:'Facebook',re:/(^|\.)(facebook\.com|fb\.com)$/i,t:20,c:'#2ee6ff'},{id:'sm_tt',n:'TikTok',re:/(^|\.)tiktok\.com$/i,t:20,c:'#fff'},{id:'sm_x',n:'X / Twitter',re:/(^|\.)(twitter\.com|x\.com)$/i,t:20,c:'#a45cff'},{id:'sm_li',n:'LinkedIn',re:/(^|\.)linkedin\.com$/i,t:20,c:'#4f7dff'},{id:'sm_wa',n:'WhatsApp',re:/(^|\.)whatsapp\.com$/i,t:20,c:'#19f0b0'}];
   (function(){ var have={}; S.habits.forEach(function(h){ have[h.id]=1; }); SOCIAL.forEach(function(s){ if(!have[s.id]) S.habits.push({id:s.id,n:s.n,t:s.t,c:s.c,unit:'min',auto:true}); }); })();
@@ -1220,7 +1220,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   function weekTitle(off){ var s=weekStart(off), e=new Date(s); e.setDate(s.getDate()+6); var a=s.getDate()+' '+MN[s.getMonth()], b=e.getDate()+' '+MN[e.getMonth()]; return (off===0?'This week · ':'')+a+' – '+b; }
   function weekDays(off){ var s=weekStart(off), days=[]; for(var i=0;i<7;i++){ var d=new Date(s); d.setDate(s.getDate()+i); var k=today(d), ms=S.moods.filter(function(m){ return m.day===k; });
     days.push({k:k,label:WD[i],date:d.getDate(),moods:ms,mood:ms.length?ms.reduce(function(n,m){ return n+moodOf(m.m).v; },0)/ms.length:null,last:ms[0]||null}); } return days; }
-  function voicePick(){ var g=(S.sageVoice||'man'); return '<div class="row"><button type="button" class="ghost" data-act="voiceMan" style="'+(g==='man'?'color:var(--gold)':'')+'">Wise man</button><button type="button" class="ghost" data-act="voiceWoman" style="'+(g==='woman'?'color:var(--gold)':'')+'">Gentle woman</button></div>'; }
+  function voicePick(){ return '<p class="small">Jess reads each line once, then the recording plays for free.</p>'; }
   function todayCard(){ var t=window.H_TODAY?H_TODAY():{title:'Peace',en:'In the remembrance of God do hearts find rest.',src:'Qur’an 13:28',ar:'',kind:'quran'};
     return '<h3>'+esc(t.title)+'</h3>'+(t.ar?'<div class="ar">'+t.ar+'</div>':'')+'<p class="en">&ldquo;'+esc(t.en)+'&rdquo;</p><p class="src">'+esc(t.src)+'</p>'; }
   function moodGrid(q){ q=(q||'').toLowerCase(); var src=MOODS, list;
@@ -1581,7 +1581,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(a==='speakToday'){ if(window.MUSage){ var t=MUSage.speakToday(); toast(t?t.title:'Reminder'); } return; }
     if(a==='speakStop'){ if(window.MUSage) MUSage.stop(); return; }
     if(a==='speakShown'){ var sh=(window.H_HADITH||[]).filter(function(x){ return x.id===shown; })[0]||(window.H_QURAN||[]).filter(function(x){ return x.id===shown; })[0]; if(sh&&window.MUSage) MUSage.speakItem(sh); return; }
-    if(a==='voiceMan'||a==='voiceWoman'){ S.sageVoice=a==='voiceMan'?'man':'woman'; save(); if(window.MUSage) MUSage.setGender(S.sageVoice); toast(S.sageVoice==='man'?'A wise man will speak':'A woman will speak'); if(shown) render(shown); return; }
+    if(a==='voiceMan'||a==='voiceWoman'){ S.sageVoice='woman'; save(); if(window.MUSage) MUSage.setGender('woman'); toast('Jess will speak'); if(shown) render(shown); return; }
     if(a==='bookPrev'){ if(window.MUBook) MUBook.turn(-1); return; }
     if(a==='bookNext'){ if(window.MUBook) MUBook.turn(1); return; }
     if(a==='monthPrev'){ monthOff--; render('mood'); return; }
@@ -1898,13 +1898,8 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     var un=M.unexploredFrom(id).length; h+='<p class="small">'+(un?un+' unexplored path'+(un>1?'s lead':' leads')+' on from here…':'Every path from here has been explored.')+'</p>';
     return h; }
 
-  /* the Sage: device voice for now (Arabic, then English); recorded Gemini voice comes once texts are verified */
-  function narrate(id){ var h=(window.H_HADITH||[]).filter(function(x){ return x.id===id; })[0]; if(!h||!window.speechSynthesis){ toast('Voice not available on this device'); return; }
-    speechSynthesis.cancel(); var vs=speechSynthesis.getVoices(), ar=vs.filter(function(v){ return /^ar/i.test(v.lang); })[0], en=vs.filter(function(v){ return /en-GB/i.test(v.lang); })[0];
-    var u1=new SpeechSynthesisUtterance(h.ar.replace(/[ً-ْ]/g,'')); u1.lang='ar-SA'; if(ar) u1.voice=ar; u1.rate=.85;
-    var u2=new SpeechSynthesisUtterance(h.en); u2.lang='en-GB'; if(en) u2.voice=en; u2.rate=.95;
-    if(!ar) toast('No Arabic voice on this device — reading the meaning in English');
-    if(ar) speechSynthesis.speak(u1); speechSynthesis.speak(u2); }
+  /* the Sage: same recorded Jess as Neuron Pulse — one Gemini take, then free replay */
+  function narrate(id){ var h=(window.H_HADITH||[]).filter(function(x){ return x.id===id; })[0]; if(!h||!window.MUSage){ toast('Voice not available on this device'); return; } MUSage.speakItem(h); }
 
   /* charts: in the page and floating in space */
   function series(){ var days=[]; for(var i=13;i>=0;i--){ var d=new Date(); d.setDate(d.getDate()-i); var k=today(d), ms=S.moods.filter(function(m){ return m.day===k; }), lg=S.log[k]||{};
@@ -2652,7 +2647,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
         if(a.op==='go'&&a.id) travelTo(a.id);
         if(a.op==='speak'&&window.MUSage) MUSage.speakToday();
       }); save(); return {say:''}; }});
-      MUAI.handle(t,function(out){ S.aiLog.push({w:'bot',t:(out&&out.say)||'·'}); save(); render('ai'); }); }
+      MUAI.handle(t,function(out){ var say=(out&&out.say)||'·'; S.aiLog.push({w:'bot',t:say}); save(); render('ai'); if(say&&say!=='·'&&window.MUSage) MUSage.speak(say); }); }
     else { S.aiLog.push({w:'bot',t:'·'}); save(); render('ai'); }
     inp.value='';
   }
