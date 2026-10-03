@@ -1090,7 +1090,21 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   function fmtDur(s){ s=Math.max(0,s|0); var h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60; if(h) return h+'h '+String(m).padStart(2,'0')+'m'; if(m) return m+'m '+String(sec).padStart(2,'0')+'s'; return sec+'s'; }
 
   /* ── storage: everything stays on this device ── */
-  var KEY='mindu.v1', S={};
+  var KEY='mindu.v1', S={}, DB=null;
+  function wipeMind(thenGo){
+    try{ Object.keys(localStorage).forEach(function(k){ if(k.indexOf('mindu')===0) localStorage.removeItem(k); }); }catch(e){}
+    try{ if(DB){ DB.close(); DB=null; } }catch(e){}
+    var went=0; function done(){ if(went||!thenGo) return; went=1; location.replace(thenGo); }
+    try{
+      var req=indexedDB.deleteDatabase('mindu-media');
+      req.onsuccess=req.onerror=req.onblocked=done;
+      setTimeout(done, 900);
+    }catch(e){ done(); }
+  }
+  if(/[?&]fresh=1(?:&|$)/.test(location.search||'')){
+    wipeMind(location.pathname+(location.hash||''));
+    return;
+  }
   try{ S=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ S={}; }
   S.profile=S.profile||{name:'',line:'',photo:null}; S.moods=S.moods||[]; S.notes=S.notes||[]; S.todos=S.todos||[]; S.goals=S.goals||[];
   S.focus=S.focus||{}; S.habits=S.habits||[{id:'water',n:'Water (glasses)',t:8,c:'#2ee6ff'},{id:'sleep',n:'Sleep (hours)',t:8,c:'#a45cff'},{id:'move',n:'Move (minutes)',t:30,c:'#19f0b0'},{id:'read',n:'Read (pages)',t:10,c:'#ffc44d'}];
@@ -1099,7 +1113,6 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
   S.log=S.log||{}; S.share=S.share||{}; S.ram=S.ram||{juz:{},fast:{}}; S.links=S.links||[]; S.videos=S.videos||[]; S.albums=S.albums||['Childhood','Precious','Family','Travel','Drawings','Ramadan']; if(S.albums.indexOf('Ramadan')<0) S.albums.push('Ramadan'); if(S.albums.indexOf('Drawings')<0) S.albums.push('Drawings'); S.album=S.album||'Precious'; S.ideas=S.ideas||[]; S.vision=S.vision||''; S.visited=S.visited||{}; S.worlds=S.worlds||{}; S.keep=S.keep||{}; S.theme=S.theme||'dark'; S.yearView=S.yearView||2025;
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){ toast('Storage is full'); } }
   // pictures and videos live in IndexedDB (too big for localStorage)
-  var DB=null;
   function db(){ return new Promise(function(res,rej){ if(DB) return res(DB); var r=indexedDB.open('mindu-media',1); r.onupgradeneeded=function(){ r.result.createObjectStore('m',{keyPath:'id'}); }; r.onsuccess=function(){ DB=r.result; res(DB); }; r.onerror=rej; }); }
   function mPut(o){ return db().then(function(d){ return new Promise(function(res){ var tx=d.transaction('m','readwrite'); tx.objectStore('m').put(o); tx.oncomplete=res; }); }); }
   function mAll(){ return db().then(function(d){ return new Promise(function(res){ var q=d.transaction('m').objectStore('m').getAll(); q.onsuccess=function(){ res(q.result||[]); }; }); }); }
@@ -1597,7 +1610,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     if(a==='saveProfile'){ S.profile.name=(document.getElementById('pName').value||'').trim(); S.profile.line=(document.getElementById('pLine').value||'').trim(); save(); toast('Profile saved'); render('me'); return; }
     if(a==='photo'){ var f=document.getElementById('pPhoto'); f.onchange=function(){ var file=f.files[0]; if(!file) return; shrink(file,320).then(function(url){ S.profile.photo=url; save(); render('me'); }); }; f.click(); return; }
     if(a==='export'){ var copy=JSON.parse(JSON.stringify(S)); delete copy.vaultPin; if(copy.vault) copy.vault={hash:copy.vault.hash,salt:copy.vault.salt}; var blob=new Blob([JSON.stringify(copy,null,2)],{type:'application/json'}), u=URL.createObjectURL(blob), l=document.createElement('a'); l.href=u; l.download='mind-universe-'+today()+'.json'; l.click(); setTimeout(function(){ URL.revokeObjectURL(u); },2000); return; }
-    if(a==='wipe'){ if(!confirm('Delete everything in your mind on this device? This cannot be undone.')) return; localStorage.removeItem(KEY); indexedDB.deleteDatabase('mindu-media'); location.reload(); return; }
+    if(a==='wipe'){ if(!confirm('Delete everything in your mind on this device? This cannot be undone.')) return; wipeMind(location.pathname); return; }
     if(a==='addMedia'){ var mf=document.getElementById('mFile'); mf.onchange=function(){ var files=[].slice.call(mf.files); Promise.all(files.map(function(file){ var isV=/^video/.test(file.type), locked=albumLocked(S.album);
         return takenOf(file).then(function(t){
           if(!isV) return shrink(file,1200).then(function(url){ return mPut({id:'m'+Date.now()+Math.random().toString(36).slice(2,6),type:'image',url:url,ts:Date.now(),when:t.when,at:t.at,album:S.album,locked:locked}); });
