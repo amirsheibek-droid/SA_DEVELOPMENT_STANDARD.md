@@ -683,6 +683,16 @@ body.np-phones #p-portfolio.pg.on .eye,body.np-phones #p-portfolio.pg.on .np-sho
 .arch-nav{justify-content:center}
 .field{margin-left:auto;margin-right:auto;text-align:center}
 textarea.field{text-align:left}
+.join-box{max-width:560px;margin:28px auto 8px;padding:22px 20px 26px;border-radius:22px;background:#fff;box-shadow:0 0 0 1px rgba(31,107,255,.14),0 24px 50px -32px rgba(31,107,255,.5);text-align:left}
+.join-box h3{margin:0 0 6px;font-size:1.15rem}
+.join-box .field{text-align:left;margin-left:0;margin-right:0;max-width:none}
+.join-box .field-l{display:block;margin-top:16px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-family:var(--mono)}
+.join-box .field-l span{text-transform:none;letter-spacing:0;font-family:var(--sans);opacity:.7}
+.join-agree{display:flex;gap:10px;align-items:flex-start;margin:18px 0 14px;font-size:.92rem;line-height:1.4}
+.join-box .send{margin-top:6px}
+#guildWiz[hidden]{display:none}
+.arch-hud{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);min-height:1.15em;margin-top:10px}
+button.linkish{background:none;border:0;padding:0;color:var(--blue);font-weight:700;cursor:pointer}
 .field-l{text-align:center}
 #p-portfolio .folio-grid{margin-left:auto;margin-right:auto;text-align:left}
 details.legal{margin-left:auto;margin-right:auto}
@@ -907,9 +917,9 @@ A free mock-up first. Fixed written quotes. No lock-in.
 Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; get local work."></div>
     <p><a class="go" href="#guild" data-go="guild">Engineer or developer? Join the network free</a></p>
     <p><a class="go" href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a></p>
-    <details class="legal" id="privacy"><summary>Privacy</summary><p>This website does not store any personal data. It's a static site with no database. Briefs you send are emailed to us and not saved anywhere else; we only use your details to reply. No analytics, tracking or advertising. Approved engineer network members have a public profile showing only their skills, depth, anonymised case study, availability and nearest town &mdash; their name, email, city and links are never published.</p></details>
+    <details class="legal" id="privacy"><summary>Privacy</summary><p>Briefs and join emails go to <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a> so we can reply. We store only a one-way hash of the email and IP to stop spam &mdash; never the raw address in a public table. Matching engineers receive an anonymised brief (no name, email, phone or business). Identity is shared only after the customer pays the finder's fee. No analytics, tracking or advertising.</p></details>
     <details class="legal" id="cookies"><summary>Cookies</summary><p>Strictly necessary browser storage only (your sound setting, which neurons you've found, and your unsent brief), cleared when you close the tab. No analytics, tracking or advertising cookies.</p></details>
-    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill. <b>Engineer network.</b> Free for engineers to join and free for clients to request an engineer. After we confirm scope, the client pays a deposit through Neuron Pulse (usually 20% of the agreed price), which counts towards the project and unlocks the engineer's identity; it's refunded in full if the engineer can't take the project before the introduction. All project payments go through Neuron Pulse, which keeps a 15% platform fee from the engineer's share. See the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</p></details>
+    <details class="legal" id="terms"><summary>Terms</summary><p><b>Quotes.</b> Build costs are quoted in writing after your free consultation and mock-up, before any work begins. <b>Ownership.</b> You buy and own your domain in your own name. <b>Care plan.</b> Billed in advance, cancel any time with no penalty. <b>Referral rewards.</b> Paid from our own revenue &mdash; never added to a client's bill. <b>Engineer network.</b> Free to join and free to request. Members review an anonymised brief. When a member wants the work, we ask the customer to approve and pay a one-off finder's fee. Only then do we introduce you. After that, the engineer and customer run the project themselves. Neuron Pulse is the finder only and is not party to delivery, errors or failed projects. See the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</p></details>
     <p class="whisper">&copy; 2026 Neuron Pulse &middot; by the founder</p>
   </article>
 
@@ -922,8 +932,8 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
       <button aria-expanded="false">Do I see anything before I pay?</button><div class="a">Yes. Every package begins with a complimentary working mock-up, so you can review the direction before committing to anything.</div>
       <button aria-expanded="false">Do you build mobile apps?</button><div class="a">Yes &mdash; for specialist niches. Voltz CRM, our voice-first app for self-employed tradespeople, is live on the App Store, and Contract Analyser is in development.</div>
       
-      <button aria-expanded="false">I'm an engineer &mdash; how does joining work?</button><div class="a">The network is for developers, engineers and builders in and around Bedford, Luton and Milton Keynes. Joining is free, and so is connecting with other members. Build a depth profile of your languages, frameworks and tools, then we check your work and hold a short technical call. Once you're verified you get your own neuron in the mind &mdash; clients see your skills, never your name or contact details. When a client's deposit is paid, you're introduced. All project payments go through Neuron Pulse, and Neuron Pulse keeps a 15% platform fee from your share. <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</div>
-      <button aria-expanded="false">How do I hire a local engineer from the network?</button><div class="a">Open the &ldquo;Join as an engineer&rdquo; neuron, search by any skill and open an engineer's profile, then tap Request &mdash; it's free. We confirm scope and availability, then send you a quote and a secure deposit link (usually 20% of the agreed price, counted towards the project). Once the deposit is paid, the engineer's identity unlocks and we introduce you. If the engineer can't take the project before the introduction, the deposit is refunded in full.</div>
+      <button aria-expanded="false">I'm an engineer &mdash; how does joining work?</button><div class="a">Type your email, skills and availability in the join box. Add certifications and a portfolio link if you have them. We email SA Marketing, then reply to that inbox to prove it's yours. Clients see skills only. When you want a brief, you see an anonymised plan. If you take it on, the customer pays a finder's fee and we introduce you. After that you and the customer run the project. <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a>.</div>
+      <button aria-expanded="false">How do I hire a local engineer from the network?</button><div class="a">Describe the project with the Architect. An anonymised plan goes to matching members. When one wants the work, we ask you to approve and pay a one-off finder's fee. Then we introduce you. After that you and the engineer manage the project yourselves &mdash; Neuron Pulse is the finder only.</div>
       <button aria-expanded="false">Am I tied into a contract?</button><div class="a">No. The care plan is optional, billed in advance and can be cancelled any time. You own your domain in your own name.</div>
     </div>
   </article>
@@ -997,21 +1007,42 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
     <div id="arch"></div>
   </article>
 
-  <!-- THE GUILD (engineer network: free to join, identity locked, Neuron Pulse takes a % when a project is placed) -->
+  <!-- THE GUILD (finder network: join by email, identity locked until finder's fee) -->
   <article class="pg" id="p-guild" data-node="guild">
     <div class="eye">Local engineer network &middot; Bedford &middot; Luton &middot; Milton Keynes</div>
     <h2 class="decode">Bringing local builders together.</h2>
-    <p>A free network for developers, engineers and builders in tech and software across Bedford, Luton, Milton Keynes and the towns around them &mdash; from HTML websites and WordPress to full-stack, mobile, cloud, data, machine learning and AI. Meet other local engineers, team up, and get work from local businesses. Every member is profiled language by language, tool by tool, while your identity stays locked to the public.</p>
+    <p>A free network for developers, engineers and builders across Bedford, Luton, Milton Keynes and the towns around them. Type your email, skills and availability. We send that to SA Marketing, then reply to prove the inbox is yours. Clients see skills &mdash; never your name or contact details &mdash; until a finder's fee is paid.</p>
     <ul class="lines g">
-      <li><b>1 &middot; Join free and get verified.</b> <small>Build your depth profile below. We check your work and hold a short technical call before your neuron goes live.</small></li>
-      <li><b>2 &middot; A client requests you.</b> <small>They see your skills, depth and case study &mdash; never your name or contact details. We check scope with you first, and you can always say no.</small></li>
-      <li><b>3 &middot; The deposit unlocks you.</b> <small>When the client pays their project deposit through Neuron Pulse, your identity unlocks to that client only and we introduce you.</small></li>
-      <li><b>4 &middot; Paid through Neuron Pulse.</b> <small>Clients pay Neuron Pulse. You receive your agreed price minus a 15% platform fee, within 7 days of each payment clearing.</small></li>
-      <li><b>Connect with each other &mdash; free.</b> <small>Find local engineers by skill, team up on projects, find a mentor or collaborator. Ask to connect on any profile and we'll introduce you if they agree.</small></li>
-      <li><b>Local meetups.</b> <small>We're planning the first meetups in Bedford, Luton and Milton Keynes. Tick &ldquo;Local meetups&rdquo; in your profile to hear first.</small></li>
+      <li><b>1 &middot; Join with an email.</b> <small>Skills, availability, plus optional certifications and a https portfolio. We reply to that inbox to authenticate you.</small></li>
+      <li><b>2 &middot; Review anonymised briefs.</b> <small>Matching members see the plan, not the customer. No emails or numbers are swapped here.</small></li>
+      <li><b>3 &middot; Take the work, then we ask the customer.</b> <small>If you want it, we send an approval request. The customer pays a one-off finder's fee. Then we introduce you.</small></li>
+      <li><b>4 &middot; Finder only.</b> <small>After the introduction, you and the customer run the project. Neuron Pulse is not party to delivery, errors or failed work.</small></li>
+      <li><b>Connect with each other &mdash; free.</b> <small>Find local engineers by skill. Ask to connect on any profile and we'll introduce you if they agree.</small></li>
     </ul>
     <p class="pkg-note">Read the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a> &mdash; plain English, two minutes.</p>
-    <div id="guildWiz"></div>
+    <div class="join-box" id="joinBox">
+      <h3>Join the network</h3>
+      <p class="sub">Email, skills and availability. Add certifications or a portfolio if you have them. We never publish your address.</p>
+      <form id="joinForm" novalidate>
+        <label class="field-l" for="joinEmail">Your email</label>
+        <input class="field" id="joinEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+        <label class="field-l" for="joinSkills">Skills</label>
+        <textarea class="field" id="joinSkills" name="skills" rows="3" required placeholder="e.g. React Native, Node, Stripe, WordPress"></textarea>
+        <label class="field-l" for="joinAvail">Availability</label>
+        <input class="field" id="joinAvail" name="availability" required placeholder="e.g. evenings, weekends, two days a week">
+        <label class="field-l" for="joinCerts">Certifications <span>(optional)</span></label>
+        <input class="field" id="joinCerts" name="certs" placeholder="e.g. AWS Solutions Architect, CompTIA Security+">
+        <label class="field-l" for="joinPort">Portfolio or GitHub <span>https only</span></label>
+        <input class="field" id="joinPort" name="portfolio" type="url" inputmode="url" placeholder="https://github.com/you">
+        <input type="text" name="company" id="joinHoney" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;overflow:hidden">
+        <label class="join-agree"><input type="checkbox" id="joinTerms" required> I agree to the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a></label>
+        <button class="send" type="submit" id="joinSend">Send my join email</button>
+        <p class="err" id="joinErr" hidden></p>
+        <p class="whisper">We reply to verify you own the inbox. Portfolio and certs stay private.</p>
+      </form>
+    </div>
+    <p class="pkg-note"><button type="button" class="linkish" id="openGuildWiz">Prefer a full depth profile?</button></p>
+    <div id="guildWiz" hidden></div>
     <h3 class="mb-h">Local engineers in the network</h3>
     <input class="field" id="memberFind" placeholder="Search any skill or town &mdash; e.g. Python, WordPress, Luton, mentor" autocomplete="off">
     <div class="members" id="memberList"></div>
@@ -1421,7 +1452,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       faq:'Echoes are the questions we hear most — cost, mock-ups, apps, and the engineer network. Tap a question if you would rather read.',
       news:'The Pulse is what is moving right now — new apps, the engineer network, and Voltz going live.',
       secret:'You found the hidden neuron. It does not do anything useful. It just plays. Tell us you found it when you send a brief.',
-      guild:'This is the engineer network for Bedford, Luton and Milton Keynes. Join free, get verified, and clients can request you without seeing your name until a deposit is paid.'
+      guild:'This is the engineer network. Type your email, skills and availability in the join box. Clients never see your name until a finder fee is paid.'
     };
     var APPS={
       'Voltz CRM':'Voltz CRM is live on the App Store. It is a voice-first job app for self-employed tradespeople. Say the job out loud and it books it, quotes it, invoices it and helps you get paid.',
@@ -1635,8 +1666,9 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   var NEWS=[
     {d:'1 Oct 2026',t:'Preview: the Mind Universe',b:'Our next app is in progress \u2014 your own mind as a universe you can fly through, with moods, goals, memories and 100 hidden secrets. Private, saved only on your device. <a href="/mind-universe/" style="color:var(--accent2);font-weight:700">Step inside \u2192</a>'},
     {d:'1 Oct 2026',t:'The Braintrix is open',b:'Our new home is a mind you can fly through. Eleven neurons, one of them very well hidden. Happy hunting.'},
-    {d:'1 Oct 2026',t:'Now open: the Bedford, Luton & Milton Keynes engineer network',b:'Local developers, engineers and builders \u2014 from HTML and WordPress to full-stack, mobile, data, ML and AI \u2014 can join free, build a depth profile, connect with each other and get local work. First local meetups are being planned.'},
-    {d:'1 Oct 2026',t:'Meet the Architect',b:'Describe your idea in a few words and watch the blueprint draw itself as you type.'},
+    {d:'4 Oct 2026',t:'Join with an email',b:'Engineers type email, skills and availability. Clients get an anonymised architect plan. A finder\u2019s fee unlocks the introduction \u2014 then they run the project themselves.'},
+    {d:'1 Oct 2026',t:'Now open: the Bedford, Luton & Milton Keynes engineer network',b:'Local developers, engineers and builders \u2014 from HTML and WordPress to full-stack, mobile, data, ML and AI \u2014 can join free, connect with each other and get local work.'},
+    {d:'1 Oct 2026',t:'Meet the Architect',b:'Describe your idea. A real architect AI draws the blueprint as you go, then matching members review an anonymised plan.'},
     {d:'Sep 2026',t:'Voltz CRM is live on the App Store',b:'A voice-first job app for self-employed tradespeople, built by Neuron Pulse.'}
   ];
   (function(){ var el=document.getElementById('news'); if(!el) return; el.innerHTML=NEWS.map(function(n){ return '<div class="nw"><div class="nw-d">'+n.d+'</div><h3>'+n.t+'</h3><p>'+n.b+'</p></div>'; }).join(''); })();
@@ -1751,8 +1783,8 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
   }
   function lines(rows){ return rows.filter(function(r){ return r[1]; }).map(function(r){ return r[0]+': '+r[1]; }).join('\n'); }
 
-  /* The Architect — a voice hub. It asks, listens, probes and sketches the plan live.
-     Everything runs in the visitor's browser (speech in, speech out, the sketch) — no AI bill. */
+  /* The Architect — Anthropic draws the plan live. Free-credit cap on the server.
+     Customer details stay with SA; members only see an anonymised brief. */
   var Arch=(function(){
     var root=document.getElementById('arch'), SR=null, SYN=window.speechSynthesis;
     var S={}; try{ S=JSON.parse(ss('saArch')||'{}'); }catch(e){}
@@ -1804,11 +1836,11 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     var GENERIC='Tell me a little more — what problem does it solve, and who has that problem today?';
 
     var Q=[
-      {id:'intro',kind:'intro',say:"Hi, I'm the Architect. I'll ask a few quick questions — answer in your own words, and watch your idea take shape on the blueprint."},
+      {id:'intro',kind:'intro',say:"Hi, I'm the Architect. I'll ask a few questions — a real architect AI will draw the plan as we go. Your name and email stay hidden from the network until a finder's fee is paid."},
       {id:'type',kind:'chips',multi:true,say:'What are we building? Pick one or more.',opts:TYPES},
       {id:'idea',kind:'voice',probe:true,say:'Tell me the idea. What should it do, and who is it for?'},
       {id:'users',kind:'chips',multi:true,say:'Who will use it day to day?',opts:['Customers','Your team','Admins','The public','Businesses']},
-      {id:'must',kind:'voice',probe:false,say:'If it could only do one thing brilliantly, what would that be?'},
+      {id:'must',kind:'voice',probe:true,say:'If it could only do one thing brilliantly, what would that be?'},
       {id:'feel',kind:'chips',multi:true,say:'How should it feel?',opts:['Clean & minimal','Bold & vibrant','Premium & dark','Warm & friendly','Futuristic']},
       {id:'have',kind:'chips',multi:true,say:'What do you already have?',opts:['A logo','A domain name','A current website or app','Brand colours','Content & photos','Nothing yet']},
       {id:'timeline',kind:'chips',say:'When would you like it live?',opts:['As soon as possible','Within 1–3 months','3–6 months','Just exploring']},
@@ -1822,6 +1854,30 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       return {name:(m[0]||'').replace(/[.,!?]+$/,'').split(/\s+/).slice(0,3).join(' '),biz:(m[1]||'').replace(/[.,!?]+$/,'').trim()}; }
     function cap(s){ return s.replace(/\b\w/g,function(c){ return c.toUpperCase(); }); }
 
+    var ARCH_FN='https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/site-architect';
+    var asking=false;
+    function hidePii(s){ return String(s||'').replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,'[hidden]').replace(/(\+44|0)\s*\d[\d\s-]{8,}/g,'[hidden]').replace(/https?:\/\/\S+/gi,'[hidden]'); }
+    function hud(t){ var el=document.getElementById('aHud'); if(el) el.textContent=t||''; }
+    function briefCode(){ if(!S.code) S.code='NP-'+String(Date.now()).slice(-6); return S.code; }
+    function askArch(done){
+      var idea=hidePii(S.ans.idea||''), must=hidePii(S.ans.must||'');
+      if(idea.length<8 && must.length<4){ done&&done(null); return; }
+      if(asking){ done&&done(null); return; }
+      asking=true; hud('Architect is drawing the plan…');
+      fetch(ARCH_FN,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({idea:idea,must:must,types:S.types,users:S.users,mods:S.mods})})
+        .then(function(r){ return r.json(); })
+        .then(function(j){
+          asking=false;
+          if(j&&j.modules) j.modules.forEach(function(id){ if(MOD[id]&&S.mods.indexOf(id)<0) S.mods.push(id); });
+          if(j&&j.summary) S.aiSummary=j.summary;
+          if(j&&j.next_probe) S.aiProbe=j.next_probe;
+          if(j&&j.phases) S.aiPhases=j.phases;
+          hud(j&&j.summary?'Plan updated.':'');
+          draw(); save(); FX('zoop',.8); M.fire('build');
+          done&&done(j);
+        })
+        .catch(function(){ asking=false; hud(''); done&&done(null); });
+    }
     /* ── analysing what they say: the blueprint shape-shifts as they talk ── */
     function analyse(text,commit){
       var t=' '+(text||'').toLowerCase()+' ', added=[];
@@ -1848,7 +1904,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       var title=S.biz||(S.types[0]||'Your idea');
       h+='<g class="bp-core"><circle cx="'+cx+'" cy="'+cy+'" r="40" fill="url(#bpg)"/><text x="'+cx+'" y="'+(cy-2)+'" class="bp-t">'+esc(title.length>18?title.slice(0,17)+'…':title)+'</text><text x="'+cx+'" y="'+(cy+13)+'" class="bp-s">'+esc(S.types.slice(0,2).join(' + ').slice(0,28)||'listening…')+'</text></g>';
       mods.forEach(function(id,i){ var p=pts[i], m=MOD[id], fresh=!seen['m'+id], ghost=preview&&S.mods.indexOf(id)<0;
-        h+='<g class="bp-node'+(fresh?' pop':'')+(ghost?' ghost':'')+'" style="transform-origin:'+p[0].toFixed(1)+'px '+p[1].toFixed(1)+'px"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="7"/><text x="'+p[0].toFixed(1)+'" y="'+(p[1]+(p[1]<cy?-13:20)).toFixed(1)+'">'+esc(m.n)+'</text></g>';
+        h+='<g class="bp-node'+(fresh?' pop':'')+(ghost?' ghost':'')+'" style="transform-origin:'+p[0].toFixed(1)+'px '+p[1].toFixed(1)+'px"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="7"/><text x="'+p[0].toFixed(1)+'" y="'+(p[1]+(p[1]<cy?-13:20)).toFixed(1)+'">'+esc((m&&m.n)||id)+'</text></g>';
         if(!ghost) seen['m'+id]=1; });
       users.forEach(function(u,i){ var x=24+i*82; h+='<g class="bp-user'+(seen['u'+u]?'':' pop')+'" style="transform-origin:'+(x+36)+'px 16px"><rect x="'+x+'" y="6" rx="10" width="74" height="20"/><text x="'+(x+37)+'" y="20">'+esc(u)+'</text></g>'; if(!(preview&&S.users.indexOf(u)<0)) seen['u'+u]=1; });
       plat.forEach(function(p,i){ var x=W-24-(i+1)*72+4; h+='<g class="bp-plat'+(seen['p'+p]?'':' pop')+'" style="transform-origin:'+(x+32)+'px '+(H-16)+'px"><rect x="'+x+'" y="'+(H-26)+'" rx="10" width="64" height="20"/><text x="'+(x+32)+'" y="'+(H-12)+'">'+esc(p)+'</text></g>'; if(!(preview&&S.plat.indexOf(p)<0)) seen['p'+p]=1; });
@@ -1892,7 +1948,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     function render(){
       clearTimeout(advT); stopListen();
       var q=probe?{id:probe.key,kind:'voice',say:probe.say,isProbe:true}:Q[step], n=Q.length-1;
-      if(sent){ root.innerHTML='<h2 class="decode">Signal received.</h2><p>Thank you'+(S.name?', '+esc(S.name.split(' ')[0]):'')+'. Your sketch plan is with us &mdash; expect a reply within one working day to arrange your free consultation.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; root.querySelectorAll('.decode').forEach(decode); return; }
+      if(sent){ root.innerHTML='<h2 class="decode">Signal received.</h2><p>Thank you'+(S.name?', '+esc(S.name.split(' ')[0]):'')+'. An anonymised plan is going to matching engineers. If one wants the work, we\'ll ask you to approve and pay a finder’s fee &mdash; then we introduce you. After that, you and the engineer run the project. Neuron Pulse is the finder only.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; root.querySelectorAll('.decode').forEach(decode); return; }
       var h='<div class="arch-step">Signal '+Math.min(step,n)+' / '+n+'<span class="bar"><i style="width:'+(step/n*100)+'%"></i></span><button type="button" class="vtog" data-a="voice">'+(voiceOn?'&#128266; Voice on':'&#128263; Voice off')+'</button></div>';
       h+='<div class="arch-grid"><div class="arch-talk">';
       h+='<div class="ask" id="aAsk"></div>';
@@ -1904,8 +1960,8 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       else if(q.kind==='voice'){ h+='<textarea class="field" id="aType" rows="3" placeholder="Type your answer">'+esc(S.ans[q.id]||'')+'</textarea>'+
         '<div class="arch-nav"><button class="send" type="button" data-a="next">Continue</button>'+(step>0?'<button class="back" type="button" data-a="back">&larr; Back</button>':'')+'</div>'; }
       else if(q.kind==='email'){ h+='<input class="field" id="aEmail" type="email" autocomplete="email" placeholder="you@business.com" value="'+esc(S.email||'')+'"><div class="err" id="aErr"></div>'+nav(true); }
-      else if(q.kind==='review'){ h+=planHTML()+'<input type="checkbox" id="aBot" style="display:none" tabindex="-1" autocomplete="off"><div class="arch-nav"><button class="send" type="button" data-a="send">Send my sketch plan</button><button class="back" type="button" data-a="back">&larr; Edit</button></div><div class="err" id="aErr"></div><p class="whisper">Sent by email only &mdash; never stored, never added to a mailing list.</p>'; }
-      h+='</div><svg class="bp" id="bp" viewBox="0 0 420 320" aria-label="Live blueprint of your idea"></svg></div>';
+      else if(q.kind==='review'){ h+=planHTML()+'<input type="checkbox" id="aBot" style="display:none" tabindex="-1" autocomplete="off"><div class="arch-nav"><button class="send" type="button" data-a="send">Send anonymised brief</button><button class="back" type="button" data-a="back">&larr; Edit</button></div><div class="err" id="aErr"></div><p class="whisper">Your name and email stay with us. Matching members see an anonymised brief only.</p>'; }
+      h+='<div class="arch-hud" id="aHud">'+(S.aiSummary?'Plan: '+esc(S.aiSummary.slice(0,110)):'')+'</div></div><svg class="bp" id="bp" viewBox="0 0 420 320" aria-label="Live blueprint of your idea"></svg></div>';
       root.innerHTML=h; draw();
       var text=q.say, ask=document.getElementById('aAsk'), c=0;
       var ty=setInterval(function(){ c+=2; ask.innerHTML=esc(text.slice(0,c))+'<span class="c"></span>'; if(c>=text.length){ clearInterval(ty); ask.textContent=text; } },20);
@@ -1958,7 +2014,10 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         if(!S.ans[q.id] && !q.isProbe){ heard('Tap the mic and tell me first.',false); var m=document.getElementById('aMic'); if(m&&m.animate) m.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:400}); return; } }
       if(q.kind==='chips'){ var any=q.id==='type'?S.types.length:(q.multi?(S[q.id]||[]).length:S.ans[q.id]); if(q.id==='users') any=S.users.length; if(!any){ heard('Pick one, or tell me.',false); return; } }
       if(q.kind==='email'){ var em=(document.getElementById('aEmail').value||'').trim(); if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ document.getElementById('aErr').textContent='That email doesn\'t look quite right.'; return; } S.email=em; }
-      // probing: dig into what they just said before moving on
+      if((q.id==='idea'||q.id==='must') && !q.isProbe){ askArch(function(){ finishNext(); }); return; }
+      finishNext();
+    }
+    function finishNext(){
       var base=probe?probe.base:Q[step];
       if(base.probe){ var pq=nextProbe(base); if(pq){ probe=pq; probesHere++; save(); FX('zoop',.7); render(); return; } }
       probe=null; probesHere=0;
@@ -1966,6 +2025,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     }
     function nextProbe(base){
       if(probesHere>=2) return null;
+      if(S.aiProbe && S.probed.indexOf('ai')<0){ S.probed.push('ai'); return {key:base.id+'_ai',say:S.aiProbe,base:base}; }
       for(var i=0;i<S.mods.length;i++){ var id=S.mods[i]; if(PROBE[id] && S.probed.indexOf(id)<0){ S.probed.push(id); return {key:base.id+'_'+id,say:PROBE[id],base:base}; } }
       var words=(S.ans[base.id]||'').split(/\s+/).length;
       if(words<12 && S.probed.indexOf('generic_'+base.id)<0){ S.probed.push('generic_'+base.id); return {key:base.id+'_more',say:GENERIC,base:base}; }
@@ -1992,7 +2052,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       return {picks:out,gaps:left}; }
     function teamHTML(){ var r=team(), L='<h3>Your local team</h3>';
       if(!r.picks.length) return L+'<p class="sub">We\'re verifying the first engineers in Bedford, Luton and Milton Keynes. We\'ll hand-pick a local team for your blueprint and introduce you.</p>';
-      L+='<p class="sub">Local engineers whose skills cover your blueprint &mdash; lit up in the mind now. Identities unlock once your deposit is paid.</p><div class="members">';
+      L+='<p class="sub">Matching members will review this plan without your name or email. Identities unlock after you approve and pay the finder\'s fee.</p><div class="members">';
       r.picks.forEach(function(p){ var m=memberOf(p.d.code)||{}; L+='<button class="mbl" type="button" data-go="'+p.d.id+'"><b>'+esc(p.d.code)+(m.verified?' &middot; &#10003; verified':'')+'</b> '+esc((m.level?m.level+' ':'')+(m.role||''))+(m.region?' &middot; '+esc(m.region):'')+'<small>Covers: '+esc(p.covers.map(function(c){ return c.label; }).join(', '))+'</small></button>'; });
       L+='</div>'+(r.gaps.length?'<p class="sub">Still to match locally: '+esc(r.gaps.map(function(c){ return c.label; }).join(', '))+' &mdash; we\'ll find the right person.</p>':'');
       r.picks.forEach(function(p,k){ setTimeout(function(){ M.fire(p.d.id); FX('zoop',.4); },400+k*450); });
@@ -2000,6 +2060,8 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     function teamText(){ var r=team(); return r.picks.length?'\n\nSuggested local team:\n'+r.picks.map(function(p){ return '  • '+p.d.code+' — covers '+p.covers.map(function(c){ return c.label; }).join(', '); }).join('\n')+(r.gaps.length?'\nStill to match: '+r.gaps.map(function(c){ return c.label; }).join(', '):''):'\n\nSuggested local team: none verified yet — hand-pick.'; }
     function planHTML(){ var ph=phases(), L='';
       L+='<p class="vision">'+(S.biz?'<em>'+esc(S.biz)+'</em> — ':'')+'<em>'+esc(S.types.join(' + ')||'a new product')+'</em>'+(S.plat.length?' for '+esc(join(S.plat)):'')+'. '+esc((S.ans.idea||'').replace(/\.?$/,'.'))+'</p>';
+      if(S.aiSummary) L+='<p class="sub">'+esc(S.aiSummary)+'</p>';
+      if(S.aiPhases&&S.aiPhases.length) L+='<h3>Architect map</h3><ul class="lines g">'+S.aiPhases.map(function(p,i){ return '<li><b>'+(i<2?'Launch':'Later')+'</b><small>'+esc(p)+'</small></li>'; }).join('')+'</ul>';
       L+='<div class="split"><div><h3>Who it\'s for</h3><ul class="lines g">'+(S.users.length?S.users:['To be confirmed']).map(function(u){ return '<li>'+esc(u)+'</li>'; }).join('')+'</ul></div>';
       L+='<div><h3>Must do brilliantly</h3><p>'+esc(S.ans.must||'—')+'</p></div></div>';
       L+='<h3>Core modules &amp; key screens</h3><ul class="lines">'+S.mods.map(function(id){ return '<li><b>'+esc(MOD[id].n)+'</b><small>'+esc((SCREENS[id]||[]).join(' · '))+'</small></li>'; }).join('')+'</ul>';
@@ -2014,14 +2076,21 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         '\n\nCore modules & screens:\n'+S.mods.map(function(id){ return '  • '+MOD[id].n+' — '+(SCREENS[id]||[]).join(', '); }).join('\n')+
         '\n\nPhase 1: '+ph.p1.map(function(id){ return MOD[id].n; }).join(', ')+(ph.p2.length?'\nPhase 2: '+ph.p2.map(function(id){ return MOD[id].n; }).join(', '):'')+
         '\n\n'+lines([['Feel',join(S.feel)],['Already has',join(S.have)],['Timeline',S.ans.timeline],['Budget',S.ans.budget],['Said (name answer)',S.ans.name],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',nFound()+' / '+total]])+teamText(); }
+    function networkBrief(){
+      return 'ANONYMISED NETWORK BRIEF '+briefCode()+'\nDo not include names, emails, phones or company names.\n\n'+
+        lines([['Code',briefCode()],['Building',S.types.join(', ')],['Platforms',S.plat.join(', ')],['Users',S.users.join(', ')],['The idea',hidePii(S.ans.idea)],['Must do brilliantly',hidePii(S.ans.must)],['Modules',S.mods.map(function(id){ return MOD[id]&&MOD[id].n; }).filter(Boolean).join(', ')],['Feel',join(S.feel)],['Timeline',S.ans.timeline],['Budget band',S.ans.budget],['Architect',S.aiSummary||'']])+
+        (S.aiPhases&&S.aiPhases.length?'\n\nMap:\n'+S.aiPhases.map(function(p,i){ return '  • '+(i<2?'Launch':'Later')+' — '+p; }).join('\n'):'')+
+        '\n\nTo take this on: reply with the code. We then ask the customer to approve. After they pay the finder\'s fee we introduce you. Until then do not swap contact details.';
+    }
     function send(btn){
       if(document.getElementById('aBot').checked) return;
       btn.disabled=true; btn.textContent='Transmitting…';
-      var body={access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'Neuron Pulse — the Architect',subject:'New sketch plan — '+(S.name||'')+(S.biz?' ('+S.biz+')':'')+' — '+(S.types.join(', ')||'project'),
-        name:S.name||'',email:S.email,replyto:S.email,business:S.biz||'',package:S.types.join(', '),budget:S.ans.budget||'',timeline:S.ans.timeline||'',message:planText(),botcheck:false};
+      var message='=== SA ONLY — do not forward this block ===\n'+planText()+'\n\n=== ANONYMISED BRIEF FOR MATCHING MEMBERS (forward this only) ===\n'+networkBrief();
+      var body={access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'Neuron Pulse — the Architect',subject:'Anonymised brief '+briefCode()+' — '+(S.types.join(', ')||'project'),
+        name:S.name||'',email:S.email,replyto:S.email,business:S.biz||'',package:S.types.join(', '),budget:S.ans.budget||'',timeline:S.ans.timeline||'',message:message,botcheck:false};
       fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)})
-        .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed'); sent=true; ss('saArch','{}'); M.fire('build'); FX('warp'); speak('Signal received. Thank you. Our engineers will be in touch within one working day.',function(){},'arch-sent'); render(); })
-        .catch(function(){ btn.disabled=false; btn.textContent='Send my sketch plan'; document.getElementById('aErr').innerHTML='That didn\'t transmit. Try again, or email <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a>.'; });
+        .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed'); sent=true; ss('saArch','{}'); M.fire('build'); FX('warp'); speak('Signal received. Matching engineers will review an anonymised plan. If one takes it on, we will ask you to approve and pay a finder fee, then introduce you.',function(){},'arch-sent'); render(); })
+        .catch(function(){ btn.disabled=false; btn.textContent='Send anonymised brief'; document.getElementById('aErr').innerHTML='That didn\'t transmit. Try again, or email <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a>.'; });
     }
 
     root.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var q=curQ();
@@ -2044,8 +2113,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       preset:function(k,v){ if(sent) return; var map={'A website':'Website','A mobile app':'Mobile app'}; var ty=map[v]||v; if(S.types.indexOf(ty)<0) S.types.push(ty); typeMods(); if(step<2){ step=2; } save(); render(); } };
   })();
 
-  /* The Guild — developers, engineers and builders in software build a deep, verified skills profile.
-     Public profile = skills only; identity stays locked until a client's deposit is paid through Neuron Pulse. */
+  /* The Guild — join by email. Public profile = skills only; identity locked until a finder's fee. */
   var SK={
     disciplines:['Websites (HTML & CSS)','WordPress / CMS sites','E-commerce stores','Front-end development','Back-end development','Full-stack development','Mobile apps','Desktop apps','Game development','Embedded / IoT','DevOps & cloud','Data engineering','Data science & analytics','Machine learning engineering','AI / LLM engineering','Cyber security','QA & test automation','UI / UX for software','Solutions architecture'],
     ai:['Data engineering','Data science & analytics','Machine learning engineering','AI / LLM engineering'],
@@ -2076,7 +2144,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
 
   var Guild=Wizard({root:'guildWiz',key:'saGuild2',node:'guild',sendLabel:'Submit my profile',
     Q:function(A){ return [
-      {k:'intro',kind:'intro',btn:'Build my profile',ask:function(){ return 'Build your engineer depth profile.'; },sub:'For developers, engineers and builders in tech and software in and around Bedford, Luton and Milton Keynes &mdash; from HTML websites to machine learning. Free to join, about eight minutes. Your name, email, address and links are never shown publicly.'},
+      {k:'intro',kind:'intro',btn:'Build my profile',ask:function(){ return 'Build your engineer depth profile.'; },sub:'Optional extra depth after the join box. Your name, email and links are never shown publicly. Identity unlocks only after a finder’s fee.'},
       {k:'disciplines',kind:'many',other:true,ask:function(){ return 'What kind of software do you build?'; },sub:'Pick everything you could deliver for a paying client.',opts:function(){ return SK.disciplines; },ack:function(){ return withOther(A,'disciplines').length+' disciplines logged.'; }},
       {k:'role',kind:'one',ask:function(){ return 'Which one is your main title?'; },opts:function(){ var d=withOther(A,'disciplines'); return d.length?d:SK.disciplines; },ack:function(){ return A.role+'.'; }},
       {k:'level',kind:'one',ask:function(){ return 'How senior are you?'; },opts:function(){ return ['Junior','Mid-level','Senior','Lead / principal']; },ack:function(){ return A.level+'.'; }},
@@ -2092,14 +2160,14 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       {k:'scale',kind:'one',skip:function(A){ return !isAI(A); },ask:function(){ return 'Biggest scale you\'ve worked at?'; },opts:function(){ return ['Prototype / internal','Thousands of users','Hundreds of thousands','Millions of users or TB-scale data']; },ack:function(){ return 'Scale: '+A.scale+'.'; }},
       {k:'caseStudy',kind:'long',ask:function(){ return 'Describe one thing you built: the problem, your approach and the result.'; },sub:'Shown on your public profile, so leave out client names. Numbers help.',ph:function(){ return 'e.g. Rebuilt a booking site in Next.js and Postgres; page loads went from 4s to 0.8s and bookings rose 30%'; },ack:function(){ return 'Case study saved.'; }},
       {k:'education',kind:'short',optional:true,ask:function(){ return 'Any degrees, research or certifications?'; },ph:function(){ return 'e.g. BSc Computer Science, AWS Solutions Architect, MSc Machine Learning (optional)'; },ack:function(){ return A.education?'Credentials noted.':'No problem — the work speaks.'; }},
-      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Private &mdash; used for matching and quotes. Neuron Pulse\'s 15% platform fee comes out of the agreed price, so price accordingly.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
+      {k:'rate',kind:'rate',ask:function(){ return 'What do you charge?'; },sub:'Private &mdash; used for matching. After introduction you bill the customer yourself. Neuron Pulse takes only a finder’s fee from the customer, not from your project invoices.',opts:function(){ return ['Hourly','Day rate','Per project','Monthly retainer']; },ph:function(){ return 'e.g. £45 an hour, £350 a day, from £2,000 a project'; },ack:function(){ return 'Rate: '+A.rate+' ('+(A.rateBasis||'').toLowerCase()+').'; }},
       {k:'availability',kind:'one',ask:function(){ return 'How much time could you give?'; },opts:function(){ return ['Full-time','Part-time','Evenings & weekends','Project by project']; },ack:function(){ return 'Availability: '+A.availability.toLowerCase()+'.'; }},
       {k:'region',kind:'one',ask:function(){ return 'Which town are you nearest?'; },sub:'Shown on your profile so local people can find you &mdash; never your address.',opts:function(){ return ['Bedford','Kempston','Luton','Dunstable','Houghton Regis','Leighton Buzzard','Milton Keynes','Newport Pagnell','Cranfield','Ampthill / Flitwick','Biggleswade / Sandy','St Neots','Hitchin / Letchworth','Another town nearby']; },ack:function(){ return 'Nearest town: '+A.region+'.'; }},
       {k:'workStyle',kind:'one',ask:function(){ return 'How do you like to work?'; },opts:function(){ return ['Remote','Hybrid','On-site locally','Any of these']; },ack:function(){ return 'Works: '+A.workStyle.toLowerCase()+'.'; }},
       {k:'openTo',kind:'many',other:true,ask:function(){ return 'How would you like to connect with other local engineers?'; },sub:'Shown on your profile.',opts:function(){ return ['Teaming up on client projects','Collaborators for side projects','Mentoring others','Being mentored','Local meetups & events','Co-working','Just paid work for now']; },ack:function(){ return 'Open to: '+join(withOther(A,'openTo')).toLowerCase()+'.'; }},
       {k:'links',kind:'short',ask:function(){ return 'Where can we check your work?'; },sub:'Private &mdash; used to verify you. GitHub, GitLab, Kaggle, Hugging Face, App Store, papers or a portfolio.',ph:function(){ return 'e.g. github.com/you, yoursite.dev'; },ack:function(){ return 'Links saved for verification.'; }},
       {k:'pitch',kind:'long',ask:function(){ return 'In a line, what makes your work stand out?'; },sub:'Shown on your public profile.',ph:function(){ return 'e.g. I ship polished React Native apps fast, and I care about the small details'; },ack:function(){ return 'Noted. That\'s the part clients read first.'; }},
-      {k:'terms',kind:'one',ask:function(){ return 'Do you agree to the Engineer Network Terms?'; },sub:'<a href="/engineer-terms.html" target="_blank" rel="noopener">Read the terms</a> &mdash; plain English. Free to join. A 15% platform fee only on paid projects we place you on. Clients we introduce are billed through Neuron Pulse for 12 months. Connecting with other members is free.',opts:function(){ return ['I agree to the Engineer Network Terms']; },ack:function(){ return 'Terms agreed.'; }},
+      {k:'terms',kind:'one',ask:function(){ return 'Do you agree to the Engineer Network Terms?'; },sub:'<a href="/engineer-terms.html" target="_blank" rel="noopener">Read the terms</a> &mdash; plain English. Free to join. Neuron Pulse is the finder only. After introduction you and the customer run the project.',opts:function(){ return ['I agree to the Engineer Network Terms']; },ack:function(){ return 'Terms agreed.'; }},
       {k:'you',kind:'contact',ask:function(){ return 'Finally — who are you?'; },sub:'Private. We\'ll reply within a few working days to book your technical call.',ack:function(){ return 'Good to meet you, '+(A.name||'').split(' ')[0]+'.'; }},
       {k:'review',kind:'review',ask:function(){ return 'Your engineer profile.'; }}
     ]; },
@@ -2118,14 +2186,14 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         '\n\nPUBLIC PROFILE — to approve: give it a unique code, set verified to true after the technical call, and paste it into assets/members.js:\n'+JSON.stringify(P)+','; },
     subject:function(A){ return 'Engineer network profile — '+(A.name||'')+' ('+(A.level?A.level+' ':'')+(A.role||'engineer')+')'; },
     fields:function(A){ return {role:A.role||'',level:A.level||'',region:A.region||'',rate:(A.rate||'')+(A.rateBasis?' ('+A.rateBasis+')':''),availability:A.availability||''}; },
-    done:function(A){ return '<h2 class="decode">Profile received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll check your work and book a short technical call. Once you\'re verified, your neuron goes live in the mind, where local engineers and businesses can find you &mdash; with your identity locked.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+    done:function(A){ return '<h2 class="decode">Profile received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll reply to your inbox to verify it\'s yours, then review your portfolio and certs. Your identity stays locked until a finder’s fee is paid.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
   });
 
-  /* Request an engineer: free; Neuron Pulse confirms scope, then the client's deposit unlocks the engineer */
+  /* Request an engineer: anonymised until the customer pays a finder's fee */
   function memberOf(code){ var L=window.SA_MEMBERS||[]; for(var k=0;k<L.length;k++) if(L[k].code===code) return L[k]; return null; }
   var Hire=Wizard({root:'hireWiz',key:'saHire',node:'guild',sendLabel:'Send my request',
     Q:function(A){ return [
-      {k:'intro',kind:'intro',btn:'Request or connect',ask:function(){ return 'Request or connect with '+(A.eng||'this engineer')+' — free.'; },sub:'<b>Hiring?</b> We check scope and availability with the engineer, then send you a quote and a secure deposit link (usually 20% of the agreed price, counted towards the project). Once it\'s paid, their identity unlocks and we introduce you &mdash; refunded in full if they can\'t take it on before the introduction.<br><br><b>A local engineer?</b> Connecting is free. We pass on your message and introduce you both if they agree.'},
+      {k:'intro',kind:'intro',btn:'Request or connect',ask:function(){ return 'Request or connect with '+(A.eng||'this engineer')+' — free.'; },sub:'<b>Hiring?</b> They review an anonymised brief. If they want the work, we ask you to approve and pay a one-off finder’s fee. Then we introduce you. After that you run the project together &mdash; we are the finder only.<br><br><b>A local engineer?</b> Connecting is free. We pass on your message and introduce you both if they agree.'},
       {k:'who',kind:'one',ask:function(){ return 'Who are you?'; },opts:function(){ return ['A business or client hiring','A local engineer wanting to connect']; },ack:function(){ return A.who+'.'; }},
       {k:'project',kind:'long',skip:function(A){ return A.who!=='A business or client hiring'; },ask:function(){ return 'What do you need built?'; },ph:function(){ return 'e.g. A booking app with payments and an admin dashboard'; },ack:function(){ return 'Project noted.'; }},
       {k:'reason',kind:'long',skip:function(A){ return A.who==='A business or client hiring'; },ask:function(){ return 'What would you like to connect about?'; },ph:function(){ return 'e.g. Teaming up on a Shopify build in Luton, or I\'d love a mentor for React Native'; },ack:function(){ return 'Message noted.'; }},
@@ -2140,11 +2208,11 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     plain:function(A){ var m=memberOf(A.eng)||{}; if(A.who!=='A business or client hiring') return 'ENGINEER CONNECTION — from the Braintrix\n\n'+lines([['Wants to connect with',A.eng],['Their title',(m.level?m.level+' ':'')+(m.role||'')],['About',A.reason],['From (network code)',A.myCode],['Name',A.name],['Email',A.email]])+
       '\n\nNext: ask '+A.eng+' if they would like to connect, then introduce them both.';
       return 'ENGINEER REQUEST — from the Braintrix\n\n'+lines([['Engineer',A.eng],['Their title',(m.level?m.level+' ':'')+(m.role||'')],['Project',A.project],['Budget',A.budget],['Timeline',A.timeline],['Client',A.name],['Email',A.email]])+
-      '\n\nNext: confirm scope and availability with the engineer, then send the client a quote and deposit link.'; },
+      '\n\nNext: send the engineer an anonymised brief. If they take it on, ask the customer to approve and pay the finder\'s fee, then introduce them. Do not share emails before payment.'; },
     subject:function(A){ return (A.who==='A business or client hiring'?'Engineer request — ':'Engineer connection — ')+(A.eng||'')+' — '+(A.name||''); },
     fields:function(A){ return {engineer:A.eng||'',type:A.who||'',budget:A.budget||'',timeline:A.timeline||''}; },
     done:function(A){ if(A.who!=='A business or client hiring') return '<h2 class="decode">Message received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll ask '+esc(A.eng)+' if they\'d like to connect, and introduce you both if they do.</p><button class="go" type="button" data-fly>Fly off and explore</button>';
-      return '<h2 class="decode">Request received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll confirm scope and availability with '+esc(A.eng)+' and reply within one working day with a quote and a secure deposit link.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
+      return '<h2 class="decode">Request received.</h2><p>Thanks'+(A.name?', '+esc(A.name.split(' ')[0]):'')+'. We\'ll send an anonymised brief to '+esc(A.eng)+'. If they take it on, we\'ll ask you to approve and pay a finder’s fee, then introduce you.</p><button class="go" type="button" data-fly>Fly off and explore</button>'; }
   });
   function memberPage(pg){ var d=byId[pg.dataset.node]; var slot=pg.querySelector('.hire-slot'); if(!d||!slot) return;
     slot.appendChild(document.getElementById('hireWiz')); Hire.preset('eng',d.code); }
@@ -2155,6 +2223,34 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     el.innerHTML=hit.length?hit.map(function(d){ var m=memberOf(d.code)||{}; return '<button class="mbl" type="button" data-go="'+d.id+'"><b>'+esc(d.code)+(m.verified?' &middot; &#10003; verified':'')+'</b> '+esc((m.level?m.level+' ':'')+(m.role||''))+'<small>'+esc(T[d.id].slice(2,9).join(' · '))+'</small></button>'; }).join('')
       :'<p class="sub">No engineer matches &ldquo;'+esc(q)+'&rdquo; yet. Describe your project and we\'ll find one.</p>'; }
   (function(){ var f=document.getElementById('memberFind'); if(f) f.addEventListener('input',paintMembers); paintMembers(); })();
+  (function(){
+    var form=document.getElementById('joinForm'), send=document.getElementById('joinSend'), err=document.getElementById('joinErr');
+    var open=document.getElementById('openGuildWiz'), wiz=document.getElementById('guildWiz');
+    if(open&&wiz) open.addEventListener('click',function(){ wiz.hidden=false; open.parentNode.hidden=true; try{ Guild.start(); }catch(e){} });
+    if(!form) return;
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var email=(document.getElementById('joinEmail').value||'').trim();
+      var skills=(document.getElementById('joinSkills').value||'').trim();
+      var availability=(document.getElementById('joinAvail').value||'').trim();
+      var certs=(document.getElementById('joinCerts').value||'').trim();
+      var portfolio=(document.getElementById('joinPort').value||'').trim();
+      var honey=(document.getElementById('joinHoney').value||'').trim();
+      function fail(t){ err.hidden=false; err.textContent=t; }
+      err.hidden=true;
+      if(honey) return;
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail('That email doesn’t look quite right.');
+      if(skills.length<8) return fail('Tell us a little more about your skills.');
+      if(availability.length<2) return fail('How available are you?');
+      if(portfolio && !/^https:\/\/\S+$/i.test(portfolio)) return fail('Portfolio must be an https link.');
+      if(!document.getElementById('joinTerms').checked) return fail('Please agree to the Engineer Network Terms.');
+      send.disabled=true; send.textContent='Sending…';
+      fetch('https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/network-join',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:email,skills:skills,availability:availability,certs:certs,portfolio:portfolio,company:honey})})
+        .then(function(r){ return r.json().then(function(j){ if(!r.ok||!j.ok) throw new Error(j.error||'failed'); }); })
+        .then(function(){ form.innerHTML='<h3>Join email sent.</h3><p class="sub">We’ll reply to <b>'+esc(email)+'</b> to prove the inbox is yours. Keep certifications and portfolio ready — they stay private until a finder’s fee is paid.</p>'; M.fire('guild'); FX('warp'); })
+        .catch(function(ex){ send.disabled=false; send.textContent='Send my join email'; fail(ex&&ex.message==='rate'?'Slow down a moment and try again.':'That didn’t send. Email Contact@samarketingintelligence.com instead.'); });
+    });
+  })();
 
   /* ══ FREE FLIGHT ══ */
   var choice=document.getElementById('choice'), thrust=document.getElementById('thrust'), flyNear=document.getElementById('flyNear');
