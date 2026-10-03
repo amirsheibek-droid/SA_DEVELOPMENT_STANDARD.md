@@ -870,7 +870,7 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
 <script src="assets/mind-garden.js?v=1"></script>
 <script src="assets/mind-draw.js?v=1"></script>
 <script src="assets/mind-cube.js?v=1"></script>
-<script src="assets/mind-worlds.js?v=7"></script>
+<script src="assets/mind-worlds.js?v=8"></script>
 <script>
 /* ── Soundscapes: all synthesised in the browser (no files, nothing to download) ── */
 (function(){
@@ -1398,9 +1398,9 @@ body.flying #coreRail,body.voyage #coreRail{opacity:.15;pointer-events:none}
     sage:function(){ return eb('The Sage','#ffc44d')+'<h2>Words of wisdom.</h2><p>Golden lights drift around the Sage, each holding a piece of wisdom. You have to find them.</p>'+
         '<ul class="thread" style="--c:#ffc44d">'+(window.H_HADITH||[]).filter(function(h){ return S.visited[h.id]; }).map(function(h){ return '<li style="--dot:'+((window.H_THEMES||[]).filter(function(t){ return t.id===h.theme; })[0]||{}).col+'"><button data-go="'+h.id+'" style="text-align:left"><b>'+esc(h.title)+'</b></button>'+'</li>'; }).join('')+'</ul>'+hiddenNote('hadith'); },
     light:function(){ return eb('Light','#19f0b0')+'<h2>Positive light.</h2><p>Small truths to lift your mind, hidden as lights nearby. Find them.</p><ul class="thread" style="--c:#19f0b0">'+H_LIGHT.filter(function(x){ return S.visited[x.id]; }).map(function(x){ return '<li><button data-go="'+x.id+'" style="text-align:left"><b>'+esc(x.t)+'</b></button><br><span class="small" style="color:var(--mute)">'+esc(x.b)+'</span></li>'; }).join('')+'</ul>'+hiddenNote('light'); },
-    worlds:function(){ return eb('Cube Keep','#2ee6ff')+'<h2>A tower of cubes. You fly it.</h2><p>Same as the mind. Drag to turn. Hold the orb, or W, to move the way you are looking. Each floor is something strange. Down a floor drops you there, or look down and fly it yourself.</p>'+
+    worlds:function(){ return eb('Cube Keep','#2ee6ff')+'<h2>Seven cube-neurons. You fly them like the mind.</h2><p>Drag to turn. Hold the orb, or W, to move. Each floor is a destination with real things hanging around it — stars, this week of moods, sayings, games you can play, a garden, a ring course, and a door home.</p>'+
       '<div class="row"><button class="btn" data-act="worlds" style="--c:#2ee6ff">Enter Cube Keep</button></div>'+
-      '<p class="small">A and D turn. S backs up. The dots along the bottom jump to a floor. Back to Mind returns here.</p>'; }
+      '<p class="small">Tap a cube to travel the axon to it. Down a floor does the same. Tap a hanging screen to read it or play.</p>'; }
   };
   function hiddenNote(k){ var all=DESTS.filter(function(d){ return d.kind===k; }), f=all.filter(function(d){ return S.visited[d.id]; }).length; return '<p class="empty">'+(f?f+' found \u00B7 ':'')+(all.length-f)+' still hidden around here. Fly close to discover them.</p>'; }
   function eb(t,c){ return '<div class="eyebrow" style="--c:'+c+'">'+t+'</div>'; }
