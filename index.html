@@ -991,7 +991,7 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
   </article>
 
   <!-- THE ARCHITECT (brief) -->
-  <script src="/assets/showroom.js?v=8"></script>
+  <script src="/assets/showroom.js?v=9"></script>
   <article class="pg" id="p-build" data-node="build" data-wide="1">
     <div class="eye">Find an engineer &middot; the Architect</div>
     <div id="arch"></div>
@@ -1347,11 +1347,65 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         el.muted=false; el.src='/assets/voice/arch/mind-inside.m4a?v=3';
         var failed=false; function fail(){ if(failed) return; failed=true; fading=false; fallback(LINE,function(){}); }
         el.onerror=fail; var pr=el.play(); if(pr&&pr.catch) pr.catch(fail); },
-      play:function(id,text,done){ setTimeout(function(){ done&&done(); },250); },
+      play:function(id,text,done){ this.say(text,done); },
+      say:function(text,done){
+        this.stop();
+        if(!text||ss('saArchVoice')==='off'){ setTimeout(function(){ done&&done(); },80); return; }
+        try{ if(window.SAAmbience&&SAAmbience.duck) SAAmbience.duck(true); }catch(e){}
+        fallback(text,done);
+      },
       stop:function(){ fading=false; try{ el.pause(); el.volume=1; }catch(e){} cb=null; unduck(); try{ window.speechSynthesis&&speechSynthesis.cancel(); }catch(e){} },
       on:function(){ return on; }, set:function(v){ on=v; ss('saArchVoice',v?'on':'off'); if(!v) this.stop(); }
     };
   })();
+
+  /* Jess talks through each page and each Vault app once, then stays quiet. */
+  var NPGuide=(function(){
+    var said={}, t=null;
+    try{ said=JSON.parse(ss('saGuideSaid')||'{}'); }catch(e){}
+    var PAGES={
+      core:'This is the Core — the front door of Neuron Pulse. We build intelligent websites and apps for specialist niches. Fly freely, join as an engineer, or tell us what you want built.',
+      services:'The Forge is our services. Starter is a clean one-page site. Signature is a fully custom site or app. Every project starts with a free mock-up before you spend anything.',
+      process:'The Pathway is how a build happens. Consult, mock-up, a written quote, then we build and launch. You see the work before you pay.',
+      referral:'The Gift is our referral. Send us a client who takes the care plan, and you keep their entire first month. It costs you nothing.',
+      about:'The Origin is who we are. Intelligent sites and apps, built remotely, worldwide. A free mock-up first, fixed written quotes, and no lock-in.',
+      faq:'Echoes are the questions we hear most — cost, mock-ups, apps, and the engineer network. Tap a question if you would rather read.',
+      news:'The Pulse is what is moving right now — new apps, the engineer network, and Voltz going live.',
+      secret:'You found the hidden neuron. It does not do anything useful. It just plays. Tell us you found it when you send a brief.',
+      guild:'This is the engineer network for Bedford, Luton and Milton Keynes. Join free, get verified, and clients can request you without seeing your name until a deposit is paid.'
+    };
+    var APPS={
+      'Voltz CRM':'Voltz CRM is live on the App Store. It is a voice-first job app for self-employed tradespeople. Say the job out loud and it books it, quotes it, invoices it and helps you get paid.',
+      'Mind Universe':'Mind Universe is our next app — your mind as a universe you can fly through. Moods, diary, goals, memories and hidden secrets, saved only on your device.',
+      'SpareDrive':'SpareDrive is in development at Neuron Pulse, launching soon.',
+      'Qlarvia':'Qlarvia is a software intelligence platform, still in the pipeline.',
+      'NEX License':'NEX License is a consulting platform, still in the pipeline.',
+      'The Talking Therapist':'The Talking Therapist is a therapy and wellbeing brand, still in the pipeline.',
+      'Eid in Bedford':'Eid in Bedford is a community event brand, still in the pipeline.',
+      'Contract Analyser':'Contract Analyser is in development. It reviews contracts and picks out the important terms for you.'
+    };
+    function mark(k){ said[k]=1; ss('saGuideSaid',JSON.stringify(said)); }
+    function later(fn){ clearTimeout(t); t=setTimeout(fn,700); }
+    function speak(key,text){
+      if(!text||said[key]||ss('saArchVoice')==='off') return;
+      mark(key);
+      later(function(){ Jess.say(text); });
+    }
+    return {
+      page:function(id){
+        if(!id||id==='portfolio'||id==='build'||id.indexOf('m-')===0) return;
+        if(id==='core'&&document.getElementById('choice')&&document.getElementById('choice').classList.contains('on')) return;
+        speak('page:'+id,PAGES[id]);
+      },
+      app:function(name){
+        if(!name||!document.body.classList.contains('np-phones')) return;
+        if(said['app:'+name]){ clearTimeout(t); Jess.stop(); return; }
+        speak('app:'+name,APPS[name]);
+      },
+      stop:function(){ clearTimeout(t); Jess.stop(); }
+    };
+  })();
+  window.NPGuide=NPGuide;
 
   /* discoveries */
   var found={}; try{ found=JSON.parse(ss('saFound')||'{}'); }catch(e){}
@@ -1418,9 +1472,11 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     if(WEAVE[id]) weave(pg); else pg.classList.remove('weaving');
     var sp=SPECIAL[id]||(byId[id]&&byId[id].member?memberPage:null); if(sp) setTimeout(function(){ sp(pg); },250);
     pg.querySelectorAll('.decode').forEach(decode);
+    if(id!=='portfolio') setTimeout(function(){ NPGuide.page(id); },400);
   }
   function retract(done){
     var leaving=shown, pg=shown?document.getElementById('p-'+shown):null; shown=null; drift.classList.remove('on'); haze.classList.remove('on');
+    try{ NPGuide.stop(); }catch(e){}
     if(leaving==='portfolio') document.body.classList.remove('np-phones');
     if(!pg){ done&&done(); return; }
     pg.classList.add('out'); stage.classList.remove('live');

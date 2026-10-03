@@ -105,6 +105,7 @@
     focus=Math.max(0,Math.min(list.length-1,i));
     list.forEach(function(d){ d.item.classList.toggle('back',d.i!==focus); });
     navB[0].disabled=focus===0; navB[1].disabled=focus===list.length-1; navN.textContent=(focus+1)+' / '+list.length;
+    try{ if(window.NPGuide) NPGuide.app(list[focus].name); }catch(e){}
   }
   function wheel(dy){ var now=performance.now(); if(now-wheelT>400) wheelAcc=0; wheelT=now; wheelAcc+=dy;
     if(Math.abs(wheelAcc)>60){ setFocus(focus+(wheelAcc>0?1:-1)); wheelAcc=0; wheelT=now+250; } }
@@ -223,5 +224,6 @@
   }
   requestAnimationFrame(frame);
 
-  window.NPShow={open:function(){ if(opened) return; opened=true; document.body.classList.add('np-phones'); prepare(); }};
+  window.NPShow={open:function(){ if(opened) return; opened=true; document.body.classList.add('np-phones'); prepare();
+    try{ if(window.NPGuide) NPGuide.app(list[focus].name); }catch(e){} }};
 })();
