@@ -683,7 +683,10 @@ body.np-phones #p-portfolio.pg.on .eye,body.np-phones #p-portfolio.pg.on .np-sho
 .arch-nav{justify-content:center}
 .field{margin-left:auto;margin-right:auto;text-align:center}
 textarea.field{text-align:left}
-.join-box{max-width:560px;margin:28px auto 8px;padding:22px 20px 26px;border-radius:22px;background:#fff;box-shadow:0 0 0 1px rgba(31,107,255,.14),0 24px 50px -32px rgba(31,107,255,.5);text-align:left}
+#p-guild .guild-lead{max-width:560px;margin:6px auto 0;font-size:.95rem}
+#p-guild .guild-steps{margin-top:18px}
+#p-guild .join-box{scroll-margin-top:12px}
+.join-box{max-width:560px;margin:14px auto 8px;padding:18px 18px 20px;border-radius:22px;background:#fff;box-shadow:0 0 0 1px rgba(31,107,255,.14),0 24px 50px -32px rgba(31,107,255,.5);text-align:left}
 .join-box h3{margin:0 0 6px;font-size:1.15rem}
 .join-box .field{text-align:left;margin-left:0;margin-right:0;max-width:none}
 .join-box .field-l{display:block;margin-top:16px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-family:var(--mono)}
@@ -692,6 +695,17 @@ textarea.field{text-align:left}
 .join-box .send{margin-top:6px}
 #guildWiz[hidden]{display:none}
 .arch-hud{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);min-height:1.15em;margin-top:10px}
+.stack-pills{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.stack-pills i{display:inline-block;padding:5px 10px;border-radius:999px;font-style:normal;font-size:.76rem;font-weight:700;background:#eef4ff;color:#1f6bff}
+.stack-pills i.lang{background:#e8fff4;color:#0f9e66}
+.stack-pills i.plat{background:#eef4ff;color:#1f6bff}
+.stack-pills i.skill{background:#f3e8ff;color:#6d28d9}
+.stack-pills i.sec{background:#fff1e8;color:#c2410c}
+.sec-box{margin:14px 0;padding:14px 16px;border-radius:16px;background:#fff8f3;box-shadow:inset 0 0 0 1px rgba(194,65,12,.18)}
+.sec-box h3{margin:0 0 8px}
+.member-code{font-family:var(--mono);font-size:1.15rem;letter-spacing:.08em;font-weight:800;color:var(--blue);margin:12px 0;padding:12px 14px;border-radius:14px;background:#eef4ff}
+.req-card{margin:14px 0;padding:14px 16px;border-radius:16px;background:#f7f9fd;box-shadow:inset 0 0 0 1px rgba(31,107,255,.12);text-align:left}
+.req-card b{display:block;margin-bottom:4px}
 button.linkish{background:none;border:0;padding:0;color:var(--blue);font-weight:700;cursor:pointer}
 .field-l{text-align:center}
 #p-portfolio .folio-grid{margin-left:auto;margin-right:auto;text-align:left}
@@ -1011,15 +1025,7 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
   <article class="pg" id="p-guild" data-node="guild">
     <div class="eye">Local engineer network &middot; Bedford &middot; Luton &middot; Milton Keynes</div>
     <h2 class="decode">Bringing local builders together.</h2>
-    <p>A free network for developers, engineers and builders across Bedford, Luton, Milton Keynes and the towns around them. Type your email, skills and availability. We send that to SA Marketing, then reply to prove the inbox is yours. Clients see skills &mdash; never your name or contact details &mdash; until a finder's fee is paid.</p>
-    <ul class="lines g">
-      <li><b>1 &middot; Join with an email.</b> <small>Skills, availability, plus optional certifications and a https portfolio. We reply to that inbox to authenticate you.</small></li>
-      <li><b>2 &middot; Review anonymised briefs.</b> <small>Matching members see the plan, not the customer. No emails or numbers are swapped here.</small></li>
-      <li><b>3 &middot; Take the work, then we ask the customer.</b> <small>If you want it, we send an approval request. The customer pays a one-off finder's fee. Then we introduce you.</small></li>
-      <li><b>4 &middot; Finder only.</b> <small>After the introduction, you and the customer run the project. Neuron Pulse is not party to delivery, errors or failed work.</small></li>
-      <li><b>Connect with each other &mdash; free.</b> <small>Find local engineers by skill. Ask to connect on any profile and we'll introduce you if they agree.</small></li>
-    </ul>
-    <p class="pkg-note">Read the <a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a> &mdash; plain English, two minutes.</p>
+    <p class="guild-lead">Type your email, skills and availability. We reply to prove the inbox is yours. Identity stays locked until a finder's fee is paid.</p>
     <div class="join-box" id="joinBox">
       <h3>Join the network</h3>
       <p class="sub">Email, skills and availability. Add certifications or a portfolio if you have them. We never publish your address.</p>
@@ -1041,7 +1047,27 @@ Join the Bedford, Luton &amp; Milton Keynes network free. Meet local builders; g
         <p class="whisper">We reply to verify you own the inbox. Portfolio and certs stay private.</p>
       </form>
     </div>
-    <p class="pkg-note"><button type="button" class="linkish" id="openGuildWiz">Prefer a full depth profile?</button></p>
+    <p class="pkg-note"><a href="/engineer-terms.html" target="_blank" rel="noopener">Engineer Network Terms</a> &nbsp;&middot;&nbsp; <button type="button" class="linkish" id="openGuildWiz">Prefer a full depth profile?</button></p>
+    <ul class="lines g guild-steps">
+      <li><b>1 &middot; Join with an email.</b> <small>We reply to that inbox to authenticate you.</small></li>
+      <li><b>2 &middot; Review stored briefs.</b> <small>Open your member inbox. Requests stay saved so you do not lose them.</small></li>
+      <li><b>3 &middot; Take the work.</b> <small>We ask the customer to approve and pay a finder's fee, then introduce you.</small></li>
+      <li><b>4 &middot; Finder only.</b> <small>You and the customer run the project after that.</small></li>
+    </ul>
+    <div class="join-box" id="inboxBox">
+      <h3>Member request inbox</h3>
+      <p class="sub">Registered members: open your inbox with the email you joined with and your private member code. Requests stay stored here so you do not lose them.</p>
+      <form id="inboxForm" novalidate>
+        <label class="field-l" for="inboxEmail">Your email</label>
+        <input class="field" id="inboxEmail" type="email" autocomplete="username" required placeholder="you@example.com">
+        <label class="field-l" for="inboxCode">Member code</label>
+        <input class="field" id="inboxCode" required placeholder="NP-M-XXXXXXXX" autocomplete="current-password">
+        <button class="send" type="submit" id="inboxSend">Open my inbox</button>
+        <p class="err" id="inboxErr" hidden></p>
+        <p class="whisper">The code is shown once when you join. We store a hash of it, never the raw code next to your email.</p>
+      </form>
+      <div id="inboxOut" hidden></div>
+    </div>
     <div id="guildWiz" hidden></div>
     <h3 class="mb-h">Local engineers in the network</h3>
     <input class="field" id="memberFind" placeholder="Search any skill or town &mdash; e.g. Python, WordPress, Luton, mentor" autocomplete="off">
@@ -1683,7 +1709,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       var tmp=document.createElement('textarea'); tmp.innerHTML=txt; txt=tmp.value;
       (function tick(){ if(shown!=='about') { log.textContent=txt; return; } i+=2; log.innerHTML=txt.slice(0,i).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="c"></span>'; if(i<txt.length) setTimeout(tick,18); })(); },
     build:function(){ Arch.start(); },
-    guild:function(){ Guild.start(); paintMembers(); },
+    guild:function(){ Guild.start(); paintMembers(); try{ var st=document.getElementById('stage'); if(st) st.scrollTop=0; var box=document.getElementById('joinBox'); if(box&&box.scrollIntoView) box.scrollIntoView({block:'start',behavior:'instant'}); }catch(e){} },
     secret:function(){ playground(true); }
   };
   document.querySelectorAll('.echo button').forEach(function(b){ b.addEventListener('click',function(){ var a=b.nextElementSibling, on=b.getAttribute('aria-expanded')==='true';
@@ -1812,12 +1838,13 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       {id:'admin',n:'Admin & team roles',kw:/admin|manage (staff|the team)|staff|team members|roles|permissions/},
       {id:'docs',n:'Documents & e-sign',kw:/document|files?\b|upload|contract|pdf|e-?sign/},
       {id:'marketplace',n:'Marketplace & matching',kw:/marketplace|vendors?|sellers?|listings?|match(ing)?/},
-      {id:'seo',n:'Enquiries & contact',kw:/enquir|contact form|get in touch|quote request/}
+      {id:'seo',n:'Enquiries & contact',kw:/enquir|contact form|get in touch|quote request/},
+      {id:'security',n:'Security & privacy',kw:/secur|privacy|gdpr|encrypt|authenti|authori|password|2fa|mfa|permission/}
     ];
     var MOD={}; MODS.forEach(function(m){ MOD[m.id]=m; });
     var SCREENS={accounts:['Sign up & log in','Profile'],booking:['Pick a time','My bookings','Calendar (admin)'],payments:['Checkout','Receipts & invoices'],crm:['Customer list','Customer record','Follow-ups'],
       ai:['Assistant (chat or voice)','AI results & actions'],shop:['Catalogue','Basket & checkout','Orders'],dashboard:['Dashboard','Reports'],notify:['Notification centre','Reminder settings'],chat:['Inbox','Conversation'],
-      maps:['Map view','Location search'],content:['Articles','Editor'],gallery:['Gallery'],admin:['Admin panel','Team & roles'],docs:['Documents','Upload & sign'],marketplace:['Listings','Seller dashboard','Search & match'],seo:['Contact page','Enquiry form']};
+      maps:['Map view','Location search'],content:['Articles','Editor'],gallery:['Gallery'],admin:['Admin panel','Team & roles'],docs:['Documents','Upload & sign'],marketplace:['Listings','Seller dashboard','Search & match'],seo:['Contact page','Enquiry form'],security:['Sign-in','Roles & permissions','Privacy controls']};
     var TYPE_MODS={'CRM':['crm','dashboard'],'AI assistant or automation':['ai'],'Online shop':['shop','payments'],'Booking system':['booking','notify'],'Internal tool or dashboard':['dashboard','admin'],
       'Marketplace':['marketplace','accounts','payments'],'Website':['seo'],'Mobile app':['accounts','notify'],'Web app / software':['accounts','dashboard']};
     var USERS=[{n:'Customers',kw:/customer|client|buyer|shopper|guest/},{n:'Your team',kw:/staff|team|employee|engineer|worker|colleague|technician/},{n:'Admins',kw:/admin|manager|owner|myself|\bme\b/},
@@ -1832,7 +1859,9 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       marketplace:'Who are the two sides of the marketplace, and how do you make money between them?',
       chat:'Who needs to message whom — customers to you, or users to each other?',
       maps:'What does location do for people — find things nearby, track a journey, or plan routes?',
-      docs:'What kind of documents — contracts, reports, photos? And do people need to sign them?'};
+      docs:'What kind of documents — contracts, reports, photos? And do people need to sign them?',
+      accounts:'How should people prove who they are — email link, password, or sign in with Apple or Google?',
+      security:'What must never leak — customer details, payments, or staff data?'};
     var GENERIC='Tell me a little more — what problem does it solve, and who has that problem today?';
 
     var Q=[
@@ -1841,12 +1870,14 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       {id:'idea',kind:'voice',probe:true,say:'Tell me the idea. What should it do, and who is it for?'},
       {id:'users',kind:'chips',multi:true,say:'Who will use it day to day?',opts:['Customers','Your team','Admins','The public','Businesses']},
       {id:'must',kind:'voice',probe:true,say:'If it could only do one thing brilliantly, what would that be?'},
+      {id:'data',kind:'chips',multi:true,say:'What kind of data will it hold? This shapes privacy and security from the start.',opts:['Names and contact details','Payments or bank details','Health or sensitive records','Location','Photos or files','Nothing personal']},
+      {id:'access',kind:'chips',say:'Who should be allowed in?',opts:['Anyone (public)','Signed-in customers','Staff only','Two sides (e.g. buyers and sellers)']},
       {id:'feel',kind:'chips',multi:true,say:'How should it feel?',opts:['Clean & minimal','Bold & vibrant','Premium & dark','Warm & friendly','Futuristic']},
       {id:'have',kind:'chips',multi:true,say:'What do you already have?',opts:['A logo','A domain name','A current website or app','Brand colours','Content & photos','Nothing yet']},
       {id:'timeline',kind:'chips',say:'When would you like it live?',opts:['As soon as possible','Within 1–3 months','3–6 months','Just exploring']},
       {id:'budget',kind:'chips',say:'Roughly what budget do you have in mind? Every build is still quoted in writing first.',opts:['Under £3k','£3k–£10k','£10k–£25k','£25k+','Not sure — advise me']},
       {id:'name',kind:'voice',say:"What's your name — and the business name, if there is one?"},
-      {id:'email',kind:'email',say:"Last thing — pop your email in, so we can send you the sketch plan."},
+      {id:'email',kind:'email',say:"Last thing — your email, so we can send the plan. You can also download a PDF on the next screen."},
       {id:'review',kind:'review',say:"Here's your sketch plan."}
     ];
     function cleanName(t){ t=(t||'').replace(/^(hi|hello|hey)[,!. ]*/i,'').replace(/^(my name is|my name's|i'm|i am|this is|it's|its)\s+/i,'').trim();
@@ -1855,23 +1886,33 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
     function cap(s){ return s.replace(/\b\w/g,function(c){ return c.toUpperCase(); }); }
 
     var ARCH_FN='https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/site-architect';
-    var asking=false;
+    var asking=false, lastAsk='';
     function hidePii(s){ return String(s||'').replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,'[hidden]').replace(/(\+44|0)\s*\d[\d\s-]{8,}/g,'[hidden]').replace(/https?:\/\/\S+/gi,'[hidden]'); }
     function hud(t){ var el=document.getElementById('aHud'); if(el) el.textContent=t||''; }
     function briefCode(){ if(!S.code) S.code='NP-'+String(Date.now()).slice(-6); return S.code; }
+    function dataHeld(){ return join(S.data||S.ans.data||[]); }
     function askArch(done){
       var idea=hidePii(S.ans.idea||''), must=hidePii(S.ans.must||'');
       if(idea.length<8 && must.length<4){ done&&done(null); return; }
+      var key=[idea,must,S.types.join(','),S.users.join(','),dataHeld(),S.ans.access||''].join('|');
       if(asking){ done&&done(null); return; }
+      if(key===lastAsk && S.aiSummary){ done&&done(S); return; }
       asking=true; hud('Architect is drawing the plan…');
-      fetch(ARCH_FN,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({idea:idea,must:must,types:S.types,users:S.users,mods:S.mods})})
+      fetch(ARCH_FN,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({idea:idea,must:must,types:S.types,users:S.users,mods:S.mods,plat:S.plat,data:dataHeld(),access:S.ans.access||''})})
         .then(function(r){ return r.json(); })
         .then(function(j){
-          asking=false;
+          asking=false; lastAsk=key;
           if(j&&j.modules) j.modules.forEach(function(id){ if(MOD[id]&&S.mods.indexOf(id)<0) S.mods.push(id); });
+          if(S.mods.indexOf('security')<0) S.mods.unshift('security');
           if(j&&j.summary) S.aiSummary=j.summary;
           if(j&&j.next_probe) S.aiProbe=j.next_probe;
           if(j&&j.phases) S.aiPhases=j.phases;
+          if(j&&j.languages) S.languages=j.languages;
+          if(j&&j.platforms){ S.aiPlat=j.platforms; j.platforms.forEach(function(p){ var n=p==='iOS'?'iPhone':p; if((n==='iPhone'||n==='Android'||n==='Web')&&S.plat.indexOf(n)<0) S.plat.push(n); }); }
+          if(j&&j.skills) S.skills=j.skills;
+          if(j&&j.frameworks) S.frameworks=j.frameworks;
+          if(j&&j.security) S.security=j.security;
+          if(j&&j.model) S.aiModel=j.model;
           hud(j&&j.summary?'Plan updated.':'');
           draw(); save(); FX('zoop',.8); M.fire('build');
           done&&done(j);
@@ -1960,7 +2001,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       else if(q.kind==='voice'){ h+='<textarea class="field" id="aType" rows="3" placeholder="Type your answer">'+esc(S.ans[q.id]||'')+'</textarea>'+
         '<div class="arch-nav"><button class="send" type="button" data-a="next">Continue</button>'+(step>0?'<button class="back" type="button" data-a="back">&larr; Back</button>':'')+'</div>'; }
       else if(q.kind==='email'){ h+='<input class="field" id="aEmail" type="email" autocomplete="email" placeholder="you@business.com" value="'+esc(S.email||'')+'"><div class="err" id="aErr"></div>'+nav(true); }
-      else if(q.kind==='review'){ h+=planHTML()+'<input type="checkbox" id="aBot" style="display:none" tabindex="-1" autocomplete="off"><div class="arch-nav"><button class="send" type="button" data-a="send">Send anonymised brief</button><button class="back" type="button" data-a="back">&larr; Edit</button></div><div class="err" id="aErr"></div><p class="whisper">Your name and email stay with us. Matching members see an anonymised brief only.</p>'; }
+      else if(q.kind==='review'){ h+=planHTML()+'<input type="checkbox" id="aBot" style="display:none" tabindex="-1" autocomplete="off"><div class="arch-nav"><button class="send" type="button" data-a="send">Send anonymised brief</button><button class="back" type="button" data-a="pdf">Download PDF</button><button class="back" type="button" data-a="back">&larr; Edit</button></div><div class="err" id="aErr"></div><p class="whisper">Download the PDF on this device. Your name and email stay with us. Matching members see an anonymised brief only.</p>'; }
       h+='<div class="arch-hud" id="aHud">'+(S.aiSummary?'Plan: '+esc(S.aiSummary.slice(0,110)):'')+'</div></div><svg class="bp" id="bp" viewBox="0 0 420 320" aria-label="Live blueprint of your idea"></svg></div>';
       root.innerHTML=h; draw();
       var text=q.say, ask=document.getElementById('aAsk'), c=0;
@@ -2014,7 +2055,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         if(!S.ans[q.id] && !q.isProbe){ heard('Tap the mic and tell me first.',false); var m=document.getElementById('aMic'); if(m&&m.animate) m.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:400}); return; } }
       if(q.kind==='chips'){ var any=q.id==='type'?S.types.length:(q.multi?(S[q.id]||[]).length:S.ans[q.id]); if(q.id==='users') any=S.users.length; if(!any){ heard('Pick one, or tell me.',false); return; } }
       if(q.kind==='email'){ var em=(document.getElementById('aEmail').value||'').trim(); if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ document.getElementById('aErr').textContent='That email doesn\'t look quite right.'; return; } S.email=em; }
-      if((q.id==='idea'||q.id==='must') && !q.isProbe){ askArch(function(){ finishNext(); }); return; }
+      if((q.id==='idea'||q.id==='must'||q.id==='data'||q.id==='access') && !q.isProbe){ askArch(function(){ finishNext(); }); return; }
       finishNext();
     }
     function finishNext(){
@@ -2040,7 +2081,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       crm:['back-end','full-stack','postgres','dashboard'],ai:['ai / llm','openai','anthropic','llm','rag','machine learning','langchain'],shop:['shopify','woocommerce','e-commerce','magento','stripe'],
       dashboard:['react','next.js','analytics','sql','data'],notify:['twilio','email & sms','firebase','back-end'],chat:['websockets','firebase','node'],maps:['maps','geolocation'],
       content:['wordpress','webflow','cms','strapi','sanity'],gallery:['html','css','wordpress','front-end'],admin:['back-end','full-stack','auth'],docs:['back-end','aws','supabase'],
-      marketplace:['full-stack','back-end','postgres','stripe','elasticsearch'],seo:['html','css','wordpress','websites'],
+      marketplace:['full-stack','back-end','postgres','stripe','elasticsearch'],seo:['html','css','wordpress','websites'],security:['cyber security','auth','security','oauth'],
       _mobile:['mobile','react native','flutter','swiftui','jetpack','expo'],_web:['html','wordpress','websites','front-end','next.js','react']};
     function needs(){ var n=S.mods.map(function(id){ return {id:id,label:MOD[id].n}; }), t=S.types.join(' ').toLowerCase();
       if(/mobile/.test(t)) n.unshift({id:'_mobile',label:'Mobile app'}); if(/website|web app/.test(t)) n.unshift({id:'_web',label:'Website / web front-end'}); return n; }
@@ -2058,12 +2099,117 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       r.picks.forEach(function(p,k){ setTimeout(function(){ M.fire(p.d.id); FX('zoop',.4); },400+k*450); });
       return L; }
     function teamText(){ var r=team(); return r.picks.length?'\n\nSuggested local team:\n'+r.picks.map(function(p){ return '  • '+p.d.code+' — covers '+p.covers.map(function(c){ return c.label; }).join(', '); }).join('\n')+(r.gaps.length?'\nStill to match: '+r.gaps.map(function(c){ return c.label; }).join(', '):''):'\n\nSuggested local team: none verified yet — hand-pick.'; }
+    function pills(arr, cls){ return (arr||[]).filter(Boolean).map(function(x){ return '<i class="'+cls+'">'+esc(x)+'</i>'; }).join(''); }
+    function stackHTML(){
+      var L='';
+      if((S.skills||[]).length||(S.languages||[]).length||(S.frameworks||[]).length||(S.aiPlat||S.plat||[]).length){
+        L+='<h3>Stack to match</h3>';
+        if((S.skills||[]).length) L+='<p class="sub">Skills</p><div class="stack-pills">'+pills(S.skills,'skill')+'</div>';
+        if((S.languages||[]).length) L+='<p class="sub">Languages</p><div class="stack-pills">'+pills(S.languages,'lang')+'</div>';
+        if((S.aiPlat||S.plat||[]).length) L+='<p class="sub">Platforms</p><div class="stack-pills">'+pills(S.aiPlat||S.plat,'plat')+'</div>';
+        if((S.frameworks||[]).length) L+='<p class="sub">Frameworks</p><div class="stack-pills">'+pills(S.frameworks,'skill')+'</div>';
+      }
+      return L;
+    }
+    function securityHTML(){
+      var s=S.security; if(!s) return '';
+      return '<div class="sec-box"><h3>Security, privacy and authentication</h3><ul class="lines g">'+
+        '<li><b>Authentication</b><small>'+esc(s.authentication||'')+'</small></li>'+
+        '<li><b>Authorization</b><small>'+esc(s.authorization||'')+'</small></li>'+
+        '<li><b>Privacy</b><small>'+esc(s.privacy||'')+'</small></li>'+
+        '<li><b>Encryption</b><small>'+esc(s.encryption||'')+'</small></li>'+
+        ((s.other||[]).length?'<li><b>Also</b><small>'+esc((s.other||[]).join(' · '))+'</small></li>':'')+
+        '</ul><p class="sub">Built in from the start. Secrets stay on the server. The network never sees your email.</p></div>';
+    }
+    function latin(s){ return String(s||'').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[—–]/g,'-').replace(/£/g,'GBP ').replace(/[^\x09\x0A\x0D\x20-\x7E]/g,''); }
+    function downloadPlanPdf(){
+      var s=S.security||{}, blocks=[
+        {text:'NEURON PULSE  SKETCH PLAN  '+briefCode(), size:16, bold:1},
+        {text:'Built by the Architect. This copy stays on your device. The network receives an anonymised brief with no name or email.', size:10},
+        {text:(S.types.join(' + ')||'A new product')+(S.plat.length?' for '+join(S.plat):'')+'.', size:12, bold:1},
+        {text:S.aiSummary||hidePii(S.ans.idea||''), size:11},
+        {text:'Skills to match', size:13, bold:1}, {text:join(S.skills)||'To be confirmed', size:11},
+        {text:'Languages', size:13, bold:1}, {text:join(S.languages)||'To be confirmed', size:11},
+        {text:'Platforms', size:13, bold:1}, {text:join(S.aiPlat||S.plat)||'To be confirmed', size:11},
+        {text:'Frameworks', size:13, bold:1}, {text:join(S.frameworks)||'To be confirmed', size:11},
+        {text:'Who it is for', size:13, bold:1}, {text:join(S.users)||'To be confirmed', size:11},
+        {text:'Must do brilliantly', size:13, bold:1}, {text:hidePii(S.ans.must||'-'), size:11},
+        {text:'Data held', size:13, bold:1}, {text:dataHeld()||'-', size:11},
+        {text:'Who is allowed in', size:13, bold:1}, {text:S.ans.access||'-', size:11},
+        {text:'Modules', size:13, bold:1},
+        {text:S.mods.map(function(id){ return (MOD[id]&&MOD[id].n)||id; }).join(', ')||'-', size:11},
+        {text:'Security, privacy and authentication', size:13, bold:1},
+        {text:'Authentication: '+(s.authentication||'Signed-in users. Staff use a separate admin role.'), size:11},
+        {text:'Authorization: '+(s.authorization||'Least privilege.'), size:11},
+        {text:'Privacy: '+(s.privacy||'Collect only what is needed. UK GDPR access and delete on request.'), size:11},
+        {text:'Encryption: '+(s.encryption||'HTTPS in transit. Encrypted at rest. Secrets stay on the server.'), size:11},
+        {text:'Also: '+((s.other||[]).join(', ')||'Rate limiting, server-side secrets, audit log'), size:11},
+        {text:'Phases', size:13, bold:1},
+        {text:(S.aiPhases||[]).join(' | ')||'Scoped together at consultation', size:11},
+        {text:'Timeline '+(S.ans.timeline||'-')+'  ·  Budget '+(S.ans.budget||'-'), size:10},
+        {text:'Neuron Pulse is the finder only. After introduction the engineer and customer run the project.', size:9}
+      ];
+      makePdf('neuron-pulse-plan-'+briefCode()+'.pdf', blocks);
+    }
+    function makePdf(filename, blocks){
+      var W=595.28, H=841.89, left=48, right=547, pages=[], page, y;
+      function newPage(){ page=[]; pages.push(page); y=H-56; }
+      newPage();
+      function wrap(text, size){
+        var words=latin(text).split(/\s+/), line='', out=[], avg=size*0.48;
+        words.forEach(function(word){ var t=line?line+' '+word:word; if(t.length*avg>right-left){ if(line) out.push(line); line=word; } else line=t; });
+        if(line) out.push(line);
+        return out.length?out:[''];
+      }
+      blocks.forEach(function(b){
+        var size=b.size||11;
+        wrap(b.text, size).forEach(function(ln){
+          if(y<64) newPage();
+          page.push({y:y,size:size,text:ln,bold:!!b.bold});
+          y -= size+5;
+        });
+        y -= 5;
+      });
+      function escPdf(s){ return latin(s).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)'); }
+      var objs=[], stream;
+      objs.push('<< /Type /Catalog /Pages 2 0 R >>');
+      var kids=[], i;
+      for(i=0;i<pages.length;i++) kids.push((3+i*2)+' 0 R');
+      objs.push('<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+pages.length+' >>');
+      pages.forEach(function(p){
+        var cmd=['BT','/F1 11 Tf'];
+        p.forEach(function(ln){ cmd.push('/'+(ln.bold?'F2':'F1')+' '+ln.size+' Tf'); cmd.push('1 0 0 1 '+left+' '+ln.y.toFixed(1)+' Tm'); cmd.push('(' + escPdf(ln.text) + ') Tj'); });
+        cmd.push('ET');
+        stream=cmd.join('\n');
+        objs.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+W+' '+H+'] /Contents '+(objs.length+2)+' 0 R /Resources << /Font << /F1  '+(3+pages.length*2)+' 0 R /F2 '+(4+pages.length*2)+' 0 R >> >> >>');
+        objs.push('<< /Length '+stream.length+' >>\nstream\n'+stream+'\nendstream');
+      });
+      objs.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
+      objs.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>');
+      var out=['%PDF-1.4'], xref=[0], pos=0;
+      function add(s){ out.push(s); pos += s.length+1; }
+      add(out[0]); pos=out[0].length+1; out=['%PDF-1.4']; pos=9;
+      var body=['%PDF-1.4\n'], offset=9, table=['0000000000 65535 f \n'];
+      objs.forEach(function(o, idx){
+        table.push(('0000000000'+offset).slice(-10)+' 00000 n \n');
+        var chunk=idx+1+' 0 obj\n'+o+'\nendobj\n';
+        body.push(chunk); offset += chunk.length;
+      });
+      var xrefPos=offset;
+      body.push('xref\n0 '+(objs.length+1)+'\n'+table.join('')+'trailer\n<< /Size '+(objs.length+1)+' /Root 1 0 R >>\nstartxref\n'+xrefPos+'\n%%EOF');
+      var blob=new Blob([body.join('')],{type:'application/pdf'});
+      var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+      FX('zoop',.7);
+    }
     function planHTML(){ var ph=phases(), L='';
       L+='<p class="vision">'+(S.biz?'<em>'+esc(S.biz)+'</em> — ':'')+'<em>'+esc(S.types.join(' + ')||'a new product')+'</em>'+(S.plat.length?' for '+esc(join(S.plat)):'')+'. '+esc((S.ans.idea||'').replace(/\.?$/,'.'))+'</p>';
       if(S.aiSummary) L+='<p class="sub">'+esc(S.aiSummary)+'</p>';
+      L+=stackHTML();
       if(S.aiPhases&&S.aiPhases.length) L+='<h3>Architect map</h3><ul class="lines g">'+S.aiPhases.map(function(p,i){ return '<li><b>'+(i<2?'Launch':'Later')+'</b><small>'+esc(p)+'</small></li>'; }).join('')+'</ul>';
       L+='<div class="split"><div><h3>Who it\'s for</h3><ul class="lines g">'+(S.users.length?S.users:['To be confirmed']).map(function(u){ return '<li>'+esc(u)+'</li>'; }).join('')+'</ul></div>';
       L+='<div><h3>Must do brilliantly</h3><p>'+esc(S.ans.must||'—')+'</p></div></div>';
+      L+=securityHTML();
       L+='<h3>Core modules &amp; key screens</h3><ul class="lines">'+S.mods.map(function(id){ return '<li><b>'+esc(MOD[id].n)+'</b><small>'+esc((SCREENS[id]||[]).join(' · '))+'</small></li>'; }).join('')+'</ul>';
       L+='<h3>Suggested build phases</h3><ul class="lines g"><li><b>Phase 1 — launch</b><small>'+esc(ph.p1.map(function(id){ return MOD[id].n; }).join(', ')||'Scoped together at consultation')+'</small></li>'+(ph.p2.length?'<li><b>Phase 2 — grow</b><small>'+esc(ph.p2.map(function(id){ return MOD[id].n; }).join(', '))+'</small></li>':'')+'</ul>';
       L+='<p class="sub">Feel: '+esc(join(S.feel)||'—')+' · Has: '+esc(join(S.have)||'—')+' · Timeline: '+esc(S.ans.timeline||'—')+' · Budget: '+esc(S.ans.budget||'—')+'</p>';
@@ -2078,7 +2224,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
         '\n\n'+lines([['Feel',join(S.feel)],['Already has',join(S.have)],['Timeline',S.ans.timeline],['Budget',S.ans.budget],['Said (name answer)',S.ans.name],['Found the hidden neuron',found.secret?'Yes':'No'],['Neurons discovered',nFound()+' / '+total]])+teamText(); }
     function networkBrief(){
       return 'ANONYMISED NETWORK BRIEF '+briefCode()+'\nDo not include names, emails, phones or company names.\n\n'+
-        lines([['Code',briefCode()],['Building',S.types.join(', ')],['Platforms',S.plat.join(', ')],['Users',S.users.join(', ')],['The idea',hidePii(S.ans.idea)],['Must do brilliantly',hidePii(S.ans.must)],['Modules',S.mods.map(function(id){ return MOD[id]&&MOD[id].n; }).filter(Boolean).join(', ')],['Feel',join(S.feel)],['Timeline',S.ans.timeline],['Budget band',S.ans.budget],['Architect',S.aiSummary||'']])+
+        lines([['Code',briefCode()],['Building',S.types.join(', ')],['Platforms',(S.aiPlat||S.plat).join(', ')],['Languages',(S.languages||[]).join(', ')],['Skills to match',(S.skills||[]).join(', ')],['Frameworks',(S.frameworks||[]).join(', ')],['Users',S.users.join(', ')],['Data held',dataHeld()],['Who is allowed in',S.ans.access],['The idea',hidePii(S.ans.idea)],['Must do brilliantly',hidePii(S.ans.must)],['Modules',S.mods.map(function(id){ return MOD[id]&&MOD[id].n; }).filter(Boolean).join(', ')],['Feel',join(S.feel)],['Timeline',S.ans.timeline],['Budget band',S.ans.budget],['Architect',S.aiSummary||'']])+
         (S.aiPhases&&S.aiPhases.length?'\n\nMap:\n'+S.aiPhases.map(function(p,i){ return '  • '+(i<2?'Launch':'Later')+' — '+p; }).join('\n'):'')+
         '\n\nTo take this on: reply with the code. We then ask the customer to approve. After they pay the finder\'s fee we introduce you. Until then do not swap contact details.';
     }
@@ -2089,7 +2235,9 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       var body={access_key:'73ae07a5-82c2-40e1-a953-72bac1446213',from_name:'Neuron Pulse — the Architect',subject:'Anonymised brief '+briefCode()+' — '+(S.types.join(', ')||'project'),
         name:S.name||'',email:S.email,replyto:S.email,business:S.biz||'',package:S.types.join(', '),budget:S.ans.budget||'',timeline:S.ans.timeline||'',message:message,botcheck:false};
       fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)})
-        .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed'); sent=true; ss('saArch','{}'); M.fire('build'); FX('warp'); speak('Signal received. Matching engineers will review an anonymised plan. If one takes it on, we will ask you to approve and pay a finder fee, then introduce you.',function(){},'arch-sent'); render(); })
+        .then(function(r){ return r.json(); }).then(function(r){ if(!r.success) throw new Error(r.message||'failed');
+          fetch('https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/network-inbox',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'save',code:briefCode(),building:S.types.join(', '),platforms:(S.aiPlat||S.plat).join(', '),languages:(S.languages||[]).join(', '),skills:(S.skills||[]).join(', '),frameworks:(S.frameworks||[]).join(', '),users:S.users.join(', '),data:dataHeld(),access:S.ans.access||'',idea:hidePii(S.ans.idea),must:hidePii(S.ans.must),modules:S.mods.map(function(id){ return MOD[id]&&MOD[id].n; }).filter(Boolean).join(', '),summary:S.aiSummary||'',phases:(S.aiPhases||[]).join(' | '),timeline:S.ans.timeline||'',budget:S.ans.budget||''})}).catch(function(){});
+          sent=true; ss('saArch','{}'); M.fire('build'); FX('warp'); speak('Signal received. Matching engineers will review an anonymised plan. If one takes it on, we will ask you to approve and pay a finder fee, then introduce you.',function(){},'arch-sent'); render(); })
         .catch(function(){ btn.disabled=false; btn.textContent='Send anonymised brief'; document.getElementById('aErr').innerHTML='That didn\'t transmit. Try again, or email <a href="mailto:Contact@samarketingintelligence.com">Contact@samarketingintelligence.com</a>.'; });
     }
 
@@ -2102,7 +2250,7 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       if(a==='begin'){ step=1; save(); FX('warp'); render(); }
       else if(a==='mic'){ if(rec){ try{ rec.stop(); }catch(_){} } else { clearTimeout(advT); if(!listen(onVoice)) fallbackBox(); } }
       else if(a==='redo'){ clearTimeout(advT); var qq=curQ(); if(qq.isProbe) delete S.ans[qq.id]; else S.ans[qq.id]=''; save(); if(!listen(onVoice)) fallbackBox(); }
-      else if(a==='next') next(); else if(a==='back') back(); else if(a==='send') send(b);
+      else if(a==='next') next(); else if(a==='back') back(); else if(a==='send') send(b); else if(a==='pdf') downloadPlanPdf();
       else if(a==='voice'){ voiceOn=!voiceOn; Jess.set(voiceOn); if(!voiceOn) try{ SYN.cancel(); }catch(_){} b.innerHTML=voiceOn?'&#128266; Voice on':'&#128263; Voice off'; }
     });
     root.addEventListener('keydown',function(e){ if(e.key==='Enter' && (e.target.id==='aEmail' || (e.target.id==='aType' && !e.shiftKey))){ e.preventDefault(); next(); } });
@@ -2246,8 +2394,8 @@ window.SA_LINKS=[['core','guild'],['core','services'],['core','referral'],['core
       if(!document.getElementById('joinTerms').checked) return fail('Please agree to the Engineer Network Terms.');
       send.disabled=true; send.textContent='Sending…';
       fetch('https://dyurykdiuwbmadjrljzh.supabase.co/functions/v1/network-join',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:email,skills:skills,availability:availability,certs:certs,portfolio:portfolio,company:honey})})
-        .then(function(r){ return r.json().then(function(j){ if(!r.ok||!j.ok) throw new Error(j.error||'failed'); }); })
-        .then(function(){ form.innerHTML='<h3>Join email sent.</h3><p class="sub">We’ll reply to <b>'+esc(email)+'</b> to prove the inbox is yours. Keep certifications and portfolio ready — they stay private until a finder’s fee is paid.</p>'; M.fire('guild'); FX('warp'); })
+        .then(function(r){ return r.json().then(function(j){ if(!r.ok||!j.ok) throw new Error(j.error||'failed'); return j; }); })
+        .then(function(j){ form.innerHTML='<h3>Join email sent.</h3><p class="sub">Save this private member code. It opens your request inbox so you never lose a brief. We reply to <b>'+esc(email)+'</b> to prove the inbox is yours.</p>'+(j.code?'<p class="member-code">'+esc(j.code)+'</p><p class="whisper">Write it down. We store a hash only — we cannot show this code again.</p>':'')+'<p class="whisper">Portfolio and certs stay private until a finder’s fee is paid.</p>'; M.fire('guild'); FX('warp'); })
         .catch(function(ex){ send.disabled=false; send.textContent='Send my join email'; fail(ex&&ex.message==='rate'?'Slow down a moment and try again.':'That didn’t send. Email Contact@samarketingintelligence.com instead.'); });
     });
   })();
