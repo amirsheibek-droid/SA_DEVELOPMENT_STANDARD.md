@@ -132,11 +132,12 @@
 
   function orb(){
     var small=innerWidth<900;
-    return {x:innerWidth/2, y:small?innerHeight*.36:innerHeight*.42};
+    return {x:innerWidth/2, y:small?innerHeight*.38:innerHeight*.42};
   }
   function geom(){
-    var small=innerWidth<900, H=innerHeight;
-    return {mode:'single', S:small?Math.min(.52,H*.28/372):Math.min(.72,H*.42/372), fx:0, fy:small?-8:-18};
+    var small=innerWidth<900, H=innerHeight, W=innerWidth;
+    if(!small) return {mode:'single', S:Math.min(.72,H*.42/372), fx:0, fy:-18};
+    return {mode:'single', S:Math.min(1.08, (H*.56)/372, (W*.82)/150), fx:0, fy:0};
   }
 
   /* travel into the light, then the app takes over */
@@ -231,7 +232,7 @@
       } else { d.ry+=d.vy; d.vy*=.93; }
       d.rig.style.transform='translateY('+d.off+'px) rotateX('+d.rx.toFixed(2)+'deg) rotateY('+d.ry.toFixed(2)+'deg)';
     });
-    var fy=o.y+g.fy+186*g.S+(innerWidth<900?72:110);
+    var fy=o.y+g.fy+186*g.S+(innerWidth<900?58:110);
     nav.style.transform='translate('+(o.x+g.fx).toFixed(1)+'px,'+Math.min(innerHeight-64,fy).toFixed(1)+'px) translateX(-50%)';
     nav.style.opacity=document.body.classList.contains('flying')?0:1;
   }
