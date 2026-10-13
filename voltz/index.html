@@ -601,6 +601,14 @@
        so Jess's words always sit above them */
     @media (min-width: 901px) { .slide { padding-bottom: 150px !important; } }
     @media (max-width: 900px) { .slide { padding-bottom: calc(158px + env(safe-area-inset-bottom)) !important; } }
+    /* Phones: during the tour Jess gets the room. Floating buttons step aside until the tour ends,
+       the mockup shrinks a little, and a tall slide scrolls instead of hiding text. */
+    @media (max-width: 900px) {
+      .slide-inner { margin: auto !important; }
+      .phone { height: min(38vh, 420px); }
+      body.touring .getapp, body.touring .chat-fab { display: none !important; }
+      body.touring .slide { padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important; }
+    }
   </style>
 </head>
 <body>
@@ -1233,12 +1241,12 @@
       })();
     }
     function startAuto(){
-      auto=true; voiceOn=true; setPaused(false); stopEl.classList.add('show'); pauseEl.classList.add('show');
+      auto=true; voiceOn=true; setPaused(false); document.body.classList.add('touring'); stopEl.classList.add('show'); pauseEl.classList.add('show');
       soundOn=true; soundBtn.classList.add('on'); soundBtn.setAttribute('aria-pressed','true'); soundBtn.innerHTML='&#10074;&#10074; Sound off';
       startMusic();
     }
     function stopAuto(){
-      auto=false; clearTimeout(autoT); setPaused(false); stopEl.classList.remove('show'); pauseEl.classList.remove('show'); tapEl.classList.remove('show');
+      auto=false; clearTimeout(autoT); setPaused(false); document.body.classList.remove('touring'); stopEl.classList.remove('show'); pauseEl.classList.remove('show'); tapEl.classList.remove('show');
       store('voltzTourSeen','1');
       setTimeout(function(){ Promo.run(); }, 1500);  // "Tired of typing?" comes after the tour
     }
