@@ -625,13 +625,15 @@
   <!-- Glass side menu -->
   <nav class="side" id="side" aria-label="Pages">
     <a class="side-brand" href="#why" data-go="why"><img src="/voltz/assets/voltz-icon.png" alt=""> Voltz CRM</a>
-    <a class="sl" href="#why" data-go="why"><span class="d"></span>Why Voltz</a>
-    <div class="grp">Guided tour</div>
+    <a class="sl" href="#why" data-go="why"><span class="d"></span>Meet Voltz</a>
+    <div class="grp">What Voltz does</div>
     <a class="sl" href="#speak" data-go="speak"><span class="d"></span>Speak a job</a>
-    <a class="sl" href="#client" data-go="client"><span class="d"></span>Create a client</a>
-    <a class="sl" href="#diary" data-go="diary"><span class="d"></span>Your diary</a>
     <a class="sl" href="#glance" data-go="glance"><span class="d"></span>Bird's-eye view</a>
     <a class="sl" href="#tools" data-go="tools"><span class="d"></span>One-tap tools</a>
+    <a class="sl" href="#start" data-go="start"><span class="d"></span>Get started</a>
+    <div class="grp">More features</div>
+    <a class="sl" href="#client" data-go="client"><span class="d"></span>Create a client</a>
+    <a class="sl" href="#diary" data-go="diary"><span class="d"></span>Your diary</a>
     <div class="grp">In detail</div>
     <a class="sl" href="#ai-voice" data-go="ai-voice"><span class="d"></span>AI Voice Assist</a>
     <a class="sl" href="#desks" data-go="desks"><span class="d"></span>Desk views</a>
@@ -646,35 +648,30 @@
 
   <main class="deck" id="deck">
 
-    <!-- 0 · Why Voltz -->
-    <section class="slide" id="why" data-audio="/voltz/assets/jess/why.m4a?v=2" data-title="Why Voltz"
-      data-jess="Hey there, I'm Jess, your Voltz assistant. Voltz is built for one-person trade businesses, on purpose. Most field CRMs are made for companies with an office and a dispatcher. I'm made for the person doing the work, running the business from the van. Shall I show you around?"
-      data-chips='[["Yes, show me","next"],["Just get the app","get"]]'>
-      <div class="slide-inner cards-grid why-grid">
-        <div class="cards-copy">
-          <span class="label">Built for sole traders</span>
+    <!-- 0 · Intro (first 30-45s) -->
+    <section class="slide" id="why" data-audio="/voltz/assets/jess/us/why.m4a?v=1" data-title="Meet Voltz"
+      data-jess="Hi, I'm Jess. Voltz CRM is built for one-person trade businesses. You talk, I do the admin: bookings, quotes, invoices and getting paid. Here's how."
+      data-chips='[["Show me","next"],["Just get the app","start"]]'>
+      <div class="slide-inner screen-grid">
+        <div class="screen-copy">
+          <div class="brandline"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM" width="56" height="56"><div><strong>Voltz CRM</strong><span>The field CRM for sole traders</span></div></div>
           <h2>You do the work.<br><em>Voltz does the admin.</em></h2>
-          <p class="lead why-lead">When you work for yourself, you're the boss, the tradesperson and the office. Evenings go on quotes, invoices and chasing money. Voltz gives you that time back. Just talk, and it gets done.</p>
+          <p class="lead">Just talk. Jobs booked, quotes sent, invoices paid, all from your phone.</p>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
-        <div class="cards">
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Made for one-person businesses</h4><p>No teams, no dispatch, no bloat. Just you, your customers and your jobs.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>Talk instead of type</h4><p>Say the job out loud. Voltz books it, adds the client and starts the quote.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>Everything in one app</h4><p>Clients, diary, quotes, invoices, payments and receipts, right on your phone.</p></div>
-          <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Your evenings back</h4><p>Less paperwork, faster quotes, quicker payments. More time for work and home.</p></div>
-          <div class="card wide mission"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>Why we built it</h4><p>We're Neuron Pulse. We build tools that help sole traders win more work with less paperwork, so running your own business feels a little lighter.</p></div>
-        </div>
+        <div class="phone-wrap"><div class="phone"><img src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Voltz CRM diary with booked jobs" width="660" height="1434"></div>
+          <div class="tag a"><i></i>Built for sole traders</div><div class="tag b"><i class="g"></i>Admin done by voice</div></div>
       </div>
     </section>
 
     <!-- 2 · Speak a job -->
-    <section class="slide" id="speak" data-audio="/voltz/assets/jess/speak-v2.m4a" data-title="Speak a job"
-      data-jess="This is your home screen. Tap the mic and tell me about a job, like: boiler service for John on Friday at two. I'll book it in, create the client and start the quote."
-      data-chips='[["Show me how I add a client","next"]]'>
+    <section class="slide" id="speak" data-audio="/voltz/assets/jess/us/speak.m4a?v=1" data-title="Speak a job"
+      data-jess="Tap the mic and say: boiler service for John, Friday at two. I book the job, add the client and start the quote."
+      data-chips='[["See the whole business","next"]]'>
       <div class="slide-inner screen-grid">
         <div class="screen-copy">
           <div class="brandline"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM" width="56" height="56"><div><strong>Voltz CRM</strong><span>The field CRM for sole traders</span></div></div>
-          <div class="step-tag"><b>1 / 5</b> Guided tour</div>
+          <div class="step-tag"><b>1 / 3</b> What Voltz does</div>
           <h2>Speak a job.<br><em>Watch it happen.</em></h2>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
@@ -683,43 +680,13 @@
       </div>
     </section>
 
-    <!-- 3 · Create a client -->
-    <section class="slide" id="client" data-audio="/voltz/assets/jess/client.m4a" data-title="Create a client"
-      data-jess="Would you like me to create a client? Paste their details or say them out loud, and I'll fill in the name, phone, email and address. The postcode lookup finds the address for you."
-      data-chips='[["Where does the job go?","next"]]'>
-      <div class="slide-inner screen-grid">
-        <div class="screen-copy">
-          <div class="step-tag"><b>2 / 5</b> Guided tour</div>
-          <h2>A new client<br><em>in seconds.</em></h2>
-          <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
-        </div>
-        <div class="phone-wrap"><div class="phone"><img src="/voltz/assets/screens/clean-05-new-client.jpg" alt="Voltz new client form" width="660" height="1434" loading="lazy"></div>
-          <div class="tag a"><i></i>Filled in from your voice</div><div class="tag b"><i class="g"></i>Address found</div></div>
-      </div>
-    </section>
-
-    <!-- 4 · Diary -->
-    <section class="slide" id="diary" data-audio="/voltz/assets/jess/diary.m4a" data-title="Your diary"
-      data-jess="Here's your diary. Every job sits on the calendar, and you can flip to a list view. Tap any day and I'll show you what's booked, so nothing gets double-booked or forgotten."
-      data-chips='[["Show me the whole business","next"]]'>
-      <div class="slide-inner screen-grid">
-        <div class="screen-copy">
-          <div class="step-tag"><b>3 / 5</b> Guided tour</div>
-          <h2>Your diary,<br><em>under control.</em></h2>
-          <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
-        </div>
-        <div class="phone-wrap"><div class="phone"><img src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Voltz schedule calendar" width="660" height="1434" loading="lazy"></div>
-          <div class="tag a"><i></i>Boiler clean · Sat 26</div><div class="tag b"><i class="g"></i>Tap a day to see jobs</div></div>
-      </div>
-    </section>
-
     <!-- 5 · Bird's-eye -->
-    <section class="slide" id="glance" data-audio="/voltz/assets/jess/glance.m4a" data-title="Bird's-eye view"
-      data-jess="This is Bird's-eye view: today's jobs, open quotes, unpaid invoices and cash, all on one screen. You'll know exactly where you stand before your first coffee."
-      data-chips='[["What else can I do?","next"]]'>
+    <section class="slide" id="glance" data-audio="/voltz/assets/jess/us/glance.m4a?v=1" data-title="Bird's-eye view"
+      data-jess="Bird's-eye view: today's jobs, open quotes and unpaid invoices, all on one screen."
+      data-chips='[["And the money side?","next"]]'>
       <div class="slide-inner screen-grid">
         <div class="screen-copy">
-          <div class="step-tag"><b>4 / 5</b> Guided tour</div>
+          <div class="step-tag"><b>2 / 3</b> What Voltz does</div>
           <h2>Your business<br><em>at a glance.</em></h2>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
@@ -729,12 +696,12 @@
     </section>
 
     <!-- 6 · Tools -->
-    <section class="slide" id="tools" data-audio="/voltz/assets/jess/tools.m4a" data-title="One-tap tools"
-      data-jess="And here's everything, one tap away: quotes, invoices, payments, parts, cashbook and receipts. Big buttons, no hunting through menus. Want to know more about how I work?"
-      data-chips='[["Tell me about AI Voice","next"],["I have seen enough, get the app","get"]]'>
+    <section class="slide" id="tools" data-audio="/voltz/assets/jess/us/tools.m4a?v=1" data-title="One-tap tools"
+      data-jess="Quotes, invoices and payments, one tap away. Invoice from the van and get paid faster."
+      data-chips='[["How do I start?","next"]]'>
       <div class="slide-inner screen-grid">
         <div class="screen-copy">
-          <div class="step-tag"><b>5 / 5</b> Guided tour</div>
+          <div class="step-tag"><b>3 / 3</b> What Voltz does</div>
           <h2>Everything<br><em>one tap away.</em></h2>
           <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         </div>
@@ -743,8 +710,53 @@
       </div>
     </section>
 
+    <!-- 4 · Get started (the ask) -->
+    <section class="slide" id="start" data-audio="/voltz/assets/jess/us/start.m4a?v=1" data-title="Get started"
+      data-jess="Get Voltz on the App Store, and your free AI credit gets you started today. Or stay with me for the rest of the tour."
+      data-chips='[["Show me the rest","next"]]'>
+      <div class="slide-inner final">
+        <img class="hero-icon" src="/voltz/assets/voltz-icon.png" alt="" width="168" height="168">
+        <h2>Talk your first job in<br><em>today.</em></h2>
+        <p class="lead" style="text-align:center">Download Voltz CRM for iPhone. Your free AI credit is waiting, so Jess can start doing your admin straight away.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1.1-3.2-1 .1-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"/></svg>Get the app on the App Store</a>
+        </div>
+        <div class="jess" style="width:100%;max-width:560px;text-align:left"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
+      </div>
+    </section>
+
+    <!-- 3 · Create a client -->
+    <section class="slide" id="client" data-audio="/voltz/assets/jess/us/client.m4a?v=1" data-title="Create a client"
+      data-jess="Would you like me to create a client? Paste their details or say them out loud, and I'll fill in the name, phone, email and address. The postcode lookup finds the address for you."
+      data-chips='[["Where does the job go?","next"]]'>
+      <div class="slide-inner screen-grid">
+        <div class="screen-copy">
+          <div class="step-tag"><b>More</b> Clients</div>
+          <h2>A new client<br><em>in seconds.</em></h2>
+          <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
+        </div>
+        <div class="phone-wrap"><div class="phone"><img src="/voltz/assets/screens/clean-05-new-client.jpg" alt="Voltz new client form" width="660" height="1434" loading="lazy"></div>
+          <div class="tag a"><i></i>Filled in from your voice</div><div class="tag b"><i class="g"></i>Address found</div></div>
+      </div>
+    </section>
+
+    <!-- 4 · Diary -->
+    <section class="slide" id="diary" data-audio="/voltz/assets/jess/us/diary.m4a?v=1" data-title="Your diary"
+      data-jess="Here's your diary. Every job sits on the calendar, and you can flip to a list view. Tap any day and I'll show you what's booked, so nothing gets double-booked or forgotten."
+      data-chips='[["Tell me about AI Voice","next"]]'>
+      <div class="slide-inner screen-grid">
+        <div class="screen-copy">
+          <div class="step-tag"><b>More</b> Diary</div>
+          <h2>Your diary,<br><em>under control.</em></h2>
+          <div class="jess"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
+        </div>
+        <div class="phone-wrap"><div class="phone"><img src="/voltz/assets/screens/clean-03-schedule.jpg" alt="Voltz schedule calendar" width="660" height="1434" loading="lazy"></div>
+          <div class="tag a"><i></i>Boiler clean · Sat 26</div><div class="tag b"><i class="g"></i>Tap a day to see jobs</div></div>
+      </div>
+    </section>
+
     <!-- 7 · AI Voice -->
-    <section class="slide" id="ai-voice" data-audio="/voltz/assets/jess/ai-voice.m4a" data-title="AI Voice Assist"
+    <section class="slide" id="ai-voice" data-audio="/voltz/assets/jess/us/ai-voice.m4a?v=1" data-title="AI Voice Assist"
       data-jess="I'm built for trade talk. You talk, I do the admin, so your hands stay on the tools."
       data-chips='[["Show me the desk views","next"]]'>
       <div class="slide-inner cards-grid">
@@ -765,7 +777,7 @@
     </section>
 
     <!-- 8 · Desks -->
-    <section class="slide" id="desks" data-audio="/voltz/assets/jess/desks.m4a?v=3" data-title="Desk views"
+    <section class="slide" id="desks" data-audio="/voltz/assets/jess/us/desks.m4a?v=1" data-title="Desk views"
       data-jess="Voltz has three desks now. AI Voice puts the mic front and centre, Bird's Eye shows your whole day on one board, and the new Voltz 2.0 desk gives you live money charts, a daily brief and a monthly goal. Switch any time in Account, and your jobs and clients come with you."
       data-chips='[["Can I change the colours?","next"]]'>
       <div class="slide-inner cards-grid">
@@ -785,7 +797,7 @@
     </section>
 
     <!-- 9 · Colours -->
-    <section class="slide" id="colours" data-audio="/voltz/assets/jess/colours.m4a?v=2" data-title="Colours & branding"
+    <section class="slide" id="colours" data-audio="/voltz/assets/jess/us/colours.m4a?v=1" data-title="Colours & branding"
       data-jess="Go to Account, then Look and brand. Choose Dark, Light or Auto, which switches for daylight and night. Pick a colour skin: Classic cyan, Black and Gold, or Blue and Yellow. Then add your company name, slogan and logo to your quotes and invoices. More colours are on the way."
       data-chips='[["Who is Voltz for?","next"]]'>
       <div class="slide-inner cards-grid">
@@ -809,7 +821,7 @@
     </section>
 
     <!-- 10 · Sole traders -->
-    <section class="slide" id="sole-traders" data-audio="/voltz/assets/jess/sole-traders.m4a" data-title="Why sole traders"
+    <section class="slide" id="sole-traders" data-audio="/voltz/assets/jess/us/sole-traders.m4a?v=1" data-title="Why sole traders"
       data-jess="Voltz is built for one-person trade businesses, on purpose. Most field CRMs are made for companies with an office and a dispatcher. I'm made for the person doing the work, running the business from the van."
       data-chips='[["What about quotes and payments?","next"]]'>
       <div class="slide-inner cards-grid">
@@ -823,12 +835,13 @@
           <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Priced for one</h4><p>You don't pay for seats, departments or enterprise extras.</p></div>
           <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>Runs from your phone</h4><p>Quote on site, book the next job, invoice when done, get paid on the spot.</p></div>
           <div class="card"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Less admin, more work</h4><p>Voice does the typing, so evenings aren't spent on paperwork.</p></div>
+          <div class="card wide mission"><h4><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>Why we built it</h4><p>We're Neuron Pulse. We build tools that help sole traders win more work with less paperwork, so running your own business feels a little lighter.</p></div>
         </div>
       </div>
     </section>
 
     <!-- 11 · Money -->
-    <section class="slide" id="money" data-audio="/voltz/assets/jess/money.m4a" data-title="Quotes, invoices & more"
+    <section class="slide" id="money" data-audio="/voltz/assets/jess/us/money.m4a?v=1" data-title="Quotes, invoices & more"
       data-jess="Need a quote sent, an invoice raised or a payment logged? Just say the word and I'll prepare it for you."
       data-chips='[["What\'s coming next?","next"]]'>
       <div class="slide-inner cards-grid">
@@ -849,7 +862,7 @@
     </section>
 
     <!-- Coming soon -->
-    <section class="slide" id="soon" data-audio="/voltz/assets/jess/soon.m4a?v=2" data-title="Coming soon"
+    <section class="slide" id="soon" data-audio="/voltz/assets/jess/us/soon.m4a?v=1" data-title="Coming soon"
       data-jess="Here's what's coming next. Voltz for Mac, a full desktop version where you just talk and Voltz does the work. Plus the Command Centre desk, and more colours for your app. Watch this space!"
       data-chips='[["How do I get Voltz?","next"]]'>
       <div class="slide-inner cards-grid">
@@ -867,7 +880,7 @@
     </section>
 
     <!-- 12 · Get Voltz -->
-    <section class="slide" id="get" data-audio="/voltz/assets/jess/get.m4a" data-title="Get Voltz"
+    <section class="slide" id="get" data-audio="/voltz/assets/jess/us/get.m4a?v=1" data-title="Get Voltz"
       data-jess="That's the tour. Download Voltz from the App Store and I'll be ready when you are. Speak soon!"
       data-chips='[["Start the tour again","why"]]'>
       <div class="slide-inner final">
@@ -952,9 +965,9 @@
     <div class="ask-card">
       <div class="ask-av">J</div>
       <h3>Hey there, I'm Jess</h3>
-      <p>Would you like a quick guided tour of Voltz? It takes about two minutes, and I'll talk you through each screen.</p>
+      <p>Give me 45 seconds and I'll show you how Voltz runs your admin while you do the work.</p>
       <div class="ask-btns">
-        <button class="cbtn" id="ask-yes">Yes, start the tour</button>
+        <button class="cbtn" id="ask-yes">Show me</button>
         <button class="cbtn ghost" id="ask-no">No thanks, I'll explore</button>
       </div>
     </div>
@@ -1014,8 +1027,9 @@
       audio.paused=true; audio.ended=true;
       if(window.VzMusic) VzMusic.duck(false);
     }
+    var voiceMissing=false;
     function speak(t, el){
-      stopVoice(); if(!soundOn || !voiceOn) return;
+      voiceMissing=false; stopVoice(); if(!soundOn || !voiceOn) return;
       var s=slides[cur]; if(!s||!s.dataset.audio) return;
       var url=s.dataset.audio, mine=cur, c=vctx();
       if(c.state==='suspended' && c.resume) c.resume();
@@ -1028,7 +1042,7 @@
           el&&el.classList.remove('talking'); if(window.VzMusic) VzMusic.duck(false); };
         voiceSrc=src; el&&el.classList.add('talking'); if(window.VzMusic) VzMusic.duck(true);
         src.start(0);
-      }).catch(function(){ audio.paused=true; audio.ended=true; el&&el.classList.remove('talking'); });
+      }).catch(function(){ voiceMissing=true; audio.paused=true; audio.ended=true; el&&el.classList.remove('talking'); });
     }
     /* ── "Zoop" sound ── */
     var actx=null;
@@ -1200,12 +1214,12 @@
       (function wait(){
         if(!auto || paused) return;
         var playing = soundOn && !needTap && !audio.paused && !audio.ended;
-        if(playing || Date.now()-started < (soundOn && !needTap ? 900 : minRead)){ autoT=setTimeout(wait,250); return; }
+        if(playing || Date.now()-started < (soundOn && !needTap && !voiceMissing ? 600 : minRead)){ autoT=setTimeout(wait,250); return; }
         autoT=setTimeout(function(){
           if(!auto || paused) return;
           if(cur>=slides.length-1){ stopAuto(); return; }
           autoNav=true; go(cur+1);
-        }, 1300);
+        }, cur < ids.indexOf('start') ? 450 : 1300);  // opening run moves briskly
       })();
     }
     function startAuto(){
