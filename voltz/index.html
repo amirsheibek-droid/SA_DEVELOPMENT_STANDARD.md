@@ -597,6 +597,10 @@
     .tourctl { display: flex; gap: 6px; align-items: center; }
     .controls .stoptour { position: static !important; right: auto !important; bottom: auto !important; box-shadow: none; padding: 9px 14px; white-space: nowrap; }
     @media (max-width: 900px) { .controls .stoptour { padding: 9px 11px; } .controls .stoptour .lbl { display: none; } }
+    /* Keep a clear strip at the bottom for the bar + floating "Get the app" / "Ask Jess" buttons,
+       so Jess's words always sit above them */
+    @media (min-width: 901px) { .slide { padding-bottom: 150px !important; } }
+    @media (max-width: 900px) { .slide { padding-bottom: calc(158px + env(safe-area-inset-bottom)) !important; } }
   </style>
 </head>
 <body>
