@@ -622,6 +622,19 @@
       #prev { padding-left: 14px; padding-right: 14px; }
       .controls { gap: 8px; }
     }
+    /* Official-style "Download on the App Store" badge */
+    .asbadge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 11px; border-radius: 10px; text-decoration: none;
+      color: #fff; background: #000; border: 1px solid #a6a6a6; line-height: 1; transition: transform .15s, box-shadow .15s; }
+    .asbadge:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+    .asbadge:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+    .asbadge .asb-t { display: flex; flex-direction: column; font-weight: 600; font-size: 17px; letter-spacing: -.01em; white-space: nowrap; }
+    .asbadge small { font-size: 10px; font-weight: 500; letter-spacing: .01em; margin-bottom: 2px; }
+    .asbadge-lg { padding: 10px 22px 10px 16px; border-radius: 14px; gap: 11px; }
+    .asbadge-lg .asb-t { font-size: 25px; }
+    .asbadge-lg small { font-size: 13px; }
+    .asbadge.appstore-top { margin-left: 8px; }
+    @media (max-width: 900px) { .asbadge.appstore-top { display: none; } }
+    .appctl { background: #000 !important; border-color: #a6a6a6 !important; border-radius: 10px !important; }
   </style>
 </head>
 <body>
@@ -634,7 +647,7 @@
     <a class="brand" href="#why" data-go="why" aria-label="Voltz CRM home"><img src="/voltz/assets/voltz-icon.png" alt="Voltz CRM app icon" width="132" height="132"><span>Voltz <em>CRM</em></span><i class="brand-tag" aria-label="Tired of typing? Just talk."><span class="bt1">Tired of typing?</span><b>Just talk.</b></i></a>
     <button class="pill music-btn on" id="music-btn" aria-pressed="true" title="Background music on or off">&#9835; <span>Music on</span></button>
     <button class="pill" id="sound-btn" aria-pressed="false">&#9654; Sound on</button>
-    <a class="pill primary appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="margin-right:6px;vertical-align:-2px"><path d="M16.37 12.64c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.59-.75 2.99-.75 1.39 0 1.79.75 3.01.72 1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.45-3.71zM14.07 5.87c.64-.78 1.07-1.85.95-2.93-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.78-.97 2.83 1.02.08 2.07-.52 2.71-1.28z"/></svg>Get the app</a>
+    <a class="asbadge appstore-top" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener" aria-label="Download Voltz CRM on the App Store"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M16.37 12.64c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.59-.75 2.99-.75 1.39 0 1.79.75 3.01.72 1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.45-3.71zM14.07 5.87c.64-.78 1.07-1.85.95-2.93-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.78-.97 2.83 1.02.08 2.07-.52 2.71-1.28z"/></svg><span class="asb-t"><small>Download on the</small>App Store</span></a>
   </div>
 
   <div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="App screen, zoomed in" aria-hidden="true">
@@ -748,7 +761,7 @@
         <h2>Your free AI credit<br><em>is waiting.</em></h2>
         <p class="lead" style="text-align:center">Get Voltz CRM on the App Store and use your free AI credit to talk your first job in today.</p>
         <div class="cta-row">
-          <a class="btn" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1.1-3.2-1 .1-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"/></svg>Get the app on the App Store</a>
+          <a class="asbadge asbadge-lg" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener" aria-label="Download Voltz CRM on the App Store"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M16.37 12.64c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.59-.75 2.99-.75 1.39 0 1.79.75 3.01.72 1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.45-3.71zM14.07 5.87c.64-.78 1.07-1.85.95-2.93-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.78-.97 2.83 1.02.08 2.07-.52 2.71-1.28z"/></svg><span class="asb-t"><small>Download on the</small>App Store</span></a>
         </div>
         <div class="jess" style="width:100%;max-width:560px;text-align:left"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
       </div>
@@ -917,7 +930,7 @@
         <h2>Less admin.<br><em>More work done.</em></h2>
         <p class="lead" style="text-align:center">Voltz CRM for iPhone. Clients, diary, quotes, invoices, payments and a live AI voice assistant, built for sole traders.</p>
         <div class="cta-row">
-          <a class="btn" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1.1-3.2-1 .1-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"/></svg>Download on the App Store</a>
+          <a class="asbadge asbadge-lg" href="https://apps.apple.com/app/id6797125146" target="_blank" rel="noopener" aria-label="Download Voltz CRM on the App Store"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M16.37 12.64c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.59-.75 2.99-.75 1.39 0 1.79.75 3.01.72 1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.45-3.71zM14.07 5.87c.64-.78 1.07-1.85.95-2.93-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.78-.97 2.83 1.02.08 2.07-.52 2.71-1.28z"/></svg><span class="asb-t"><small>Download on the</small>App Store</span></a>
         </div>
         <div class="jess" style="width:100%;max-width:560px;text-align:left"><div class="jess-av">J</div><div class="jess-body"><div class="jess-name">Jess <small>Voltz AI assistant</small></div><div class="bubble"></div><div class="chips"></div></div></div>
         <div class="links">
